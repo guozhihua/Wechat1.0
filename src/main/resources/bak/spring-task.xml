@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task-4.0.xsd"
+       default-autowire="byName" >
+    <!-- 配置定时任务 -->
+    <bean id="reserveRemind" class="com.hxs.general.task.MessageJob"></bean>
+    <task:scheduler id="scheduler" pool-size="10" />
+    <task:scheduled-tasks scheduler="scheduler">
+        <task:scheduled ref="reserveRemind" method="timeWorker" cron="0 0/1 * * * ?" />
+    </task:scheduled-tasks>
+</beans>

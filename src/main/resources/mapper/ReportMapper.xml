@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hxs.weixin.parent.dao.ReportMapper" >
+  <resultMap id="BaseResultMap" type="hxs.weixin.parent.entity.Report" >
+    <id column="report_id" property="reportId" jdbcType="INTEGER" />
+    <result column="booktype_name" property="booktypeName" jdbcType="VARCHAR" />
+    <result column="grade_name" property="gradeName" jdbcType="VARCHAR" />
+    <result column="user_unique_id" property="userUniqueId" jdbcType="VARCHAR" />
+    <result column="test_code" property="testCode" jdbcType="VARCHAR" />
+    <result column="total_score" property="totalScore" jdbcType="INTEGER" />
+    <result column="user_score" property="userScore" jdbcType="INTEGER" />
+    <result column="use_time" property="useTime" jdbcType="INTEGER" />
+    <result column="report_date" property="reportDate" jdbcType="TIMESTAMP" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="subject_name" property="subjectName" jdbcType="VARCHAR" />
+    <result column="subject_code" property="subjectCode" jdbcType="VARCHAR" />
+    <result column="grade_code" property="gradeCode" jdbcType="VARCHAR" />
+    <result column="stage_code" property="stageCode" jdbcType="VARCHAR" />
+    <result column="ctb_code" property="ctbCode" jdbcType="VARCHAR" />
+    <result column="booktype_code" property="booktypeCode" jdbcType="VARCHAR" />
+    <result column="test_content" property="testContent" jdbcType="VARCHAR" />
+    <result column="add_score" property="addScore" jdbcType="VARCHAR" />
+    <result column="grasp_map" property="graspMap" jdbcType="VARCHAR" />
+    <result column="grasp_rate" property="graspRate" jdbcType="VARCHAR" />
+    <result column="error_frequency" property="errorFrequency" jdbcType="VARCHAR" />
+    <result column="reflections" property="reflections" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+   
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    
+    report_id, booktype_name,grade_name,user_unique_id ,test_code, total_score, user_score, use_time, 
+    report_date, title, subject_name, subject_code, grade_code, stage_code,
+    ctb_code, booktype_code, test_content, add_score, grasp_map, grasp_rate, error_frequency, reflections
+  </sql>
+  <sql id="Blob_Column_List" >
+   
+    test_content, add_score, grasp_map, grasp_rate, error_frequency, reflections
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="hxs.weixin.parent.entity.Report" >
+    select
+    <include refid="Base_Column_List" />
+    from report
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+   <select id="getReportByEntity" parameterType="hxs.weixin.parent.entity.Report" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/> from report
+  	<where>
+  		1=1
+  		<if test="reportId != null">
+  			AND report_id = #{reportId}
+  		</if>
+  	</where>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from report
+    where report_id = #{reportId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="hxs.weixin.parent.entity.Report" >
+    delete from report
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="hxs.weixin.parent.entity.Report" >
+    insert into report (report_id, booktype_name,grade_name,user_unique_id, test_code,
+     total_score, user_score, 
+      use_time, report_date, title, 
+      subject_name,
+      subject_code, grade_code, stage_code, 
+      ctb_code, booktype_code, test_content, 
+      add_score, grasp_map, grasp_rate, 
+      error_frequency, reflections)
+    values (#{reportId,jdbcType=INTEGER},#{booktypeName,jdbcType=VARCHAR},#{gradeName,jdbcType=VARCHAR}, #{userUniqueId,jdbcType=VARCHAR},#{testCode,jdbcType=VARCHAR}, 
+      #{totalScore,jdbcType=INTEGER}, #{userScore,jdbcType=INTEGER}, 
+      #{useTime,jdbcType=INTEGER}, #{reportDate,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, 
+      #{subjectName,jdbcType=VARCHAR},
+      #{subjectCode,jdbcType=VARCHAR}, #{gradeCode,jdbcType=VARCHAR}, #{stageCode,jdbcType=VARCHAR}, 
+      #{ctbCode,jdbcType=VARCHAR}, #{booktypeCode,jdbcType=VARCHAR}, #{testContent,jdbcType=VARCHAR}, 
+      #{addScore,jdbcType=VARCHAR}, #{graspMap,jdbcType=VARCHAR}, #{graspRate,jdbcType=VARCHAR}, 
+      #{errorFrequency,jdbcType=VARCHAR}, #{reflections,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="hxs.weixin.parent.entity.Report" keyProperty="reportId" useGeneratedKeys="true" >
+    insert into report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="reportId != null" >
+        report_id,
+      </if>
+      <if test="booktypeName != null" >
+        booktype_name,
+      </if>
+      <if test="gradeName != null" >
+        grade_name,
+      </if>
+      <if test="userUniqueId != null" >
+        user_unique_id,
+      </if>
+      <if test="testCode != null" >
+        test_code,
+      </if>
+      
+      <if test="totalScore != null" >
+        total_score,
+      </if>
+      <if test="userScore != null" >
+        user_score,
+      </if>
+      <if test="useTime != null" >
+        use_time,
+      </if>
+      <if test="reportDate != null" >
+        report_date,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="subjectName != null" >
+        subject_name,
+      </if>
+      
+      <if test="subjectCode != null" >
+        subject_code,
+      </if>
+      <if test="gradeCode != null" >
+        grade_code,
+      </if>
+      <if test="stageCode != null" >
+        stage_code,
+      </if>
+      <if test="ctbCode != null" >
+        ctb_code,
+      </if>
+      <if test="booktypeCode != null" >
+        booktype_code,
+      </if>
+      
+      <if test="testContent != null" >
+        test_content,
+      </if>
+      <if test="addScore != null" >
+        add_score,
+      </if>
+      <if test="graspMap != null" >
+        grasp_map,
+      </if>
+      <if test="graspRate != null" >
+        grasp_rate,
+      </if>
+      <if test="errorFrequency != null" >
+        error_frequency,
+      </if>
+      <if test="reflections != null" >
+        reflections,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="reportId != null" >
+        #{reportId,jdbcType=INTEGER},
+      </if>
+       <if test="booktypeName != null" >
+        #{booktypeName,jdbcType=VARCHAR},
+      </if>
+       <if test="gradeName != null" >
+        #{gradeName,jdbcType=VARCHAR},
+      </if>
+      <if test="userUniqueId != null" >
+        #{userUniqueId,jdbcType=VARCHAR},
+      </if>
+      <if test="testCode != null" >
+        #{testCode,jdbcType=VARCHAR},
+      </if>
+      <if test="totalScore != null" >
+        #{totalScore,jdbcType=INTEGER},
+      </if>
+      <if test="userScore != null" >
+        #{userScore,jdbcType=INTEGER},
+      </if>
+      <if test="useTime != null" >
+        #{useTime,jdbcType=INTEGER},
+      </if>
+      <if test="reportDate != null" >
+        #{reportDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectName != null" >
+        #{subjectName,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectCode != null" >
+        #{subjectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeCode != null" >
+        #{gradeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stageCode != null" >
+        #{stageCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ctbCode != null" >
+        #{ctbCode,jdbcType=VARCHAR},
+      </if>
+      <if test="booktypeCode != null" >
+        #{booktypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="testContent != null" >
+        #{testContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="addScore != null" >
+        #{addScore,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="graspMap != null" >
+        #{graspMap,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="graspRate != null" >
+        #{graspRate,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="errorFrequency != null" >
+        #{errorFrequency,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="reflections != null" >
+        #{reflections,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="hxs.weixin.parent.entity.Report" resultType="java.lang.Integer" >
+    select count(*) from report
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+</mapper>

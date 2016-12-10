@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hxs.weixin.parent.dao.WGameMapper" >
+  <resultMap id="BaseResultMap" type="hxs.weixin.parent.entity.WGame" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="game_time" property="gameTime" jdbcType="BIGINT" />
+    <result column="overplus_times" property="overplusTimes" jdbcType="BIGINT" />
+    <result column="user_nick" property="userNick" jdbcType="VARCHAR" />
+    <result column="voucher_flag" property="voucherFlag" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="rank" property="rank" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, game_time, overplus_times, user_nick, voucher_flag, create_time, update_time, 
+    rank
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from p_w_game
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from p_w_game
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="hxs.weixin.parent.entity.WGame" >
+    insert into p_w_game (id, user_id, game_time, 
+      overplus_times, user_nick, voucher_flag, 
+      create_time, update_time, rank
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{gameTime,jdbcType=BIGINT}, 
+      #{overplusTimes,jdbcType=BIGINT}, #{userNick,jdbcType=VARCHAR}, #{voucherFlag,jdbcType=BIGINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{rank,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="saveWGame" parameterType="hxs.weixin.parent.entity.WGame" >
+    insert into p_w_game
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="gameTime != null" >
+        game_time,
+      </if>
+      <if test="overplusTimes != null" >
+        overplus_times,
+      </if>
+      <if test="userNick != null" >
+        user_nick,
+      </if>
+      <if test="voucherFlag != null" >
+        voucher_flag,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="rank != null" >
+        rank,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="gameTime != null" >
+        #{gameTime,jdbcType=BIGINT},
+      </if>
+      <if test="overplusTimes != null" >
+        #{overplusTimes,jdbcType=BIGINT},
+      </if>
+      <if test="userNick != null" >
+        #{userNick,jdbcType=VARCHAR},
+      </if>
+      <if test="voucherFlag != null" >
+        #{voucherFlag,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rank != null" >
+        #{rank,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="hxs.weixin.parent.entity.WGame" >
+    update p_w_game
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="gameTime != null" >
+        game_time = #{gameTime,jdbcType=BIGINT},
+      </if>
+      <if test="overplusTimes != null" >
+        overplus_times = #{overplusTimes,jdbcType=BIGINT},
+      </if>
+      <if test="userNick != null" >
+        user_nick = #{userNick,jdbcType=VARCHAR},
+      </if>
+      <if test="voucherFlag != null" >
+        voucher_flag = #{voucherFlag,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rank != null" >
+        rank = #{rank,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="hxs.weixin.parent.entity.WGame" >
+    update p_w_game
+    set user_id = #{userId,jdbcType=VARCHAR},
+      game_time = #{gameTime,jdbcType=BIGINT},
+      overplus_times = #{overplusTimes,jdbcType=BIGINT},
+      user_nick = #{userNick,jdbcType=VARCHAR},
+      voucher_flag = #{voucherFlag,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      rank = #{rank,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 通过用户code查询有无当前用户 -->
+  <select id="selectUserByUserCode" resultMap="BaseResultMap" parameterType="hxs.weixin.parent.entity.WGame">
+  SELECT * FROM P_W_GAME 
+  <where>
+  	1=1
+  	<if test="null != userId">
+  	AND user_id = #{userId}
+  	</if>
+  </where>
+  </select>
+  <!-- 修改用户信息 -->
+  <update id="updateWGameByUserId" parameterType="hxs.weixin.parent.entity.WGame" >
+    update p_w_game
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="gameTime != null" >
+        game_time = #{gameTime,jdbcType=BIGINT},
+      </if>
+      <if test="overplusTimes != null" >
+        overplus_times = #{overplusTimes,jdbcType=BIGINT},
+      </if>
+      <if test="userNick != null" >
+        user_nick = #{userNick,jdbcType=VARCHAR},
+      </if>
+      <if test="voucherFlag != null" >
+        voucher_flag = #{voucherFlag,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rank != null" >
+        rank = #{rank,jdbcType=BIGINT},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <!-- 查询用户游戏全球排行榜 -->
+  <select id="selectWGameRankByUserId" resultType="hashMap" parameterType="hxs.weixin.parent.entity.WGame">
+  SELECT * FROM (
+	SELECT @rownum:=@rownum+1 AS rownum, Wgame.*
+	FROM (SELECT @rownum:=0) r, p_W_game Wgame order by game_time asc) A WHERE A.user_id=#{userId};
+  </select>
+  <!-- 查询游戏全球排行榜 -->
+  <select id="selectWGameRankList" resultType="hashMap">
+  
+	SELECT @rownum:=@rownum+1 AS rownum, Wgame.*
+	FROM (SELECT @rownum:=0) r, p_W_game Wgame order by game_time asc limit 0,50;
+  </select>
+</mapper>

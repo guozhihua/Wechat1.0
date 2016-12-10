@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hxs.weixin.parent.dao.PRankingDao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="hxs.weixin.parent.entity.PRanking">
+        <result column="rank_id" property="rankId"/>
+        <result column="user_id" property="userId"/>
+        <result column="grade_code" property="gradeCode"/>
+        <result column="subject_code" property="subjectCode"/>
+
+        <result column="ctb_code" property="ctbCode"/>
+        <result column="score" property="score"/>
+        <result column="create_date" property="createDate"/>
+        <result column="update_date" property="updateDate"/>
+    </resultMap>
+    <resultMap type="hxs.weixin.parent.entity.RankingModel" id="RankModelMap">
+        <result column="rank_id" property="rankId"/>
+        <result column="user_id" property="userId"/>
+        <result column="grade_code" property="gradeCode"/>
+        <result column="subject_code" property="subjectCode"/>
+        <result column="ctb_code" property="ctbCode"/>
+        <result column="score" property="score"/>
+        <result column="create_date" property="createDate"/>
+        <result column="update_date" property="updateDate"/>
+
+        <result column="sex" property="sex" />
+        <result column="open_id" property="openId" />
+        <result column="user_name"  property="userName" />
+        <result column="true_name" property="trueName" />
+        <result column="mobile"  property="mobile" />
+        <result column="head_img_url"  property="headImgUrl" />
+
+    </resultMap>
+
+    <!-- p_ranking table all fields -->
+    <sql id="Base_Column_List">
+	 rank_id,user_id,grade_code,subject_code,ctb_code,score,create_date,update_date
+</sql>
+
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="rankId != null and rankId != ''">
+                and rank_id = #{rankId}
+            </if>
+            <if test="userId != null and userId != ''">
+                and user_id = #{userId}
+            </if>
+            <if test="gradeCode != null and gradeCode != ''">
+                and grade_code = #{gradeCode}
+            </if>
+            <if test="subjectCode != null and subjectCode != ''">
+                and subject_code = #{subjectCode}
+            </if>
+
+            <if test="ctbCode != null and ctbCode != ''">
+                and ctb_code = #{ctbCode}
+            </if>
+            <if test="score != null and score != ''">
+                and score = #{score}
+            </if>
+            <if test="createDate != null and createDate != ''">
+                and create_date = #{createDate}
+            </if>
+            <if test="updateDate != null and updateDate != ''">
+                and update_date = #{updateDate}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 根据id查询 排行榜 -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from p_ranking where rank_id = #{rankId}
+    </select>
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	delete 	 from p_ranking where rank_id = #{rankId}
+</delete>
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="hxs.weixin.parent.entity.PRanking" useGeneratedKeys="true" keyProperty="rankId">
+
+  insert into p_ranking(rank_id,user_id,grade_code,subject_code,ctb_code,score,create_date,update_date)
+ values(#{rankId},#{userId},#{gradeCode},#{subjectCode},#{ctbCode},#{score},#{createDate},#{updateDate})
+</insert>
+    <!-- 插入记录 -->
+    <insert id="insertSelective" parameterType="hxs.weixin.parent.entity.PRanking" useGeneratedKeys="true"
+            keyProperty="rankId">
+        insert into p_ranking
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="rankId != null  ">
+                rank_id,
+            </if>
+            <if test="userId != null  ">
+                user_id,
+            </if>
+            <if test="gradeCode != null  ">
+                grade_code,
+            </if>
+            <if test="subjectCode != null  ">
+                subject_code,
+            </if>
+
+            <if test="ctbCode != null  ">
+                ctb_code,
+            </if>
+            <if test="score != null  ">
+                score,
+            </if>
+            <if test="createDate != null  ">
+                create_date,
+            </if>
+            <if test="updateDate != null  ">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="rankId != null  ">
+                #{rankId},
+            </if>
+            <if test="userId != null  ">
+                #{userId},
+            </if>
+            <if test="gradeCode != null  ">
+                #{gradeCode},
+            </if>
+            <if test="subjectCode != null  ">
+                #{subjectCode},
+            </if>
+
+            <if test="ctbCode != null  ">
+                #{ctbCode},
+            </if>
+            <if test="score != null  ">
+                #{score},
+            </if>
+            <if test="createDate != null  ">
+                #{createDate},
+            </if>
+            <if test="updateDate != null  ">
+                #{updateDate},
+            </if>
+        </trim>
+    </insert>
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="hxs.weixin.parent.entity.PRanking">
+        update p_ranking set
+        <trim suffixOverrides=",">
+            <if test="userId != null  ">
+                user_id=#{userId},
+            </if>
+            <if test="gradeCode != null  ">
+                grade_code=#{gradeCode},
+            </if>
+            <if test="subjectCode != null  ">
+                subject_code=#{subjectCode},
+            </if>
+
+            <if test="ctbCode != null  ">
+                ctb_code=#{ctbCode},
+            </if>
+            <if test="score != null  ">
+                score=#{score},
+            </if>
+            <if test="createDate != null  ">
+                create_date=#{createDate},
+            </if>
+            <if test="updateDate != null  ">
+                update_date=#{updateDate},
+            </if>
+        </trim>
+        where rank_id=#{rankId}
+    </update>
+    <!-- 根据id，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="hxs.weixin.parent.entity.PRanking">
+  update p_ranking set user_id=#{userId},grade_code=#{gradeCode},subject_code=#{subjectCode},ctb_code=#{ctbCode},score=#{score},create_date=#{createDate},update_date=#{updateDate} where rank_id=#{rankId}
+ </update>
+
+    <!-- 查询排行榜列表 -->
+    <select id="selectList" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List"/>
+        from p_ranking
+        <include refid="Example_Where_Clause"/>
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <!--分页查询榜之中的数据-->
+    <select id="selectListByPage" resultMap="RankModelMap" parameterType="Object">
+        SELECT ra.grade_code,ra.subject_code,ra.ctb_code,ra.score,
+        us.head_img_url,us.user_name,us.user_id
+        FROM p_ranking ra,p_user_base us
+        where ra.user_id = us.user_id
+        <if test="subjectCode != null">
+            and ra.subject_code=#{subjectCode}
+        </if>
+        <if test="gradeCode != null">
+            and ra.grade_code=#{gradeCode}
+        </if>
+        <if test="ctbCode != null">
+            and ra.ctb_code=#{ctbCode}
+        </if>
+        <if test="userId != null">
+            and ra.user_id=#{userId}
+        </if>
+        ORDER BY ra.score DESC
+
+    </select>
+    <!-- 查询排行榜列表 -->
+    <select id="selectOne" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List"/>
+        from p_ranking
+        <include refid="Example_Where_Clause"/>
+        LIMIT 1
+    </select>
+
+
+
+    <!-- 统计用户当前排名 执行前需要先执行 set_rank -->
+    <select id="countCurrentRank" resultType="long" parameterType="Object">
+        SELECT
+            rank,
+            user_id,
+            ctb_code,
+            subject_code,
+            grade_code
+        FROM
+            (
+                SELECT
+                    (@rowNum := @rowNum + 1) AS rank,
+                    user_id,
+                    grade_code,
+                    subject_code,
+                    ctb_code,
+                    score
+                FROM
+                    p_ranking
+                WHERE
+                    subject_code = #{subjectCode} and grade_code=#{gradeCode} and ctb_code = #{ctbCode}  order by
+                    score DESC
+            ) AS A,
+            (SELECT @rownum := 0) r
+        WHERE
+            subject_code = #{subjectCode}
+        AND grade_code = #{gradeCode}
+        AND  ctb_code = #{ctbCode}
+        AND user_id=#{userId}
+    </select>
+    <select id="set_rank" resultType="String">
+        set @rowNum=0;
+    </select>
+</mapper>

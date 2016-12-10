@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hxs.weixin.parent.dao.PTestProjectDao" >
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="hxs.weixin.parent.entity.PTestProject" >
+	<id column="project_id" property="projectId"/>
+	<result column="ctb_code" property="ctbCode"/>
+	<result column="subject_code" property="subjectCode"/>
+	<result column="logo_url" property="logoUrl"/>
+	<result column="project_name" property="projectName"/>
+	<result column="project_desc" property="projectDesc"/>
+	<result column="project_price" property="projectPrice"/>
+	<result column="imgs" property="imgs"/>
+	<result column="effective_time" property="effectiveTime"/>
+	<result column="book_type" property="bookType"/>
+	<result column="status" property="status"/>
+	<result column="create_time" property="createTime"/>
+	<result column="update_time" property="updateTime"/>
+</resultMap>
+       
+<!-- p_test_project table all fields -->
+<sql id="Base_Column_List" >
+	 project_id,subject_code,ctb_code,logo_url,project_name,project_desc,project_price,imgs,effective_time,book_type,status,create_time,update_time
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="projectId != null and projectId != ''" >
+	    and project_id =  #{projectId}
+	</if>
+	<if test="subjectCode != null and subjectCode != ''" >
+	    and subject_code =  #{subjectCode}
+	</if>
+	<if test="ctbCode != null and ctbCode != ''" >
+	    and ctb_code =  #{ctbCode}
+	</if>
+	<if test="projectName != null and projectName != ''" >
+	    and project_name =  #{projectName}
+	</if>
+	<if test="projectPrice != null and projectPrice != ''" >
+	    and project_price =  #{projectPrice}
+	</if>
+	<if test="status != null and status != ''" >
+		and status =  #{status}
+	</if>
+	<if test="bookType != null and bookType != ''" >
+		and book_type =  #{bookType}
+	</if>
+	<if test="effectiveTime != null and effectiveTime != ''" >
+		and effective_time =  #{effectiveTime}
+	</if>
+	<if test="createTime != null and createTime != ''" >
+		and create_time =  #{createTime}
+	</if>
+	<if test="updateTime != null and updateTime != ''" >
+		and update_time =  #{updateTime}
+	</if>
+</trim>
+</sql>
+   
+<!-- 根据id查询 考试帮手信息 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap">
+	select <include refid="Base_Column_List" /> 
+	 from p_test_project where project_id = #{projectId}
+</select>
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey">
+	delete from p_test_project where project_id = #{projectId}
+</delete>
+<!-- 插入记录 -->
+<insert id="insert" parameterType="hxs.weixin.parent.entity.PTestProject" useGeneratedKeys="true" keyProperty="projectId">
+  insert into p_test_project(subject_code,ctb_code,logo_url,project_name,project_desc,project_price,imgs,effective_time,book_type,status,create_time,update_time)
+ values(#{subjectCode},#{ctbCode},#{logoUrl},#{projectName},#{projectDesc},#{projectPrice},#{imgs},#{effectiveTime},#{bookType},#{status},now(),now())
+</insert>
+<!-- 插入记录 -->
+<insert id="insertSelective" parameterType="hxs.weixin.parent.entity.PTestProject"  useGeneratedKeys="true" keyProperty="projectId">
+  insert into p_test_project
+	<trim  prefix="(" suffix=")"  suffixOverrides="," >
+	<if test="subjectCode != null  ">
+		subject_code,
+	</if>
+	<if test="ctbCode != null  ">
+		ctb_code,
+	</if>
+	<if test="logoUrl != null  ">
+		logo_url,
+	</if>
+	<if test="projectName != null  ">
+		project_name,
+	</if>
+	<if test="projectDesc != null  ">
+		project_desc,
+	</if>
+	<if test="projectPrice != null  ">
+		project_price,
+	</if>
+	<if test="imgs != null  ">
+		imgs,
+	</if>
+	<if test="effectiveTime != null  ">
+		effective_time,
+	</if>
+	<if test="bookType != null  ">
+		book_type,
+	</if>
+	<if test="status != null  ">
+		status,
+	</if>
+		create_time,
+		update_time
+	</trim>
+	<trim  prefix="values (" suffix=")"  suffixOverrides="," >
+		<if test="subjectCode != null  ">
+			${subjectCode},
+		</if>
+		<if test="ctbCode != null  ">
+			${ctbCode},
+		</if>
+		<if test="logoUrl != null  ">
+			${logoUrl},
+		</if>
+		<if test="projectName != null  ">
+			${projectName},
+		</if>
+		<if test="projectDesc != null  ">
+			${projectDesc},
+		</if>
+		<if test="projectPrice != null  ">
+			${projectPrice},
+		</if>
+		<if test="imgs != null  ">
+			${imgs},
+		</if>
+		<if test="effectiveTime != null  ">
+			${effectiveTime},
+		</if>
+		<if test="bookType != null  ">
+			${bookType},
+		</if>
+		<if test="status != null  ">
+			${status},
+		</if>
+		now(),
+		now()
+	</trim>
+</insert>
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="hxs.weixin.parent.entity.PTestProject" >
+	update p_test_project set 
+	<trim  suffixOverrides="," >
+		<if test="subjectCode != null  ">
+			subject_code=${subjectCode},
+		</if>
+		<if test="ctbCode != null  ">
+			ctb_code=${ctbCode},
+		</if>
+		<if test="logoUrl != null  ">
+			logo_url=${logoUrl},
+		</if>
+		<if test="projectName != null  ">
+			project_name=${projectName},
+		</if>
+		<if test="projectDesc != null  ">
+			project_desc=${projectDesc},
+		</if>
+		<if test="projectPrice != null  ">
+			project_price=${projectPrice},
+		</if>
+		<if test="imgs != null  ">
+			imgs=${imgs},
+		</if>
+		<if test="effectiveTime != null  ">
+			effective_time=${effectiveTime},
+		</if>
+		<if test="status != null  ">
+			status=${status},
+		</if>
+		update_time = now()
+	</trim> where project_id = #{projectId}
+</update>
+
+<!-- 查询考试帮手信息列表 -->
+<select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from p_test_project 
+	<include refid="Example_Where_Clause"/>
+	<if test="orderByClause != null and orderByClause != ''" >
+       order by  ${orderByClause}
+    </if>
+</select>
+
+  	
+</mapper>   

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hxs.weixin.parent.dao.PRankingRelationDao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="hxs.weixin.parent.entity.PRankingRelation">
+        <result column="id" property="id"/>
+        <result column="grade_code" property="gradeCode"/>
+        <result column="subject_code" property="subjectCode"/>
+        <result column="book_type" property="bookType"/>
+        <result column="ctb_code" property="ctbCode"/>
+        <result column="stage_code" property="stageCode"/>
+    </resultMap>
+
+    <!-- p_ranking_relation table all fields -->
+    <sql id="Base_Column_List">
+	 id,grade_code,subject_code,book_type,ctb_code,stage_code
+</sql>
+
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="id != null and id != ''">
+                and id = #{id}
+            </if>
+            <if test="gradeCode != null and gradeCode != ''">
+                and grade_code = #{gradeCode}
+            </if>
+            <if test="subjectCode != null and subjectCode != ''">
+                and subject_code = #{subjectCode}
+            </if>
+            <if test="bookType != null and bookType != ''">
+                and book_type = #{bookType}
+            </if>
+            <if test="ctbCode != null and ctbCode != ''">
+                and ctb_code = #{ctbCode}
+            </if>
+            <if test="stageCode != null and stageCode != ''">
+                and stage_code = #{stageCode}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 根据id查询 根据学科、学年、教材版本、获取ctb_code -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from p_ranking_relation where id = #{id}
+    </select>
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	delete 	 from p_ranking_relation where id = #{id}
+</delete>
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="hxs.weixin.parent.entity.PRankingRelation">
+  insert into p_ranking_relation(id,grade_code,subject_code,book_type,ctb_code,stage_code)
+ values(#{id},#{gradeCode},#{subjectCode},#{bookType},#{ctbCode},#{stageCode})
+</insert>
+    <!-- 插入记录 -->
+    <insert id="insertSelective" parameterType="hxs.weixin.parent.entity.PRankingRelation">
+        insert into p_ranking_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  ">
+                id,
+            </if>
+            <if test="gradeCode != null  ">
+                grade_code,
+            </if>
+            <if test="subjectCode != null  ">
+                subject_code,
+            </if>
+            <if test="bookType != null  ">
+                book_type,
+            </if>
+            <if test="ctbCode != null  ">
+                ctb_code,
+            </if>
+            <if test="stageCode != null  ">
+                stage_code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null  ">
+                #{id},
+            </if>
+            <if test="gradeCode != null  ">
+                #{gradeCode},
+            </if>
+            <if test="subjectCode != null  ">
+                #{subjectCode},
+            </if>
+            <if test="bookType != null  ">
+                #{bookType},
+            </if>
+            <if test="ctbCode != null  ">
+                #{ctbCode},
+            </if>
+            <if test="stageCode != null  ">
+                #{stageCode},
+            </if>
+        </trim>
+    </insert>
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="hxs.weixin.parent.entity.PRankingRelation">
+        update p_ranking_relation set
+        <trim suffixOverrides=",">
+            <if test="gradeCode != null  ">
+                grade_code=#{gradeCode},
+            </if>
+            <if test="subjectCode != null  ">
+                subject_code=#{subjectCode},
+            </if>
+            <if test="bookType != null  ">
+                book_type=#{bookType},
+            </if>
+            <if test="ctbCode != null  ">
+                ctb_code=#{ctbCode},
+            </if>
+            <if test="stageCode != null  ">
+                stage_code=#{stageCode},
+            </if>
+        </trim>
+        where id=#{id}
+    </update>
+    <!-- 根据id，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="hxs.weixin.parent.entity.PRankingRelation">
+  update p_ranking_relation set grade_code=#{gradeCode},subject_code=#{subjectCode},book_type=#{bookType},ctb_code=#{ctbCode},stage_code=#{stageCode} where id=#{id}
+ </update>
+
+    <!-- 查询根据学科、学年、教材版本、获取ctb_code列表 -->
+    <select id="selectList" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List"/>
+        from p_ranking_relation
+        <include refid="Example_Where_Clause"/>
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+    </select>
+
+    <select id="selectOne" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List"/>
+        from p_ranking_relation
+        <include refid="Example_Where_Clause"/>
+        LIMIT 1
+    </select>
+
+</mapper>   

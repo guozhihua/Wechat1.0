@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hxs.weixin.parent.dao.VoucherDao" >
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="hxs.weixin.parent.entity.Voucher" >
+	<result column="voucher_id" property="voucherId"/>
+	<result column="effective_day" property="effectiveDay"/>
+	<result column="descinfo" property="descinfo"/>
+	<result column="create_time" property="creatTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+	<result column="amout" property="amount"/>
+	<result column="isdel" property="isDel"/>
+</resultMap>
+       
+<!-- p_voucher table all fields -->
+<sql id="Base_Column_List" >
+	 voucher_id,effective_day,descinfo,create_time,amout,isdel
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="voucherId != null and voucherId != ''" >
+	    and voucher_id =  #{voucherId}
+	</if>
+	<if test="effectiveDay != null and effectiveDay != ''" >
+	    and effective_day =  #{effectiveDay}
+	</if>
+	<if test="descinfo != null and descinfo != ''" >
+	    and descinfo =  #{descinfo}
+	</if>
+	<if test="createTime != null and createTime != ''" >
+	    and create_time =  #{createTime}
+	</if>
+	<if test="amount != null and amount != ''" >
+	    and amout =  #{amount}
+	</if>
+	<if test="isDel != null and isDel != ''" >
+		and isdel =  #{isDel}
+	</if>
+
+</trim>
+</sql>
+   
+<!-- 根据id查询 代金券表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.String">
+	select <include refid="Base_Column_List" /> 
+	 from p_voucher where voucher_id = #{voucherId}
+</select>
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	delete 	 from p_voucher where voucher_id = #{voucherId}
+</delete>
+<!-- 插入记录 -->
+<insert id="insert" parameterType="hxs.weixin.parent.entity.Voucher" useGeneratedKeys="true" keyProperty="voucherId">
+  insert into p_voucher(voucher_id,effective_day,descinfo,create_time,amout)
+ values(#{voucherId},#{effectiveDay},#{descinfo},now(),#{amount})
+</insert>
+<!-- 插入记录 -->
+<insert id="insertSelective" parameterType="hxs.weixin.parent.entity.Voucher"  useGeneratedKeys="true" keyProperty="voucherId">
+  insert into p_voucher
+	<trim  prefix="(" suffix=")"  suffixOverrides="," >
+	<if test="voucherId != null  ">
+		voucher_id,
+	</if>
+	<if test="effectiveDay != null  ">
+		effective_day,
+	</if>
+	<if test="descinfo != null  ">
+		descinfo,
+	</if>
+	<if test="createTime != null  ">
+		create_time,
+	</if>
+	<if test="amount != null  ">
+		amout,
+	</if>
+
+	</trim>
+	<trim  prefix="values (" suffix=")"  suffixOverrides="," >
+	<if test="voucherId != null  ">
+		#{voucherId},
+	</if>
+	<if test="effectiveDay != null  ">
+		#{effectiveDay},
+	</if>
+	<if test="descinfo != null  ">
+		#{descinfo},
+	</if>
+	<if test="createTime != null  ">
+		now(),
+	</if>
+	<if test="amount != null  ">
+		#{amount},
+	</if>
+
+	</trim>
+</insert>
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="hxs.weixin.parent.entity.Voucher" >
+	update p_voucher set 
+	<trim  suffixOverrides="," >
+	<if test="effectiveDay != null  ">
+		effective_day=#{effectiveDay},
+	</if>
+	<if test="descinfo != null  ">
+		descinfo=#{descinfo},
+	</if>
+	<if test="createTime != null  ">
+		create_time=#{createTime},
+	</if>
+	<if test="amount != null  ">
+		amout=#{amount},
+	</if>
+		<if test="isDel != null and isDel != ''" >
+			 isdel =  #{isDel},
+		</if>
+
+	</trim> where voucher_id=#{voucherId}
+</update>
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="hxs.weixin.parent.entity.Voucher" >
+  update p_voucher set effective_day=#{effectiveDay},descinfo=#{descinfo},create_time=now(),amout=#{amount},isdel=#{isDel} where voucher_id=#{voucherId}
+ </update>
+  	
+<!-- 查询代金券表列表 -->
+<select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from p_voucher 
+	<include refid="Example_Where_Clause"/>
+	<if test="orderByClause != null and orderByClause != ''" >
+       order by  ${orderByClause}
+    </if>
+</select>
+	<!-- 查询代金券表列表 -->
+	<select id="selectOne" resultMap="BaseResultMap"  parameterType="Object">
+		select
+		<include refid="Base_Column_List"/>
+		from p_voucher
+		<include refid="Example_Where_Clause"/>
+		 limit 1
+	</select>
+
+  	
+</mapper>   

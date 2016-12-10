@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hxs.weixin.parent.dao.PUserVoucherDao" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="hxs.weixin.parent.entity.PUserVoucher" >
+	<result column="id" property="id"/>
+	<result column="user_id" property="userId"/>
+	<result column="voucher_id" property="voucherId"/>
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+	<result column="voucher_way" property="voucherWay"/>
+	<result column="isUsed" property="isUsed"/>
+	<result column="expire_time" property="expireTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+	<result column="out_trade_no" property="outTradeNo" ></result>
+</resultMap>
+       
+<!-- p_user_voucher table all fields -->
+<sql id="Base_Column_List" >
+	 id,user_id,voucher_id,create_time,voucher_way,expire_time,isUsed
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="userId != null and userId != ''" >
+	    and user_id =  #{userId}
+	</if>
+	<if test="voucherId != null and voucherId != ''" >
+	    and voucher_id =  #{voucherId}
+	</if>
+	<if test="createTime != null and createTime != ''" >
+	    and create_time =  #{createTime}
+	</if>
+	<if test="voucherWay != null and voucherWay != ''" >
+	    and voucher_way =  #{voucherWay}
+	</if>
+	<if test="expireTime != null and expireTime != ''" >
+	and expire_time =  #{expireTime}
+</if>
+	<if test="isUsed != null and isUsed != ''" >
+		and isUsed =  #{isUsed}
+	</if>
+	<if test="outTradeNo != null and outTradeNo != ''" >
+		and out_trade_no =  #{outTradeNo}
+	</if>
+</trim>
+</sql>
+   
+<!-- 根据id查询 用户代金券表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.String">
+	select <include refid="Base_Column_List" /> 
+	 from p_user_voucher where id = #{id}
+</select>
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	delete 	 from p_user_voucher where id = #{id}
+</delete>
+<!-- 插入记录 -->
+<insert id="insert" parameterType="hxs.weixin.parent.entity.PUserVoucher" >
+<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+	SELECT UUID()
+  </selectKey>
+  insert into p_user_voucher(id,user_id,voucher_id,create_time,voucher_way,expire_time,out_trade_no)
+ values(#{id},#{userId},#{voucherId},now(),#{voucherWay},#{expireTime},#{outTradeNo})
+</insert>
+<!-- 插入记录 -->
+<insert id="insertSelective" parameterType="hxs.weixin.parent.entity.PUserVoucher" >
+<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="id">
+	SELECT UUID()
+  </selectKey>
+  insert into p_user_voucher
+	<trim  prefix="(" suffix=")"  suffixOverrides="," >
+	<if test="id != null  ">
+		id,
+	</if>
+	<if test="userId != null  ">
+		user_id,
+	</if>
+	<if test="voucherId != null  ">
+		voucher_id,
+	</if>
+	<if test="createTime != null  ">
+		create_time,
+	</if>
+	<if test="voucherWay != null  ">
+		voucher_way,
+	</if>
+	<if test="expireTime != null  ">
+		expire_time,
+	</if>
+		<if test="isUsed != null  ">
+			isUsed,
+		</if>
+		<if test="outTradeNo != null  ">
+			out_trade_no,
+		</if>
+	</trim>
+	<trim  prefix="values (" suffix=")"  suffixOverrides="," >
+	<if test="id != null  ">
+		#{id},
+	</if>
+	<if test="userId != null  ">
+		#{userId},
+	</if>
+	<if test="voucherId != null  ">
+		#{voucherId},
+	</if>
+	<if test="createTime != null  ">
+		now(),
+	</if>
+	<if test="voucherWay != null  ">
+		#{voucherWay},
+	</if>
+	<if test="expireTime != null  ">
+		#{expireTime},
+	</if>
+		<if test="isUsed != null  ">
+			#{isUsed},
+		</if>
+		<if test="outTradeNo != null  ">
+			#{outTradeNo},
+		</if>
+	</trim>
+</insert>
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="hxs.weixin.parent.entity.PUserVoucher" >
+	update p_user_voucher set 
+	<trim  suffixOverrides="," >
+	<if test="userId != null  ">
+		user_id=#{userId},
+	</if>
+	<if test="voucherId != null  ">
+		voucher_id=#{voucherId},
+	</if>
+	<if test="createTime != null  ">
+		create_time=#{createTime},
+	</if>
+	<if test="voucherWay != null  ">
+		voucher_way=#{voucherWay},
+	</if>
+	<if test="expireTime != null  ">
+		expire_time=#{expireTime},
+	</if>
+		<if test="isUsed != null  ">
+			isUsed=	#{isUsed},
+		</if>
+	</trim> where id=#{id}
+</update>
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="hxs.weixin.parent.entity.PUserVoucher" >
+  update p_user_voucher set user_id=#{userId},voucher_id=#{voucherId},create_time=now(),voucher_way=#{voucherWay},expire_time=#{expireTime},isUsed=#{isUsed} where id=#{id}
+ </update>
+  	
+<!-- 查询用户代金券表列表 -->
+<select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from p_user_voucher 
+	<include refid="Example_Where_Clause"/>
+	<if test="orderByClause != null and orderByClause != ''" >
+       order by  ${orderByClause}
+    </if>
+</select>
+	<select id="selectVoucherUserCount" resultType="int" parameterType="Object">
+		select
+		count(*)
+		from p_user_voucher
+		<include refid="Example_Where_Clause"/>
+	</select>
+
+
+	<select id="getUserVoucherListStatics" parameterType="Object" resultType="HashMap">
+		SELECT COUNT(*)  as countNum ,user_id,voucher_id from p_user_voucher
+		WHERE  user_id =  #{userId} and  expire_time <![CDATA[>]]>  #{endTime} and isUsed =  #{isUsed}  GROUP BY user_id ,voucher_id;
+	</select>
+
+	<select id="selectByUserIdAndVoucherId" resultMap="BaseResultMap" parameterType="Object">
+		select
+		<include refid="Base_Column_List"/>
+		from p_user_voucher
+		WHERE 1=1
+		<if test="voucherId != null">
+			and voucher_id=#{voucherId}
+		</if>
+		<if test="userId != null">
+			and user_id=#{userId}
+		</if>
+		<if test="isUsed != null">
+			and isUsed=#{isUsed}
+		</if>
+		ORDER BY expire_time ASC
+		LIMIT 1
+	</select>
+
+	<insert id="insertInBatch" parameterType="ArrayList">
+		insert into p_user_voucher(id,user_id,voucher_id,create_time,voucher_way,expire_time,isUsed)
+		values
+		<foreach collection="list" item="obj" index="index" separator="," >
+			(uuid(),#{obj.userId},#{obj.voucherId},now(),#{obj.voucherWay},#{obj.expireTime},0)
+		</foreach>
+	</insert>
+
+	<!-- 查询用户代金券表列表 -->
+	<select id="get" resultMap="BaseResultMap"   parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List"/>
+		from p_user_voucher
+		where id =#{id}
+	</select>
+
+</mapper>   
