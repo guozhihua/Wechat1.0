@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
  * Created by :Guozhihua
  * Date： 2017/3/2.
  */
+
 public class ResourceTest {
 
     /**
