@@ -1,4 +1,4 @@
-package hxs.weixin.parent.test;
+package hxs.weixin.parent.test.other;
 
 import hxs.weixin.parent.entity.PUserVoucher;
 import hxs.weixin.parent.entity.User;
@@ -6,6 +6,7 @@ import hxs.weixin.parent.entity.Voucher;
 import hxs.weixin.parent.service.PUserVoucherService;
 import hxs.weixin.parent.service.UserService;
 import hxs.weixin.parent.sys.enums.VoucherWayEnum;
+import hxs.weixin.parent.test.BaseTest;
 import hxs.weixin.parent.util.DateUtil;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

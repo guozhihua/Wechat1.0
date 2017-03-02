@@ -1,5 +1,6 @@
-package hxs.weixin.parent.test;
+package hxs.weixin.parent.test.redis;
 
+import hxs.weixin.parent.test.BaseTest;
 import hxs.weixin.parent.util.redis.RedisClientTemplate;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

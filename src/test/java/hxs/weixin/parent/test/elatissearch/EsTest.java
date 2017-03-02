@@ -1,4 +1,4 @@
-package hxs.weixin.parent.test;
+package hxs.weixin.parent.test.elatissearch;
 
 /**
  * Created by :Guozhihua
