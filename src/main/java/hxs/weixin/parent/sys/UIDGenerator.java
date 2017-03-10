@@ -1,9 +1,8 @@
 package hxs.weixin.parent.sys;
 
-import com.eeduspace.uuims.comm.util.base.FormatUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 import java.util.UUID;
 /**
  * Created by :Guozhihua
@@ -67,7 +66,8 @@ import java.util.UUID;
 
         public static String generateBizUID(long sequence, String bizFlag, Date date) {
             if(bizFlag != null && bizFlag.length() == 2) {
-                String dateStr = FormatUtils.formatDate(date, "yyMMdd", (TimeZone)null);
+                SimpleDateFormat sd = new SimpleDateFormat("yyMMdd");
+                String dateStr =sd.format(new Date());
                 return bizFlag + "A" + dateStr + confuse(sequence, DEFAULT_CONFOUNDER);
             } else {
                 throw new RuntimeException("bizFlag must be 2 length");

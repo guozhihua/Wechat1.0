@@ -331,11 +331,11 @@
 
 
 		<!-- 引用uuims 开始 -->
-		<dependency>
-			<groupId>com.eeduspace</groupId>
-			<artifactId>uuims-comm-util</artifactId>
-			<version>1.0-SNAPSHOT</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>com.eeduspace</groupId>-->
+			<!--<artifactId>uuims-comm-util</artifactId>-->
+			<!--<version>1.0-SNAPSHOT</version>-->
+		<!--</dependency>-->
 		<!-- 引用uuims 结束 -->
 
 		<!-- redis 开始 -->
