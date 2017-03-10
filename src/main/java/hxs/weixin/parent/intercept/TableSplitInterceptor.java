@@ -1,9 +1,9 @@
 package hxs.weixin.parent.intercept;
 
-import com.wechat.plugin.ContextHelper;
-import com.wechat.plugin.Strategy;
-import com.wechat.plugin.StrategyManager;
-import com.wechat.plugin.TableSplit;
+import hxs.weixin.parent.plugins.ContextHelper;
+import hxs.weixin.parent.plugins.Strategy;
+import hxs.weixin.parent.plugins.StrategyManager;
+import hxs.weixin.parent.plugins.TableSplit;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.logging.Log;
