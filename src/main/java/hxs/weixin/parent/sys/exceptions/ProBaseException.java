@@ -5,8 +5,6 @@ package hxs.weixin.parent.sys.exceptions;
  * Date： 2016/11/25.
  */
 public class ProBaseException extends  Exception{
-    //service 层业务逻辑异常
-    private  static final  String SERVICE_EXP_CODE_SP="HSX_WX_10001";
 
     private String code ;
     public ProBaseException() {

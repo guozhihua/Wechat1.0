@@ -268,7 +268,7 @@ public class WeixinPayController {
 	}
 	
 	/**
-	 * 微信支付回调
+	 * 微信支付回调(回复微信服务器防止多次回调)
 	 * @param request
 	 * @return
 	 */
@@ -294,6 +294,8 @@ public class WeixinPayController {
 			log.error("微信支付回调 notify error",ex);
 			return;
 		}
+		String r = "<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>";
+		HttpServletStream.putString(r, response);
 	}
 	
 	/**
