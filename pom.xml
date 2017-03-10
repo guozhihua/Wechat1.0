@@ -446,6 +446,19 @@
 		  <artifactId>activemq-pool</artifactId>
 		  <version>5.12.1</version>
 	  </dependency>
+	  <!--图片压缩的包-->
+	  <dependency>
+		  <groupId>net.coobird</groupId>
+		  <artifactId>thumbnailator</artifactId>
+		  <version>0.4.8</version>
+	  </dependency>
+	  <!--jsoup  html 转换成 Document-->
+	  <dependency>
+		  <groupId>org.jsoup</groupId>
+		  <artifactId>jsoup</artifactId>
+		  <version>1.8.3</version>
+	  </dependency>
+
   </dependencies>
   <build>
     <finalName>hxs_personaltutor_wechat</finalName>

@@ -1,22 +1,26 @@
 package hxs.weixin.parent.controller;
 
-import hxs.weixin.parent.entity.vo.UserVoucherVo;
 import hxs.weixin.parent.responsecode.BaseResponse;
 import hxs.weixin.parent.responsecode.ResponseCode;
 import hxs.weixin.parent.service.VoucherService;
 import hxs.weixin.parent.sys.MethodLog;
 import hxs.weixin.parent.sys.enums.VoucherWayEnum;
-import hxs.weixin.parent.sys.exceptions.ProBaseException;
+import net.coobird.thumbnailator.Thumbnails;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 用户优惠券controller
@@ -101,11 +105,52 @@ private static Logger logger = Logger.getLogger(UserVoucherController.class);
 
 
 
-    private VoucherWayEnum chechVoucherWayEnum(String way){
-        VoucherWayEnum voucherWayEnum=  VoucherWayEnum.getEnumByCode(way);
-        return voucherWayEnum;
+    /**
+     * 产品图片上传
+     * @param multipartFile
+     * @return
+     */
+    @RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
+    @ResponseBody
+    public BaseResponse upload(@RequestParam(value = "file") MultipartFile multipartFile) {
+        BaseResponse baseResponse = new BaseResponse();
+        if (multipartFile == null) {
+            return BaseResponse.setResponse(baseResponse, ResponseCode.PARAMETER_MISS.code, "multipartFile");
+        }
+        try {
+            String baseUrl = "/opt/statocs/";
+            File file = new File(baseUrl);
+            if (!file.exists()&&!file.isDirectory()) {
+                file.mkdirs();
+            }
+            String name = multipartFile.getOriginalFilename();
+            name = UUID.randomUUID().toString().replace("-","") + name.substring(name.lastIndexOf(".")).toLowerCase();
+            String path = baseUrl + name;
+            file = new File(path);
+            try {
+                // 先尝试压缩并保存图片
+                Thumbnails.of(multipartFile.getInputStream()).scale(0.7f).outputQuality(0.35f).toFile(file);
+            } catch (IOException e) {
+                try {
+                    multipartFile.transferTo(file);
+                } catch (IOException e1) {
+                    logger.error("file upload error");
+                    baseResponse.isFail(ResponseCode.SERVICE_ERROR,"图片上传失败");
+                    return baseResponse;
+                }
+            }
+            Map<String, Object> result = new HashMap();
+            result.put("path",   "/statics/" + name);
+            baseResponse.setResult(result);
+            baseResponse.setCode(ResponseCode.SUCCESS.code);
+            logger.info(" admin fileUpload  response :" + super.gson.toJson(baseResponse));
+            return baseResponse;
+        } catch (Exception e) {
+            logger.error("admin fileUpload error", e);
+            baseResponse.setCode(ResponseCode.SERVICE_ERROR.code);
+            return baseResponse;
+        }
     }
-
 
 
 
