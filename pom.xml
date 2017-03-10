@@ -311,7 +311,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
+	  <dependency>
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-jms</artifactId>
+		  <version>${spring.version}</version>
+	  </dependency>
 		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -421,6 +425,7 @@
 		  <artifactId>java-property-utils</artifactId>
 		  <version>1.9.1</version>
 	  </dependency>
+
 	  	  <dependency>
 		  <groupId>org.ebaysf.web</groupId>
 		  <artifactId>cors-filter</artifactId>
@@ -431,7 +436,16 @@
 		  <artifactId>fastjson</artifactId>
 		  <version>1.2.21</version>
 	  </dependency>
-
+	  <dependency>
+		  <groupId>org.apache.activemq</groupId>
+		  <artifactId>activemq-core</artifactId>
+		  <version>5.7.0</version>
+	  </dependency>
+	  <dependency>
+		  <groupId>org.apache.activemq</groupId>
+		  <artifactId>activemq-pool</artifactId>
+		  <version>5.12.1</version>
+	  </dependency>
   </dependencies>
   <build>
     <finalName>hxs_personaltutor_wechat</finalName>
