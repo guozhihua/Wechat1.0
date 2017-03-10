@@ -2,22 +2,13 @@ package hxs.weixin.parent.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import hxs.weixin.parent.dao.BaseDao;
-import hxs.weixin.parent.entity.PRanking;
 import hxs.weixin.parent.entity.SuperVO;
-import hxs.weixin.parent.entity.Voucher;
 import hxs.weixin.parent.service.BaseService;
-import hxs.weixin.parent.sys.CacheConfig;
-import hxs.weixin.parent.sys.CacheKey;
-import hxs.weixin.parent.sys.MyEhcache;
-import hxs.weixin.parent.util.CacheManageUtils;
 import hxs.weixin.parent.util.redis.RedisClientTemplate;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

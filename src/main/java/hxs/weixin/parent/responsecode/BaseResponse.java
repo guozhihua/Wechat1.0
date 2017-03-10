@@ -1,7 +1,7 @@
 package hxs.weixin.parent.responsecode;
 
 import hxs.weixin.parent.sys.UIDGenerator;
-import hxs.weixin.parent.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 异常响应

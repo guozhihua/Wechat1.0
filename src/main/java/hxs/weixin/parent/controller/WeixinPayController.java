@@ -10,9 +10,6 @@ import hxs.weixin.parent.entity.*;
 import hxs.weixin.parent.responsecode.BaseResponse;
 import hxs.weixin.parent.responsecode.ResponseCode;
 import hxs.weixin.parent.service.OrderService;
-import hxs.weixin.parent.service.PTestProjectService;
-import hxs.weixin.parent.service.PUserVoucherService;
-import hxs.weixin.parent.service.ProjectService;
 import hxs.weixin.parent.service.WeixinPayService;
 import hxs.weixin.parent.sys.MethodLog;
 import hxs.weixin.parent.util.DataMap;
@@ -42,13 +39,7 @@ public class WeixinPayController {
 	private OrderService orderService;
 	@Autowired
 	private WeixinPayService weixinPayService;
-	@Autowired
-	private ProjectService projectService;
-	@Autowired
-	private PTestProjectService pTestProjectService;
-	@Autowired
-	private PUserVoucherService pUserVoucherService;
-	
+
 	/**
 	 * 支付购买产品
 	 * @param data
@@ -108,29 +99,29 @@ public class WeixinPayController {
 				Long endTime = System.currentTimeMillis();
 				Integer effectiveTime = 0;
 				String buyTestStr = null;
-				if (buyType.equals("1")) {
-					order.setProjectName(paramMap.get("projectName").toString()+" - 作业辅导");
-					buyTestStr = "作业辅导";
-					Project p = this.projectService.selectByPrimaryKey(Integer.parseInt(paramMap.get("projectId").toString()));
-					effectiveTime = p.getEffectiveTime();
-				} else {
-					buyTestStr = "考试帮手";
-					PTestProject p = this.pTestProjectService.queryById(paramMap.get("projectId").toString());
-					effectiveTime = p.getEffectiveTime();
-				}
+//				if (buyType.equals("1")) {
+//					order.setProjectName(paramMap.get("projectName").toString()+" - 作业辅导");
+//					buyTestStr = "作业辅导";
+//					Project p = this.projectService.selectByPrimaryKey(Integer.parseInt(paramMap.get("projectId").toString()));
+//					effectiveTime = p.getEffectiveTime();
+//				} else {
+//					buyTestStr = "考试帮手";
+//					PTestProject p = this.pTestProjectService.queryById(paramMap.get("projectId").toString());
+//					effectiveTime = p.getEffectiveTime();
+//				}
 				endTime += effectiveTime * 24 * 60 * 60 *1000l;
 				order.setEndTime(new Date(endTime));
 				order.setCouponAmout(paramMap.get("amount").toString());//代金券金额
 				order.setCashAmout(totalAmout);
-				if(Integer.parseInt(paramMap.get("amount").toString())>0){
-					String puserVoucherId =pUserVoucherService.updateVoucherByUserIdAndAmount(paramMap.get("userId").toString(), Integer.parseInt(paramMap.get("amount").toString()));
-					if(puserVoucherId!=null){
-						order.setPuserVoucherId(puserVoucherId);
-					}else{
-						baseResponse.isFail(ResponseCode.PARAMETER_INVALID,"下单失败，没有对用的代金券。");
-						return  baseResponse;
-					}
-				}
+//				if(Integer.parseInt(paramMap.get("amount").toString())>0){
+//					String puserVoucherId =pUserVoucherService.updateVoucherByUserIdAndAmount(paramMap.get("userId").toString(), Integer.parseInt(paramMap.get("amount").toString()));
+//					if(puserVoucherId!=null){
+//						order.setPuserVoucherId(puserVoucherId);
+//					}else{
+//						baseResponse.isFail(ResponseCode.PARAMETER_INVALID,"下单失败，没有对用的代金券。");
+//						return  baseResponse;
+//					}
+//				}
 				orderService.insertSelective(order);
 				UnifiedOrder UnifiedOrder = new UnifiedOrder();
 				PropertiesUtil properties = new PropertiesUtil(PathUtil.getClassPath() + "config/weixin.properties");
@@ -242,26 +233,26 @@ public class WeixinPayController {
 				order.setBuyType(Integer.parseInt(buyType));
 				Long endTime = System.currentTimeMillis();
 				Integer effectiveTime = 0;
-				if (buyType.equals("1")) {
-					Project p = this.projectService.selectByPrimaryKey(Integer.parseInt(paramMap.get("projectId").toString()));
-					effectiveTime = p.getEffectiveTime();
-				} else {
-					PTestProject p = this.pTestProjectService.queryById(paramMap.get("projectId").toString());
-					effectiveTime = p.getEffectiveTime();
-				}
+//				if (buyType.equals("1")) {
+//					Project p = this.projectService.selectByPrimaryKey(Integer.parseInt(paramMap.get("projectId").toString()));
+//					effectiveTime = p.getEffectiveTime();
+//				} else {
+//					PTestProject p = this.pTestProjectService.queryById(paramMap.get("projectId").toString());
+//					effectiveTime = p.getEffectiveTime();
+//				}
 				endTime += effectiveTime * 24 * 60 * 60 *1000l;
 				order.setEndTime(new Date(endTime));
 				order.setCouponAmout(paramMap.get("amount").toString());//代金券金额
 				order.setCashAmout(totalAmout);
-				if(Integer.parseInt(paramMap.get("amount").toString())>0){
-					String puserVoucherId =pUserVoucherService.updateVUserVoucherInner(paramMap.get("userId").toString(), Integer.parseInt(paramMap.get("amount").toString()));
-					if(puserVoucherId!=null){
-						order.setPuserVoucherId(puserVoucherId);
-					}else{
-						baseResponse.isFail(ResponseCode.PARAMETER_INVALID,"下单失败，没有对用的代金券。");
-						return  baseResponse;
-					}
-				}
+//				if(Integer.parseInt(paramMap.get("amount").toString())>0){
+//					String puserVoucherId =pUserVoucherService.updateVUserVoucherInner(paramMap.get("userId").toString(), Integer.parseInt(paramMap.get("amount").toString()));
+//					if(puserVoucherId!=null){
+//						order.setPuserVoucherId(puserVoucherId);
+//					}else{
+//						baseResponse.isFail(ResponseCode.PARAMETER_INVALID,"下单失败，没有对用的代金券。");
+//						return  baseResponse;
+//					}
+//				}
 				orderService.insertSelective(order);
 				baseResponse.setResult(order.getOutTradeNo());
 			}else{

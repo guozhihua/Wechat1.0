@@ -1,10 +1,8 @@
 package hxs.weixin.parent.controller;
 
-import hxs.weixin.parent.entity.PUserVoucher;
 import hxs.weixin.parent.entity.vo.UserVoucherVo;
 import hxs.weixin.parent.responsecode.BaseResponse;
 import hxs.weixin.parent.responsecode.ResponseCode;
-import hxs.weixin.parent.service.PUserVoucherService;
 import hxs.weixin.parent.service.VoucherService;
 import hxs.weixin.parent.sys.MethodLog;
 import hxs.weixin.parent.sys.enums.VoucherWayEnum;
@@ -30,8 +28,7 @@ import java.util.Map;
 public class UserVoucherController extends  ABaseController {
 private static Logger logger = Logger.getLogger(UserVoucherController.class);
 
-    @Autowired
-    private PUserVoucherService pUserVoucherService;
+
 
     @Autowired
     private VoucherService voucherService;
@@ -48,45 +45,8 @@ private static Logger logger = Logger.getLogger(UserVoucherController.class);
                                         @RequestParam(required=false) String requestId){
         BaseResponse baseResponse = new BaseResponse(requestId);
 
-        PUserVoucher userVoucher = new PUserVoucher();
-        userVoucher.setVoucherWay(voucherWay);
-        VoucherWayEnum voucherWayEnum=VoucherWayEnum.getEnumByCode(userVoucher.getVoucherWay());
-      /*  Map<String,Object> obj=new HashMap<>();
-        obj.put("amount",voucherWayEnum.getWayInfo());
-        Voucher voucher = voucherService.queryOne(obj);
-        if(voucher==null){
-            baseResponse.isFail(ResponseCode.PARAMETER_INVALID,"voucherWay is error!");
-            return  baseResponse;
-        }*/
-//        userVoucher.setVoucherId(voucher.getVoucherId());
-        userVoucher.setUserId(userId);
-        try {
-            if(userVoucher!=null){
-                if(userVoucher.getUserId()==null){
-                    baseResponse.isFail(ResponseCode.PARAMETER_MISS,"userId is miss!");
-                }else{
 
-                    if(voucherWayEnum==null){
-                        baseResponse.isFail(ResponseCode.PARAMETER_INVALID,"wayType is error，system is not found");
-                        return baseResponse;
-                    }
-                    userVoucher.setOutTradeNo(outTradeNo);
-                   Map<String,Object> result =pUserVoucherService.insertUserVoucher(userVoucher,voucherWayEnum);
-                   baseResponse.setResult(result);
-                }
-            }else{
-               baseResponse.isFail(ResponseCode.PARAMETER_MISS,null);
-            }
-        }catch (ProBaseException pro){
-            baseResponse.isFail(ResponseCode.FX_FAIL,pro.getMessage());
-            logger.error("分享获取代金券失败",pro);
-            return  baseResponse;
-        }catch (Exception e) {
-            logger.error("分享获取代金券失败:", e);
-            baseResponse.isFail(ResponseCode.FX_FAIL,null);
-           return baseResponse;
-        }
-        logger.info("save user voucehr  response :"+super.gson.toJson(baseResponse));
+
         return baseResponse;
     }
 
@@ -108,13 +68,7 @@ private static Logger logger = Logger.getLogger(UserVoucherController.class);
                baseResponse.isFail(ResponseCode.PARAMETER_INVALID,"wayType is error");
                return baseResponse;
            }
-           int num =pUserVoucherService.checkUserVoucher(param);
-           if(num==0){
-               baseResponse.setMessage("success");
-           }else{
-               baseResponse.isFail(ResponseCode.FX_FAIL,"该券只能获取一次");
-               return baseResponse;
-           }
+
        }catch (Exception ex){
            logger.error("分享获取代金券失败:", ex);
            baseResponse.isFail(ResponseCode.SERVICE_ERROR,null);
@@ -136,12 +90,6 @@ private static Logger logger = Logger.getLogger(UserVoucherController.class);
                 baseResponse.isFail(ResponseCode.PARAMETER_MISS,"userId is miss");
                 return baseResponse;
             }
-            Map<String,Object> param=new HashMap<>();
-            param.put("userId",userId);
-            param.put("isUsed",0);
-            param.put("endTime",new Date());
-            List<UserVoucherVo> userVoucherVos = pUserVoucherService.getUserVoucherCount(param);
-            baseResponse.setResult(userVoucherVos);
         }catch (Exception ex){
             logger.error("分享获取代金券失败:", ex);
             baseResponse.isFail(ResponseCode.SERVICE_ERROR,null);

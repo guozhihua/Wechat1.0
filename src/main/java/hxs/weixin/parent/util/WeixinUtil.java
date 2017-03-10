@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import hxs.weixin.parent.entity.vo.TicketVo;
 import hxs.weixin.parent.entity.vo.TokenVo;
 import hxs.weixin.parent.util.redis.RedisClientTemplate;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import javax.net.ssl.HttpsURLConnection;
