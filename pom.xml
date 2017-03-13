@@ -3,9 +3,13 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.yj</groupId>
   <artifactId>hxs_personaltutor_wechat</artifactId>
-  <packaging>war</packaging>
+  <packaging>pom</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>hxs-wechat-parent Maven Webapp</name>
+	<modules>
+		<module>jdbc</module>
+		<module>web</module>
+	</modules>
+	<name>hxs-wechat-parent Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

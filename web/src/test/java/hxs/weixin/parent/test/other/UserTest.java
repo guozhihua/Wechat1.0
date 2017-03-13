@@ -5,12 +5,6 @@ import hxs.weixin.parent.service.UserService;
 import hxs.weixin.parent.sys.enums.VoucherWayEnum;
 import hxs.weixin.parent.test.BaseTest;
 import hxs.weixin.parent.util.DateUtil;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by :Guozhihua
