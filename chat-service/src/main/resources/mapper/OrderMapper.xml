@@ -31,7 +31,7 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
-  <select id="getByUserId" resultMap="BaseResultMap" parameterType="Order">
+  <select id="getByUserId" resultMap="BaseResultMap" parameterType="com.weixin.services.dao.OrderMapper">
   	select <include refid="Base_Column_List" /> from p_order
   	<where>
   		1 = 1
@@ -56,7 +56,7 @@
     delete from p_order
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="Order">
+  <insert id="insert" parameterType="com.weixin.entity.chat.Order">
     insert into p_order (id, project_id, buy_type, out_trade_no,
       user_unique_id, puserVoucherId,state, order_date, 
       description, cash_amout, coupon_amout, 
@@ -68,7 +68,7 @@
       #{totalAmout,jdbcType=VARCHAR}, #{serialNumber,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{endTime,jdbcType=TIMESTAMP},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="Order">
+  <insert id="insertSelective" parameterType="com.weixin.entity.chat.Order">
     insert into p_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -177,7 +177,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="Order">
+  <update id="updateByPrimaryKeySelective" parameterType="com.weixin.entity.chat.Order">
     update p_order
     <set>
       <if test="projectId != null">
@@ -231,7 +231,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="Order">
+  <update id="updateByPrimaryKey" parameterType="com.weixin.entity.chat.Order">
     update p_order
     set project_id = #{projectId,jdbcType=VARCHAR},
       buy_type = #{buyType,jdbcType=INTEGER},
@@ -252,7 +252,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <update id="updateByOrderNo" parameterType="Order">
+  <update id="updateByOrderNo" parameterType="com.weixin.entity.chat.Order">
   update p_order set state = #{state,jdbcType=VARCHAR} where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
 </update>
 

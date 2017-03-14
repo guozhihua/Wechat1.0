@@ -55,12 +55,12 @@ where 1=1
 	delete 	 from p_voucher where voucher_id = #{voucherId}
 </delete>
 <!-- 插入记录 -->
-<insert id="insert" parameterType="Voucher" useGeneratedKeys="true" keyProperty="voucherId">
+<insert id="insert" parameterType="com.weixin.entity.chat.Voucher" useGeneratedKeys="true" keyProperty="voucherId">
   insert into p_voucher(voucher_id,effective_day,descinfo,create_time,amout)
  values(#{voucherId},#{effectiveDay},#{descinfo},now(),#{amount})
 </insert>
 <!-- 插入记录 -->
-<insert id="insertSelective" parameterType="Voucher"  useGeneratedKeys="true" keyProperty="voucherId">
+<insert id="insertSelective" parameterType="com.weixin.entity.chat.Voucher"  useGeneratedKeys="true" keyProperty="voucherId">
   insert into p_voucher
 	<trim  prefix="(" suffix=")"  suffixOverrides="," >
 	<if test="voucherId != null  ">
@@ -100,7 +100,7 @@ where 1=1
 	</trim>
 </insert>
  <!-- 修改记录，只修改只不为空的字段 -->
-<update id="updateByPrimaryKeySelective" parameterType="Voucher" >
+<update id="updateByPrimaryKeySelective" parameterType="com.weixin.entity.chat.Voucher" >
 	update p_voucher set 
 	<trim  suffixOverrides="," >
 	<if test="effectiveDay != null  ">
@@ -122,7 +122,7 @@ where 1=1
 	</trim> where voucher_id=#{voucherId}
 </update>
 <!-- 根据id，修改记录-->  
- <update id="updateByPrimaryKey" parameterType="Voucher" >
+ <update id="updateByPrimaryKey" parameterType="com.weixin.entity.chat.Voucher" >
   update p_voucher set effective_day=#{effectiveDay},descinfo=#{descinfo},create_time=now(),amout=#{amount},isdel=#{isDel} where voucher_id=#{voucherId}
  </update>
   	

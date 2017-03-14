@@ -111,17 +111,17 @@
                 <version>${slf4j.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-core -->
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-core</artifactId>
-                <version>${logback.version}</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
-            <dependency>
-                <groupId>ch.qos.logback</groupId>
-                <artifactId>logback-classic</artifactId>
-                <version>${logback.version}</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>ch.qos.logback</groupId>-->
+                <!--<artifactId>logback-core</artifactId>-->
+                <!--<version>${logback.version}</version>-->
+            <!--</dependency>-->
+            <!--&lt;!&ndash; https://mvnrepository.com/artifact/ch.qos.logback/logback-classic &ndash;&gt;-->
+            <!--<dependency>-->
+                <!--<groupId>ch.qos.logback</groupId>-->
+                <!--<artifactId>logback-classic</artifactId>-->
+                <!--<version>${logback.version}</version>-->
+            <!--</dependency>-->
 
             <dependency>
                 <groupId>junit</groupId>
@@ -470,7 +470,7 @@
         <druid.version>1.0.15</druid.version>
         <jackson.version>2.7.5</jackson.version>
         <activeMQ.version>5.7.0</activeMQ.version>
-        <activeMQ-pool.version>5.7.0</activeMQ-pool.version>
+        <activeMQ-pool.version>5.12.0</activeMQ-pool.version>
         <logback.version>1.0.13</logback.version>
         <aspectj.version>1.8.2</aspectj.version>
         <maven.compiler.source>1.7</maven.compiler.source>

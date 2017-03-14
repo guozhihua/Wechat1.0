@@ -24,7 +24,7 @@
                 <property name="redeliveryPolicy" ref="redeliveryPolicyBean"></property>
             </bean>
         </property>
-        <!--<property name="reconnectOnException" value="true"></property>-->
+        <property name="reconnectOnException" value="true"></property>
     </bean>
 
     <!--消息重发机制的配置-->
