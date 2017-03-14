@@ -1,11 +1,10 @@
 package hxs.weixin.parent.controller;
 
-import hxs.weixin.parent.aop.LogService;
-import hxs.weixin.parent.entity.vo.WeChatConfigVo;
-import hxs.weixin.parent.responsecode.BaseResponse;
-import hxs.weixin.parent.responsecode.ResponseCode;
-import hxs.weixin.parent.service.WeChatHttpService;
-import hxs.weixin.parent.sys.MethodLog;
+import com.weixin.services.service.WeChatHttpService;
+import com.weixin.utils.responsecode.BaseResponse;
+import com.weixin.utils.responsecode.ResponseCode;
+import com.weixin.utils.sys.MethodLog;
+import com.weixin.utils.sys.weixinVO.WeChatConfigVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

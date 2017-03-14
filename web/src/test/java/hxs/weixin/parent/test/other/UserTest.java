@@ -1,10 +1,6 @@
 package hxs.weixin.parent.test.other;
 
-import hxs.weixin.parent.entity.User;
-import hxs.weixin.parent.service.UserService;
-import hxs.weixin.parent.sys.enums.VoucherWayEnum;
 import hxs.weixin.parent.test.BaseTest;
-import hxs.weixin.parent.util.DateUtil;
 
 /**
  * Created by :Guozhihua

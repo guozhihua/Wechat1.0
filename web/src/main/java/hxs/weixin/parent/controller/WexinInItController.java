@@ -2,27 +2,24 @@ package hxs.weixin.parent.controller;
 
 
 import com.alibaba.fastjson.JSON;
-import hxs.weixin.parent.entity.User;
 
-import hxs.weixin.parent.responsecode.BaseResponse;
-import hxs.weixin.parent.responsecode.ResponseCode;
-import hxs.weixin.parent.service.UserService;
-import hxs.weixin.parent.sys.MethodLog;
-import hxs.weixin.parent.sys.enums.VoucherWayEnum;
-import hxs.weixin.parent.util.HttpRequest;
-import hxs.weixin.parent.util.PathUtil;
-import hxs.weixin.parent.util.PropertiesUtil;
+import com.weixin.entity.chat.User;
+import com.weixin.services.service.UserService;
+import com.weixin.utils.responsecode.BaseResponse;
+import com.weixin.utils.responsecode.ResponseCode;
+import com.weixin.utils.sys.MethodLog;
+import com.weixin.utils.util.HttpRequest;
+import com.weixin.utils.util.PathUtil;
+import com.weixin.utils.util.PropertiesUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONObject;
 
@@ -33,6 +30,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/wexinInIt/")
@@ -53,7 +52,7 @@ public class WexinInItController  extends  ABaseController{
 	 */
 	@RequestMapping("getOpenid")
 	@MethodLog
-	public String getOpenid(HttpServletRequest request,User user,Model model){
+	public String getOpenid(HttpServletRequest request, User user, Model model){
 		BaseResponse baseResponse = new BaseResponse();
 		String state = request.getParameter("state");
 		log.info("state is "+state);

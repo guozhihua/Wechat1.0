@@ -1,7 +1,7 @@
 package hxs.weixin.parent.controller;
 
 import com.google.gson.Gson;
-import hxs.weixin.parent.util.redis.RedisClientTemplate;
+import com.weixin.utils.util.redis.RedisClientTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;

@@ -1,7 +1,7 @@
 package hxs.weixin.parent.aop;
 
 import com.alibaba.fastjson.JSONObject;
-import hxs.weixin.parent.sys.MethodLog;
+import com.weixin.utils.sys.MethodLog;
 import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -30,7 +30,7 @@ public class LogService {
     private static JSONObject json = new JSONObject();
     private static LocalVariableTableParameterNameDiscoverer u =
             new LocalVariableTableParameterNameDiscoverer();
-    @Pointcut("@annotation(hxs.weixin.parent.sys.MethodLog)")
+    @Pointcut("@annotation(com.weixin.utils.sys.MethodLog)")
     public void methodLogPointcut() {
     }
    /* @After(value = "methodLogPointcut()")

@@ -3,23 +3,22 @@ package hxs.weixin.parent.controller;
 import java.util.*;
 
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import hxs.weixin.parent.entity.*;
-import hxs.weixin.parent.responsecode.BaseResponse;
-import hxs.weixin.parent.responsecode.ResponseCode;
-import hxs.weixin.parent.service.OrderService;
-import hxs.weixin.parent.service.WeixinPayService;
-import hxs.weixin.parent.sys.MethodLog;
-import hxs.weixin.parent.util.DataMap;
-import hxs.weixin.parent.util.HttpServletStream;
-import hxs.weixin.parent.util.Md5;
-import hxs.weixin.parent.util.OrderUtil;
-import hxs.weixin.parent.util.ParaXml;
-import hxs.weixin.parent.util.PathUtil;
-import hxs.weixin.parent.util.PropertiesUtil;
-import hxs.weixin.parent.util.SoonJson;
+import com.weixin.entity.chat.Order;
+import com.weixin.entity.chat.UnifiedOrder;
+import com.weixin.entity.chat.UnifiedOrderReturn;
+import com.weixin.services.service.OrderService;
+import com.weixin.services.service.WeixinPayService;
+import com.weixin.utils.responsecode.BaseResponse;
+import com.weixin.utils.responsecode.ResponseCode;
+import com.weixin.utils.sys.MethodLog;
+import com.weixin.utils.util.DataMap;
+import com.weixin.utils.util.HttpServletStream;
+import com.weixin.utils.util.Md5;
+import com.weixin.utils.util.OrderUtil;
+import com.weixin.utils.util.ParaXml;
+import com.weixin.utils.util.PathUtil;
+import com.weixin.utils.util.PropertiesUtil;
+import com.weixin.utils.util.SoonJson;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +27,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/pay/")
@@ -49,7 +51,7 @@ public class WeixinPayController {
 	 */
 	@RequestMapping("payProduct")
 	@MethodLog
-	public @ResponseBody BaseResponse payProduct(DataMap data,HttpServletRequest request,HttpServletResponse response){
+	public @ResponseBody BaseResponse payProduct(DataMap data, HttpServletRequest request, HttpServletResponse response){
 		log.info("=============开始购买===============");
 		BaseResponse baseResponse = new BaseResponse();
 		try {

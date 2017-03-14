@@ -25,7 +25,7 @@
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 		<!-- 生成DAO的包名和位置 -->
-		<javaClientGenerator type="XMLMAPPER" targetPackage="hxs.weixin.parent.dao" targetProject="E:\workspace\hxs_personaltutor_wechat\src\main\java">
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.weixin.service.dao" targetProject="E:\workspace\hxs_personaltutor_wechat\src\main\java">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		<!-- 要生成那些表(更改tableName和domainObjectName就可以),selectByPrimaryKeyQueryId=""填写主键id -->

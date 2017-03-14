@@ -60,7 +60,7 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="hxs.weixin.parent.dao" />
+		<property name="basePackage" value="com.weixin.service.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 
@@ -105,5 +105,5 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 		  class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
 		<property name="configLocation" value="classpath:config/ehcache.xml" />
 	</bean>-->
-	<bean id="SpringBeanUtils" class="hxs.weixin.parent.util.SpringBeanUtils"></bean>
+	<bean id="SpringBeanUtils" class="com.weixin.utils.util.SpringBeanUtils"></bean>
 </beans>

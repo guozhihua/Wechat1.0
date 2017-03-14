@@ -1,10 +1,10 @@
 package hxs.weixin.parent.controller;
 
-import hxs.weixin.parent.responsecode.BaseResponse;
-import hxs.weixin.parent.responsecode.ResponseCode;
-import hxs.weixin.parent.service.VoucherService;
-import hxs.weixin.parent.sys.MethodLog;
-import hxs.weixin.parent.sys.enums.VoucherWayEnum;
+import com.weixin.services.service.VoucherService;
+import com.weixin.utils.responsecode.BaseResponse;
+import com.weixin.utils.responsecode.ResponseCode;
+import com.weixin.utils.sys.MethodLog;
+import com.weixin.utils.sys.enums.VoucherWayEnum;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
