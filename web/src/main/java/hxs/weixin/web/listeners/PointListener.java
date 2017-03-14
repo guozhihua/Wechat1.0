@@ -31,6 +31,7 @@ public class PointListener implements SessionAwareMessageListener<ObjectMessage>
             if(session.getTransacted()){
                 session.commit();
             }
+            objectMessage.acknowledge();
         } catch (JMSException e) {
             if(session.getTransacted()){
                 session.rollback();
