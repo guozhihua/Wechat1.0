@@ -8,8 +8,8 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>jdbc</artifactId>
-    <name>jdbc</name>
+    <artifactId>common-jdbc</artifactId>
+    <name>common-jdbc</name>
     <url>http://maven.apache.org</url>
     <packaging>jar</packaging>
 

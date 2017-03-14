@@ -6,9 +6,9 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>web</artifactId>
+    <artifactId>chat-web</artifactId>
     <packaging>war</packaging>
-    <name>web Maven Webapp</name>
+    <name>chat-web</name>
     <url>http://maven.apache.org</url>
 
     <dependencies>
@@ -461,7 +461,7 @@
 
     </dependencies>
     <build>
-        <finalName>WX-webs</finalName>
+        <finalName>chat-web</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
