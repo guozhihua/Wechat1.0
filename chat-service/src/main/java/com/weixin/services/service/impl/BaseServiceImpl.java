@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import com.weixin.entity.chat.SuperVO;
 import com.weixin.services.dao.BaseDao;
 import com.weixin.services.service.BaseService;
-import com.weixin.utils.util.redis.RedisClientTemplate;
+import com.weixin.cache.redis.RedisClientTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;

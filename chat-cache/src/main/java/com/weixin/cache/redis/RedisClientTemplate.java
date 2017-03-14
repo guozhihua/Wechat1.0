@@ -1,4 +1,4 @@
-package com.weixin.utils.util.redis;
+package com.weixin.cache.redis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

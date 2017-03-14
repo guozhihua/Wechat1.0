@@ -1,9 +1,9 @@
-package com.weixin.utils.util;
+package com.weixin.cache.redis;
 
 import com.google.gson.Gson;
-import com.weixin.utils.sys.weixinVO.TicketVo;
-import com.weixin.utils.sys.weixinVO.TokenVo;
-import com.weixin.utils.util.redis.RedisClientTemplate;
+import com.weixin.utils.util.*;
+import com.weixin.utils.weixinVo.TicketVo;
+import com.weixin.utils.weixinVo.TokenVo;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 

@@ -1,7 +1,7 @@
 package com.weixin.services.service;
 
 
-import com.weixin.utils.sys.weixinVO.WeChatConfigVo;
+import com.weixin.utils.weixinVo.WeChatConfigVo;
 
 /**
  * Created by :Guozhihua

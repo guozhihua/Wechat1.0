@@ -1,4 +1,4 @@
-package com.weixin.utils.sys.weixinVO;
+package com.weixin.utils.weixinVo;
 
 public class TicketVo {
 	private String errcode;

@@ -1,11 +1,11 @@
 package com.weixin.services.service.impl;
 
 
-import com.weixin.utils.sys.weixinVO.WeChatConfigVo;
+import com.weixin.cache.redis.WeixinUtil;
+import com.weixin.utils.weixinVo.WeChatConfigVo;
 import com.weixin.services.service.WeChatHttpService;
-import com.weixin.utils.sys.weixinVO.TicketVo;
-import com.weixin.utils.sys.weixinVO.TokenVo;
-import com.weixin.utils.util.WeixinUtil;
+import com.weixin.utils.weixinVo.TicketVo;
+import com.weixin.utils.weixinVo.TokenVo;
 import org.springframework.stereotype.Component;
 
 import java.io.UnsupportedEncodingException;

@@ -1,11 +1,11 @@
 package com.weixin.services.service;
 
+import com.weixin.cache.redis.WeixinUtil;
 import com.weixin.entity.chat.UnifiedOrder;
 import com.weixin.entity.chat.UnifiedOrderReturn;
 import com.weixin.utils.util.ParaXml;
 import com.weixin.utils.util.PathUtil;
 import com.weixin.utils.util.PropertiesUtil;
-import com.weixin.utils.util.WeixinUtil;
 
 import java.util.TreeMap;
 

@@ -1,7 +1,7 @@
 package hxs.weixin.web.test.redis;
 
 import hxs.weixin.web.test.BaseTest;
-import com.weixin.utils.util.redis.RedisClientTemplate;
+import com.weixin.cache.redis.RedisClientTemplate;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

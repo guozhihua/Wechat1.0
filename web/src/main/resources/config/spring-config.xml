@@ -27,7 +27,7 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.
 
 	<!-- 具体的实现bean -->
 	<bean id="demoService" class="hxs.weixin.web.dubbo.impl.DemoServiceImpl" />
-	<import resource="redis-context.xml"></import>
+	<import resource="classpath*:/config/redis-context.xml"></import>
 	<aop:aspectj-autoproxy  />
 
 </beans>

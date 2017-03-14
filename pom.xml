@@ -16,6 +16,7 @@
         <module>chat-entity</module>
         <module>chat-utils</module>
         <module>message-queue</module>
+        <module>chat-cache</module>
     </modules>
 
     <!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId 和 artifactId 即可 -->

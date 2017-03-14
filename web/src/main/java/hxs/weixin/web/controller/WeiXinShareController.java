@@ -4,7 +4,7 @@ import com.weixin.services.service.WeChatHttpService;
 import com.weixin.utils.responsecode.BaseResponse;
 import com.weixin.utils.responsecode.ResponseCode;
 import com.weixin.utils.sys.MethodLog;
-import com.weixin.utils.sys.weixinVO.WeChatConfigVo;
+import com.weixin.utils.weixinVo.WeChatConfigVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

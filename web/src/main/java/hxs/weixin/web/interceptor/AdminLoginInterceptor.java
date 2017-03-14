@@ -1,6 +1,6 @@
 package hxs.weixin.web.interceptor;
 
-import com.weixin.utils.util.redis.RedisClientTemplate;
+import com.weixin.cache.redis.RedisClientTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

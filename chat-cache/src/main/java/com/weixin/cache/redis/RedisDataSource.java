@@ -1,4 +1,4 @@
-package com.weixin.utils.util.redis;
+package com.weixin.cache.redis;
 
 import redis.clients.jedis.ShardedJedis;
 

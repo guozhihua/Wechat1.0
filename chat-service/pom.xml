@@ -22,6 +22,11 @@
          <artifactId>message-queue</artifactId>
          <version>${wechat.version}</version>
      </dependency>
+     <dependency>
+         <groupId>com.yj</groupId>
+         <artifactId>chat-cache</artifactId>
+         <version>${wechat.version}</version>
+     </dependency>
  </dependencies>
 <build>
     <finalName>chat-service</finalName>
