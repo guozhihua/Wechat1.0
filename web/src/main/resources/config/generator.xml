@@ -16,7 +16,7 @@
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
 		<!-- 生成模型的包名和位置 -->
-		<javaModelGenerator targetPackage="hxs.weixin.parent.entity" targetProject="E:\workspace\hxs_personaltutor_wechat\src\main\java">
+		<javaModelGenerator targetPackage="hxs.weixin.web.entity" targetProject="E:\workspace\hxs_personaltutor_wechat\src\main\java">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>

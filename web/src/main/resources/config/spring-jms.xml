@@ -7,23 +7,24 @@
        http://www.springframework.org/schema/jms
         http://www.springframework.org/schema/jms/spring-jms-4.1.xsd
          http://activemq.apache.org/schema/core
-        http://activemq.apache.org/schema/core/activemq-core-5.8.0.xsd">
+        http://activemq.apache.org/schema/core/activemq-core-5.7.0.xsd">
 
     <bean id="jmsConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
         <property name="connectionFactory">
             <bean class="org.apache.activemq.ActiveMQConnectionFactory">
-                <property name="brokerURL" value="tcp://211.157.179.218:61616?jms.prefetchPolicy.all=2" />
+                <!--<property name="brokerURL" value="tcp://211.157.179.218:61616?jms.prefetchPolicy.all=2" />-->
+                <property name="brokerURL" value="tcp://127.0.0.1:61616?jms.prefetchPolicy.all=2" />
                 <property name="closeTimeout" value="60000" />
                 <property name="userName" value="admin" />
                 <property name="password" value="admin_qwe123000" />
                 <property name="useAsyncSend" value="true"></property>
-                <!--<property name="optimizeAcknowledge" value="true" />-->
+                <property name="optimizeAcknowledge" value="true" />
                 <property name="optimizedAckScheduledAckInterval" value="10000" />
                 <property name="maxThreadPoolSize" value="80"></property>
                 <property name="redeliveryPolicy" ref="redeliveryPolicyBean"></property>
             </bean>
         </property>
-        <property name="reconnectOnException" value="true"></property>
+        <!--<property name="reconnectOnException" value="true"></property>-->
     </bean>
 
     <!--消息重发机制的配置-->

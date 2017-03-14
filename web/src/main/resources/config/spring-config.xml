@@ -10,7 +10,7 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.
 	<!-- 引入属性文件 -->
 	<context:property-placeholder location="classpath:config/jdbc.properties"  ignore-unresolvable="true"  />
 	<!-- 自动扫描(自动注入) -->
-	<context:component-scan base-package="hxs.weixin.parent">
+	<context:component-scan base-package="hxs.weixin.web,com.weixin.utils">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:exclude-filter>
 	</context:component-scan>
 	<!-- 提供方应用名称信息，这个相当于起一个名字，我们dubbo管理页面比较清晰是哪个应用暴露出来的 -->
@@ -22,11 +22,11 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.
 	<dubbo:protocol name="dubbo" port="20880" />
 
 	<!-- 声明需要暴露的服务接口 -->
-	<dubbo:service interface="hxs.weixin.parent.dubbo.DemoService"
+	<dubbo:service interface="hxs.weixin.web.dubbo.DemoService"
 				   ref="demoService" />
 
 	<!-- 具体的实现bean -->
-	<bean id="demoService" class="hxs.weixin.parent.dubbo.impl.DemoServiceImpl" />
+	<bean id="demoService" class="hxs.weixin.web.dubbo.impl.DemoServiceImpl" />
 	<import resource="redis-context.xml"></import>
 	<aop:aspectj-autoproxy  />
 

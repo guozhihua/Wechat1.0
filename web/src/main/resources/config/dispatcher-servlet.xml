@@ -11,7 +11,7 @@ http://www.springframework.org/schema/mvc
 http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 	<aop:aspectj-autoproxy  proxy-target-class="true"/>
 	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
-	<context:component-scan base-package="hxs.weixin.parent.controller,hxs.weixin.parent.aop"/>
+	<context:component-scan base-package="hxs.weixin.web.controller,hxs.weixin.web.aop"/>
 	<mvc:annotation-driven/>
 
 	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  

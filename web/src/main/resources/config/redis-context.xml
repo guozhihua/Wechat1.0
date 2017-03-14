@@ -30,6 +30,7 @@
                     <constructor-arg name="connectionTimeout" value="${redis.timeout}"  type="int"/>
                     <constructor-arg name="soTimeout" value="${redis.timeout}"  type="int"/>
                     <constructor-arg name="weight" value="1" type="int"/>
+                    <property name="password" value="${redis.password}"></property>
                 </bean>
             </list>
         </constructor-arg>
