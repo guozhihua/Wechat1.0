@@ -1,6 +1,5 @@
-package com.weixin.utils.sys.message;
+package com.weixin.queue.message;
 
-import com.weixin.utils.sys.message.MessageType;
 import org.apache.activemq.ScheduledMessage;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.jms.core.MessageCreator;

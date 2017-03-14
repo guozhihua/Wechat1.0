@@ -60,7 +60,7 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.weixin.service.dao" />
+		<property name="basePackage" value="com.weixin.services.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 

@@ -10,7 +10,7 @@ import com.weixin.services.dao.UserMapper;
 import java.util.List;
 import java.util.Map;
 
-@Service
+@Service("userService")
 public class UserServiceimp implements UserService {
 
 	@Autowired

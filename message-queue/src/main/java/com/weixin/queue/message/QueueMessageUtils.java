@@ -1,9 +1,9 @@
-package com.weixin.utils.util.messages;
+package com.weixin.queue.message;
 
 
-import com.weixin.utils.sys.message.CustomScheduledMessage;
-import com.weixin.utils.sys.message.MessageComm;
-import com.weixin.utils.sys.message.MessageType;
+import com.weixin.queue.message.CustomScheduledMessage;
+import com.weixin.queue.message.MessageComm;
+import com.weixin.queue.message.MessageType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;

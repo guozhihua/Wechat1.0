@@ -1,4 +1,4 @@
-package com.weixin.utils.sys.message;
+package com.weixin.queue.message;
 
 import org.springframework.jms.core.MessageCreator;
 

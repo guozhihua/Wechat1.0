@@ -1,4 +1,4 @@
-package com.weixin.utils.sys.message;
+package com.weixin.queue.message;
 
 /**
  * 消息队列名称

@@ -1,7 +1,7 @@
 package hxs.weixin.web.listeners;
 
-import com.weixin.utils.sys.message.MessageQueueName;
-import com.weixin.utils.util.messages.ConsumerProxyFactory;
+import com.weixin.queue.message.ConsumerProxyFactory;
+import com.weixin.queue.message.MessageQueueName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jms.annotation.EnableJms;

@@ -1,4 +1,4 @@
-package com.weixin.utils.util.messages;
+package com.weixin.queue.message;
 
 import javax.jms.JMSException;
 import javax.jms.Message;

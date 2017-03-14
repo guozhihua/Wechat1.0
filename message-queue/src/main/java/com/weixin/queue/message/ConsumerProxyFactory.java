@@ -1,7 +1,6 @@
-package com.weixin.utils.util.messages;
+package com.weixin.queue.message;
 
 
-import com.weixin.utils.sys.message.MessageType;
 import com.weixin.utils.sys.exceptions.ProBaseException;
 import com.weixin.utils.util.SpringBeanUtils;
 
