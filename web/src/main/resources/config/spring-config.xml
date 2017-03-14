@@ -13,17 +13,17 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.
 	<context:component-scan base-package="hxs.weixin.web,com.weixin.utils">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:exclude-filter>
 	</context:component-scan>
-	<!-- 提供方应用名称信息，这个相当于起一个名字，我们dubbo管理页面比较清晰是哪个应用暴露出来的 -->
-	<dubbo:application name="Wechat"></dubbo:application>
-	<!-- 使用zookeeper注册中心暴露服务地址 -->
-	<dubbo:registry address="zookeeper://211.157.179.195:2181" check="false" subscribe="false" register=""></dubbo:registry>
+	<!--&lt;!&ndash; 提供方应用名称信息，这个相当于起一个名字，我们dubbo管理页面比较清晰是哪个应用暴露出来的 &ndash;&gt;-->
+	<!--<dubbo:application name="Wechat"></dubbo:application>-->
+	<!--&lt;!&ndash; 使用zookeeper注册中心暴露服务地址 &ndash;&gt;-->
+	<!--<dubbo:registry address="zookeeper://211.157.179.195:2181" check="false" subscribe="false" register=""></dubbo:registry>-->
 
-	<!-- 用dubbo协议在20880端口暴露服务 -->
-	<dubbo:protocol name="dubbo" port="20880" />
+	<!--&lt;!&ndash; 用dubbo协议在20880端口暴露服务 &ndash;&gt;-->
+	<!--<dubbo:protocol name="dubbo" port="20880" />-->
 
-	<!-- 声明需要暴露的服务接口 -->
-	<dubbo:service interface="hxs.weixin.web.dubbo.DemoService"
-				   ref="demoService" />
+	<!--&lt;!&ndash; 声明需要暴露的服务接口 &ndash;&gt;-->
+	<!--<dubbo:service interface="hxs.weixin.web.dubbo.DemoService"-->
+				   <!--ref="demoService" />-->
 
 	<!-- 具体的实现bean -->
 	<bean id="demoService" class="hxs.weixin.web.dubbo.impl.DemoServiceImpl" />
