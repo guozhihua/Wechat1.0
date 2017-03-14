@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.weixin.service.dao.VoucherDao" >
+<mapper namespace="com.weixin.services.dao.VoucherDao" >
 <!-- Result Map-->
-<resultMap id="BaseResultMap" type="Voucher" >
+<resultMap id="BaseResultMap" type="com.weixin.entity.chat.Voucher" >
 	<result column="voucher_id" property="voucherId"/>
 	<result column="effective_day" property="effectiveDay"/>
 	<result column="descinfo" property="descinfo"/>

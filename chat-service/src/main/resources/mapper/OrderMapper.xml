@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.weixin.service.dao.OrderMapper">
-  <resultMap id="BaseResultMap" type="Order">
+<mapper namespace="com.weixin.services.dao.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.weixin.entity.chat.Order">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="project_id" jdbcType="VARCHAR" property="projectId" />
     <result column="buy_type" jdbcType="INTEGER" property="buyType" />
