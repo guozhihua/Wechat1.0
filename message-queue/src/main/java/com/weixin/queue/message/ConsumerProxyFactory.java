@@ -11,7 +11,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by :Guozhihua
  * Date： 2017/3/9.
  */
-public class ConsumerProxyFactory {
+public class ConsumerProxyFactory implements WorkerFactory {
+
+    private static ConsumerProxyFactory consumerProxyFactory;
 
     private static ThreadLocal<Map<String,Consumer>> comsumers = new ThreadLocal<Map<String,Consumer>>(){
         public Map<String,Consumer> initialValue(){
@@ -20,7 +22,15 @@ public class ConsumerProxyFactory {
 
     };
 
-    public static Consumer getConsumer(String messageType) throws ProBaseException {
+    public  static   synchronized ConsumerProxyFactory getInstance(){
+           if(consumerProxyFactory ==null){
+               consumerProxyFactory = new ConsumerProxyFactory();
+           }
+          return  consumerProxyFactory;
+    }
+
+    @Override
+    public Consumer getWorker(String messageType)  throws ProBaseException{
         Consumer consumerProxy=null;
         Map<String,Consumer> consumerMap =comsumers.get();
         if(consumerMap.containsKey(messageType)){
@@ -29,7 +39,7 @@ public class ConsumerProxyFactory {
             //需要找到对应messageType的处理类
             Consumer consumer =null;
             if(MessageType.CLASS_MODULE.getTypeCode().equals(messageType)){
-                 consumer= (Consumer) SpringBeanUtils.getBean("classModuleWorker");
+                consumer= (Consumer) SpringBeanUtils.getBean("classModuleWorker");
             }else  if(MessageType.CLASS_REPORT.getTypeCode().equals(messageType)){
                 consumer= (Consumer)SpringBeanUtils.getBean("classReportWorker");
             }else  if(MessageType.ClASS_WRONG.getTypeCode().equals(messageType)){
@@ -49,8 +59,5 @@ public class ConsumerProxyFactory {
             throw  new ProBaseException("message type :"+messageType+"没有指定相应的业务处理类,");
         }
         return  consumerProxy;
-
     }
-
-
 }
