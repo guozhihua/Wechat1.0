@@ -34,6 +34,7 @@ public class EsConnectionProvider {
     public static void main(String[] args) {
         try{
             new EsConnectionProvider().testAddIndex();
+
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -44,12 +45,13 @@ public class EsConnectionProvider {
             * @throws Exception
     */
     public void testAddIndex() throws Exception {
-        Client client = getClient();
+//        Client client = getClient();
+        Client client =ESClient.createTransportClient(null);
         User user = new User();
         user.setUserId(UUID.randomUUID().toString());
-        user.setAreaName("天猫1111");
+        user.setAreaName("天猫2222");
         user.setUserId(UUID.randomUUID() + "");
-        user.setSchool("北京大学11111");
+        user.setSchool("北京大学222222");
         Random random = new Random();
         user.setMobile("1770102" + random.nextInt(10000));
         try {
