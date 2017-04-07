@@ -27,7 +27,7 @@ public class PointListener implements SessionAwareMessageListener<ObjectMessage>
     public void onMessage(ObjectMessage objectMessage, Session session) throws JMSException {
         try {
             //todo 根据消息类型做响应的业务处理
-            ConsumerProxyFactory.getConsumer(objectMessage.getJMSType()).execute(objectMessage);
+          ConsumerProxyFactory.getInstance().getWorker(objectMessage.getJMSType()).execute(objectMessage);
             if(session.getTransacted()){
                 session.commit();
             }
