@@ -22,6 +22,8 @@ import java.net.InetAddress;
 import java.util.*;
 
 /**
+ *
+ * 简单测试类测试 ES集群基础功能
  * Created by :Guozhihua
  * Date： 2017/4/7.
  */
