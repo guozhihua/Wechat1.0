@@ -13,7 +13,7 @@ import java.util.Map;
 
 /**
  * <h3>JSON工具类</h3>
- *
+ *  主要使用的是fastJson
  * @author liangzh
  * @since common-0.0.1-SNAPSHOT
  * <p/>
@@ -21,8 +21,6 @@ import java.util.Map;
  */
 public class JsonUtils {
     private static final Logger logger = Logger.getLogger(JsonUtils.class);
-    public final static int GSON = 0;
-    public final static int FASTJSON = 1;
 
     /**
      * <b>解析JSONObject</b>
