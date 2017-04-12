@@ -1,4 +1,4 @@
-package com.weixin.yj.search.mappings;
+package com.weixin.yj.search.setting;
 
 /**
  * 混合式教学搜索常量

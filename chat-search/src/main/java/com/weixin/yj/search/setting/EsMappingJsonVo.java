@@ -1,4 +1,4 @@
-package com.weixin.yj.search.mappings;
+package com.weixin.yj.search.setting;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package com.weixin.yj.search;
+package com.weixin.yj.search.index;
 
 import org.apache.commons.dbutils.QueryRunner;
 

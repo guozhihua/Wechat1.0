@@ -1,6 +1,7 @@
-package com.weixin.yj.search;
+package com.weixin.yj.search.index;
 
 
+import com.weixin.yj.search.ESHelper;
 import com.weixin.yj.search.setting.IndexData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

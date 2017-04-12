@@ -3,6 +3,9 @@ package com.weixin.yj.search.mappings;
 
 import com.weixin.utils.util.JsonUtils;
 import com.weixin.yj.search.setting.EsMappingConst;
+import com.weixin.yj.search.setting.EsMappingJsonVo;
+import com.weixin.yj.search.setting.EsMappingPropertiesVo;
+import com.weixin.yj.search.setting.TigerEsConst;
 
 import java.util.HashMap;
 import java.util.Map;

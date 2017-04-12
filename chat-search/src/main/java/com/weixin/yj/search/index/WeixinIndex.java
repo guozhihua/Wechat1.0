@@ -1,9 +1,8 @@
 package com.weixin.yj.search.index;
 
 import com.weixin.utils.jdbc.JdbcUtils;
-import com.weixin.yj.search.CommonIndexThead;
 import com.weixin.yj.search.ESHelper;
-import com.weixin.yj.search.mappings.TigerEsConst;
+import com.weixin.yj.search.setting.TigerEsConst;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.commons.logging.Log;
@@ -17,6 +16,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
+ * 1.第一次创建mapping等同于创建表结构，数据表等
+ * 2.索引存在，mapping 存在在更新数据
  * Created by :Guozhihua
  * Date： 2017/4/12.
  */

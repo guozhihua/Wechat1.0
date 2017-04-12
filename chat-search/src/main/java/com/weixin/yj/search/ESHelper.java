@@ -1,5 +1,6 @@
 package com.weixin.yj.search;
 
+import com.weixin.yj.search.index.SyncAddSearchData;
 import com.weixin.yj.search.setting.ESClient;
 import com.weixin.yj.search.setting.ESConst;
 import com.weixin.yj.search.setting.HighLightConf;
