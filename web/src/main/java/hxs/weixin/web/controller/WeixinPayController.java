@@ -11,14 +11,7 @@ import com.weixin.services.service.WeixinPayService;
 import com.weixin.utils.responsecode.BaseResponse;
 import com.weixin.utils.responsecode.ResponseCode;
 import com.weixin.utils.sys.MethodLog;
-import com.weixin.utils.util.DataMap;
-import com.weixin.utils.util.HttpServletStream;
-import com.weixin.utils.util.Md5;
-import com.weixin.utils.util.OrderUtil;
-import com.weixin.utils.util.ParaXml;
-import com.weixin.utils.util.PathUtil;
-import com.weixin.utils.util.PropertiesUtil;
-import com.weixin.utils.util.SoonJson;
+import com.weixin.utils.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,7 +82,7 @@ public class WeixinPayController {
 				String totalAmout = paramMap.get("totalAmout").toString();
 				order.setTotalAmout(totalAmout);
 				order.setdescription(paramMap.get("projectDesc").toString());
-				order.setOutTradeNo(OrderUtil.getOrderNumber(""));
+				order.setOutTradeNo(OrderNumManager.getOrderIdByUUId());
 				order.setCreateTime(new Date());
 				order.setOrderDate(new Date());
 				order.setSerialNumber(getSerialNumber());
@@ -167,7 +160,7 @@ public class WeixinPayController {
 				rMap.put("timestamp", map.get("timestamp"));
 				rMap.put("paysign", map.get("paysign"));
 				rMap.put("outTradeNo", order.getOutTradeNo());
-				String rjson = SoonJson.getJson(rMap);
+				String rjson = JsonUtils.toJson(rMap);
 				baseResponse.setResult(rjson);
 				log.info("下单成功==============");
 			}
@@ -223,7 +216,7 @@ public class WeixinPayController {
 				totalAmout = (int) (Double.valueOf(totalAmout) * 100) + "";
 				order.setTotalAmout(totalAmout);
 				order.setdescription(paramMap.get("projectDesc").toString());
-				order.setOutTradeNo(OrderUtil.getOrderNumber(""));
+				order.setOutTradeNo(OrderNumManager.getOrderIdByUUId());
 				order.setCreateTime(new Date());
 				order.setOrderDate(new Date());
 				order.setSerialNumber(getSerialNumber());

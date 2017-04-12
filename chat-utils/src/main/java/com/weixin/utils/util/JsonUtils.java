@@ -183,7 +183,7 @@ public class JsonUtils {
             return "";
         }
         try {
-            return JSON.toJSONString(obj, SerializerFeature.DisableCircularReferenceDetect, SerializerFeature.WriteNonStringKeyAsString);
+            return JSON.toJSONString(obj, SerializerFeature.DisableCircularReferenceDetect, SerializerFeature.WriteNonStringKeyAsString,SerializerFeature.WriteMapNullValue);
         } catch (Exception e) {
             logger.error("error", e);
             return "";
