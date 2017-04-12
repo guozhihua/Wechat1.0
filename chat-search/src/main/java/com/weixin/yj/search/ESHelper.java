@@ -44,6 +44,9 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 /**
+ *
+ * 对于搜索可以使用jdbc方式连接数据库，进行数据的同步。可以设计一个版本或者时间的字段，作为索引更新的一句。
+ * 也可以编写shell脚本，加入linux crontab 做定时任务处理，达到实时索引的目的。
  * ElasticSearch基础工具类
  *
  * @author Jianpin.Li
