@@ -27,7 +27,7 @@ public class TestMessageController extends ABaseController{
     @Autowired
     private QueueMessageUtils queueMessageUtils;
     /**
-     * 保存用户代金券
+     * 发送消息
      */
     @RequestMapping(value="send",method={ RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
