@@ -14,10 +14,10 @@ http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd http://www.springfr
 	<context:component-scan base-package="hxs.weixin.web.controller,hxs.weixin.web.aop"/>
 	<mvc:annotation-driven/>
 
-	<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
-        <property name="fileEncoding" value="UTF-8" />  
-        <property name="location" value="classpath:config/jdbc.properties" />
-	</bean>   
+	<!--<bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  -->
+        <!--<property name="fileEncoding" value="UTF-8" />  -->
+        <!--<property name="location" value="classpath:config/jdbc.properties" />-->
+	<!--</bean>   -->
 	<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
 	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 		<property name="supportedMediaTypes">
