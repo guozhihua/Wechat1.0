@@ -40,9 +40,10 @@
       <param-name>cors.supportedHeaders</param-name>
       <param-value>Accept, Origin, X-Requested-With, Content-Type, Last-Modified</param-value>
     </init-param>
+    <!--设置一些指定的请求头参数可以跨域传递-->
     <init-param>
       <param-name>cors.exposedHeaders</param-name>
-      <param-value>Set-Cookie</param-value>
+      <param-value>Set-Cookie,Access-Token,Auth-Token,Sign</param-value>
     </init-param>
     <init-param>
       <param-name>cors.supportsCredentials</param-name>
