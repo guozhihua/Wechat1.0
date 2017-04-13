@@ -24,10 +24,9 @@ public class ESConst {
         }
     };
 
-    /** 知识汇聚客户端配置前缀 */
-    public static final String CONF_ES_PREFIX_HUNTER = "elasticsearch";
+
     /** 本地搜索服务客户端配置前缀 */
-    public static final String CONF_ES_PREFIX_LOCAL = "elasticsearch.local";
+    public static final String CONF_ES_PREFIX_LOCAL = "elasticsearch";
 
     /** mapping properties */
     public static final String MAPPING_PROPERTIES = "properties";

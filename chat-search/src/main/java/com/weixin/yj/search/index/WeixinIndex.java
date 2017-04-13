@@ -85,11 +85,11 @@ public class WeixinIndex extends BaseIndex{
 //            }
                 //创建主索引
                 if (tempMapList.size() > 0) {
-                    ESHelper.getYunInstance().bulkAddDoc(TigerEsConst.INDEX_TIGER_MASTER, TigerEsConst.TYPE_COURSE, tempMapList);
+                    ESHelper.getInstance().bulkAddDoc(TigerEsConst.INDEX_TIGER_MASTER, TigerEsConst.TYPE_COURSE, tempMapList);
                 }
                 //删除索引
                 if (deleteIdList.size() > 0) {
-                    ESHelper.getYunInstance().bulkDeleteDoc(TigerEsConst.INDEX_TIGER_MASTER, TigerEsConst.TYPE_COURSE, deleteIdList);
+                    ESHelper.getInstance().bulkDeleteDoc(TigerEsConst.INDEX_TIGER_MASTER, TigerEsConst.TYPE_COURSE, deleteIdList);
                 }
             }
         }

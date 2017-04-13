@@ -14,8 +14,6 @@ import org.elasticsearch.action.admin.indices.settings.get.GetSettingsResponse;
 import org.elasticsearch.action.admin.indices.settings.put.UpdateSettingsRequest;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
-import org.elasticsearch.action.count.CountRequestBuilder;
-import org.elasticsearch.action.count.CountResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
@@ -63,75 +61,74 @@ public class ESHelper {
     private Client client;
     private IndicesOperations io;
 
-    /* private static class ESHelperHolder {
-         private static ESHelper helper = new ESHelper();
-         private static Client client = ESClient.createTransportClient(ESConst.CONF_ES_PREFIX_HUNTER);
-         private static IndicesOperations io = new IndicesOperations(client);
-     }
-
-     private static class ESHelperLocalHolder {
-         private static ESHelper helper = new ESHelper();
-         private static Client client = ESClient.createTransportClient(ESConst.CONF_ES_PREFIX_LOCAL);
-         private static IndicesOperations io = new IndicesOperations(client);
-     }*/
 
     private static Map<String, ESHelper> instanceMap = Collections.synchronizedMap(new HashMap<String, ESHelper>());
 
-    public static ESHelper getInstance(String clustSearchName) {
-        ESHelper esHelper = instanceMap.get(clustSearchName);
+    private static ESHelper getInstance(String custorPrefix) {
+        ESHelper esHelper = instanceMap.get(custorPrefix);
         if (esHelper == null) {
             esHelper = new ESHelper();
-            esHelper.client = ESClient.createTransportClient(clustSearchName);
-            esHelper.searchName=clustSearchName;
+            esHelper.client = ESClient.createTransportClient(custorPrefix);
+            esHelper.searchName=custorPrefix;
             esHelper.io = new IndicesOperations(esHelper.client);
-            esHelper.searchName=clustSearchName;
-            instanceMap.put(clustSearchName, esHelper);
+            esHelper.searchName=custorPrefix;
+            instanceMap.put(custorPrefix, esHelper);
         }
         return esHelper;
     }
-
     /**
      * 获取知识汇聚的搜索实例
      *
      * @return
      */
-    public static ESHelper getYunInstance() {
-        return getInstance(ESConst.CONF_ES_PREFIX_HUNTER);
-        /*ESHelper helper = ESHelperHolder.helper;
-        helper.client = ESHelperHolder.client;
-        helper.io = ESHelperHolder.io;
-        return helper;*/
+    public static ESHelper getInstance() {
+        return getInstance(ESConst.CONF_ES_PREFIX_LOCAL);
+    }
+    /**
+     * 删除索引
+     * @param name
+     */
+    public void deleteIndex(String name){
+        this.io.deleteIndex(name);
     }
 
+    /**
+     * 创建索引
+     *
+     * @param index 索引名称
+     * @author Jianpin.Li
+     */
+    public void createIndex(String index) {
+        this.io.createIndex(index);
+    }
+
+
+
+
+
+
+
     private static long lastReInitTime=0;
-    public void reInitInstance(String clustSearchName) {
+    public void reInitInstance(String prefinxName) {
         if( (System.currentTimeMillis()-lastReInitTime)>30*60*1000L){
             logger.error("索引长连接出问题，尝试重新初始化连接");
             lastReInitTime=System.currentTimeMillis();
-            ESHelper esHelper = getInstance(clustSearchName);
-            esHelper.client = ESClient.reConnectTransportClient(clustSearchName, (TransportClient) esHelper.client);
+            ESHelper esHelper = getInstance(prefinxName);
+            esHelper.client = ESClient.reConnectTransportClient(prefinxName, (TransportClient) esHelper.client);
             if(esHelper.io!=null){
                 esHelper.io.reSetClient(esHelper.client);
             }else{
                 esHelper.io = new IndicesOperations(esHelper.client);
             }
-            esHelper.searchName=clustSearchName;
+            esHelper.searchName=prefinxName;
         }
     }
 
-    /**
-     * 获取本地搜索服务的搜索实例
-     *
-     * @return
-     */
-    public static ESHelper getLocalInstance() {
-        return getInstance(ESConst.CONF_ES_PREFIX_LOCAL);
-    }
 
     private void dealNoAvailableException(Exception e){
         if (e instanceof NoNodeAvailableException || e instanceof NodeNotConnectedException) {
-            if (this.searchName!=null && this.searchName.equals(ESConst.CONF_ES_PREFIX_HUNTER)) {
-                reInitInstance(ESConst.CONF_ES_PREFIX_HUNTER);
+            if (this.searchName!=null && this.searchName.equals(ESConst.CONF_ES_PREFIX_LOCAL)) {
+                reInitInstance(ESConst.CONF_ES_PREFIX_LOCAL);
             }
             if (this.searchName!=null && this.searchName.equals(ESConst.CONF_ES_PREFIX_LOCAL)) {
                 reInitInstance(ESConst.CONF_ES_PREFIX_LOCAL);
@@ -161,6 +158,7 @@ public class ESHelper {
         return flag;
     }
 
+
     /**
      * 判断是否存在指定索引的type
      *
@@ -186,69 +184,6 @@ public class ESHelper {
     }
 
     /**
-     * 判断是否存在指定索引的type
-     *
-     * @param index 索引名称
-     * @param type  类型名称
-     * @return 存在则返回true，如果连接异常也返回false
-     * @author Jianpin.Li
-     */
-    public boolean existType(IndicesOperations io, String index, String type) {
-        boolean flag = true;
-        try {
-            if (!io.checkTypeExists(index, type)) {
-                flag = false;
-                logger.error("index为【" + index + "】的索引对应的type【" + type + "】不存在！");
-            }
-        } catch (Exception e) {
-            flag = false;
-            logger.error("es节点连接异常！检查网络连接！", e);
-            dealNoAvailableException(e);
-        }
-
-        return flag;
-    }
-
-    /**
-     * 创建索引
-     *
-     * @param index 索引名称
-     * @author Jianpin.Li
-     */
-    public void createIndex(String index) {
-        this.io.createIndex(index);
-    }
-
-    /**
-     * 创建索引
-     *
-     * @param index 索引名称
-     * @author Jianpin.Li
-     */
-    public void createIndex(IndicesOperations io, String index) {
-        io.createIndex(index);
-    }
-
-    /*  private static boolean hasBulkFail(BulkItemResponse[] items) {
-          //    	BulkItemResponse[] items = bulkResponse.getItems();
-          for (BulkItemResponse bulkItemResponse : items) {
-              if (bulkItemResponse.getResponse() instanceof IndexResponse) {
-                  if (!((IndexResponse) bulkItemResponse.getResponse()).isCreated()) {
-                      return true;
-                  }
-              } else if (bulkItemResponse.getResponse() instanceof DeleteResponse) {
-                  if (!((DeleteResponse) bulkItemResponse.getResponse()).isFound()) {
-                      return true;
-                  }
-              }
-
-              //			System.out.println(bulkItemResponse.getResponse() instanceof IndexResponse);
-          }
-
-          return false;
-      }
-     */
-    /**
      * 添加索引的document，不立即刷新
      *
      * @param index  索引名称
@@ -272,7 +207,7 @@ public class ESHelper {
      */
     public boolean addDoc(String index, String type, Map<String, Object> fields, boolean isRefresh) {
         //如果是云搜索，统一改成异步方式处理
-        if(ESConst.CONF_ES_PREFIX_HUNTER.equals(this.searchName)){
+        if(ESConst.CONF_ES_PREFIX_LOCAL.equals(this.searchName)){
             IndexData syncData=new IndexData(index,type,fields,isRefresh);
             SyncAddSearchData.getInstance().addQueue(syncData);
             return true;
@@ -954,110 +889,6 @@ public class ESHelper {
     public Aggregations searchAggs(String indexs, String types, QueryBuilder boolQuery, QueryBuilder boolFilter, List<AggregationBuilder> aggsBuilderList) {
         return this.searchAggsResp(indexs, types, boolQuery, boolFilter, aggsBuilderList).getAggregations();
     }
-
-//    /**
-//     * 使用function_score方式查询
-//     *
-//     * @param indexs           索引名称，多个使用“,”分割
-//     * @param types            类型名称，多个使用“,”分割
-//     * @param fsqBuilder       functionScore查询方式构建
-//     * @param facetBuilderList functionScore查询方式构建
-//     * @param aggsBuilderList  functionScore查询方式构建
-//     * @param pageNo           当前页
-//     * @param pageSize         每页显示多少条
-//     * @return
-//     * @author Jianpin.Li
-//     */
-//    @SuppressWarnings("rawtypes")
-//    public SearchHits searchByFuncScore(String indexs, String types, FunctionScoreQueryBuilder fsqBuilder, List<FacetBuilder> facetBuilderList, List<AggregationBuilder> aggsBuilderList, HighLightConf highLightConf, int pageNo, int pageSize) {
-//        SearchResponse sr = this.searchByFuncScoreResp(indexs, types, fsqBuilder, facetBuilderList, aggsBuilderList, highLightConf, pageNo, pageSize);
-//        return sr.getHits();
-//    }
-//
-//    /**
-//     * 使用function_score方式查询，返回SearchResponse
-//     *
-//     * @param indexs           索引名称，多个使用“,”分割
-//     * @param types            类型名称，多个使用“,”分割
-//     * @param fsqBuilder       functionScore查询方式构建
-//     * @param facetBuilderList functionScore查询方式构建
-//     * @param aggsBuilderList  functionScore查询方式构建
-//     * @param pageNo           当前页
-//     * @param pageSize         每页显示多少条
-//     * @return
-//     * @author Jianpin.Li
-//     */
-//    @SuppressWarnings("rawtypes")
-//    public SearchResponse searchByFuncScoreResp(String indexs, String types, FunctionScoreQueryBuilder fsqBuilder, List<FacetBuilder> facetBuilderList, List<AggregationBuilder> aggsBuilderList, HighLightConf highLightConf, int pageNo, int pageSize) {
-//        try {
-//            SearchRequestBuilder searchRequestBuilder = this.client.prepareSearch(indexs);
-//            if (StringUtils.isNotEmpty(types)) {
-//                searchRequestBuilder.setTypes(types);
-//            }
-//
-//            searchRequestBuilder.setSearchType(SearchType.DFS_QUERY_THEN_FETCH);
-//
-//            searchRequestBuilder.setQuery(fsqBuilder);
-//
-//            if (facetBuilderList != null && facetBuilderList.size() > 0) {
-//                for (FacetBuilder facetBuilder : facetBuilderList) {
-//                    searchRequestBuilder.addFacet(facetBuilder);
-//                }
-//            }
-//
-//            if (aggsBuilderList != null && aggsBuilderList.size() > 0) {
-//                for (AggregationBuilder aggregationBuilder : aggsBuilderList) {
-//                    searchRequestBuilder.addAggregation(aggregationBuilder);
-//                }
-//            }
-//
-//            if (pageNo != 0 && pageSize != 0) {
-//                searchRequestBuilder.setFrom((pageNo - 1) * pageSize).setSize(pageSize);//.setExplain(true)
-//            }
-//
-//            if (highLightConf != null) {
-//                searchRequestBuilder.setHighlighterPreTags(highLightConf.getPreTag());
-//                searchRequestBuilder.setHighlighterPostTags(highLightConf.getPostTag());
-//
-//                if (highLightConf.getFieldList() != null && highLightConf.getFieldList().size() > 0) {
-//                    for (String field : highLightConf.getFieldList()) {
-//                        searchRequestBuilder.addHighlightedField(field);
-//                    }
-//                }
-//            }
-//            return searchRequestBuilder.execute().actionGet();
-//        } catch (Exception e) {
-//            logger.error("搜索服务searchByFuncScoreResp发生异常!", e);
-//            dealNoAvailableException(e);
-//        }
-//
-//        return null;
-//    }
-
-    /**
-     * 创建river
-     *
-     * @param riverName river名称
-     * @param riverJson river配置信息
-     * @return boolean 创建成功为true
-     * @author Jianpin.Li
-     */
-    public boolean createRiver(String riverName, String riverJson) {
-        IndexResponse ir = this.client.prepareIndex("_river", riverName, "_meta").setSource(riverJson).execute().actionGet();
-        return ir.isCreated();
-    }
-
-    /**
-     * 删除river
-     *
-     * @param riverName river名称
-     * @return boolean 删除成功为true
-     * @author Jianpin.Li
-     */
-    public boolean delRiver(String riverName) {
-        return this.bulkDeleteDoc("_river", riverName, ESConst.RIVER_ID_LIST);
-    }
-
     /**
      * 创建mapping
      *
@@ -1074,7 +905,6 @@ public class ESHelper {
         }
         mappingRequest.source(mappingJson);
         PutMappingResponse response = this.client.admin().indices().putMapping(mappingRequest).actionGet();
-
         return response.isAcknowledged();
     }
 
@@ -1168,32 +998,6 @@ public class ESHelper {
 
 
 
-
-    /**
-     * 获取文档数
-     *
-     * @param indexs    索引名称，多个使用“,”分割
-     * @param types     类型名称，多个使用“,”分割
-     * @param boolQuery 组合查询
-     * @return
-     * @author Jianpin.Li
-     */
-    public long getCount(String indexs, String types, QueryBuilder boolQuery) {
-        try {
-            CountRequestBuilder countRequestBuilder = this.client.prepareCount(indexs).setTypes(types);
-
-            if (boolQuery != null) {
-                countRequestBuilder.setQuery(boolQuery);
-            }
-
-            CountResponse response = countRequestBuilder.execute().actionGet();
-            return response.getCount();
-        } catch (Exception e) {
-            logger.error("index为【" + indexs + "】,type为【" + types + "】求总数时发生错误！", e);
-            dealNoAvailableException(e);
-            return 0;
-        }
-    }
 
     /**
      * 根据索引id获取索引数据
@@ -1345,4 +1149,7 @@ public class ESHelper {
         return new SearchResponse();
     }
 
+    public Client getClient() {
+        return client;
+    }
 }

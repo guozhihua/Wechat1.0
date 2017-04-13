@@ -46,7 +46,7 @@ public class SyncAddSearchData {
                             if (ref != null) {
                                 IndexData data = ref.get();
                                 try {
-                                    ESHelper.getYunInstance().addDocDirect(data.getIndex(),data.getType(),data.getFields(),data.isRefresh());
+                                    ESHelper.getInstance().addDocDirect(data.getIndex(),data.getType(),data.getFields(),data.isRefresh());
                                 } catch (Exception e) {
                                     logger.error("存索引错误" + e);
                                     continue;
