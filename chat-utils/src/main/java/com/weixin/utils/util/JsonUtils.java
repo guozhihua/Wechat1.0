@@ -166,6 +166,7 @@ public class JsonUtils {
             return JSON.parseArray(json, objClass);
         } catch (Exception e) {
             logger.error("error", e);
+            e.printStackTrace();
             return null;
         }
     }
