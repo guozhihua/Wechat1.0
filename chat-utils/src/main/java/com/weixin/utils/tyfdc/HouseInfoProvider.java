@@ -22,19 +22,6 @@ public class HouseInfoProvider {
     public static void main(String[] args) {
 
         try {
-            /**
-             * PerYear:
-             PerFlowNO:
-             PerType:0
-             ProType:0
-             ProName:东
-             OrgName:
-             HouseType:0
-             Region:0
-             ProAddress:
-             pageNo:1
-             pageSize:15
-             */
             Map<String, Object> params = new HashMap<>();
             params.put("ProName", "东");
             params.put("pageNo", 1);
