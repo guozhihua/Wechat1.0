@@ -1,5 +1,20 @@
 package com.weixin.utils.util;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.client.utils.URIUtils;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -8,9 +23,12 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -77,9 +95,6 @@ public class HttpRequest {
 	 * 
 	 * @param url
 	 *            资源路径
-	 * @param requestTpye
-	 *            请求方式
-	 * @param JsonData
 	 *            json类型的数据
 	 * @return
 	 */
@@ -134,6 +149,7 @@ public class HttpRequest {
 	 * 
 	 * @return 所代表远程资源的响应结果
 	 */
+
 	public static String postRequest(String url, Map<String, String> parameter) {
 
 		String parameterString = "";
@@ -195,7 +211,6 @@ public class HttpRequest {
 	 * 
 	 * @param url
 	 *            资源路径
-	 * @param JsonData
 	 *            xml类型的数据
 	 * @return
 	 */
@@ -251,6 +266,32 @@ public class HttpRequest {
 
 	}
 
+
+	public static String postFormRequest(String url,Map<String,Object> paramMap) throws Exception{
+		//核心应用类
+		HttpClient httpClient = HttpClientBuilder.create().build();
+		//设定表单需要提交的参数
+		List<NameValuePair> qparams = new ArrayList<NameValuePair>();
+		if(!paramMap.isEmpty()){
+			for(String key :paramMap.keySet()){
+				qparams.add(new BasicNameValuePair(key, String.valueOf(paramMap.get(key))));
+			}
+		}
+		URI uri =new URIBuilder(url).build();
+		//Post提交
+		HttpPost httpPost = new HttpPost(uri);
+		httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded;charset=utf-8");
+		httpPost.setEntity(new UrlEncodedFormEntity(qparams,"utf-8"));
+		//httpClient执行，返回response
+		HttpResponse response = httpClient.execute(httpPost);
+		//获取实体
+		HttpEntity httpEntity= response.getEntity();
+		//打印StatusLine
+		System.out.println("StatusLine: " + response.getStatusLine());
+		//读取内容
+		String content = EntityUtils.toString(httpEntity, "UTF-8");
+		return content;
+	}
 	public static void main(String[] args) {
 		String url = "http://218.240.38.108/uutool/sms/getDetail";
 		// 发送 POST 请求
