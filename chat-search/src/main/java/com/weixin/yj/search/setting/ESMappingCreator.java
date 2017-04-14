@@ -64,6 +64,7 @@ public class ESMappingCreator {
                 }
             }
         } catch (Exception e) {
+           e.printStackTrace();
             logger.error("根据【" + mappingJson + "】创建mapping发生例外！", e);
         }
     }

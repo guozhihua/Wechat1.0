@@ -3,6 +3,7 @@ package com.weixin.yj.search;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.elasticsearch.action.admin.indices.exists.types.TypesExistsResponse;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.common.settings.Settings;
 
 /**
  * 索引目录操作类
@@ -48,7 +49,12 @@ public class IndicesOperations {
      * @param name 索引名称
      */
     public void createIndex(String name) {
-        this.client.admin().indices().prepareCreate(name).execute().actionGet();
+        Settings settings = Settings.builder()
+                //5个主分片
+                .put("number_of_shards", 5)
+                //测试环境，减少副本提高速度
+                .put("number_of_replicas", 1).build();
+        this.client.admin().indices().prepareCreate(name).setSettings(settings).execute().actionGet();
     }
 
     /**

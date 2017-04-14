@@ -5,3 +5,11 @@
  * Date： 2017/4/7.
  */
 package com.weixin.yj.search;
+/**
+ * initMapping中，判断是否初始化了索引，否则，先创建索引，在建立mapping.创建索引指定分片和副本防止yellow.
+ *
+ * 建立好文本之后可以对于数据进行存储
+ *
+ *
+ *
+ */
