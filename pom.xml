@@ -33,6 +33,11 @@
                 <version>${wechat.version}</version>
             </dependency>
             <dependency>
+                <groupId>commons-dbutils</groupId>
+                <artifactId>commons-dbutils</artifactId>
+                <version>1.6</version>
+            </dependency>
+            <dependency>
                 <groupId>com.yj</groupId>
                 <artifactId>chat-service</artifactId>
                 <version>${wechat.version}</version>
