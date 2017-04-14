@@ -1,4 +1,4 @@
-package com.weixin.utils.util;
+package com.weixin.utils.util.thread;
 
 import org.apache.commons.dbutils.QueryRunner;
 
