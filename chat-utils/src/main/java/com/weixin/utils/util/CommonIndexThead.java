@@ -1,4 +1,4 @@
-package com.weixin.utils.tyfdc;
+package com.weixin.utils.util;
 
 import org.apache.commons.dbutils.QueryRunner;
 

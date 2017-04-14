@@ -1,12 +1,12 @@
 package com.weixin.utils.tyfdc;
 
 import com.weixin.utils.jdbc.JdbcUtils;
+import com.weixin.utils.util.CommonIndexThead;
 import com.weixin.utils.util.HttpRequest;
 import com.weixin.utils.util.JsonUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.BeanMapHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,7 +16,6 @@ import org.jsoup.select.Elements;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
