@@ -15,7 +15,9 @@ public class AddhouseIndexData {
 
     public static void main(String[] args) {
         //添加索引
-        new AddhouseIndexData().addDataForHouse();
+//        new AddhouseIndexData().addDataForHouse();
+        //删除索引,
+//        new AddhouseIndexData().deleteDataForHouse();
     }
 
     /**
@@ -38,9 +40,12 @@ public class AddhouseIndexData {
 
     }
 
+    /**
+     * 删除索引，相当于数据库
+     */
     public void deleteDataForHouse(){
           try{
-
+             ESHelper.getInstance().deleteIndex(index);
 
           }catch (Exception ex){
               ex.printStackTrace();
