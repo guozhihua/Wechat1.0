@@ -1,6 +1,7 @@
 package houseTest;
 
 import com.weixin.utils.util.thread.MyTaskUtils;
+import com.weixin.yj.search.ESHelper;
 
 /**
  * Created by :Guozhihua
@@ -33,7 +34,17 @@ public class AddhouseIndexData {
        }
 
 
+
+
     }
 
+    public void deleteDataForHouse(){
+          try{
+
+
+          }catch (Exception ex){
+              ex.printStackTrace();
+          }
+    }
 
 }

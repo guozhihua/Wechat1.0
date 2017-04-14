@@ -1152,4 +1152,11 @@ public class ESHelper {
     public Client getClient() {
         return client;
     }
+
+
+    public boolean deleteBatch(){
+
+
+        return false;
+    }
 }
