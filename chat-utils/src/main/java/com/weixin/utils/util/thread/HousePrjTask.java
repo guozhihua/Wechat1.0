@@ -2,7 +2,7 @@ package com.weixin.utils.util.thread;
 
 import com.weixin.utils.jdbc.JdbcUtils;
 import com.weixin.utils.tyfdc.HouseInfoProvider;
-import com.weixin.utils.tyfdc.house;
+import com.weixin.utils.tyfdc.House;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import java.util.List;
@@ -24,8 +24,8 @@ public class HousePrjTask extends CommonIndexThead {
          this.sql = "select id from house_info";
         try {
             for (long j = this.startPage; j <= this.endPage; j++) {
-                List<house> llis = (List<house>) runner.query(JdbcUtils.getPageSql(sql, (int) j, MyTaskUtils.TASK_PAGE_SIZE), new BeanListHandler(house.class));
-                for (house id : llis) {
+                List<House> llis = (List<House>) runner.query(JdbcUtils.getPageSql(sql, (int) j, MyTaskUtils.TASK_PAGE_SIZE), new BeanListHandler(House.class));
+                for (House id : llis) {
                     provider.setHousePrjInfo(id.getId());
                 }
             }

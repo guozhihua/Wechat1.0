@@ -6,24 +6,20 @@ import com.weixin.utils.util.HttpRequest;
 import com.weixin.utils.util.JsonUtils;
 import com.weixin.utils.util.thread.HousePrjTask;
 import com.weixin.utils.util.thread.MyTaskUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
-import org.springframework.scheduling.support.TaskUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * http://wsfc.nsae.tyfdc.gov.cn/Firsthand/tyfc/publish/p/ProjInfo.do?propid=
@@ -116,8 +112,9 @@ public class HouseInfoProvider {
     }
 
     /**
+     *
      * 房产数据信息，第一步，获取到具体的楼
-     *                第二步，获取每个楼的出售情况和户型的具体数据
+     *               第二步，获取每个楼的出售情况和户型的具体数据
      *
      * @param pid
      * @return
@@ -142,7 +139,7 @@ public class HouseInfoProvider {
                 String id = element.attributes().get("objid");
                 List<Node> nodes = element.childNodes();
                 try {
-                   //在里面把数据抽取出来，sql参数数组里
+                   //在里面把数据抽取出来，sql参数数组里,例如
                     sqlParams[i] = new Object[] { "aa" , "123", "aa@sina.com","",""};
                     i++;
                 } catch (Exception ex) {
@@ -150,13 +147,18 @@ public class HouseInfoProvider {
                     continue;
                 }
             }
-            //批量插入数据
+            //批量插入所有的楼的数据
            queryRunner.batch(insertSql,sqlParams);
+            //根据小区和楼号，获取具体的出售情况
+           List<HouseObj> houseobjs= (List<HouseObj>) queryRunner.query("select * from house_obj",new BeanListHandler(HouseObj.class));
+           if(CollectionUtils.isNotEmpty(houseobjs)){
+
+
+
+           }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-
         return null;
     }
 
@@ -183,7 +185,7 @@ public class HouseInfoProvider {
         try {
             QueryRunner queryRunner = new QueryRunner(JdbcUtils.getDataSource("hxs_wx"));
             String sql = "select * from house_info where id = " + id;
-            house house = (com.weixin.utils.tyfdc.house) queryRunner.query(sql, new BeanHandler(house.class));
+            House house = (House) queryRunner.query(sql, new BeanHandler(House.class));
 
             String rs = HttpRequest.getRequest(hosue_prj_info + id);
             Document document = Jsoup.parse(rs);

@@ -24,7 +24,7 @@ import java.io.Serializable;
  * Created by :Guozhihua
  * Date： 2017/4/14.
  */
-public class house implements Serializable {
+public class House implements Serializable {
     private int pid;
     private String id;
     private String houseName;

@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by :Guozhihua
  * Date： 2017/4/14.
  */
-public class houseObj implements Serializable {
+public class HouseObj implements Serializable {
     private  int nid;
     private String houseId;
     private String houseName;
