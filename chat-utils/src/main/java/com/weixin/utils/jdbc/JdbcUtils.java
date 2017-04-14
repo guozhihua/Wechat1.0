@@ -187,6 +187,7 @@ public class JdbcUtils {
             pageSize = 200;
         }
         String sql = baseSql + " limit " + ((pageNo - 1) * pageSize) + "," + pageSize;
+        System.out.println("sql is :"+sql);
         return sql;
     }
 
