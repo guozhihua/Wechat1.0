@@ -41,6 +41,16 @@ public class Mhouse implements Serializable {
     private String address;
     private String mid;//具体的房间唯一标识
 
+    private String danyuan;
+
+    public String getDanyuan() {
+        return danyuan;
+    }
+
+    public void setDanyuan(String danyuan) {
+        this.danyuan = danyuan;
+    }
+
     public int getUid() {
         return uid;
     }

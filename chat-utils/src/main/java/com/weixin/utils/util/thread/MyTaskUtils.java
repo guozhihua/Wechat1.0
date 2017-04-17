@@ -1,8 +1,10 @@
 package com.weixin.utils.util.thread;
 
 import com.weixin.utils.jdbc.JdbcUtils;
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +22,7 @@ public class MyTaskUtils {
     public static  final int TASK_PAGE_SIZE=100;
     //指定每个线程的处理的页数
     public static  final int TASK_PAGE_NUM=3;
-    private static QueryRunner getQueryRunner(String datasourceName){
+    private static  QueryRunner getQueryRunner(String datasourceName){
         QueryRunner queryRunner = new QueryRunner(JdbcUtils.getDataSource(datasourceName));
         return queryRunner;
     }
@@ -33,6 +35,7 @@ public class MyTaskUtils {
      */
     public void MutiTasksRun(String dataSourceName,String countSql,String totalCoumnName,CommonIndexThead thead){
         ExecutorService executor = Executors.newCachedThreadPool();
+
         try{
             QueryRunner queryRunner =getQueryRunner(dataSourceName);
             List<Map<String, Object>> countList = queryRunner.query(countSql, new MapListHandler());
@@ -54,13 +57,18 @@ public class MyTaskUtils {
                 for (int i = 1; i <= threadSize; i++) {
                     long startPage = interval * (i - 1) + 1;
                     long endPage = (i == threadSize) ? pages : startPage + interval - 1;
+                    CommonIndexThead thead2=null;
                     if(thead!=null){
-                        thead.setLatch(latch);
-                        thead.setStartPage(startPage);
-                        thead.setEndPage(endPage);
-                        thead.setRunner(queryRunner);
+                        thead2 = thead.getClass().newInstance();
+                        thead2.setContType(thead.getContType());
+                        thead2.setSql(thead.getSql());
+                        thead2.setLatch(latch);
+                        thead2.setStartPage(startPage);
+                        thead2.setEndPage(endPage);
+
+                        thead2.setRunner(getQueryRunner(dataSourceName));
                     }
-                    executor.execute(thead);
+                    executor.execute(thead2);
                 }
             }
         }catch (Exception ex){
