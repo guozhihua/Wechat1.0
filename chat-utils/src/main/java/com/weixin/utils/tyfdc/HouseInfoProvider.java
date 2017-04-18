@@ -1,9 +1,9 @@
 package com.weixin.utils.tyfdc;
 
 import com.weixin.utils.jdbc.JdbcUtils;
-import com.weixin.utils.util.thread.*;
 import com.weixin.utils.util.HttpRequest;
 import com.weixin.utils.util.JsonUtils;
+import com.weixin.utils.util.thread.*;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;

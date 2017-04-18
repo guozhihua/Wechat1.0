@@ -65,7 +65,8 @@ public class MyTaskUtils {
                         thead2.setLatch(latch);
                         thead2.setStartPage(startPage);
                         thead2.setEndPage(endPage);
-
+                        thead2.setType(thead.getType());
+                        thead2.setIndex(thead.getIndex());
                         thead2.setRunner(getQueryRunner(dataSourceName));
                     }
                     executor.execute(thead2);

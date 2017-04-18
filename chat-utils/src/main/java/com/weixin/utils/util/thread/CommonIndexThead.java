@@ -2,6 +2,8 @@ package com.weixin.utils.util.thread;
 
 import org.apache.commons.dbutils.QueryRunner;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -16,6 +18,25 @@ public abstract class CommonIndexThead extends Thread {
     protected QueryRunner runner;
     protected String sql;
     protected String contType;
+    protected String index ;
+    protected String  type;
+    protected Map<String,Object> paramMap=new HashMap<>();
+
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getClientCode() {
         return clientCode;
