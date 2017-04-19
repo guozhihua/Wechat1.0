@@ -74,6 +74,7 @@ public class ESHelper {
             esHelper.searchName=custorPrefix;
             instanceMap.put(custorPrefix, esHelper);
         }
+
         return esHelper;
     }
     /**
