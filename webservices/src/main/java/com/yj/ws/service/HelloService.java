@@ -1,0 +1,25 @@
+package com.yj.ws.service;
+
+import com.yj.ws.App;
+import org.springframework.stereotype.Component;
+
+import javax.jws.WebService;
+
+/**
+ * Created by :Guozhihua
+ * Date： 2017/4/20.
+ */
+@Component
+@WebService(endpointInterface = "com.yj.ws.service.IsService",serviceName = "helloService")
+public class HelloService implements IsService {
+    @Override
+    public String sayHi(String text) {
+        return "hello " + text;
+    }
+
+    @Override
+    public App getAppById(String appId) {
+        App app = new App(12,"apple");
+        return app;
+    }
+}
