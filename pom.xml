@@ -457,6 +457,21 @@
                 <artifactId>cxf-rt-bindings-soap</artifactId>
                 <version>${org.cxf-version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-bundle-jaxrs</artifactId>
+                <version>${org.cxf-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-transports-http</artifactId>
+                <version>${org.cxf-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-transports-http-jetty</artifactId>
+                <version>${org.cxf-version}</version>
+            </dependency>
             <!--cxf 跨域方式有2中解决途径，一种是cors跨域设置，一种是支持jsonp-->
             <dependency>
                 <groupId>org.apache.cxf</groupId>
