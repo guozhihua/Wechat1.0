@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import javax.jws.WebService;
 
 /**
+ * 一般情况下，使用post方式进行接口限制，防止在页面直接输入url调用。
  * Created by :Guozhihua
  * Date： 2017/4/20.
  */
