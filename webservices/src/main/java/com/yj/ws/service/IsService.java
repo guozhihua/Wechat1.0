@@ -26,7 +26,7 @@ public interface IsService {
 
 
     @GET
-    @Path("/hi")
+    @Path("/app")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_XML)
     @WebMethod(operationName = "getAppById")

@@ -11,7 +11,7 @@ import javax.jws.WebService;
  * Date： 2017/4/20.
  */
 @Component
-@WebService(endpointInterface = "com.yj.ws.service.IsService",serviceName = "helloService")
+@WebService(endpointInterface = "com.yj.ws.service.IsService",serviceName = "helloService",targetNamespace = "http://service.ws.yj.com/")
 public class HelloService implements IsService {
     @Override
     public String sayHi(String text) {

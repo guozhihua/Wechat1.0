@@ -6,12 +6,12 @@
     http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
     http://cxf.apache.org/jaxrs
     http://cxf.apache.org/schemas/jaxrs.xsd http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
-	<!-- soap webservice -->
+	<!-- soap webservice wsdl -->
 	<jaxws:endpoint id="isService" implementor="com.yj.ws.service.HelloService"
 					address="/soap">
 	</jaxws:endpoint>
 
-	<!--rest 方式的webService-->
+	<!--rest 方式的webService wadl-->
 	<bean id="testWs" class="com.yj.ws.service.TestWs" />
 	<!-- 这里的地址很重要，客户端需要通过这个地址来访问WebService -->
 	<jaxrs:server id="spring-app-cloud-auth" address="/rest">
