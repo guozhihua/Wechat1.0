@@ -6,6 +6,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 
+/**
+ * 推荐使用谷歌的反序列化工具 protostuff
+ */
+
 public class SerializeUtil {
     public static byte[] serialize(Object object) {
         ObjectOutputStream oos = null;
