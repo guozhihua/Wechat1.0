@@ -16,17 +16,18 @@ public class TestHello {
 
 
     /**
-     * 简单的通过完整的接口地址访问
-     * 这种方式无法对于接口对象的限制太死了
+     * 获取webserice对象，可以调用所有的方法，累死于hessian 代理
      */
     @Test
     public void hell() {
         JaxWsProxyFactoryBean bean = new JaxWsProxyFactoryBean();
         bean.setServiceClass(com.yj.ws.service.IsService.class);
-        bean.setAddress("http://localhost:8080/ws/soap/helloService/hi");
+        bean.setAddress("http://localhost:8080/ws/soap/helloService");
         IsService helloWorldService = (IsService) bean.create();
         String result = helloWorldService.sayHi("Kevin");
+        App result2 = helloWorldService.getAppById("234");
         System.out.println(result);
+        System.out.println(result2.getName());
     }
 
 
@@ -69,4 +70,6 @@ public class TestHello {
             e.printStackTrace();
         }
     }
+
+
 }
