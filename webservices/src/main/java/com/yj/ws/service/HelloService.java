@@ -1,6 +1,5 @@
 package com.yj.ws.service;
 
-import com.yj.ws.App;
 import org.springframework.stereotype.Component;
 
 import javax.jws.WebService;

@@ -1,7 +1,5 @@
 package com.yj.ws.service;
 
-import com.yj.ws.App;
-
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;

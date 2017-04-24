@@ -17,6 +17,11 @@
             <version>${wechat.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.yj</groupId>
+            <artifactId>chat-search</artifactId>
+            <version>${wechat.version}</version>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet.jsp.jstl</groupId>
             <artifactId>jstl-api</artifactId>
             <version>1.2</version>

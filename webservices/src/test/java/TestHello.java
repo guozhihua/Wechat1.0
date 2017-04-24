@@ -1,5 +1,5 @@
 import com.weixin.utils.util.JsonUtils;
-import com.yj.ws.App;
+import com.yj.ws.service.App;
 import com.yj.ws.service.IsService;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
@@ -23,7 +23,7 @@ public class TestHello {
     public void hell() {
         JaxWsProxyFactoryBean bean = new JaxWsProxyFactoryBean();
         bean.setServiceClass(com.yj.ws.service.IsService.class);
-        bean.setAddress("http://localhost:8082/ws/soap/helloService/hi");
+        bean.setAddress("http://localhost:8080/ws/soap/helloService/hi");
         IsService helloWorldService = (IsService) bean.create();
         String result = helloWorldService.sayHi("Kevin");
         System.out.println(result);
@@ -53,7 +53,7 @@ public class TestHello {
 
         JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
         Client client = dcf
-                .createClient("http://localhost:8082/ws/soap?wsdl");
+                .createClient("http://localhost:8080/ws/soap?wsdl");
         // url为调用webService的wsdl地址
         QName name = new QName("http://service.ws.yj.com/", "getAppById");
         // namespace是命名空间，methodName是方法名
@@ -62,7 +62,9 @@ public class TestHello {
         Object[] objects;
         try {
             objects = client.invoke(name, xmlStr);
-            System.out.println(objects[0].toString());
+            System.out.println( objects[0].toString());
+            App app = (App) objects[0];
+            System.out.println(app.getName());
         } catch (Exception e) {
             e.printStackTrace();
         }
