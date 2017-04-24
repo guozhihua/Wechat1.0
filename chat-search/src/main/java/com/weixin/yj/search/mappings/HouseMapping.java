@@ -23,8 +23,8 @@ public class HouseMapping {
         //小区id
         proMap.put("id",new EsMappingPropertiesVo(EsMappingConst.PRO_TYPE_INTEGER));
         //houseName
-        proMap.put("houseName",new EsMappingPropertiesVo(EsMappingConst.PRO_INDEX_ANALYZED, EsMappingConst.PRO_TYPE_STRING, EsMappingConst.PRO_ANALYZED_IK_MAX_WORD, true));
-        proMap.put("areaName",new EsMappingPropertiesVo(EsMappingConst.PRO_INDEX_ANALYZED, EsMappingConst.PRO_TYPE_STRING, EsMappingConst.PRO_ANALYZED_IK, true));
+        proMap.put("houseName",new EsMappingPropertiesVo(EsMappingConst.PRO_INDEX_NOT_ANALYZED, EsMappingConst.PRO_TYPE_STRING));
+        proMap.put("areaName",new EsMappingPropertiesVo(EsMappingConst.PRO_INDEX_NOT_ANALYZED, EsMappingConst.PRO_TYPE_STRING));
         proMap.put("houseType",new EsMappingPropertiesVo(EsMappingConst.PRO_INDEX_ANALYZED, EsMappingConst.PRO_TYPE_STRING, EsMappingConst.PRO_ANALYZED_IK, true));
         proMap.put("yushouCode",new EsMappingPropertiesVo(EsMappingConst.PRO_INDEX_ANALYZED, EsMappingConst.PRO_TYPE_STRING, EsMappingConst.PRO_ANALYZED_IK));
         proMap.put("kaifashang",new EsMappingPropertiesVo(EsMappingConst.PRO_INDEX_ANALYZED, EsMappingConst.PRO_TYPE_STRING, EsMappingConst.PRO_ANALYZED_IK));

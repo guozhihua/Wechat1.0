@@ -22,8 +22,8 @@ public class HouseObjPriceMapping {
         //小区id
         proMap.put("id",new EsMappingPropertiesVo(EsMappingConst.PRO_TYPE_INTEGER));
         //houseName
-        proMap.put("houseName",new EsMappingPropertiesVo(EsMappingConst.PRO_INDEX_ANALYZED, EsMappingConst.PRO_TYPE_STRING, EsMappingConst.PRO_ANALYZED_IK_MAX_WORD, true));
-        proMap.put("areaName",new EsMappingPropertiesVo(EsMappingConst.PRO_INDEX_ANALYZED, EsMappingConst.PRO_TYPE_STRING, EsMappingConst.PRO_ANALYZED_IK, true));
+        proMap.put("houseName",new EsMappingPropertiesVo(EsMappingConst.PRO_INDEX_NOT_ANALYZED, EsMappingConst.PRO_TYPE_STRING));
+        proMap.put("areaName",new EsMappingPropertiesVo(EsMappingConst.PRO_INDEX_NOT_ANALYZED, EsMappingConst.PRO_TYPE_STRING));
         proMap.put("address",new EsMappingPropertiesVo(EsMappingConst.PRO_INDEX_ANALYZED, EsMappingConst.PRO_TYPE_STRING, EsMappingConst.PRO_ANALYZED_IK));
         proMap.put("startTime",new EsMappingPropertiesVo(EsMappingConst.PRO_INDEX_ANALYZED, EsMappingConst.PRO_TYPE_STRING, EsMappingConst.PRO_ANALYZED_IK));
         proMap.put("endTime",new EsMappingPropertiesVo(EsMappingConst.PRO_INDEX_ANALYZED, EsMappingConst.PRO_TYPE_STRING, EsMappingConst.PRO_ANALYZED_IK));
