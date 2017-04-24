@@ -58,8 +58,8 @@ public class HouseInfoProvider {
 
         };
         for(String d:dd){
-            new HouseInfoProvider().setHouseDataInfo(getQueryRunner(),d);
-//            new HouseInfoProvider().resetProperPriceDate(getQueryRunner(),d);
+//            new HouseInfoProvider().setHouseDataInfo(getQueryRunner(),d);
+            new HouseInfoProvider().resetProperPriceDate(getQueryRunner(),d);
         }
 
 //        new HouseInfoProvider().checkHouse();
