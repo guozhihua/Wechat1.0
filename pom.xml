@@ -559,7 +559,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--指定Maven用什么编码来呈现站点的HTML文件 -->
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring.version>4.1.6.RELEASE</spring.version>
+        <spring.version>4.2.4.RELEASE</spring.version>
         <quartz.version>2.2.2</quartz.version>
         <slf4j.version>1.7.5</slf4j.version>
         <mybatis.version>3.2.8</mybatis.version>
