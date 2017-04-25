@@ -1,6 +1,8 @@
 package com.weixin.utils.util;
 
+import com.google.common.io.ByteArrayDataInput;
 import com.google.gson.Gson;
+import org.springframework.util.Base64Utils;
 
 import javax.crypto.Cipher;
 import java.security.Key;
@@ -178,7 +180,7 @@ public class DESSecurityUtils {
             map.put("phone","17710704320");
             String test = new Gson().toJson(map);
             //DESPlus des = new DESPlus();//默认密钥
-            DESSecurityUtils des = new DESSecurityUtils("leemenz");//自定义密钥
+            DESSecurityUtils des = new DESSecurityUtils("weqeqwe213123f932452");//自定义密钥
             System.out.println("加密前的字符："+test);
             System.out.println("加密后的字符："+des.encrypt(test));
             System.out.println("解密后的字符："+des.decrypt(des.encrypt(test)));

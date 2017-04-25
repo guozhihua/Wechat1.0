@@ -18,6 +18,7 @@
         <module>chat-cache</module>
         <module>chat-search</module>
         <module>webservices</module>
+        <module>chat-sso</module>
     </modules>
 
     <!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId 和 artifactId 即可 -->
@@ -559,7 +560,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--指定Maven用什么编码来呈现站点的HTML文件 -->
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <spring.version>4.1.6.RELEASE</spring.version>
+        <spring.version>4.2.4.RELEASE</spring.version>
         <quartz.version>2.2.2</quartz.version>
         <slf4j.version>1.7.5</slf4j.version>
         <mybatis.version>3.2.8</mybatis.version>
