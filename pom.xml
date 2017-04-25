@@ -327,6 +327,11 @@
                 <artifactId>activemq-pool</artifactId>
                 <version>${activeMQ-pool.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.activemq</groupId>
+                <artifactId>activemq-web</artifactId>
+                <version>${activeMQ.version}</version>
+            </dependency>
             <!--图片压缩的包-->
             <dependency>
                 <groupId>net.coobird</groupId>
