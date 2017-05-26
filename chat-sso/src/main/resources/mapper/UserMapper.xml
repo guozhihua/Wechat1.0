@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chat.sso.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.weixin.entity.chat.User">
+    <id column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="true_name" jdbcType="VARCHAR" property="trueName" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="head_img_url" jdbcType="VARCHAR" property="headImgUrl" />
+    <result column="first_login_flag" jdbcType="BIT" property="firstLoginFlag" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="user_token" jdbcType="VARCHAR" property="userToken" />
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, sex, open_id, user_name, true_name, mobile, head_img_url, first_login_flag, 
+    status, user_token, last_time, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from p_user_base
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getByOpenid" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select 
+    <include refid="Base_Column_List" />
+    from p_user_base
+    where open_id = #{openId,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from p_user_base
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.weixin.entity.chat.User">
+    <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="userId">
+      SELECT UUID()
+    </selectKey>
+    insert into p_user_base (user_id, sex, open_id, 
+      user_name, true_name, mobile, 
+      head_img_url, first_login_flag, status, 
+      user_token, last_time, create_time, 
+      update_time)
+    values (#{userId,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR},
+      #{userName,jdbcType=VARCHAR}, #{trueName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{headImgUrl,jdbcType=VARCHAR}, #{firstLoginFlag,jdbcType=BIT}, #{status,jdbcType=BIT}, 
+      #{userToken,jdbcType=VARCHAR}, #{lastTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.weixin.entity.chat.User">
+    <selectKey resultType="java.lang.String" order="BEFORE" keyProperty="userId">
+      SELECT UUID()
+    </selectKey>
+    insert into p_user_base
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="trueName != null">
+        true_name,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="headImgUrl != null">
+        head_img_url,
+      </if>
+      <if test="firstLoginFlag != null">
+        first_login_flag,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="userToken != null">
+        user_token,
+      </if>
+      <if test="lastTime != null">
+        last_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="trueName != null">
+        #{trueName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="headImgUrl != null">
+        #{headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="firstLoginFlag != null">
+        #{firstLoginFlag,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="userToken != null">
+        #{userToken,jdbcType=VARCHAR},
+      </if>
+      <if test="lastTime != null">
+        #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.weixin.entity.chat.User">
+    update p_user_base
+    <set>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="trueName != null">
+        true_name = #{trueName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="headImgUrl != null">
+        head_img_url = #{headImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="firstLoginFlag != null">
+        first_login_flag = #{firstLoginFlag,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="userToken != null">
+        user_token = #{userToken,jdbcType=VARCHAR},
+      </if>
+      <if test="lastTime != null">
+        last_time = #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.weixin.entity.chat.User">
+    update p_user_base
+    set sex = #{sex,jdbcType=INTEGER},
+      open_id = #{openId,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      true_name = #{trueName,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      head_img_url = #{headImgUrl,jdbcType=VARCHAR},
+      first_login_flag = #{firstLoginFlag,jdbcType=BIT},
+      status = #{status,jdbcType=BIT},
+      user_token = #{userToken,jdbcType=VARCHAR},
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <!-- 查询用户列表 -->
+  <select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
+    select
+    <include refid="Base_Column_List"/>
+    from p_user_base
+    <include refid="Example_Where_Clause"/>
+    <if test="orderByClause != null and orderByClause != ''" >
+      order by  ${orderByClause}
+    </if>
+  </select>
+
+
+  <!-- 查询条件 -->
+  <sql id="Example_Where_Clause">
+    where 1=1
+    <trim  suffixOverrides="," >
+      <if test="userId != null and userId != ''" >
+        and user_id =  #{userId}
+      </if>
+      <if test="sex != null and sex != ''" >
+        and sex =  #{sex}
+      </if>
+      <if test="openId != null and openId != ''" >
+        and open_id =  #{openId}
+      </if>
+      <if test="userName != null and userName != ''" >
+        and user_name =  #{userName}
+      </if>
+      <if test="trueName != null and trueName != ''" >
+        and true_name =  #{trueName}
+      </if>
+      <if test="mobile != null and mobile != ''" >
+        and mobile =  #{mobile}
+      </if>
+      <if test="headImgUrl != null and headImgUrl != ''" >
+        and head_img_url =  #{headImgUrl}
+      </if>
+      <if test="firstLoginFlag != null and firstLoginFlag != ''" >
+        and first_login_flag =  #{firstLoginFlag}
+      </if>
+      <if test="status != null and status != ''" >
+        and status =  #{status}
+      </if>
+      <if test="userToken != null and userToken != ''" >
+        and user_token =  #{userToken}
+      </if>
+      <if test="lastTime != null and lastTime != ''" >
+        and last_time =  #{lastTime}
+      </if>
+      <if test="createTime != null and createTime != ''" >
+        and create_time =  #{createTime}
+      </if>
+      <if test="updateTime != null and updateTime != ''" >
+        and update_time =  #{updateTime}
+      </if>
+    </trim>
+  </sql>
+
+</mapper>

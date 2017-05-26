@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	   xmlns:task="http://www.springframework.org/schema/task"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+	<!-- 引入属性文件 -->
+	<context:property-placeholder location="classpath:config/jdbc.properties"  ignore-unresolvable="true"  />
+	<!-- 自动扫描(自动注入) -->
+	<context:component-scan base-package="com.chat.sso">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:exclude-filter>
+	</context:component-scan>
+	<bean id="consumerIniter" class="com.chat.sso.queue.MsgConsumerIniter" init-method="initConsumer"></bean>
+	<!-- 启动定时器 -->
+	<task:executor id="executor" pool-size="5" />
+	<task:scheduler id="scheduler" pool-size="10" />
+	<task:annotation-driven executor="executor" scheduler="scheduler" />
+	<!--<import resource="classpath*:/config/redis-context.xml"></import>-->
+</beans>
