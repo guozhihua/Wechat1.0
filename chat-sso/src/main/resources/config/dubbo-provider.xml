@@ -12,10 +12,16 @@
     <dubbo:registry address="zookeeper://101.200.55.143:2181?backup=101.200.55.143:2182,101.200.55.143:2183" check="true" />
     <!-- 用dubbo协议在20880端口暴露服务 -->
     <dubbo:protocol name="dubbo" port="20880" />
+    <dubbo:protocol name="rest" port="20881"  />
     <!-- 声明需要暴露的服务接口 -->
-    <dubbo:service interface="sso.provider.SsoUserLoginService"
-                   ref="SsoUserLoginService" />
+    <dubbo:service interface="sso.provider.dubbo.SsoUserLoginService"
+                   ref="SsoUserLoginService" protocol="dubbo" />
+    <!-- 使用rmi协议暴露服务 -->
+    <dubbo:service interface="sso.provider.rest.SsoUserLoginRestService" ref="SsoUserLoginRestService" protocol="rest" validation="true"  />
+
+
     <!-- 具体的实现bean,用来注入-->
     <bean id="SsoUserLoginService" class="com.chat.sso.provider.SsoUserLoginServiceImpl" />
+    <bean id="SsoUserLoginRestService" class="com.chat.sso.provider.SsoUserLoginRestServiceImpl" />
 
 </beans>

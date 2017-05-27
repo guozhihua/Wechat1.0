@@ -1,8 +1,7 @@
 package com.chat.sso.provider;
 
 import com.weixin.entity.chat.User;
-import sso.provider.SsoUserLoginService;
-import sun.net.NetworkClient;
+import sso.provider.dubbo.SsoUserLoginService;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
