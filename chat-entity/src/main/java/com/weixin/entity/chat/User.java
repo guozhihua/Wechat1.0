@@ -1,8 +1,9 @@
 package com.weixin.entity.chat;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable{
     @Override
 	public String toString() {
 		return "User [userId=" + userId + ", sex=" + sex + ", openId=" + openId

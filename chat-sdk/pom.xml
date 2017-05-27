@@ -11,6 +11,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>chat-sdk</artifactId>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.yj</groupId>
+            <artifactId>chat-entity</artifactId>
+        </dependency>
+    </dependencies>
     <build>
         <finalName>chat-sdk</finalName>
         <plugins>
