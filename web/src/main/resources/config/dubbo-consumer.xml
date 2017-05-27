@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        ">
+
+    <!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+    <dubbo:application name="test_consumer"/>
+    <!-- 使用zookeeper注册中心暴露服务地址 check 代表是否检查注册中心或者是提供者-->
+
+    <dubbo:registry address="zookeeper://101.200.55.143:2181?backup=101.200.55.143:2182,101.200.55.143:2183"
+                    check="true"/>
+    <!-- 声明需要使用的服务接口 -->
+    <dubbo:reference id="SsoUserLoginService" interface="sso.provider.SsoUserLoginService" timeout="5000"
+                     check="false"/>
+
+</beans>

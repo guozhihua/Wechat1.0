@@ -16,14 +16,14 @@ import javax.jms.*;
  * Date： 2017/3/8.
  */
 @Component
-@EnableJms
+//@EnableJms
 public class PointListener implements SessionAwareMessageListener<ObjectMessage> {
     //当收到消息后，自动调用该方法,spring配置默认监听器，负责接收消息
     private final Logger logger = LoggerFactory.getLogger(PointListener.class);
 
 
     @Override
-    @JmsListener(containerFactory= MessageQueueName.JSM_CONNECTION_FACTORY,destination = MessageQueueName.textMessageQueue)
+//    @JmsListener(containerFactory= MessageQueueName.JSM_CONNECTION_FACTORY,destination = MessageQueueName.textMessageQueue)
     public void onMessage(ObjectMessage objectMessage, Session session) throws JMSException {
         try {
             //todo 根据消息类型做响应的业务处理
