@@ -20,14 +20,15 @@ import java.net.UnknownHostException;
         ##可以接受的数据格式。json和简单xml
  */
 @Path("users")
-@Consumes({MediaType.APPLICATION_JSON, MediaType.TEXT_XML})
-@Produces({ContentType.APPLICATION_JSON_UTF_8, ContentType.TEXT_XML_UTF_8})
+//@Consumes({MediaType.APPLICATION_JSON, MediaType.TEXT_XML})
+
 public class SsoUserLoginRestServiceImpl implements SsoUserLoginRestService {
 
 
     @GET
     @Path("getUser")
     @Override
+    @Produces({ContentType.APPLICATION_JSON_UTF_8, ContentType.TEXT_XML_UTF_8})
     public User queryUserByTicket(@QueryParam("ticket") String ticket) {
         try {
             System.out.println("rest fule=========== "+ticket);
