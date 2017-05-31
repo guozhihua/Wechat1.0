@@ -91,6 +91,12 @@
             </dependency>
 
             <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dubbo-rpc-rest</artifactId>
+                <version>2.8.4a</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.101tec</groupId>
                 <artifactId>zkclient</artifactId>
                 <version>0.3</version>
@@ -127,7 +133,17 @@
                 <groupId>org.jboss.resteasy</groupId>
                 <artifactId>resteasy-jaxrs</artifactId>
                 <version>3.0.8.Final</version>
-                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>jaxrs-api</artifactId>
+                <version>3.0.8.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.spec.javax.annotation</groupId>
+                <artifactId>jboss-annotations-api_1.1_spec</artifactId>
+                <version>1.0.1.Final</version>
             </dependency>
 
             <dependency>
@@ -155,7 +171,44 @@
             <!--<artifactId>logback-classic</artifactId>-->
             <!--<version>${logback.version}</version>-->
             <!--</dependency>-->
+            <!-- 如果要使用json序列化 -->
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-jackson-provider</artifactId>
+                <version>3.0.7.Final</version>
+            </dependency>
 
+            <!-- 如果要使用xml序列化 -->
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-jaxb-provider</artifactId>
+                <version>3.0.7.Final</version>
+            </dependency>
+
+            <!-- 如果要使用netty server -->
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-netty</artifactId>
+                <version>3.0.7.Final</version>
+            </dependency>
+
+            <!-- 如果要使用Sun HTTP server -->
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-jdk-http</artifactId>
+                <version>3.0.7.Final</version>
+            </dependency>
+            <!-- 如果要使用tomcat server -->
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-core</artifactId>
+                <version>7.0.59</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-logging-juli</artifactId>
+                <version>7.0.59</version>
+            </dependency>
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -528,6 +581,12 @@
                 <artifactId>javax.inject</artifactId>
                 <version>1</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty</artifactId>
+                <version>${jetty_version}</version>
+            </dependency>
         </dependencies>
 
 
@@ -599,6 +658,7 @@
         <org.cxf-version>3.1.10</org.cxf-version>
         <package.environment>dev</package.environment>
         <wechat.version>0.0.1-SNAPSHOT</wechat.version>
+        <jetty_version>6.1.26</jetty_version>
     </properties>
 
     <repositories>

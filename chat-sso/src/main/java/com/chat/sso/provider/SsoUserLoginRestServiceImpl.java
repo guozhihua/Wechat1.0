@@ -2,6 +2,7 @@ package com.chat.sso.provider;
 
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
 import com.weixin.entity.chat.User;
+import org.springframework.stereotype.Service;
 import sso.provider.rest.SsoUserLoginRestService;
 
 import javax.ws.rs.*;

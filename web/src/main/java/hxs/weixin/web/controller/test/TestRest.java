@@ -1,7 +1,6 @@
 package hxs.weixin.web.controller.test;
 
 import com.weixin.entity.chat.User;
-import com.weixin.utils.util.HTTPClientUtils;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
@@ -16,7 +15,7 @@ public class TestRest {
     public static void main(String[] args) {
         try{
             ResteasyClient client = new ResteasyClientBuilder().build();  // <-- Error occurs here
-            ResteasyWebTarget target = client.target("http://localhost:20881/servers/user/getUser?ticket=123131");
+            ResteasyWebTarget target = client.target("http://192.168.1.71:20881/servers/users/getUser?ticket=123131");
             Response response = target.request().get();
             User value = response.readEntity(User.class);
             System.out.println(value.getUserName());
