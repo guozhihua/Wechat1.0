@@ -45,11 +45,10 @@
            <artifactId>protostuff-runtime</artifactId>
            <version>1.0.8</version>
        </dependency>
-       <!-- https://mvnrepository.com/artifact/jstl/jstl -->
+       <!-- dubbo 2.8.4a -->
        <dependency>
            <groupId>com.alibaba</groupId>
            <artifactId>dubbo</artifactId>
-           <version>2.8.4a</version>
            <exclusions>
                <exclusion>
                    <artifactId>spring</artifactId>
@@ -65,9 +64,12 @@
        <dependency>
            <groupId>com.alibaba</groupId>
            <artifactId>dubbo-rpc-rest</artifactId>
-           <version>2.8.4a</version>
        </dependency>
-
+       <dependency>
+           <groupId>com.alibaba</groupId>
+           <artifactId>dubbo-common</artifactId>
+           <version>${dubbox.version}</version>
+       </dependency>
        <dependency>
            <groupId>com.101tec</groupId>
            <artifactId>zkclient</artifactId>
@@ -90,44 +92,6 @@
            <artifactId>log4j</artifactId>
            <version>1.2.17</version>
        </dependency>
-       <dependency>
-           <groupId>org.jboss.resteasy</groupId>
-           <artifactId>resteasy-jaxrs</artifactId>
-           <version>3.0.8.Final</version>
-           <scope>provided</scope>
-       </dependency>
-       <dependency>
-           <groupId>org.jboss.spec.javax.annotation</groupId>
-           <artifactId>jboss-annotations-api_1.1_spec</artifactId>
-           <version>1.0.1.Final</version>
-       </dependency>
-
-       <dependency>
-           <groupId>org.jboss.resteasy</groupId>
-           <artifactId>resteasy-client</artifactId>
-           <version>3.0.8.Final</version>
-           <!--<scope>provided</scope>-->
-       </dependency>
-       <dependency>
-           <groupId>org.jboss.resteasy</groupId>
-           <artifactId>jaxrs-api</artifactId>
-           <version>3.0.8.Final</version>
-       </dependency>
-
-
-       <dependency>
-           <groupId>org.jboss.resteasy</groupId>
-           <artifactId>resteasy-cdi</artifactId>
-           <version>3.0.8.Final</version>
-       </dependency>
-       <!-- 如果要使用json序列化 -->
-       <dependency>
-           <groupId>org.jboss.resteasy</groupId>
-           <artifactId>resteasy-jackson-provider</artifactId>
-           <version>3.0.7.Final</version>
-       </dependency>
-
-
 
        <dependency>
            <groupId>org.aspectj</groupId>
@@ -381,14 +345,12 @@
        <dependency>
            <groupId>javax.validation</groupId>
            <artifactId>validation-api</artifactId>
-           <version>1.0.0.GA</version>
+           <version>${validation_version}</version>
        </dependency>
-       <!-- servlet HttpServletRequest,HttpServletResponse对象-->
        <dependency>
-           <groupId>javax.servlet</groupId>
-           <artifactId>javax.servlet-api</artifactId>
-           <version>3.1.0</version>
-           <scope>provided</scope>
+           <groupId>org.hibernate</groupId>
+           <artifactId>hibernate-validator</artifactId>
+           <version>${hibernate_validator_version}</version>
        </dependency>
        <!-- jsp页面的访问，注意scope标签 -->
        <dependency>
@@ -506,26 +468,6 @@
                     <!--</execution>-->
                 <!--</executions>-->
             </plugin>
-            <!--<plugin>-->
-                <!--<artifactId>maven-assembly-plugin</artifactId>-->
-                <!--<version>2.2.1</version>-->
-                <!--<configuration>-->
-                    <!--&lt;!&ndash; not append assembly id in release file name &ndash;&gt;-->
-                    <!--<appendAssemblyId>false</appendAssemblyId>-->
-                    <!--<descriptors>-->
-                        <!--<descriptor>src/main/assembly/assembly.xml</descriptor>-->
-                    <!--</descriptors>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>make-assembly</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>single</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
         </plugins>
     </build>
 
