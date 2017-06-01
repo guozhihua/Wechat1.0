@@ -5,9 +5,9 @@
     <param-value>classpath*:config/spring-*.xml</param-value>
   </context-param>
 
-  <!--<listener>-->
-    <!--<listener-class>com.alibaba.dubbo.remoting.http.servlet.BootstrapListener</listener-class>-->
-  <!--</listener>-->
+  <listener>
+    <listener-class>com.alibaba.dubbo.remoting.http.servlet.BootstrapListener</listener-class>
+  </listener>
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
@@ -84,16 +84,16 @@
     <servlet-name>dispatcher</servlet-name>
     <url-pattern>*.do</url-pattern>
   </servlet-mapping>
-  <!--<servlet>-->
-    <!--<servlet-name>dubbo-dispatcher</servlet-name>-->
-    <!--<servlet-class>com.alibaba.dubbo.remoting.http.servlet.DispatcherServlet</servlet-class>-->
-    <!--<load-on-startup>2</load-on-startup>-->
-  <!--</servlet>-->
+  <servlet>
+    <servlet-name>dubbo-dispatcher</servlet-name>
+    <servlet-class>com.alibaba.dubbo.remoting.http.servlet.DispatcherServlet</servlet-class>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
 
-  <!--<servlet-mapping>-->
-    <!--<servlet-name>dubbo-dispatcher</servlet-name>-->
-    <!--<url-pattern>/services/*</url-pattern>-->
-  <!--</servlet-mapping>-->
+  <servlet-mapping>
+    <servlet-name>dubbo-dispatcher</servlet-name>
+    <url-pattern>/services/*</url-pattern>
+  </servlet-mapping>
   <!-- 防止spring内存溢出监听器 -->
   <listener>
     <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
