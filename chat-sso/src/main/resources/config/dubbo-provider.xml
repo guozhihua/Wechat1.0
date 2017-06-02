@@ -12,7 +12,8 @@
     <dubbo:registry address="zookeeper://101.200.55.143:2181?backup=101.200.55.143:2182,101.200.55.143:2183" check="true" />
     <!-- 用dubbo协议在20880端口暴露服务 -->
     <dubbo:protocol name="dubbo" port="8087" />
-    <dubbo:protocol name="rest" port="8086"  contextpath="services"  server="servlet" />
+    <!--<dubbo:protocol name="rest" port="8086"  contextpath="services"  server="servlet" />-->
+    <dubbo:protocol name="rest" port="8088"  contextpath="services" />
     <!-- 声明需要暴露的服务接口 -->
     <dubbo:service interface="sso.provider.dubbo.SsoUserLoginService"
                    ref="SsoUserLoginService" protocol="dubbo"  />
