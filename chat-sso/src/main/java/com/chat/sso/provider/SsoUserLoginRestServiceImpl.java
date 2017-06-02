@@ -5,7 +5,9 @@ import com.weixin.entity.chat.User;
 import org.springframework.stereotype.Service;
 import sso.provider.rest.SsoUserLoginRestService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -53,4 +55,13 @@ public class SsoUserLoginRestServiceImpl implements SsoUserLoginRestService {
 //        return user;
 //    }
 
+
+    @Path("checkId/{id}")
+    @GET
+    @Produces({ContentType.APPLICATION_JSON_UTF_8, ContentType.TEXT_XML_UTF_8})
+    @Override
+    public User checkIp(@PathParam("id") Long id,@Context HttpServletRequest request) {
+        System.out.println("Client address is " + request.getRemoteAddr());
+        return new User();
+    }
 }
