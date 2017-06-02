@@ -9,6 +9,8 @@ search 采用elaticsearch 作为搜索服务，数据的同步采用了可配置
 
 一般而言，外部tomcat 较内置服务性能更为强大。
 
+后期搭建mycat 读写分离，增加项目高并发情况下的支持。
+
 common-jdbc 模块是JDBC方式操作的数据库。目前无模块依赖，仅作为测试
 web-service 测试使用
 
