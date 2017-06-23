@@ -1,6 +1,5 @@
 package hxs.weixin.web.interceptor;
 
-import com.weixin.cache.redis.RedisClientTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -16,21 +15,22 @@ import java.io.PrintWriter;
  */
 @Component
 public class AdminLoginInterceptor extends HandlerInterceptorAdapter {
-
-    @Autowired
-    protected RedisClientTemplate redisClientTemplate;
+//
+//    @Autowired
+//    protected RedisClientTemplate redisClientTemplate;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String sign = request.getParameter("sign");
         if (!StringUtils.isEmpty(sign)) {
-            String userId = redisClientTemplate.get(sign);
-            if (StringUtils.isEmpty(userId)) {
-                signError(response);
-                return false;
-            } else {
-                return true;
-            }
+            return true;
+//            String userId = redisClientTemplate.get(sign);
+//            if (StringUtils.isEmpty(userId)) {
+//                signError(response);
+//                return false;
+//            } else {
+//                return true;
+//            }
         } else {
             signError(response);
             return false;

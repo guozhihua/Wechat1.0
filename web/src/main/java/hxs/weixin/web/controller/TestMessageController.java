@@ -38,7 +38,6 @@ public class TestMessageController extends ABaseController{
             HashMap<String,Object> messageDate=new HashMap<>();
             messageDate.put("le","234");
             queueMessageUtils.sendSerializableMessage(MessageQueueName.textMessageQueue,messageDate, MessageType.CLASS_MODULE);
-            super.redisClientTemplate.set("aaaa","123");
         }catch (Exception ex){
             logger.error(ex);
         }

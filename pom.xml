@@ -17,6 +17,7 @@
         <module>message-queue</module>
         <module>chat-cache</module>
         <module>chat-search</module>
+        <module>chat-sdk</module>
         <!--<module>webservices</module>-->
         <module>chat-sso</module>
     </modules>

@@ -1,4 +1,4 @@
-package com.weixin.cache.redis;
+package com.weixin.services;
 
 import com.google.gson.Gson;
 import com.weixin.utils.util.*;
@@ -103,14 +103,14 @@ public class WeixinUtil {
     }
 
     public static TokenVo getAccessToken() {
-       RedisClientTemplate redisClientTemplate =(RedisClientTemplate) SpringBeanUtils.getBean("redisClientTemplate");
-        String tokenJson =redisClientTemplate.get(WX_ACCESS_TOKEN);
+//       RedisClientTemplate redisClientTemplate =(RedisClientTemplate) SpringBeanUtils.getBean("redisClientTemplate");
+//        String tokenJson =redisClientTemplate.get(WX_ACCESS_TOKEN);
         TokenVo object =null;
-        if(org.springframework.util.StringUtils.isEmpty(tokenJson)){
-            initWxAccessToken();
-            tokenJson =redisClientTemplate.get(WX_ACCESS_TOKEN);
-        }
-        object=new Gson().fromJson(tokenJson,TokenVo.class);
+//        if(org.springframework.util.StringUtils.isEmpty(tokenJson)){
+//            initWxAccessToken();
+//            tokenJson =redisClientTemplate.get(WX_ACCESS_TOKEN);
+//        }
+//        object=new Gson().fromJson(tokenJson,TokenVo.class);
         return object;
     }
 
@@ -122,14 +122,14 @@ public class WeixinUtil {
      * @date 2016年01月9日下午1:32:32
      */
     public static TicketVo getTicketVo(TokenVo tokenVo) {
-        RedisClientTemplate redisClientTemplate =(RedisClientTemplate) SpringBeanUtils.getBean("redisClientTemplate");
-        String tokenJson =redisClientTemplate.get(WX_JSAPI_TICKET);
+//        RedisClientTemplate redisClientTemplate =(RedisClientTemplate) SpringBeanUtils.getBean("redisClientTemplate");
+//        String tokenJson =redisClientTemplate.get(WX_JSAPI_TICKET);
         TicketVo object =null;
-        if(org.springframework.util.StringUtils.isEmpty(tokenJson)){
-            initWxAccessToken();
-            tokenJson =redisClientTemplate.get(WX_JSAPI_TICKET);
-        }
-        object=new Gson().fromJson(tokenJson,TicketVo.class);
+//        if(org.springframework.util.StringUtils.isEmpty(tokenJson)){
+//            initWxAccessToken();
+//            tokenJson =redisClientTemplate.get(WX_JSAPI_TICKET);
+//        }
+//        object=new Gson().fromJson(tokenJson,TicketVo.class);
         return object;
     }
 
@@ -154,9 +154,9 @@ public class WeixinUtil {
                 ticketVo = new Gson().fromJson(message, TicketVo.class);
             }
             if (tokenVo != null && ticketVo != null && StringUtils.isNotEmpty(ticketVo.getTicket())) {
-                RedisClientTemplate redisClientTemplate =(RedisClientTemplate) SpringBeanUtils.getBean("redisClientTemplate");
-                redisClientTemplate.setex(WX_ACCESS_TOKEN,6000,new Gson().toJson(tokenVo));
-                redisClientTemplate.setex(WX_JSAPI_TICKET,6000,new Gson().toJson(ticketVo));
+//                RedisClientTemplate redisClientTemplate =(RedisClientTemplate) SpringBeanUtils.getBean("redisClientTemplate");
+//                redisClientTemplate.setex(WX_ACCESS_TOKEN,6000,new Gson().toJson(tokenVo));
+//                redisClientTemplate.setex(WX_JSAPI_TICKET,6000,new Gson().toJson(ticketVo));
             }
         } catch (Exception ex) {
             logger.error("获取微信access_token ,jsApi_Ticket 失败", ex);

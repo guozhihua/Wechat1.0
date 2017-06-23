@@ -1,7 +1,7 @@
 package com.weixin.services.service.impl;
 
 
-import com.weixin.cache.redis.WeixinUtil;
+import com.weixin.services.WeixinUtil;
 import com.weixin.utils.weixinVo.WeChatConfigVo;
 import com.weixin.services.service.WeChatHttpService;
 import com.weixin.utils.weixinVo.TicketVo;
@@ -26,12 +26,12 @@ public class WeChatHttpServiceImpl implements WeChatHttpService {
 	 */
 	public WeChatConfigVo getWeChatConfig(String  url){
 		//(微信)获取access_token
+		WeChatConfigVo configVo = new WeChatConfigVo();
 		TokenVo tokenVo = WeixinUtil.getAccessToken();
 		//(微信)获取ticket【根据tokenVo获取ticketVo】
 		TicketVo ticketVo = WeixinUtil.getTicketVo(tokenVo);
 		//(微信)获取签名signature
 		Map<String, String> valueMap = getTargetMap(ticketVo,url);
-		WeChatConfigVo configVo = new WeChatConfigVo();
 		configVo.setWeChatNonceStr(valueMap.get("noncestr"));
 		configVo.setWeChatSignature(valueMap.get("signature"));
 		configVo.setWeChatTimestamp(valueMap.get("timestamp"));
