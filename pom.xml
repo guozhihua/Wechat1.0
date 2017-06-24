@@ -249,28 +249,28 @@
             </dependency>
 
             <!--使用spring封装好的redis -->
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-redis</artifactId>
-                <version>1.4.1.RELEASE</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.data</groupId>-->
+                <!--<artifactId>spring-data-redis</artifactId>-->
+                <!--<version>1.4.1.RELEASE</version>-->
+            <!--</dependency>-->
             <dependency>
                 <groupId>net.sf.json-lib</groupId>
                 <artifactId>json-lib</artifactId>
                 <version>2.4</version>
                 <classifier>jdk15</classifier>
             </dependency>
-
-            <dependency>
-                <groupId>net.sf.ehcache</groupId>
-                <artifactId>ehcache-core</artifactId>
-                <version>2.6.11</version>
-            </dependency>
-            <dependency>
-                <groupId>com.googlecode.ehcache-spring-annotations</groupId>
-                <artifactId>ehcache-spring-annotations</artifactId>
-                <version>1.2.0</version>
-            </dependency>
+             <!--ehcache 注解-->
+            <!--<dependency>-->
+                <!--<groupId>net.sf.ehcache</groupId>-->
+                <!--<artifactId>ehcache-core</artifactId>-->
+                <!--<version>2.6.11</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>com.googlecode.ehcache-spring-annotations</groupId>-->
+                <!--<artifactId>ehcache-spring-annotations</artifactId>-->
+                <!--<version>1.2.0</version>-->
+            <!--</dependency>-->
             <!-- redis 结束 -->
             <!-- http://mvnrepository.com/artifact/org.apache.poi/poi -->
             <dependency>
@@ -438,55 +438,7 @@
                 <artifactId>elasticsearch</artifactId>
                 <version>${elaticsearch.version}</version>
             </dependency>
-            <!--&lt;!&ndash;cxf配置&ndash;&gt;-->
-            <!--<dependency>-->
-                <!--<groupId>org.apache.cxf</groupId>-->
-                <!--<artifactId>cxf-rt-frontend-jaxrs</artifactId>-->
-                <!--<version>${org.cxf-version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.apache.cxf</groupId>-->
-                <!--<artifactId>cxf-rt-frontend-jaxws</artifactId>-->
-                <!--<version>${org.cxf-version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.apache.cxf</groupId>-->
-                <!--<artifactId>cxf-rt-bindings-soap</artifactId>-->
-                <!--<version>${org.cxf-version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.apache.cxf</groupId>-->
-                <!--<artifactId>cxf-bundle-jaxrs</artifactId>-->
-                <!--<version>${org.cxf-version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.apache.cxf</groupId>-->
-                <!--<artifactId>cxf-rt-transports-http</artifactId>-->
-                <!--<version>${org.cxf-version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.apache.cxf</groupId>-->
-                <!--<artifactId>cxf-rt-transports-http-jetty</artifactId>-->
-                <!--<version>${org.cxf-version}</version>-->
-            <!--</dependency>-->
-            <!--&lt;!&ndash;cxf 跨域方式有2中解决途径，一种是cors跨域设置，一种是支持jsonp&ndash;&gt;-->
-            <!--<dependency>-->
-                <!--<groupId>org.apache.cxf</groupId>-->
-                <!--<artifactId>cxf-rt-rs-security-cors</artifactId>-->
-                <!--<version>${org.cxf-version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>com.fasterxml.jackson.jaxrs</groupId>-->
-                <!--<artifactId>jackson-jaxrs-json-provider</artifactId>-->
-                <!--<version>2.8.6</version>-->
-            <!--</dependency>-->
 
-            <!--jsonp方式-->
-            <!--<dependency>-->
-            <!--<groupId>org.apache.cxf</groupId>-->
-            <!--<artifactId>cxf-rt-rs-extension-providers</artifactId>-->
-            <!--<version>${org.cxf-version}</version>-->
-            <!--</dependency>-->
             <!--javax inject注解方式-->
             <dependency>
                 <groupId>javax.inject</groupId>
@@ -562,12 +514,21 @@
                 <artifactId>fst</artifactId>
                 <version>${fst_version}</version>
             </dependency>
+
+
+            <!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+            <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>mail</artifactId>
+                <version>1.4.7</version>
+            </dependency>
+
         </dependencies>
 
 
     </dependencyManagement>
     <build>
-        <finalName>hxs_personaltutor_wechat</finalName>
+        <finalName>Wechat</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

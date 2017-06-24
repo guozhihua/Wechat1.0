@@ -60,16 +60,10 @@
                </exclusion>
            </exclusions>
        </dependency>
-
-       <!--<dependency>-->
-           <!--<groupId>com.alibaba</groupId>-->
-           <!--<artifactId>dubbo-rpc-rest</artifactId>-->
-       <!--</dependency>-->
-       <!--<dependency>-->
-           <!--<groupId>com.alibaba</groupId>-->
-           <!--<artifactId>dubbo-common</artifactId>-->
-           <!--<version>${dubbox.version}</version>-->
-       <!--</dependency>-->
+       <dependency>
+           <groupId>javax.mail</groupId>
+           <artifactId>mail</artifactId>
+       </dependency>
        <dependency>
            <groupId>com.101tec</groupId>
            <artifactId>zkclient</artifactId>
