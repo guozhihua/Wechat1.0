@@ -54,38 +54,34 @@
                    <artifactId>spring</artifactId>
                    <groupId>org.springframework</groupId>
                </exclusion>
-               <exclusion>
-                   <artifactId>netty</artifactId>
-                   <groupId>org.jboss.netty</groupId>
-               </exclusion>
+               <!--<exclusion>-->
+                   <!--<artifactId>netty</artifactId>-->
+                   <!--<groupId>org.jboss.netty</groupId>-->
+               <!--</exclusion>-->
            </exclusions>
        </dependency>
        <dependency>
            <groupId>javax.mail</groupId>
            <artifactId>mail</artifactId>
        </dependency>
-       <dependency>
-           <groupId>com.101tec</groupId>
-           <artifactId>zkclient</artifactId>
-           <version>0.3</version>
-           <!--elaticsearch 和zk 所依赖的netty出错-->
-           <exclusions>
-               <exclusion>
-                   <artifactId>netty</artifactId>
-                   <groupId>org.jboss.netty</groupId>
-               </exclusion>
-           </exclusions>
-       </dependency>
+       <!--<dependency>-->
+           <!--<groupId>com.101tec</groupId>-->
+           <!--<artifactId>zkclient</artifactId>-->
+           <!--<version>0.3</version>-->
+           <!--&lt;!&ndash;elaticsearch 和zk 所依赖的netty出错&ndash;&gt;-->
+           <!--<exclusions>-->
+               <!--<exclusion>-->
+                   <!--<artifactId>netty</artifactId>-->
+                   <!--<groupId>org.jboss.netty</groupId>-->
+               <!--</exclusion>-->
+           <!--</exclusions>-->
+       <!--</dependency>-->
        <dependency>
            <groupId>commons-dbutils</groupId>
            <artifactId>commons-dbutils</artifactId>
            <version>1.6</version>
        </dependency>
-       <dependency>
-           <groupId>log4j</groupId>
-           <artifactId>log4j</artifactId>
-           <version>1.2.17</version>
-       </dependency>
+
 
        <dependency>
            <groupId>org.aspectj</groupId>
@@ -350,60 +346,46 @@
        <dependency>
            <groupId>javax.servlet.jsp.jstl</groupId>
            <artifactId>jstl-api</artifactId>
-           <version>1.2</version>
            <scope>provided</scope>
        </dependency>
        <dependency>
            <groupId>jstl</groupId>
            <artifactId>jstl</artifactId>
-           <version>1.2</version>
        </dependency>
        <!-- https://mvnrepository.com/artifact/taglibs/standard -->
        <dependency>
            <groupId>taglibs</groupId>
            <artifactId>standard</artifactId>
-           <version>1.1.2</version>
        </dependency>
-       <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
-       <dependency>
-           <groupId>org.slf4j</groupId>
-           <artifactId>slf4j-log4j12</artifactId>
-           <version>1.7.7</version>
-       </dependency>
+
        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
        <dependency>
            <groupId>com.google.code.gson</groupId>
            <artifactId>gson</artifactId>
-           <version>2.3.1</version>
        </dependency>
        <!-- redis 开始 -->
        <dependency>
            <groupId>org.apache.commons</groupId>
            <artifactId>commons-pool2</artifactId>
-           <version>2.0</version>
        </dependency>
 
        <!-- https://mvnrepository.com/artifact/commons-lang/commons-lang -->
        <dependency>
            <groupId>commons-lang</groupId>
            <artifactId>commons-lang</artifactId>
-           <version>2.6</version>
        </dependency>
        <dependency>
            <groupId>org.apache.commons</groupId>
            <artifactId>commons-lang3</artifactId>
-           <version>3.4</version>
        </dependency>
        <dependency>
            <groupId>com.thetransactioncompany</groupId>
            <artifactId>java-property-utils</artifactId>
-           <version>1.9.1</version>
        </dependency>
        <!-- https://mvnrepository.com/artifact/com.thetransactioncompany/cors-filter -->
        <dependency>
            <groupId>com.thetransactioncompany</groupId>
            <artifactId>cors-filter</artifactId>
-           <version>2.4</version>
        </dependency>
        <!-- https://mvnrepository.com/artifact/com.thetransactioncompany/java-property-utils -->
        <dependency>
@@ -411,7 +393,38 @@
            <artifactId>java-property-utils</artifactId>
            <version>1.9.1</version>
        </dependency>
-
+       <dependency>
+           <groupId>org.apache.logging.log4j</groupId>
+           <artifactId>log4j-web</artifactId>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.logging.log4j</groupId>
+           <artifactId>log4j-api</artifactId>
+       </dependency>
+       <dependency>
+           <groupId>org.apache.logging.log4j</groupId>
+           <artifactId>log4j-core</artifactId>
+       </dependency>
+       <!-- slf4j核心包-->
+       <dependency>
+           <groupId>org.slf4j</groupId>
+           <artifactId>slf4j-api</artifactId>
+       </dependency>
+       <dependency>
+           <groupId>org.slf4j</groupId>
+           <artifactId>jcl-over-slf4j</artifactId>
+           <scope>runtime</scope>
+       </dependency>
+       <!--用于与slf4j保持桥接-->
+       <dependency>
+           <groupId>org.apache.logging.log4j</groupId>
+           <artifactId>log4j-slf4j-impl</artifactId>
+       </dependency>
+       <!--需要使用log4j2的AsyncLogger需要包含disruptor-->
+       <dependency>
+           <groupId>com.lmax</groupId>
+           <artifactId>disruptor</artifactId>
+       </dependency>
 
        <dependency>
            <groupId>com.alibaba</groupId>
