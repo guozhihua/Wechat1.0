@@ -25,26 +25,13 @@
     <!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId 和 artifactId 即可 -->
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>com.yj</groupId>
-                <artifactId>chat-web</artifactId>
-                <version>${wechat.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.yj</groupId>
-                <artifactId>common-jdbc</artifactId>
-                <version>${wechat.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>commons-dbutils</groupId>
                 <artifactId>commons-dbutils</artifactId>
                 <version>1.6</version>
             </dependency>
-            <dependency>
-                <groupId>com.yj</groupId>
-                <artifactId>chat-service</artifactId>
-                <version>${wechat.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>com.yj</groupId>
                 <artifactId>chat-entity</artifactId>
@@ -90,16 +77,16 @@
                     </exclusion>
                 </exclusions>
             </dependency>
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>dubbo-rpc-rest</artifactId>
-                <version>${dubbox.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>dubbo-common</artifactId>
-                <version>${dubbox.version}</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>com.alibaba</groupId>-->
+                <!--<artifactId>dubbo-rpc-rest</artifactId>-->
+                <!--<version>${dubbox.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+                <!--<groupId>com.alibaba</groupId>-->
+                <!--<artifactId>dubbo-common</artifactId>-->
+                <!--<version>${dubbox.version}</version>-->
+            <!--</dependency>-->
             <dependency>
                 <groupId>com.101tec</groupId>
                 <artifactId>zkclient</artifactId>
