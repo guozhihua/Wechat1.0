@@ -94,23 +94,64 @@
                 <artifactId>dubbo-rpc-rest</artifactId>
                 <version>${dubbox.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>dubbo-common</artifactId>
-                <version>${dubbox.version}</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>com.alibaba</groupId>-->
+                <!--<artifactId>dubbo-common</artifactId>-->
+                <!--<version>${dubbox.version}</version>-->
+            <!--</dependency>-->
             <dependency>
                 <groupId>com.101tec</groupId>
                 <artifactId>zkclient</artifactId>
                 <version>0.3</version>
             </dependency>
 
+            <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-web -->
+            <!--log4j2 start-->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-web</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+            <!-- slf4j核心包-->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <scope>runtime</scope>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <!--用于与slf4j保持桥接-->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-slf4j-impl</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+            <!--需要使用log4j2的AsyncLogger需要包含disruptor-->
+            <dependency>
+                <groupId>com.lmax</groupId>
+                <artifactId>disruptor</artifactId>
+                <version>3.3.6</version>
+            </dependency>
             <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
-                <version>1.2.17</version>
+                <version>${log4j_version}</version>
             </dependency>
-
+            <!--log4j end-->
             <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
@@ -126,12 +167,7 @@
                 <artifactId>cglib</artifactId>
                 <version>2.2.2</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${slf4j.version}</version>
-            </dependency>
+
 
             <dependency>
                 <groupId>junit</groupId>
@@ -376,12 +412,7 @@
                 <artifactId>standard</artifactId>
                 <version>1.1.2</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>1.7.7</version>
-            </dependency>
+
             <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
             <dependency>
                 <groupId>com.google.code.gson</groupId>
@@ -450,55 +481,7 @@
                 <artifactId>elasticsearch</artifactId>
                 <version>${elaticsearch.version}</version>
             </dependency>
-            <!--&lt;!&ndash;cxf配置&ndash;&gt;-->
-            <!--<dependency>-->
-                <!--<groupId>org.apache.cxf</groupId>-->
-                <!--<artifactId>cxf-rt-frontend-jaxrs</artifactId>-->
-                <!--<version>${org.cxf-version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.apache.cxf</groupId>-->
-                <!--<artifactId>cxf-rt-frontend-jaxws</artifactId>-->
-                <!--<version>${org.cxf-version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.apache.cxf</groupId>-->
-                <!--<artifactId>cxf-rt-bindings-soap</artifactId>-->
-                <!--<version>${org.cxf-version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.apache.cxf</groupId>-->
-                <!--<artifactId>cxf-bundle-jaxrs</artifactId>-->
-                <!--<version>${org.cxf-version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.apache.cxf</groupId>-->
-                <!--<artifactId>cxf-rt-transports-http</artifactId>-->
-                <!--<version>${org.cxf-version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>org.apache.cxf</groupId>-->
-                <!--<artifactId>cxf-rt-transports-http-jetty</artifactId>-->
-                <!--<version>${org.cxf-version}</version>-->
-            <!--</dependency>-->
-            <!--&lt;!&ndash;cxf 跨域方式有2中解决途径，一种是cors跨域设置，一种是支持jsonp&ndash;&gt;-->
-            <!--<dependency>-->
-                <!--<groupId>org.apache.cxf</groupId>-->
-                <!--<artifactId>cxf-rt-rs-security-cors</artifactId>-->
-                <!--<version>${org.cxf-version}</version>-->
-            <!--</dependency>-->
-            <!--<dependency>-->
-                <!--<groupId>com.fasterxml.jackson.jaxrs</groupId>-->
-                <!--<artifactId>jackson-jaxrs-json-provider</artifactId>-->
-                <!--<version>2.8.6</version>-->
-            <!--</dependency>-->
 
-            <!--jsonp方式-->
-            <!--<dependency>-->
-            <!--<groupId>org.apache.cxf</groupId>-->
-            <!--<artifactId>cxf-rt-rs-extension-providers</artifactId>-->
-            <!--<version>${org.cxf-version}</version>-->
-            <!--</dependency>-->
             <!--javax inject注解方式-->
             <dependency>
                 <groupId>javax.inject</groupId>
@@ -628,7 +611,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <spring.version>4.2.4.RELEASE</spring.version>
         <quartz.version>2.2.2</quartz.version>
-        <slf4j.version>1.7.5</slf4j.version>
+        <slf4j.version>1.7.13</slf4j.version>
         <mybatis.version>3.2.8</mybatis.version>
         <mybatis-spring.version>1.3.0</mybatis-spring.version>
         <jackson-mapper-asl.version>1.9.13</jackson-mapper-asl.version>
@@ -637,7 +620,6 @@
         <jackson.version>2.7.5</jackson.version>
         <activeMQ.version>5.7.0</activeMQ.version>
         <activeMQ-pool.version>5.12.0</activeMQ-pool.version>
-        <logback.version>1.0.13</logback.version>
         <elaticsearch.version>2.3.3</elaticsearch.version>
         <aspectj.version>1.8.2</aspectj.version>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -663,6 +645,8 @@
         <kryo-serializers_version>0.37</kryo-serializers_version>
         <fst_version>2.44</fst_version>
         <dubbox.version>2.8.4a</dubbox.version>
+        <log4j2.version>2.5</log4j2.version>
+        <log4j_version>1.2.17</log4j_version>
     </properties>
 
     <repositories>
