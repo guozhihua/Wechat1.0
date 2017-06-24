@@ -12,9 +12,6 @@
     <artifactId>chat-cache</artifactId>
     <packaging>pom</packaging>
     <version>${wechat.version}</version>
-    <modules>
-        <module>../chat-sdk</module>
-    </modules>
     <dependencies>
       <dependency>
           <groupId>com.yj</groupId>

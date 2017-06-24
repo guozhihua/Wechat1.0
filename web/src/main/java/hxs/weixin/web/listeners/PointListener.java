@@ -1,21 +1,18 @@
 package hxs.weixin.web.listeners;
 
-import com.weixin.queue.message.ConsumerProxyFactory;
-import com.weixin.queue.message.MessageQueueName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jms.annotation.EnableJms;
-import org.springframework.jms.annotation.JmsListener;
 import org.springframework.jms.listener.SessionAwareMessageListener;
-import org.springframework.stereotype.Component;
 
-import javax.jms.*;
+import javax.jms.JMSException;
+import javax.jms.ObjectMessage;
+import javax.jms.Session;
 
 /**
  * Created by :Guozhihua
  * Date： 2017/3/8.
  */
-@Component
+//@Component
 //@EnableJms
 public class PointListener implements SessionAwareMessageListener<ObjectMessage> {
     //当收到消息后，自动调用该方法,spring配置默认监听器，负责接收消息
@@ -27,7 +24,7 @@ public class PointListener implements SessionAwareMessageListener<ObjectMessage>
     public void onMessage(ObjectMessage objectMessage, Session session) throws JMSException {
         try {
             //todo 根据消息类型做响应的业务处理
-          ConsumerProxyFactory.getInstance().getWorker(objectMessage.getJMSType()).execute(objectMessage);
+//          ConsumerProxyFactory.getInstance().getWorker(objectMessage.getJMSType()).execute(objectMessage);
             if(session.getTransacted()){
                 session.commit();
             }

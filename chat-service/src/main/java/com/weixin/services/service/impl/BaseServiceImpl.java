@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import com.weixin.entity.chat.SuperVO;
 import com.weixin.services.dao.BaseDao;
 import com.weixin.services.service.BaseService;
-import com.weixin.cache.redis.RedisClientTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
@@ -19,8 +18,6 @@ import java.util.Map;
 public abstract class BaseServiceImpl<T extends SuperVO> implements BaseService<T> {
 
     protected abstract BaseDao<T> getBaseDao();
-    @Autowired
-    protected RedisClientTemplate redisClientTemplate;
 
     protected Gson gson=new Gson();
 
@@ -107,9 +104,6 @@ public abstract class BaseServiceImpl<T extends SuperVO> implements BaseService<
 
     }
 
-    public RedisClientTemplate getRedisClientTemplate() {
-        return redisClientTemplate;
-    }
 
 
 

@@ -1,19 +1,14 @@
 package hxs.weixin.web.controller;
 
-import com.weixin.queue.message.MessageQueueName;
-import com.weixin.queue.message.MessageType;
-import com.weixin.queue.message.QueueMessageUtils;
 import com.weixin.utils.responsecode.BaseResponse;
 import com.weixin.utils.sys.MethodLog;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by :Guozhihua
@@ -23,9 +18,9 @@ import java.util.Map;
 @RequestMapping(value = "/message/")
 public class TestMessageController extends ABaseController{
     private static Logger logger = Logger.getLogger(TestMessageController.class);
-
-    @Autowired
-    private QueueMessageUtils queueMessageUtils;
+//
+//    @Autowired
+//    private QueueMessageUtils queueMessageUtils;
     /**
      * 发送消息
      */
@@ -37,8 +32,7 @@ public class TestMessageController extends ABaseController{
         try{
             HashMap<String,Object> messageDate=new HashMap<>();
             messageDate.put("le","234");
-            queueMessageUtils.sendSerializableMessage(MessageQueueName.textMessageQueue,messageDate, MessageType.CLASS_MODULE);
-            super.redisClientTemplate.set("aaaa","123");
+//            queueMessageUtils.sendSerializableMessage(MessageQueueName.textMessageQueue,messageDate, MessageType.CLASS_MODULE);
         }catch (Exception ex){
             logger.error(ex);
         }

@@ -16,11 +16,11 @@
             <artifactId>chat-service</artifactId>
             <version>${wechat.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.yj</groupId>
-            <artifactId>chat-search</artifactId>
-            <version>${wechat.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.yj</groupId>-->
+            <!--<artifactId>chat-search</artifactId>-->
+            <!--<version>${wechat.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.yj</groupId>
             <artifactId>chat-sdk</artifactId>

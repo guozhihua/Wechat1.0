@@ -12,9 +12,9 @@
     <!-- 使用zookeeper注册中心暴露服务地址 check 代表是否检查注册中心或者是提供者-->
 
     <dubbo:registry address="zookeeper://101.200.55.143:2181?backup=101.200.55.143:2182,101.200.55.143:2183"
-                    check="true" />
+                    check="false" />
     <!-- 声明需要使用的服务接口 -->
-    <dubbo:reference id="SsoUserLoginService" interface="sso.provider.dubbo.SsoUserLoginService" timeout="5000"
+    <dubbo:reference id="SsoUserLoginService" interface="sso.provider.dubbo.SsoUserLoginService" timeout="50000"
                      check="false"/>
 
 </beans>

@@ -1,7 +1,6 @@
 package hxs.weixin.web.controller;
 
 import com.google.gson.Gson;
-import com.weixin.cache.redis.RedisClientTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,8 +18,6 @@ public  abstract  class ABaseController  {
     @Autowired
     protected HttpSession session;
 
-    @Autowired
-    protected RedisClientTemplate redisClientTemplate;
 
     //默认的缓存有效期
     public int DEFAULT_TIME_OUT=60*60*2;
