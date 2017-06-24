@@ -4,7 +4,10 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath*:config/spring-*.xml</param-value>
   </context-param>
-
+  <context-param>
+    <param-name>log4jConfiguration</param-name>
+    <param-value>classpath:log4j2-default.xml</param-value>
+  </context-param>
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
@@ -85,18 +88,18 @@
   </listener>
 
 
-  <!-- druid监控页面 -->
+  <!--!&#45;&#45; druid监控页面 &ndash;&gt;
   <servlet>
 
     <servlet-name>DruidStatView</servlet-name>
     <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
     <init-param>
-      <!-- 用户名 -->
+      &lt;!&ndash; 用户名 &ndash;&gt;
       <param-name>loginUsername</param-name>
       <param-value>druid</param-value>
     </init-param>
     <init-param>
-      <!-- 密码 -->
+      &lt;!&ndash; 密码 &ndash;&gt;
       <param-name>loginPassword</param-name>
       <param-value>druid_admin</param-value>
     </init-param>
@@ -131,7 +134,7 @@
     <filter-name>DruidWebStatFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-
+-->
   <session-config>
     <session-timeout>100</session-timeout>
   </session-config>

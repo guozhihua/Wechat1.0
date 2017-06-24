@@ -1,10 +1,7 @@
 package hxs.weixin.web.controller.test;
 
-import com.weixin.queue.message.MessageQueueName;
-import com.weixin.queue.message.MessageType;
 import com.weixin.utils.responsecode.BaseResponse;
 import com.weixin.utils.sys.MethodLog;
-import com.weixin.yj.search.ESHelper;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.stereotype.Controller;
@@ -13,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -37,7 +33,7 @@ public class TestSearch {
             BoolQueryBuilder boolQuery = QueryBuilders.boolQuery();
             boolQuery.must(QueryBuilders.termQuery("houseName", "唐槐园"));
             List<String> partyIndexs = new ArrayList<String>();
-            ESHelper.getInstance().searchQuery("house","price_info",boolQuery,null,null,1,1000);
+//            ESHelper.getInstance().searchQuery("house","price_info",boolQuery,null,null,1,1000);
         }catch (Exception ex){
             ex.printStackTrace();
         }
