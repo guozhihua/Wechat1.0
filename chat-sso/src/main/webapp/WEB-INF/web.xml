@@ -4,9 +4,9 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath*:config/spring-*.xml</param-value>
   </context-param>
-  <listener>
-    <listener-class>com.alibaba.dubbo.remoting.http.servlet.BootstrapListener</listener-class>
-  </listener>
+  <!--<listener>-->
+    <!--<listener-class>com.alibaba.dubbo.remoting.http.servlet.BootstrapListener</listener-class>-->
+  <!--</listener>-->
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
@@ -71,15 +71,15 @@
     <url-pattern>*.ico</url-pattern>
   </servlet-mapping>
 
-  <servlet>
-    <servlet-name>dubbo-dispatcher</servlet-name>
-    <servlet-class>com.alibaba.dubbo.remoting.http.servlet.DispatcherServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>dubbo-dispatcher</servlet-name>
-    <url-pattern>/services/*</url-pattern>
-  </servlet-mapping>
+  <!--<servlet>-->
+    <!--<servlet-name>dubbo-dispatcher</servlet-name>-->
+    <!--<servlet-class>com.alibaba.dubbo.remoting.http.servlet.DispatcherServlet</servlet-class>-->
+    <!--<load-on-startup>1</load-on-startup>-->
+  <!--</servlet>-->
+  <!--<servlet-mapping>-->
+    <!--<servlet-name>dubbo-dispatcher</servlet-name>-->
+    <!--<url-pattern>/services/*</url-pattern>-->
+  <!--</servlet-mapping>-->
   <servlet>
     <servlet-name>dispatcher</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
