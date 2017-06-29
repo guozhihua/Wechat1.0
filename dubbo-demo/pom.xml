@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>hxs_personaltutor_wechat</artifactId>
+        <groupId>com.yj</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>dubbo-demo</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <skip_maven_deploy>true</skip_maven_deploy>
+        <slf4j_version>1.7.15</slf4j_version>
+        <log4j2_version>2.5</log4j2_version>
+    </properties>
+    <modules>
+        <module>demo-sdk</module>
+        <module>provider-demo</module>
+        <module>customer-demo</module>
+    </modules>
+
+
+</project>
