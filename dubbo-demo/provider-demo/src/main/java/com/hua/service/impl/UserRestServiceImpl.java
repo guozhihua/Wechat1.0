@@ -2,8 +2,11 @@ package com.hua.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+import com.test.WebModel;
 import com.test.pojo.User;
 import com.test.rpc.UserRestService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
@@ -24,8 +27,9 @@ import java.util.List;
 @Consumes({MediaType.APPLICATION_JSON, MediaType.TEXT_HTML})
 //配置响应为 json utf-8
 @Produces({ContentType.APPLICATION_JSON_UTF_8, ContentType.TEXT_PLAIN_UTF_8})
-@Component
+@Component("userRest")
 public class UserRestServiceImpl implements UserRestService {
+    private static final Logger logger = LoggerFactory.getLogger(UserRestServiceImpl.class);
 
     //设置为GET请求
     @GET
@@ -39,12 +43,13 @@ public class UserRestServiceImpl implements UserRestService {
     @POST
     @Path("list")
     @Override
-    public List<User> getUserList() {
+    public WebModel getUserList() {
         List<User> users = new ArrayList<>();
         users.add(new User(1, "指望rest"));
         users.add(new User(2, "指望2"));
         users.add(new User(3, "指望3"));
         users.add(new User(4, "指望4"));
-        return users;
+        logger.info("获取到了{}条数据",users.size());
+        return new WebModel().success(users);
     }
 }

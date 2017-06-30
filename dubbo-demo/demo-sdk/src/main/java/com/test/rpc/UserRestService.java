@@ -1,5 +1,6 @@
 package com.test.rpc;
 
+import com.test.WebModel;
 import com.test.pojo.User;
 
 import java.util.List;
@@ -12,6 +13,6 @@ public interface UserRestService {
 
     public User getUser(int userId);
 
-    public List<User> getUserList();
+    public WebModel getUserList();
 
 }
