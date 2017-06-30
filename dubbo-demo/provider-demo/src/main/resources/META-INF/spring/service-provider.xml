@@ -18,7 +18,7 @@
     <dubbo:protocol name="rest" port="9999" threads="500" contextpath="services" server="tomcat" accepts="500"/>
     <dubbo:service interface="com.test.rpc.UserRestService" protocol="rest" ref="userRest"></dubbo:service>
 
-    <dubbo:annotation package="com.hua.service.*" />
+    <dubbo:annotation package="com.hua.*" />
     <import resource="classpath:conf/spring-config.xml"></import>
     <import resource="classpath:conf/spring-mybatis.xml"></import>
     <!-- 使用注解方式暴露接口 -->

@@ -2,11 +2,14 @@ package com.hua.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.alibaba.dubbo.rpc.protocol.rest.support.ContentType;
+import com.hua.dao.MenuDao;
 import com.test.WebModel;
+import com.test.pojo.Menu;
 import com.test.pojo.User;
 import com.test.rpc.UserRestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.*;
@@ -31,6 +34,17 @@ import java.util.List;
 public class UserRestServiceImpl implements UserRestService {
     private static final Logger logger = LoggerFactory.getLogger(UserRestServiceImpl.class);
 
+    @Autowired
+    private MenuDao menuDao;
+
+    /**
+     * 必须使用setter
+     * @param menuDao
+     */
+    public void setMenuDao(MenuDao menuDao) {
+        this.menuDao = menuDao;
+    }
+
     //设置为GET请求
     @GET
     //追加路径
@@ -51,5 +65,13 @@ public class UserRestServiceImpl implements UserRestService {
         users.add(new User(4, "指望4"));
         logger.info("获取到了{}条数据",users.size());
         return new WebModel().success(users);
+    }
+
+    @POST
+    @Path("menu_list")
+    @Override
+    public WebModel getMenus() {
+       List<Menu> menuList = menuDao.getChildListMenu(0);
+        return new WebModel().success(menuList);
     }
 }

@@ -15,4 +15,5 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.
     <task:scheduler id="scheduler" pool-size="10"/>
     <task:annotation-driven executor="executor" scheduler="scheduler"/>
     <!--<import resource="redis-context.xml"></import>-->
+
 </beans>
