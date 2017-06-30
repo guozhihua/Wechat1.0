@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC  
+    "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hua.dao.MenuDao">
+    <resultMap id="BaseResultMap" type="com.test.pojo.Menu" >
+        <result column="MENU_ID" property="menuId"/>
+        <result column="MENU_NAME" property="menuName"/>
+        <result column="MENU_URL" property="menuUrl"/>
+        <result column="PARENT_ID" property="parentId"/>
+        <result column="IS_LEAF" property="isLeaf"/>
+        <result column="IS_SYSTEM" property="isSystem"/>
+        <result column="SORT_NUM" property="sortNum"/>
+        <result column="CREATE_TIME" property="createTime"/>
+    </resultMap>
+
+    <select id="getChildListMenu" parameterType="int" resultMap="BaseResultMap">
+        select  MENU_ID,MENU_NAME,MENU_URL,PARENT_ID ,IS_LEAF,IS_SYSTEM,SORT_NUM,CREATE_TIME  from a_menus where   PARENT_ID  = #{parentId} AND STATUS = 1 ORDER  by SORT_NUM
+    </select>
+
+    <select id="selectById" parameterType="int" resultMap="BaseResultMap">
+        select  MENU_ID,MENU_NAME,MENU_URL,PARENT_ID ,IS_LEAF,IS_SYSTEM,SORT_NUM,CREATE_TIME  from a_menus where   MENU_ID  = #{id} AND STATUS = 1
+    </select>
+
+   <select id="findByIdsMap" resultMap="BaseResultMap" parameterType="Object">
+    Select
+       MENU_ID,MENU_NAME,MENU_URL,PARENT_ID ,IS_LEAF,IS_SYSTEM,SORT_NUM,CREATE_TIME
+    from a_menus where STATUS = 1 AND PARENT_ID in
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+        #{item}
+    </foreach>
+</select>
+
+</mapper>
