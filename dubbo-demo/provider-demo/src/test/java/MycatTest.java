@@ -1,3 +1,4 @@
+import com.test.pojo.LombokTest;
 import com.weixin.utils.util.DBHelper;
 import org.apache.commons.dbutils.DbUtils;
 import org.junit.Test;
@@ -29,5 +30,15 @@ public class MycatTest {
             ex.printStackTrace();
         }
 
+    }
+
+    @Test
+    public void testLombok(){
+        LombokTest lombokTest =  LombokTest.builder().build();
+        lombokTest.setId("123");
+        lombokTest.setName("namw4q3");
+        System.out.println(lombokTest.toString());
+        System.out.println(lombokTest.hashCode());
+        System.out.println(lombokTest.getName());
     }
 }
