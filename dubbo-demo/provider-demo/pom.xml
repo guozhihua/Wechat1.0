@@ -16,10 +16,12 @@
         <dependency>
             <groupId>com.yj</groupId>
             <artifactId>demo-sdk</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.yj</groupId>
             <artifactId>chat-utils</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
     <build>
