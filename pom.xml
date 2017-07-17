@@ -9,18 +9,17 @@
     <name>hxs-wechat-parent</name>
     <url>http://maven.apache.org</url>
     <modules>
-        <!--<module>jdbc</module>-->
         <module>web</module>
         <module>chat-service</module>
         <module>chat-entity</module>
         <module>chat-utils</module>
         <module>dubbo-demo</module>
         <module>chat-sdk</module>
-        <!--<module>message-queue</module>-->
-        <!--<module>chat-cache</module>-->
-        <!--<module>chat-search</module>-->
-        <!--<module>webservices</module>-->
-        <!--<module>chat-sso</module>-->
+        <module>message-queue</module>
+        <module>chat-cache</module>
+        <module>chat-search</module>
+        <module>webservices</module>
+        <module>chat-sso</module>
     </modules>
 
     <!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId 和 artifactId 即可 -->
@@ -29,11 +28,6 @@
             <dependency>
                 <groupId>com.yj</groupId>
                 <artifactId>chat-web</artifactId>
-                <version>${wechat.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.yj</groupId>
-                <artifactId>common-jdbc</artifactId>
                 <version>${wechat.version}</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
