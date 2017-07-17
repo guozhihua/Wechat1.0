@@ -3,8 +3,6 @@ package com.weixin.utils.jdbc;
 import com.mchange.v1.xml.DomParseUtils;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.weixin.utils.jdbc.cfg.NamedScope;
-import org.apache.commons.dbcp2.BasicDataSource;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;

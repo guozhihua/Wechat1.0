@@ -16,9 +16,11 @@
         <dependency>
             <groupId>com.yj</groupId>
             <artifactId>demo-sdk</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.yj</groupId>
+            <artifactId>chat-utils</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <finalName>provider-demo</finalName>
