@@ -15,14 +15,13 @@ import java.io.PrintWriter;
  */
 @Component
 public class AdminLoginInterceptor extends HandlerInterceptorAdapter {
-
+//
 //    @Autowired
 //    protected RedisClientTemplate redisClientTemplate;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String sign = request.getParameter("sign");
-
         if (!StringUtils.isEmpty(sign)) {
             return true;
 //            String userId = redisClientTemplate.get(sign);

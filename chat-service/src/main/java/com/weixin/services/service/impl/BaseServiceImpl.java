@@ -18,6 +18,8 @@ import java.util.Map;
 public abstract class BaseServiceImpl<T extends SuperVO> implements BaseService<T> {
 
     protected abstract BaseDao<T> getBaseDao();
+//    @Autowired
+//    protected RedisClientTemplate redisClientTemplate;
 
     protected Gson gson=new Gson();
 
@@ -103,6 +105,7 @@ public abstract class BaseServiceImpl<T extends SuperVO> implements BaseService<
         getBaseDao().insertSelective(entity);
 
     }
+
 
 
 

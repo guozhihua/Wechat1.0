@@ -19,6 +19,7 @@ public  abstract  class ABaseController  {
     protected HttpSession session;
 
 
+
     //默认的缓存有效期
     public int DEFAULT_TIME_OUT=60*60*2;
     public int DEFAULT_MAX_TIME_OUT=60*60*24;

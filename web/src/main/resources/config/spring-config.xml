@@ -26,6 +26,7 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.
 				   <!--ref="demoService" />-->
 
 	<!--<import resource="classpath*:/config/redis-context.xml"></import>-->
+	<!--<aop:aspectj-autoproxy  />-->
 	<import resource="dubbo-consumer.xml"></import>
 
 </beans>

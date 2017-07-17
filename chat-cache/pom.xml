@@ -10,7 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>chat-cache</artifactId>
-    <packaging>pom</packaging>
     <version>${wechat.version}</version>
     <dependencies>
       <dependency>

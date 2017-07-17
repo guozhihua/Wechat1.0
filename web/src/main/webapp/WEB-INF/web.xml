@@ -4,12 +4,8 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath*:config/spring-*.xml</param-value>
   </context-param>
-  <context-param>
-    <param-name>log4jConfiguration</param-name>
-    <param-value>classpath:log4j2-default.xml</param-value>
-  </context-param>
   <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    <listener-class>hxs.weixin.web.listeners.CustomListener</listener-class>
   </listener>
   <filter>
     <description>字符集过滤器</description>
