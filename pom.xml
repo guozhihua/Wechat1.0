@@ -20,6 +20,7 @@
         <module>chat-search</module>
         <module>webservices</module>
         <module>chat-sso</module>
+        <module>base</module>
     </modules>
 
     <!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId 和 artifactId 即可 -->
@@ -320,6 +321,19 @@
                 <version>2.4</version>
                 <classifier>jdk15</classifier>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
+                <version>${mail.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
+            <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>javax.mail-api</artifactId>
+                <version>${mail.version}</version>
+            </dependency>
+
 
 
             <dependency>
@@ -770,6 +784,7 @@
         <javassist_version>3.15.0-GA</javassist_version>
         <bsf_version>3.1</bsf_version>
         <lombok_version>1.16.16</lombok_version>
+        <mail.version>1.5.5</mail.version>
     </properties>
 
     <repositories>
