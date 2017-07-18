@@ -77,5 +77,15 @@ where 1=1
        order by  ${orderByClause}
     </if>
 </select>
-  	
+	<!-- 查询${codeName}列表 -->
+	<select id="selectOne" resultMap="BaseResultMap"  parameterType="Object">
+		select
+		<include refid="Base_Column_List"/>
+		from ${tableName}
+		<include refid="Example_Where_Clause"/>
+		limit 1
+	</select>
+
+
+
 </mapper>   

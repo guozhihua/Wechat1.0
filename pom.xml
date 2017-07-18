@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.yj</groupId>
-    <artifactId>hxs_personaltutor_wechat</artifactId>
+    <artifactId>wechat_app</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <description>统一测试平台</description>
@@ -678,7 +678,7 @@
 
     </dependencyManagement>
     <build>
-        <finalName>hxs_personaltutor_wechat</finalName>
+        <finalName>wechat_app</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
