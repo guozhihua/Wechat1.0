@@ -1,12 +1,8 @@
 import com.weixin.utils.util.JsonUtils;
 import com.yj.ws.service.App;
 import com.yj.ws.service.IsService;
-import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
-import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 import org.junit.Test;
-
-import javax.xml.namespace.QName;
 
 /**
  * Created by :Guozhihua
@@ -52,23 +48,23 @@ public class TestHello {
     @Test
     public void wsdl() {
 
-        JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
-        Client client = dcf
-                .createClient("http://localhost:8080/ws/soap?wsdl");
-        // url为调用webService的wsdl地址
-        QName name = new QName("http://service.ws.yj.com/", "getAppById");
-        // namespace是命名空间，methodName是方法名
-        String xmlStr = "aaaaaaaa";
-        // paramvalue为参数值
-        Object[] objects;
-        try {
-            objects = client.invoke(name, xmlStr);
-            System.out.println( objects[0].toString());
-            App app = (App) objects[0];
-            System.out.println(app.getName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
+//        Client client = dcf
+//                .createClient("http://localhost:8080/ws/soap?wsdl");
+//        // url为调用webService的wsdl地址
+//        QName name = new QName("http://service.ws.yj.com/", "getAppById");
+//        // namespace是命名空间，methodName是方法名
+//        String xmlStr = "aaaaaaaa";
+//        // paramvalue为参数值
+//        Object[] objects;
+//        try {
+//            objects = client.invoke(name, xmlStr);
+//            System.out.println( objects[0].toString());
+//            App app = (App) objects[0];
+//            System.out.println(app.getName());
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
 
