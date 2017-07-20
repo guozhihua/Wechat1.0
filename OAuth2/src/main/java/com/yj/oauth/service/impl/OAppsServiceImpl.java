@@ -43,12 +43,12 @@ public class  OAppsServiceImpl  extends BaseServiceImpl<OApps> implements OAppsS
 	}
 
 	@Override
-	public void deleteClient(Long clientId) {
+	public void deleteClient(String appId) {
 
 	}
 
 	@Override
-	public OApps findOne(Long clientId) {
+	public OApps findOne(String appId) {
 		return null;
 	}
 
@@ -58,12 +58,12 @@ public class  OAppsServiceImpl  extends BaseServiceImpl<OApps> implements OAppsS
 	}
 
 	@Override
-	public OApps findByClientId(String clientId) {
+	public OApps findByClientId(String appId) {
 		return null;
 	}
 
 	@Override
-	public OApps findByClientSecret(String clientSecret) {
+	public OApps findByClientSecret(String appSecret) {
 		return null;
 	}
 

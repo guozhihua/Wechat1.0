@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yj.oauth.dao.OUserDao" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.yj.oauth.entity.OUser" >
+	<result column="uuid" property="uuid"/>
+	<result column="user_name" property="userName"/>
+	<result column="password" property="password"/>
+	<result column="salt" property="salt"/>
+</resultMap>
+       
+<!-- o_user table all fields -->
+<sql id="Base_Column_List" >
+	 uuid,user_name,password,salt
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="uuid != null and uuid != ''" >
+	    and uuid =  #{uuid}
+	</if>
+	<if test="userName != null and userName != ''" >
+	    and user_name =  #{userName}
+	</if>
+	<if test="password != null and password != ''" >
+	    and password =  #{password}
+	</if>
+	<if test="salt != null and salt != ''" >
+	    and salt =  #{salt}
+	</if>
+</trim>
+</sql>
+   
+<!-- 根据id查询 用户资源 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.String">
+	select <include refid="Base_Column_List" /> 
+	 from o_user where uuid = #{uuid}
+</select>
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	delete 	 from o_user where uuid = #{uuid}
+</delete>
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.yj.oauth.entity.OUser" >
+  insert into o_user(uuid,user_name,password,salt)
+ values(#{uuid},#{userName},#{password},#{salt})
+</insert>
+<!-- 插入记录 -->
+<insert id="insertSelective" parameterType="com.yj.oauth.entity.OUser" >
+  insert into o_user
+	<trim  prefix="(" suffix=")"  suffixOverrides="," >
+	<if test="uuid != null  ">
+		uuid,
+	</if>
+	<if test="userName != null  ">
+		user_name,
+	</if>
+	<if test="password != null  ">
+		password,
+	</if>
+	<if test="salt != null  ">
+		salt,
+	</if>
+	</trim>
+	<trim  prefix="values (" suffix=")"  suffixOverrides="," >
+	<if test="uuid != null  ">
+		#{uuid},
+	</if>
+	<if test="userName != null  ">
+		#{userName},
+	</if>
+	<if test="password != null  ">
+		#{password},
+	</if>
+	<if test="salt != null  ">
+		#{salt},
+	</if>
+	</trim>
+</insert>
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="com.yj.oauth.entity.OUser" >
+	update o_user set 
+	<trim  suffixOverrides="," >
+	<if test="userName != null  ">
+		user_name=#{userName},
+	</if>
+	<if test="password != null  ">
+		password=#{password},
+	</if>
+	<if test="salt != null  ">
+		salt=#{salt},
+	</if>
+	</trim> where uuid=#{uuid}
+</update>
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="com.yj.oauth.entity.OUser" >
+  update o_user set user_name=#{userName},password=#{password},salt=#{salt} where uuid=#{uuid}
+ </update>
+  	
+<!-- 查询用户资源列表 -->
+<select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from o_user 
+	<include refid="Example_Where_Clause"/>
+	<if test="orderByClause != null and orderByClause != ''" >
+       order by  ${orderByClause}
+    </if>
+</select>
+	<!-- 查询用户资源列表 -->
+	<select id="selectOne" resultMap="BaseResultMap"  parameterType="Object">
+		select
+		<include refid="Base_Column_List"/>
+		from o_user
+		<include refid="Example_Where_Clause"/>
+		limit 1
+	</select>
+
+
+
+</mapper>   

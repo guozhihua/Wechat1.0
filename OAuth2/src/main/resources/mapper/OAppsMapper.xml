@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yj.oauth.dao.OAppsDao" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="com.yj.oauth.entity.OApps" >
+	<result column="id" property="id"/>
+	<result column="app_id" property="appId"/>
+	<result column="app_secret" property="appSecret"/>
+	<result column="app_name" property="appName"/>
+	<result column="create_time" property="createTime"/>
+	<result column="status" property="status"/>
+</resultMap>
+       
+<!-- o_apps table all fields -->
+<sql id="Base_Column_List" >
+	 id,app_id,app_secret,app_name,create_time,status
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="appId != null and appId != ''" >
+	    and app_id =  #{appId}
+	</if>
+	<if test="appSecret != null and appSecret != ''" >
+	    and app_secret =  #{appSecret}
+	</if>
+	<if test="appName != null and appName != ''" >
+	    and app_name =  #{appName}
+	</if>
+	<if test="createTime != null and createTime != ''" >
+	    and create_time =  #{createTime}
+	</if>
+	<if test="status != null and status != ''" >
+	    and status =  #{status}
+	</if>
+</trim>
+</sql>
+   
+<!-- 根据id查询 客户端 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.String">
+	select <include refid="Base_Column_List" /> 
+	 from o_apps where id = #{id}
+</select>
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	delete 	 from o_apps where id = #{id}
+</delete>
+<!-- 插入记录 -->
+<insert id="insert" parameterType="com.yj.oauth.entity.OApps" >
+  insert into o_apps(id,app_id,app_secret,app_name,create_time,status)
+ values(#{id},#{appId},#{appSecret},#{appName},now(),#{status})
+</insert>
+<!-- 插入记录 -->
+<insert id="insertSelective" parameterType="com.yj.oauth.entity.OApps" >
+  insert into o_apps
+	<trim  prefix="(" suffix=")"  suffixOverrides="," >
+	<if test="id != null  ">
+		id,
+	</if>
+	<if test="appId != null  ">
+		app_id,
+	</if>
+	<if test="appSecret != null  ">
+		app_secret,
+	</if>
+	<if test="appName != null  ">
+		app_name,
+	</if>
+	<if test="createTime != null  ">
+		create_time,
+	</if>
+	<if test="status != null  ">
+		status,
+	</if>
+	</trim>
+	<trim  prefix="values (" suffix=")"  suffixOverrides="," >
+	<if test="id != null  ">
+		#{id},
+	</if>
+	<if test="appId != null  ">
+		#{appId},
+	</if>
+	<if test="appSecret != null  ">
+		#{appSecret},
+	</if>
+	<if test="appName != null  ">
+		#{appName},
+	</if>
+	<if test="createTime != null  ">
+		now(),
+	</if>
+	<if test="status != null  ">
+		#{status},
+	</if>
+	</trim>
+</insert>
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="com.yj.oauth.entity.OApps" >
+	update o_apps set 
+	<trim  suffixOverrides="," >
+	<if test="appId != null  ">
+		app_id=#{appId},
+	</if>
+	<if test="appSecret != null  ">
+		app_secret=#{appSecret},
+	</if>
+	<if test="appName != null  ">
+		app_name=#{appName},
+	</if>
+	<if test="createTime != null  ">
+		create_time=#{createTime},
+	</if>
+	<if test="status != null  ">
+		status=#{status},
+	</if>
+	</trim> where id=#{id}
+</update>
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="com.yj.oauth.entity.OApps" >
+  update o_apps set app_id=#{appId},app_secret=#{appSecret},app_name=#{appName},create_time=now(),status=#{status} where id=#{id}
+ </update>
+  	
+<!-- 查询客户端列表 -->
+<select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from o_apps 
+	<include refid="Example_Where_Clause"/>
+	<if test="orderByClause != null and orderByClause != ''" >
+       order by  ${orderByClause}
+    </if>
+</select>
+	<!-- 查询客户端列表 -->
+	<select id="selectOne" resultMap="BaseResultMap"  parameterType="Object">
+		select
+		<include refid="Base_Column_List"/>
+		from o_apps
+		<include refid="Example_Where_Clause"/>
+		limit 1
+	</select>
+
+
+
+</mapper>   
