@@ -1,7 +1,8 @@
 package com.weixin.services.service.impl;
 
 import com.weixin.entity.chat.Voucher;
-import com.weixin.services.dao.BaseDao;
+import com.yj.base.services.BaseDao;
+import com.yj.base.services.impl.BaseServiceImpl;
 import com.weixin.services.dao.VoucherDao;
 import com.weixin.services.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;

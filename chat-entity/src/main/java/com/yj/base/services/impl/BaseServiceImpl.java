@@ -1,11 +1,10 @@
-package com.weixin.services.service.impl;
+package com.yj.base.services.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.google.gson.Gson;
 import com.weixin.entity.chat.SuperVO;
-import com.weixin.services.dao.BaseDao;
-import com.weixin.services.service.BaseService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.yj.base.services.BaseDao;
+import com.yj.base.services.BaseService;
 
 import java.io.Serializable;
 import java.util.List;

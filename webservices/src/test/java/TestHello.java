@@ -1,6 +1,6 @@
 import com.weixin.utils.util.JsonUtils;
-import com.yj.ws.service.App;
-import com.yj.ws.service.IsService;
+import com.yj.oauth.ws.service.App;
+import com.yj.oauth.ws.service.IsService;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ public class TestHello {
     @Test
     public void hell() {
         JaxWsProxyFactoryBean bean = new JaxWsProxyFactoryBean();
-        bean.setServiceClass(com.yj.ws.service.IsService.class);
+        bean.setServiceClass(IsService.class);
         bean.setAddress("http://localhost:8080/ws/soap/helloService");
         IsService helloWorldService = (IsService) bean.create();
         String result = helloWorldService.sayHi("Kevin");
@@ -34,7 +34,7 @@ public class TestHello {
     @Test
     public void hell2() {
         JaxWsProxyFactoryBean bean = new JaxWsProxyFactoryBean();
-        bean.setServiceClass(com.yj.ws.service.IsService.class);
+        bean.setServiceClass(IsService.class);
         bean.setAddress("http://localhost:8082/ws/soap/helloService/app");
         IsService helloWorldService = (IsService) bean.create();
         App result = helloWorldService.getAppById("1231");

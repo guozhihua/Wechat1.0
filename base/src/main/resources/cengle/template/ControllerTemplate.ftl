@@ -1,6 +1,7 @@
 package ${bussPackage}.controller#if($!controllerEntityPackage).${controllerEntityPackage}#end;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ import ${bussPackage}.entity#if($!entityPackage).${entityPackage}#end.${classNam
 @RequestMapping("/${lowerName}")
 public class ${className}Controller extends ABaseController<${className}>{
 	
-	private final static Logger log= Logger.getLogger(${className}Controller.class);
+	private final static Logger logger=  LogManager.getLogger("${className}Controller");
 	@Autowired
 	private ${className}Service ${lowerName}Service; 
 	

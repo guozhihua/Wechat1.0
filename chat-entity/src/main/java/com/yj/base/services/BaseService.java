@@ -1,4 +1,4 @@
-package com.weixin.services.service;
+package com.yj.base.services;
 
 
 import java.io.Serializable;

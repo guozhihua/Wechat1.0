@@ -1,6 +1,7 @@
 package com.weixin.services.dao;
 
 import com.weixin.entity.chat.Voucher;
+import com.yj.base.services.BaseDao;
 import org.springframework.stereotype.Repository;
 
 /**

@@ -1,4 +1,4 @@
-package com.weixin.services.dao;
+package com.yj.base.services;
 
 
 import com.github.pagehelper.Page;

@@ -1,6 +1,7 @@
 package ${bussPackage}.service.impl#if($!entityPackage).${entityPackage}#end;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,7 @@ import ${bussPackage}.service#if($!entityPackage).${entityPackage}#end.${classNa
 @Service
 //@Transactional
 public class  ${className}ServiceImpl  extends BaseServiceImpl<${className}> implements ${className}Service {
-  private final static Logger log= Logger.getLogger(${className}ServiceImpl.class);
+  private final static Logger logger= LogManager.getLogger("${className}ServiceImpl");
 	
 
 	@Autowired

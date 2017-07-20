@@ -21,6 +21,7 @@
         <module>webservices</module>
         <module>chat-sso</module>
         <module>base</module>
+        <module>OAuth2</module>
     </modules>
 
     <!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId 和 artifactId 即可 -->
@@ -166,12 +167,7 @@
                 <artifactId>disruptor</artifactId>
                 <version>3.3.6</version>
             </dependency>
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>${log4j_version}</version>
-            </dependency>
-            <!--log4j end-->
+            <!--log4j2 end-->
             <dependency>
                 <groupId>org.aspectj</groupId>
                 <artifactId>aspectjweaver</artifactId>
@@ -731,8 +727,8 @@
         <cxf_version>2.6.1</cxf_version>
         <thrift_version>0.8.0</thrift_version>
         <thrift2_version>0.9.3</thrift2_version>
-        <!--<validation_version>1.1.0.Final</validation_version>-->
-        <validation_version>1.0.0.GA</validation_version>
+        <validation_version>1.1.0.Final</validation_version>
+        <!--<validation_version>1.0.0.GA</validation_version>-->
         <hibernate_validator_version>5.1.0.Final</hibernate_validator_version>
         <jcache_version>0.4</jcache_version>
         <tomcat_embed_version>8.0.11</tomcat_embed_version>
@@ -749,7 +745,7 @@
         <fst_version>2.44</fst_version>
         <dubbox.version>2.9.0</dubbox.version>
         <log4j2.version>2.5</log4j2.version>
-        <log4j_version>1.2.17</log4j_version>
+        <!--<log4j_version>1.2.17</log4j_version>-->
         <curator_version>2.5.0</curator_version>
         <xmemcached_version>1.3.6</xmemcached_version>
         <zookeeper_version>3.4.6</zookeeper_version>
