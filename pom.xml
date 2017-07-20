@@ -689,6 +689,11 @@
                 <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
                 <version>${oauth2.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.oltu.oauth2</groupId>
+                <artifactId>org.apache.oltu.oauth2.common</artifactId>
+                <version>${oauth2.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <properties>
