@@ -5,9 +5,9 @@
 <mapper namespace="${bussPackage}.dao#if($!entityPackage).${entityPackage}#end.${className}Dao" > 
 <!-- Result Map-->
 <resultMap id="BaseResultMap" type="${bussPackage}.entity#if($!entityPackage).${entityPackage}#end.$!{className}" >
-#foreach($item in $!{columnDatas})
+   #foreach($item in $!{columnDatas})
 	<result column="$!item.columnName" property="$!item.formatColumnName"/>
-#end
+     #end
 </resultMap>
        
 <!-- $!{tableName} table all fields -->
@@ -33,11 +33,11 @@ where 1=1
 </sql>
    
 <!-- 根据id查询 ${codeName} -->
-<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.String">
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="${idClass}">
 	$!{SQL.selectById}
 </select>
 <!-- 删除记录 -->
-<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+<delete id="deleteByPrimaryKey" parameterType="${idClass}">
 	$!{SQL.delete}
 </delete>
 <!-- 插入记录 -->

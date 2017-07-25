@@ -3,6 +3,7 @@ package codeGenerater.factory;
 import codeGenerater.CommonPageParser;
 import codeGenerater.CreateBean;
 import codeGenerater.def.CodeResourceUtil;
+import codeGenerater.def.FtlDef;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.VelocityContext;
@@ -19,7 +20,10 @@ public class CodeGenerateFactory
   private static String buss_package = CodeResourceUtil.bussiPackage;
   private static String projectPath = getProjectPath();
 
-  
+  public static void codeGenerate(String tableName, String codeName,String keyType){
+    codeGenerate(tableName, codeName,"", keyType);
+  }
+
   public static void codeGenerate(String tableName, String codeName, String controllerEntityPackage, String keyType){
 	  codeGenerate(tableName, codeName,"", controllerEntityPackage, keyType);
   }
@@ -66,6 +70,11 @@ public class CodeGenerateFactory
     context.put("entityPackage", entityPackage==""?null:entityPackage);
     context.put("controllerEntityPackage", controllerEntityPackage==""?null:controllerEntityPackage);
     context.put("keyType", keyType);
+    if( FtlDef.KEY_TYPE_01==keyType){
+      context.put("idClass","java.lang.INTEGER");
+    }else{
+      context.put("idClass","java.lang.String");
+    }
     try
     {
       context.put("feilds", createBean.getBeanFeilds(tableName));

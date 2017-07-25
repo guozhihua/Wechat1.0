@@ -16,6 +16,7 @@ public class ColumnData {
 	private String precision;
 	private String classType = "";
 
+
 	private String optionType = "";
 
 	public String getFormatColumnName() {
@@ -101,4 +102,6 @@ public class ColumnData {
 	public void setColumnType(String columnType) {
 		this.columnType = columnType;
 	}
+
+
 }

@@ -31,7 +31,7 @@ public interface BaseDao<T extends SuperVO> {
 
 	public <V extends T> V selectOne(Map<String,Object> map);
 
-	public <V extends T> V selectByPrimaryKey(String id);
+	public <V extends T> V selectByPrimaryKey(Serializable id);
 
 	public <V extends T> List<V> selectList(Map<String,Object> map);
 
@@ -49,9 +49,9 @@ public interface BaseDao<T extends SuperVO> {
 
 	public int insert(T entity);
 
-	public int deleteByPrimaryKey(String id);
+	public int deleteByPrimaryKey(Serializable id);
 
-	public int deleteByIdFalse(String id);
+	public int deleteByIdFalse(Serializable id);
 
 	public int deleteAll();
 

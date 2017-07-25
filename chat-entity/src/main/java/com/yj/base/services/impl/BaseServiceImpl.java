@@ -59,7 +59,7 @@ public abstract class BaseServiceImpl<T extends SuperVO> implements BaseService<
 
 
     @Override
-    public T queryById(String id) {
+    public T queryById(Serializable id) {
         return getBaseDao().selectByPrimaryKey(id);
     }
 
@@ -69,12 +69,12 @@ public abstract class BaseServiceImpl<T extends SuperVO> implements BaseService<
     }
 
     @Override
-    public int deleteById(String id) throws Exception {
+    public int deleteById(Serializable id) throws Exception {
         return getBaseDao().deleteByPrimaryKey(id);
     }
 
     @Override
-    public int deleteFalse(String id) throws Exception {
+    public int deleteFalse(Serializable id) throws Exception {
         return getBaseDao().deleteByIdFalse(id);
     }
 

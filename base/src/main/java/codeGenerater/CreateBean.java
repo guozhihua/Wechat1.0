@@ -84,12 +84,11 @@ public class CreateBean {
 			String scale = rs.getString(5);
 			String charmaxLength = rs.getString(6) == null ? "" : rs.getString(6);
 			String nullable = TableConvert.getNullAble(rs.getString(7));
-			type = getType(type, precision, scale);
-
 			ColumnData cd = new ColumnData();
+			type = getType(type, precision, scale);
 			cd.setColumnName(name);
 			cd.setDataType(type);
-			cd.setColumnType(rs.getString(2));
+			cd.setColumnType(rs.getString(2).toUpperCase());
 			cd.setColumnComment(comment);
 			cd.setPrecision(precision);
 			cd.setScale(scale);
@@ -270,7 +269,7 @@ public class CreateBean {
 		String columnFields = getColumnFields(columns);
 		String insert = "insert into " + tableName + "(" + columns.replaceAll("\\|", ",") + ")\n values(#{" + formatColumns.replaceAll("\\|", "},#{") + "})";
 		String insertSelective=getInsertSelectiveSql(tableName, columnDatas);
-		String update = getUpdateSql(tableName, columnList);
+		String update = getUpdateSql(tableName, columnDatas);
 		String updateSelective = getUpdateSelectiveSql(tableName, columnDatas);
 		String selectById = getSelectByIdSql(tableName, columnList);
 		String delete = getDeleteSql(tableName, columnList);
@@ -334,7 +333,7 @@ public class CreateBean {
 			sb.append(" \">\n\t\t");
 			sb2.append(" \">\n\t\t");
 			sb.append(columnName + ",\n");
-			sb2.append("#{" + CommUtil.formatName(columnName) + "},\n");
+			sb2.append("#{" + CommUtil.formatName(columnName) + ",jdbcType="+data.getColumnType()+"},\n");
 			//sb.append(columnName + "=#{" + CommUtil.formatName(columnName) + "},\n");
 			sb.append("\t</if>\n");
 			sb2.append("\t</if>\n");
@@ -347,22 +346,23 @@ public class CreateBean {
 		return insert;
 	}
 
-	public String getUpdateSql(String tableName, String[] columnsList) throws SQLException {
+	public String getUpdateSql(String tableName, List columnDatas) throws SQLException {
 		StringBuffer sb = new StringBuffer();
 
-		for (int i = 1; i < columnsList.length; i++) {
-			String column = columnsList[i];
-			if (!"CREATETIME".equals(column.toUpperCase())) {
-				if ("UPDATETIME".equals(column.toUpperCase()))
+		for (int i = 1; i < columnDatas.size(); i++) {
+			ColumnData column = (ColumnData) columnDatas.get(i);
+			if (!"CREATETIME".equals(column.getColumnName().toUpperCase())) {
+				if ("UPDATETIME".equals(column.getColumnName().toUpperCase()))
 					sb.append(column + "=now()");
 				else {
-					sb.append(column + "=#{" + CommUtil.formatName(column) + "}");
+					sb.append(column + "=#{" + CommUtil.formatName(column.getColumnName()) + "}");
 				}
-				if (i + 1 < columnsList.length)
+				if (i + 1 < columnDatas.size())
 					sb.append(",");
 			}
 		}
-		String update = "update " + tableName + " set " + sb.toString() + " where " + columnsList[0] + "=#{" + CommUtil.formatName(columnsList[0]) + "}";
+		ColumnData cd = (ColumnData) columnDatas.get(0);
+		String update = "update " + tableName + " set " + sb.toString() + " where " + cd.getColumnName() + "=#{" + CommUtil.formatName(cd.getColumnName()) + ",jdbcType="+cd.getColumnType()+"}";
 		return update;
 	}
 
@@ -373,17 +373,17 @@ public class CreateBean {
 		for (int i = 1; i < columnList.size(); i++) {
 			ColumnData data = (ColumnData) columnList.get(i);
 			String columnName = data.getColumnName();
-			sb.append("\t<if test=\"").append(CommUtil.formatName(columnName)).append(" != null ");
+			sb.append("\t<if test=\"").append(CommUtil.formatName(columnName)).append(" != null");
 
 			if ("String" == data.getDataType()) {
 				sb.append(" and ").append(CommUtil.formatName(columnName)).append(" != ''");
 			}
 			sb.append(" \">\n\t\t");
-			sb.append(columnName + "=#{" + CommUtil.formatName(columnName) + "},\n");
+			sb.append(columnName + "=#{" + CommUtil.formatName(columnName) + ",jdbcType="+data.getColumnType()+"},\n");
 			sb.append("\t</if>\n");
 		}
 		sb.append("\t</trim>");
-		String update = "update " + tableName + " set \n" + sb.toString() + " where " + cd.getColumnName() + "=#{" + CommUtil.formatName(cd.getColumnName()) + "}";
+		String update = "update " + tableName + " set \n" + sb.toString() + " where " + cd.getColumnName() + "=#{" + CommUtil.formatName(cd.getColumnName()) + ",jdbcType="+cd.getColumnType()+"}";
 		return update;
 	}
 
@@ -403,5 +403,16 @@ public class CreateBean {
 			commonColumns.append(data.getFormatColumnName() + "|");
 		}
 		return commonColumns.delete(commonColumns.length() - 1, commonColumns.length()).toString();
+	}
+
+
+	public String getColumnType(List<ColumnData> columnList,String columnName) throws SQLException {
+		for (ColumnData data : columnList) {
+			 if(columnName.equals(data.getColumnName())){
+				 return data.getColumnType();
+			 }
+
+		}
+		return  null;
 	}
 }

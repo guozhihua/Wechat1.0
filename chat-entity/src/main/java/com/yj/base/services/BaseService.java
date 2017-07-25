@@ -33,7 +33,7 @@ public  interface BaseService<T> {
 	 */
 	public abstract void delete(Serializable id);
 
-	public T queryById(String id) ;
+	public T queryById(Serializable id) ;
 
 	public T queryOne(Map<String,Object> map) ;
 
@@ -45,9 +45,9 @@ public  interface BaseService<T> {
 
 	public void addSelective(T entity) throws Exception;
 
-	public int deleteById(String id) throws Exception ;
+	public int deleteById(Serializable id) throws Exception ;
 
-	public int deleteFalse(String id) throws Exception ;
+	public int deleteFalse(Serializable id) throws Exception ;
 
 	public int updateByIdSelective(T entity) throws Exception ;
 
