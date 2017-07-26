@@ -53,4 +53,6 @@ public  interface BaseService<T> {
 
 	public int updateById(T entity) throws Exception ;
 
+	public long selectCount(Map<String,Object> paramMap) throws Exception;
+
 }

@@ -1,6 +1,7 @@
 package codeGenerater;
 
 import codeGenerater.def.CommUtil;
+import codeGenerater.def.FtlDef;
 import codeGenerater.def.TableConvert;
 import org.apache.commons.lang.StringUtils;
 
@@ -259,7 +260,7 @@ public class CreateBean {
 		writer.close();
 	}
 
-	public Map<String, Object> getAutoCreateSql(String tableName) throws Exception {
+	public Map<String, Object> getAutoCreateSql(String tableName,String keyType) throws Exception {
 		Map sqlMap = new HashMap();
 		List columnDatas = getColumnDatas(tableName);
 		String columns = getColumnSplit(columnDatas);
@@ -267,7 +268,7 @@ public class CreateBean {
 		String formatColumns = getFormatColumnSplit(columnDatas);
 		String[] columnList = getColumnList(columns);
 		String columnFields = getColumnFields(columns);
-		String insert = "insert into " + tableName + "(" + columns.replaceAll("\\|", ",") + ")\n values(#{" + formatColumns.replaceAll("\\|", "},#{") + "})";
+		String insert = "insert into " + tableName + "(" + columns.replaceAll("\\|", ",") + ")\n\t\t values(\n\t\t\t#{" + formatColumns.replaceAll("\\|", "},\n\t\t\t#{") + "})";
 		String insertSelective=getInsertSelectiveSql(tableName, columnDatas);
 		String update = getUpdateSql(tableName, columnDatas);
 		String updateSelective = getUpdateSelectiveSql(tableName, columnDatas);
@@ -281,22 +282,23 @@ public class CreateBean {
 		sqlMap.put("delete", delete);
 		sqlMap.put("updateSelective", updateSelective);
 		sqlMap.put("selectById", selectById);
+		sqlMap.put("insertBatch",getInsertBatch(tableName,columnDatas,keyType));
 		sqlMap.put("keyName", CommUtil.formatName(columnList[0]));
 		return sqlMap;
 	}
 
 	public String getDeleteSql(String tableName, String[] columnsList) throws SQLException {
 		StringBuffer sb = new StringBuffer();
-		sb.append("delete ");
-		sb.append("\t from ").append(tableName).append(" where ");
+		sb.append("delete\n\t\t ");
+		sb.append(" from ").append(tableName).append(" where ");
 		sb.append(columnsList[0]).append(" = #{").append(CommUtil.formatName(columnsList[0])).append("}");
 		return sb.toString();
 	}
 
 	public String getSelectByIdSql(String tableName, String[] columnsList) throws SQLException {
 		StringBuffer sb = new StringBuffer();
-		sb.append("select <include refid=\"Base_Column_List\" /> \n");
-		sb.append("\t from ").append(tableName).append(" where ");
+		sb.append("select\n\t <include refid=\"Base_Column_List\" /> \n\t\t");
+		sb.append("from ").append(tableName).append("\n\t where ");
 		sb.append(columnsList[0]).append(" = #{").append(CommUtil.formatName(columnsList[0])).append("}");
 		return sb.toString();
 	}
@@ -313,6 +315,49 @@ public class CreateBean {
 		String[] columnList = columns.split("[|]");
 		return columnList;
 	}
+
+	public String getInsertBatch(String tableName, List<ColumnData> columnList,String keyType){
+		StringBuffer sb = new StringBuffer();
+        sb.append("insert into ").append(tableName).append("(\n");
+		int num =1 ;
+		for(ColumnData data:columnList){
+			//自增主键不需生成
+			if(num==1&&keyType== FtlDef.KEY_TYPE_01){
+				num ++ ;
+				continue;
+			}
+			sb.append("\t").append(data.getColumnName());
+			if(num==columnList.size()){
+				sb.append(") values \n\t\t<foreach collection=\"list\" item=\"item\" index=\"index\" separator=\",\">\n    (");
+			}else{
+				sb.append(",");
+			}
+			num ++ ;
+		}
+		int num1 =1 ;
+		for(ColumnData data:columnList){
+			//自增主键不需生成
+			if(num1==1&&keyType== FtlDef.KEY_TYPE_01){
+				num1 ++ ;
+				continue;
+			}
+			//uuid主键不需生成
+			if(num1==1&&keyType== FtlDef.KEY_TYPE_02){
+				sb.append("UUID(),\n");
+				num1 ++ ;
+				continue;
+			}
+			if(num1!=columnList.size()){
+				sb.append("\t#{item."+data.getFormatColumnName()+",jdbcType="+data.getColumnType()+"},\n");
+			}else{
+				sb.append("\t#{item."+data.getFormatColumnName()+",jdbcType="+data.getColumnType()+"})\n" +
+						"\t\t</foreach>");
+			}
+			num1++;
+		}
+		return  sb.toString();
+	}
+
 	
 	public String getInsertSelectiveSql(String tableName, List<ColumnData> columnList) throws SQLException {
 		StringBuffer sb = new StringBuffer();
@@ -353,12 +398,12 @@ public class CreateBean {
 			ColumnData column = (ColumnData) columnDatas.get(i);
 			if (!"CREATETIME".equals(column.getColumnName().toUpperCase())) {
 				if ("UPDATETIME".equals(column.getColumnName().toUpperCase()))
-					sb.append(column + "=now()");
+					sb.append(column.getColumnName() + "=now()");
 				else {
-					sb.append(column + "=#{" + CommUtil.formatName(column.getColumnName()) + "}");
+					sb.append("\t"+column.getColumnName() + "=#{" +column.getFormatColumnName() + ",jdbcType="+column.getColumnType()+"}");
 				}
 				if (i + 1 < columnDatas.size())
-					sb.append(",");
+					sb.append(",\n");
 			}
 		}
 		ColumnData cd = (ColumnData) columnDatas.get(0);
@@ -400,7 +445,7 @@ public class CreateBean {
 	public String getFormatColumnSplit(List<ColumnData> columnList) throws SQLException {
 		StringBuffer commonColumns = new StringBuffer();
 		for (ColumnData data : columnList) {
-			commonColumns.append(data.getFormatColumnName() + "|");
+			commonColumns.append(data.getFormatColumnName() + ",jdbcType="+data.getColumnType()+"|");
 		}
 		return commonColumns.delete(commonColumns.length() - 1, commonColumns.length()).toString();
 	}

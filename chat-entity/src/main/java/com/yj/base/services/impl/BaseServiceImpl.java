@@ -17,10 +17,6 @@ import java.util.Map;
 public abstract class BaseServiceImpl<T extends SuperVO> implements BaseService<T> {
 
     protected abstract BaseDao<T> getBaseDao();
-//    @Autowired
-//    protected RedisClientTemplate redisClientTemplate;
-
-    protected Gson gson=new Gson();
 
     //默认的缓存有效期
     public int DEFAULT_TIME_OUT=60*60*2;
@@ -105,9 +101,8 @@ public abstract class BaseServiceImpl<T extends SuperVO> implements BaseService<
 
     }
 
-
-
-
-
-
+    @Override
+    public long selectCount(Map<String, Object> paramMap) throws Exception {
+        return getBaseDao().selectCount(paramMap);
+    }
 }

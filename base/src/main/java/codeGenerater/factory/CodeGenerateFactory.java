@@ -84,7 +84,7 @@ public class CodeGenerateFactory
 
     try
     {
-      Map sqlMap = createBean.getAutoCreateSql(tableName);
+      Map sqlMap = createBean.getAutoCreateSql(tableName,keyType);
       context.put("columnDatas", createBean.getColumnDatas(tableName));
       context.put("SQL", sqlMap);
     } catch (Exception e) {

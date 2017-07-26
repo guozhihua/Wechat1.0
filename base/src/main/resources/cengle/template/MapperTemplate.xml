@@ -2,81 +2,83 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="${bussPackage}.dao#if($!entityPackage).${entityPackage}#end.${className}Dao" > 
-<!-- Result Map-->
-<resultMap id="BaseResultMap" type="${bussPackage}.entity#if($!entityPackage).${entityPackage}#end.$!{className}" >
-   #foreach($item in $!{columnDatas})
-	<result column="$!item.columnName" property="$!item.formatColumnName"/>
-     #end
-</resultMap>
-       
-<!-- $!{tableName} table all fields -->
-<sql id="Base_Column_List" >
-	 $!{SQL.columnFields}
-</sql>
-   
-   
-<!-- 查询条件 -->
-<sql id="Example_Where_Clause">
-where 1=1
-<trim  suffixOverrides="," >
-#foreach($item in $!{columnDatas})
-	#set($testStr = ""+$!item.formatColumnName + " != null and " + $!item.formatColumnName + " != ''")
-	#if($!item.dataType == 'String')
-		#set($testStr = $!testStr + " and " + $!item.formatColumnName + " != ''")
- 	#end
-<if test="$!testStr" >
-	    and $!item.columnName =  #{$!item.formatColumnName}
-	</if>
-#end
-</trim>
-</sql>
-   
-<!-- 根据id查询 ${codeName} -->
-<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="${idClass}">
-	$!{SQL.selectById}
-</select>
-<!-- 删除记录 -->
-<delete id="deleteByPrimaryKey" parameterType="${idClass}">
-	$!{SQL.delete}
-</delete>
-<!-- 插入记录 -->
-<insert id="insert" parameterType="${bussPackage}.entity#if($!entityPackage).${entityPackage}#end.$!{className}" >
-#if  ($keyType =='02')
-<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="$!{SQL.keyName}">
-	SELECT UUID()
-  </selectKey>
-#end
-  $!{SQL.insert}
-</insert>
-<!-- 插入记录 -->
-<insert id="insertSelective" parameterType="${bussPackage}.entity#if($!entityPackage).${entityPackage}#end.$!{className}" >
-#if  ($keyType =='02')
-<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="$!{SQL.keyName}">
-	SELECT UUID()
-  </selectKey>
-#end
-  $!{SQL.insertSelective}
-</insert>
- <!-- 修改记录，只修改只不为空的字段 -->
-<update id="updateByPrimaryKeySelective" parameterType="${bussPackage}.entity#if($!entityPackage).${entityPackage}#end.$!{className}" >
-	$!{SQL.updateSelective}
-</update>
-<!-- 根据id，修改记录-->  
- <update id="updateByPrimaryKey" parameterType="${bussPackage}.entity#if($!entityPackage).${entityPackage}#end.$!{className}" >
-  $!{SQL.update}
- </update>
-  	
-<!-- 查询${codeName}列表 -->
-<select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
-	select 
-	<include refid="Base_Column_List"/>
-	from ${tableName} 
-	<include refid="Example_Where_Clause"/>
-	<if test="orderByClause != null and orderByClause != ''" >
-       order by  ${orderByClause}
-    </if>
-</select>
+<mapper namespace="${bussPackage}.dao#if($!entityPackage).${entityPackage}#end.${className}Dao" >
+	<!-- Result Map-->
+	<resultMap id="BaseResultMap" type="${bussPackage}.entity#if($!entityPackage).${entityPackage}#end.$!{className}">
+		#foreach($item in $!{columnDatas})
+		<result column="$!item.columnName" property="$!item.formatColumnName" jdbcType="$!item.columnType"/>
+		#end
+	</resultMap>
+	<!-- $!{tableName} table all fields -->
+	<sql id="Base_Column_List" >
+	$!{SQL.columnFields}
+	</sql>
+	<!-- 查询条件 -->
+	<sql id="Example_Where_Clause">
+	where 1=1
+		<trim  suffixOverrides="," >
+			#foreach($item in $!{columnDatas})
+			#set($testStr = ""+$!item.formatColumnName + " != null and " + $!item.formatColumnName + " != ''")
+			#if($!item.dataType == 'String')
+			#set($testStr = $!testStr + " and " + $!item.formatColumnName + " != ''")
+			#end
+
+			<if test="$!testStr" >
+				and $!item.columnName =  #{$!item.formatColumnName,jdbcType=$!item.columnType}
+			</if>
+			#end
+		</trim>
+	</sql>
+
+	<!-- 根据id查询 ${codeName} -->
+	<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="${idClass}">
+	  $!{SQL.selectById}
+	</select>
+	<!-- 根据id查询 ${codeName} -->
+	<select id="get"  resultMap="BaseResultMap" parameterType="${idClass}">
+	  $!{SQL.selectById}
+	</select>
+	<!-- 删除记录 -->
+	<delete id="deleteByPrimaryKey" parameterType="${idClass}">
+	  $!{SQL.delete}
+	</delete>
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="${bussPackage}.entity#if($!entityPackage).${entityPackage}#end.$!{className}" >
+		#if  ($keyType =='02')
+		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="$!{SQL.keyName}">
+				SELECT UUID()
+			</selectKey>
+		#end
+		$!{SQL.insert}
+	</insert>
+	<!-- 插入记录 -->
+	<insert id="insertSelective" parameterType="${bussPackage}.entity#if($!entityPackage).${entityPackage}#end.$!{className}" >
+		#if  ($keyType =='02')
+		<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="$!{SQL.keyName}">
+				SELECT UUID()
+			</selectKey>
+		#end
+		$!{SQL.insertSelective}
+	</insert>
+	<!-- 修改记录，只修改只不为空的字段 -->
+	<update id="updateByPrimaryKeySelective" parameterType="${bussPackage}.entity#if($!entityPackage).${entityPackage}#end.$!{className}" >
+		$!{SQL.updateSelective}
+	</update>
+	<!-- 根据id，修改记录-->
+	<update id="updateByPrimaryKey" parameterType="${bussPackage}.entity#if($!entityPackage).${entityPackage}#end.$!{className}" >
+		$!{SQL.update}
+	</update>
+
+	<!-- 查询${codeName}列表 -->
+	<select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
+		select
+		<include refid="Base_Column_List"/>
+		from ${tableName}
+		<include refid="Example_Where_Clause"/>
+		<if test="orderByClause != null and orderByClause != ''" >
+			order by  ${orderByClause}
+		</if>
+	</select>
 	<!-- 查询${codeName}列表 -->
 	<select id="selectOne" resultMap="BaseResultMap"  parameterType="Object">
 		select
@@ -85,7 +87,12 @@ where 1=1
 		<include refid="Example_Where_Clause"/>
 		limit 1
 	</select>
+	<select id="selectCount" parameterType="Object" resultType="java.lang.Long">
+		SELECT COUNT(1) from ${tableName}
+		<include refid="Example_Where_Clause"/>
+	</select>
 
-
-
-</mapper>   
+	<insert id="insertInBatch" parameterType="java.util.List">
+      $!{SQL.insertBatch}
+	</insert>
+</mapper>

@@ -1,7 +1,6 @@
 package com.yj.base.services;
 
 
-import com.github.pagehelper.Page;
 import com.weixin.entity.chat.SuperVO;
 
 import java.io.Serializable;
@@ -35,15 +34,6 @@ public interface BaseDao<T extends SuperVO> {
 
 	public <V extends T> List<V> selectList(Map<String,Object> map);
 
-	public <V extends T> List<V> selectAll();
-
-	public <K, V extends T> Map<K, V> selectMap(T query, String mapKey);
-
-	public <V extends T> Page<V> selectPageList(T query);
-
-	public Long selectCount();
-
-	public Long selectCount(T query);
 
 	public Long selectCount(Map<String,Object> map);
 
@@ -52,8 +42,6 @@ public interface BaseDao<T extends SuperVO> {
 	public int deleteByPrimaryKey(Serializable id);
 
 	public int deleteByIdFalse(Serializable id);
-
-	public int deleteAll();
 
 	public int updateByPrimaryKey(T entity);
 
