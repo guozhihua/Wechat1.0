@@ -283,6 +283,7 @@ public class CreateBean {
 		sqlMap.put("updateSelective", updateSelective);
 		sqlMap.put("selectById", selectById);
 		sqlMap.put("insertBatch",getInsertBatch(tableName,columnDatas,keyType));
+		sqlMap.put("updateInBatch",getUpdateBatch(tableName,columnDatas));
 		sqlMap.put("keyName", CommUtil.formatName(columnList[0]));
 		return sqlMap;
 	}
@@ -459,5 +460,26 @@ public class CreateBean {
 
 		}
 		return  null;
+	}
+
+	public String getUpdateBatch(String tableBName,List<ColumnData> columnDatas){
+		StringBuilder sb = new StringBuilder();
+		sb.append(" <foreach collection=\"list\" item=\"item\" index=\"index\" open=\"begin\" close=\";end;\" separator=\";\">\n");
+		sb.append("\tupdate  ").append(tableBName).append(" set \n");
+		for(int i =1;i<columnDatas.size();i++){
+			ColumnData data=  columnDatas.get(i);
+			String columnName = data.getColumnName();
+			sb.append("\t<if test=\"").append(CommUtil.formatName(columnName)).append(" != null");
+			sb.append(" \">\n");
+			sb.append("\t\t"+columnName + "=#{" + CommUtil.formatName(columnName) + ",jdbcType="+data.getColumnType()+"}");
+			if(i==columnDatas.size()){
+				sb.append(",\n");
+			}
+			sb.append("\n\t</if>\n");
+		}
+		sb.append("\n\t\twhere ").append(columnDatas.get(0).getColumnName()).append("#{item.").
+				append(columnDatas.get(0).getFormatColumnName()).append(",jdbcType=").append(columnDatas.get(0).getColumnType()).append("}\n</foreach>");
+		return  sb.toString();
+
 	}
 }

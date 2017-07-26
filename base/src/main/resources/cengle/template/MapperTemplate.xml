@@ -95,4 +95,7 @@
 	<insert id="insertInBatch" parameterType="java.util.List">
       $!{SQL.insertBatch}
 	</insert>
+	<update id="updateInBatch"  parameterType="java.util.List">
+	  $!{SQL.updateInBatch}
+	</update>
 </mapper>
