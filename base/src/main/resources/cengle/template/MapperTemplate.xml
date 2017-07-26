@@ -98,4 +98,10 @@
 	<update id="updateInBatch"  parameterType="java.util.List">
 	  $!{SQL.updateInBatch}
 	</update>
+	<delete id="deleteByPrimaryKeyInBatch" parameterType="java.util.List">
+      DELETE  from ${tableName} where $!{SQL.keyName} in
+		<foreach collection="list"  index="index" item="item" open="(" separator="," close=")"  >
+			#{item}
+		</foreach>
+	</delete>
 </mapper>

@@ -47,7 +47,7 @@ public interface BaseDao<T extends SuperVO> {
 
 	public int updateByPrimaryKeySelective(T entity);
 
-	public int deleteByPrimaryKeyInBatch(List<String> idList);
+	public int deleteByPrimaryKeyInBatch(List<Serializable> idList);
 
 	public int insertInBatch(List<T> entityList);
 

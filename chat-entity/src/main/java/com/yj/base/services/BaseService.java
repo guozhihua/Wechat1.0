@@ -55,4 +55,10 @@ public  interface BaseService<T> {
 
 	public long selectCount(Map<String,Object> paramMap) throws Exception;
 
+	public int updateInBatch(List<T> entityList) throws  Exception;
+
+	public int insertInBatch(List<T> entityList) throws  Exception;
+
+	public int deleteByPrimaryKeyInBatch(List<Serializable> idList);
+
 }

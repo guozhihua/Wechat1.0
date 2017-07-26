@@ -105,4 +105,19 @@ public abstract class BaseServiceImpl<T extends SuperVO> implements BaseService<
     public long selectCount(Map<String, Object> paramMap) throws Exception {
         return getBaseDao().selectCount(paramMap);
     }
+
+    @Override
+    public int updateInBatch(List<T> entityList) throws Exception {
+        return getBaseDao().updateInBatch(entityList);
+    }
+
+    @Override
+    public int insertInBatch(List<T> entityList) throws Exception {
+        return getBaseDao().insertInBatch(entityList);
+    }
+
+    @Override
+    public int deleteByPrimaryKeyInBatch(List<Serializable> idList) {
+        return getBaseDao().deleteByPrimaryKeyInBatch(idList);
+    }
 }
