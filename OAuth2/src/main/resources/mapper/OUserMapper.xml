@@ -2,57 +2,78 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yj.oauth.dao.OUserDao" > 
-<!-- Result Map-->
-<resultMap id="BaseResultMap" type="com.yj.oauth.entity.OUser" >
-	<result column="uuid" property="uuid"/>
-	<result column="user_name" property="userName"/>
-	<result column="password" property="password"/>
-	<result column="salt" property="salt"/>
-</resultMap>
-       
-<!-- o_user table all fields -->
-<sql id="Base_Column_List" >
-	 uuid,user_name,password,salt
-</sql>
-   
-   
-<!-- 查询条件 -->
-<sql id="Example_Where_Clause">
-where 1=1
-<trim  suffixOverrides="," >
-	<if test="uuid != null and uuid != ''" >
-	    and uuid =  #{uuid}
-	</if>
-	<if test="userName != null and userName != ''" >
-	    and user_name =  #{userName}
-	</if>
-	<if test="password != null and password != ''" >
-	    and password =  #{password}
-	</if>
-	<if test="salt != null and salt != ''" >
-	    and salt =  #{salt}
-	</if>
-</trim>
-</sql>
-   
-<!-- 根据id查询 用户资源 -->
-<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.String">
-	select <include refid="Base_Column_List" /> 
-	 from o_user where uuid = #{uuid}
-</select>
-<!-- 删除记录 -->
-<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-	delete 	 from o_user where uuid = #{uuid}
-</delete>
-<!-- 插入记录 -->
-<insert id="insert" parameterType="com.yj.oauth.entity.OUser" >
-  insert into o_user(uuid,user_name,password,salt)
- values(#{uuid},#{userName},#{password},#{salt})
-</insert>
-<!-- 插入记录 -->
-<insert id="insertSelective" parameterType="com.yj.oauth.entity.OUser" >
-  insert into o_user
+<mapper namespace="com.yj.oauth.dao.OUserDao" >
+	<!-- Result Map-->
+	<resultMap id="BaseResultMap" type="com.yj.oauth.entity.OUser">
+				<result column="uuid" property="uuid" jdbcType="CHAR"/>
+				<result column="user_name" property="userName" jdbcType="VARCHAR"/>
+				<result column="password" property="password" jdbcType="VARCHAR"/>
+				<result column="salt" property="salt" jdbcType="VARCHAR"/>
+			</resultMap>
+	<!-- o_user table all fields -->
+	<sql id="Base_Column_List" >
+	uuid,user_name,password,salt
+	</sql>
+	<!-- 查询条件 -->
+	<sql id="Example_Where_Clause">
+	where 1=1
+		<trim  suffixOverrides="," >
+						
+			<if test="uuid != null and uuid != ''" >
+				and uuid =  #{uuid,jdbcType=CHAR}
+			</if>
+						
+			<if test="userName != null and userName != ''" >
+				and user_name =  #{userName,jdbcType=VARCHAR}
+			</if>
+						
+			<if test="password != null and password != ''" >
+				and password =  #{password,jdbcType=VARCHAR}
+			</if>
+						
+			<if test="salt != null and salt != ''" >
+				and salt =  #{salt,jdbcType=VARCHAR}
+			</if>
+					</trim>
+	</sql>
+
+	<!-- 根据id查询 用户资源 -->
+	<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.String">
+	  select
+	 <include refid="Base_Column_List" /> 
+		from o_user
+	 where uuid = #{uuid}
+	</select>
+	<!-- 根据id查询 用户资源 -->
+	<select id="get"  resultMap="BaseResultMap" parameterType="java.lang.String">
+	  select
+	 <include refid="Base_Column_List" /> 
+		from o_user
+	 where uuid = #{uuid}
+	</select>
+	<!-- 删除记录 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	  delete
+		  from o_user where uuid = #{uuid}
+	</delete>
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="com.yj.oauth.entity.OUser" >
+				<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="uuid">
+				SELECT UUID()
+			</selectKey>
+				insert into o_user(uuid,user_name,password,salt)
+		 values(
+			#{uuid,jdbcType=CHAR},
+			#{userName,jdbcType=VARCHAR},
+			#{password,jdbcType=VARCHAR},
+			#{salt,jdbcType=VARCHAR})
+	</insert>
+	<!-- 插入记录 -->
+	<insert id="insertSelective" parameterType="com.yj.oauth.entity.OUser" >
+				<selectKey resultType="java.lang.String" order="BEFORE" keyProperty="uuid">
+				SELECT UUID()
+			</selectKey>
+				insert into o_user
 	<trim  prefix="(" suffix=")"  suffixOverrides="," >
 	<if test="uuid != null  ">
 		uuid,
@@ -69,49 +90,51 @@ where 1=1
 	</trim>
 	<trim  prefix="values (" suffix=")"  suffixOverrides="," >
 	<if test="uuid != null  ">
-		#{uuid},
+		#{uuid,jdbcType=CHAR},
 	</if>
 	<if test="userName != null  ">
-		#{userName},
+		#{userName,jdbcType=VARCHAR},
 	</if>
 	<if test="password != null  ">
-		#{password},
+		#{password,jdbcType=VARCHAR},
 	</if>
 	<if test="salt != null  ">
-		#{salt},
+		#{salt,jdbcType=VARCHAR},
 	</if>
 	</trim>
-</insert>
- <!-- 修改记录，只修改只不为空的字段 -->
-<update id="updateByPrimaryKeySelective" parameterType="com.yj.oauth.entity.OUser" >
-	update o_user set 
+	</insert>
+	<!-- 修改记录，只修改只不为空的字段 -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.yj.oauth.entity.OUser" >
+		update o_user set 
 	<trim  suffixOverrides="," >
-	<if test="userName != null  ">
-		user_name=#{userName},
+	<if test="userName != null ">
+		user_name=#{userName,jdbcType=VARCHAR},
 	</if>
-	<if test="password != null  ">
-		password=#{password},
+	<if test="password != null ">
+		password=#{password,jdbcType=VARCHAR},
 	</if>
-	<if test="salt != null  ">
-		salt=#{salt},
+	<if test="salt != null ">
+		salt=#{salt,jdbcType=VARCHAR},
 	</if>
-	</trim> where uuid=#{uuid}
-</update>
-<!-- 根据id，修改记录-->  
- <update id="updateByPrimaryKey" parameterType="com.yj.oauth.entity.OUser" >
-  update o_user set user_name=#{userName},password=#{password},salt=#{salt} where uuid=#{uuid}
- </update>
-  	
-<!-- 查询用户资源列表 -->
-<select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
-	select 
-	<include refid="Base_Column_List"/>
-	from o_user 
-	<include refid="Example_Where_Clause"/>
-	<if test="orderByClause != null and orderByClause != ''" >
-       order by  ${orderByClause}
-    </if>
-</select>
+	</trim> where uuid=#{uuid,jdbcType=CHAR}
+	</update>
+	<!-- 根据id，修改记录-->
+	<update id="updateByPrimaryKey" parameterType="com.yj.oauth.entity.OUser" >
+		update o_user set 	user_name=#{userName,jdbcType=VARCHAR},
+	password=#{password,jdbcType=VARCHAR},
+	salt=#{salt,jdbcType=VARCHAR} where uuid=#{uuid,jdbcType=CHAR}
+	</update>
+
+	<!-- 查询用户资源列表 -->
+	<select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
+		select
+		<include refid="Base_Column_List"/>
+		from o_user
+		<include refid="Example_Where_Clause"/>
+		<if test="orderByClause != null and orderByClause != ''" >
+			order by  ${orderByClause}
+		</if>
+	</select>
 	<!-- 查询用户资源列表 -->
 	<select id="selectOne" resultMap="BaseResultMap"  parameterType="Object">
 		select
@@ -120,7 +143,41 @@ where 1=1
 		<include refid="Example_Where_Clause"/>
 		limit 1
 	</select>
+	<select id="selectCount" parameterType="Object" resultType="java.lang.Long">
+		SELECT COUNT(1) from o_user
+		<include refid="Example_Where_Clause"/>
+	</select>
 
+	<insert id="insertInBatch" parameterType="java.util.List">
+      insert into o_user(
+	uuid,	user_name,	password,	salt) values 
+		<foreach collection="list" item="item" index="index" separator=",">
+    (UUID(),
+	#{item.userName,jdbcType=VARCHAR},
+	#{item.password,jdbcType=VARCHAR},
+	#{item.salt,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	<update id="updateInBatch"  parameterType="java.util.List">
+	   <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+	update  o_user set 
+	<if test="userName != null ">
+		user_name=#{userName,jdbcType=VARCHAR}
+	</if>
+	<if test="password != null ">
+		password=#{password,jdbcType=VARCHAR}
+	</if>
+	<if test="salt != null ">
+		salt=#{salt,jdbcType=VARCHAR}
+	</if>
 
-
-</mapper>   
+		where uuid#{item.uuid,jdbcType=CHAR}
+</foreach>
+	</update>
+	<delete id="deleteByPrimaryKeyInBatch" parameterType="java.util.List">
+      DELETE  from o_user where uuid in
+		<foreach collection="list"  index="index" item="item" open="(" separator="," close=")"  >
+			#item
+		</foreach>
+	</delete>
+</mapper>

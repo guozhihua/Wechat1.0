@@ -71,7 +71,7 @@ public class CodeGenerateFactory
     context.put("controllerEntityPackage", controllerEntityPackage==""?null:controllerEntityPackage);
     context.put("keyType", keyType);
     if( FtlDef.KEY_TYPE_01==keyType){
-      context.put("idClass","java.lang.INTEGER");
+      context.put("idClass","java.lang.Integer");
     }else{
       context.put("idClass","java.lang.String");
     }
@@ -89,6 +89,7 @@ public class CodeGenerateFactory
       context.put("SQL", sqlMap);
     } catch (Exception e) {
       e.printStackTrace();
+      System.out.println("==============ERROR==================");
       return;
     }
    

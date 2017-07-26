@@ -89,7 +89,13 @@ public class CreateBean {
 			type = getType(type, precision, scale);
 			cd.setColumnName(name);
 			cd.setDataType(type);
-			cd.setColumnType(rs.getString(2).toUpperCase());
+			if(rs.getString(2).toUpperCase().equals("INT")){
+				cd.setColumnType("INTEGER");
+			}else if(rs.getString(2).toUpperCase().equals("DATETIME")){
+				cd.setColumnType("DATE");
+			}else{
+				cd.setColumnType(rs.getString(2).toUpperCase());
+			}
 			cd.setColumnComment(comment);
 			cd.setPrecision(precision);
 			cd.setScale(scale);
@@ -125,7 +131,8 @@ public class CreateBean {
 		}
 		argv = str.toString();
 		this.method = getset.toString();
-		return argv + this.method;
+		return argv;
+//		return argv + this.method;
 	}
 
 	private String formatTableName(String name) {
@@ -469,15 +476,15 @@ public class CreateBean {
 		for(int i =1;i<columnDatas.size();i++){
 			ColumnData data=  columnDatas.get(i);
 			String columnName = data.getColumnName();
-			sb.append("\t<if test=\"").append(CommUtil.formatName(columnName)).append(" != null");
+			sb.append("\t<if test=\"item.").append(CommUtil.formatName(columnName)).append(" != null");
 			sb.append(" \">\n");
-			sb.append("\t\t"+columnName + "=#{" + CommUtil.formatName(columnName) + ",jdbcType="+data.getColumnType()+"}");
-			if(i==columnDatas.size()){
+			sb.append("\t\t"+columnName + "=#{item." + CommUtil.formatName(columnName) + ",jdbcType="+data.getColumnType()+"}");
+			if(i!=columnDatas.size()-1){
 				sb.append(",\n");
 			}
 			sb.append("\n\t</if>\n");
 		}
-		sb.append("\n\t\twhere ").append(columnDatas.get(0).getColumnName()).append("#{item.").
+		sb.append("\n\t\twhere ").append(columnDatas.get(0).getColumnName()).append("= #{item.").
 				append(columnDatas.get(0).getFormatColumnName()).append(",jdbcType=").append(columnDatas.get(0).getColumnType()).append("}\n</foreach>");
 		return  sb.toString();
 

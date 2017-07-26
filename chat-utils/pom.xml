@@ -244,18 +244,20 @@
        <dependency>
            <groupId>net.sf.json-lib</groupId>
            <artifactId>json-lib</artifactId>
-           <version>2.4</version>
            <classifier>jdk15</classifier>
        </dependency>
 
        <dependency>
            <groupId>net.sf.ehcache</groupId>
            <artifactId>ehcache-core</artifactId>
-           <version>2.6.11</version>
        </dependency>
        <dependency>
            <groupId>com.googlecode.ehcache-spring-annotations</groupId>
            <artifactId>ehcache-spring-annotations</artifactId>
+       </dependency>
+       <dependency>
+           <groupId>org.projectlombok</groupId>
+           <artifactId>lombok</artifactId>
        </dependency>
        <!-- redis 结束 -->
        <!-- http://mvnrepository.com/artifact/org.apache.poi/poi -->

@@ -1,152 +1,218 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yj.oauth.dao.OAppsDao" > 
-<!-- Result Map-->
-<resultMap id="BaseResultMap" type="com.yj.oauth.entity.OApps" >
-	<result column="id" property="id"/>
-	<result column="app_id" property="appId"/>
-	<result column="app_secret" property="appSecret"/>
-	<result column="app_name" property="appName"/>
-	<result column="create_time" property="createTime"/>
-	<result column="status" property="status"/>
-</resultMap>
-       
-<!-- o_apps table all fields -->
-<sql id="Base_Column_List" >
-	 id,app_id,app_secret,app_name,create_time,status
-</sql>
-   
-   
-<!-- 查询条件 -->
-<sql id="Example_Where_Clause">
-where 1=1
-<trim  suffixOverrides="," >
-	<if test="id != null and id != ''" >
-	    and id =  #{id}
-	</if>
-	<if test="appId != null and appId != ''" >
-	    and app_id =  #{appId}
-	</if>
-	<if test="appSecret != null and appSecret != ''" >
-	    and app_secret =  #{appSecret}
-	</if>
-	<if test="appName != null and appName != ''" >
-	    and app_name =  #{appName}
-	</if>
-	<if test="createTime != null and createTime != ''" >
-	    and create_time =  #{createTime}
-	</if>
-	<if test="status != null and status != ''" >
-	    and status =  #{status}
-	</if>
-</trim>
-</sql>
-   
-<!-- 根据id查询 客户端 -->
-<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.String">
-	select <include refid="Base_Column_List" /> 
-	 from o_apps where id = #{id}
-</select>
-<!-- 删除记录 -->
-<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-	delete 	 from o_apps where id = #{id}
-</delete>
-<!-- 插入记录 -->
-<insert id="insert" parameterType="com.yj.oauth.entity.OApps" >
-  insert into o_apps(id,app_id,app_secret,app_name,create_time,status)
- values(#{id},#{appId},#{appSecret},#{appName},now(),#{status})
-</insert>
-<!-- 插入记录 -->
-<insert id="insertSelective" parameterType="com.yj.oauth.entity.OApps" >
-  insert into o_apps
-	<trim  prefix="(" suffix=")"  suffixOverrides="," >
-	<if test="id != null  ">
-		id,
-	</if>
-	<if test="appId != null  ">
-		app_id,
-	</if>
-	<if test="appSecret != null  ">
-		app_secret,
-	</if>
-	<if test="appName != null  ">
-		app_name,
-	</if>
-	<if test="createTime != null  ">
-		create_time,
-	</if>
-	<if test="status != null  ">
-		status,
-	</if>
-	</trim>
-	<trim  prefix="values (" suffix=")"  suffixOverrides="," >
-	<if test="id != null  ">
-		#{id},
-	</if>
-	<if test="appId != null  ">
-		#{appId},
-	</if>
-	<if test="appSecret != null  ">
-		#{appSecret},
-	</if>
-	<if test="appName != null  ">
-		#{appName},
-	</if>
-	<if test="createTime != null  ">
-		now(),
-	</if>
-	<if test="status != null  ">
-		#{status},
-	</if>
-	</trim>
-</insert>
- <!-- 修改记录，只修改只不为空的字段 -->
-<update id="updateByPrimaryKeySelective" parameterType="com.yj.oauth.entity.OApps" >
-	update o_apps set 
-	<trim  suffixOverrides="," >
-	<if test="appId != null  ">
-		app_id=#{appId},
-	</if>
-	<if test="appSecret != null  ">
-		app_secret=#{appSecret},
-	</if>
-	<if test="appName != null  ">
-		app_name=#{appName},
-	</if>
-	<if test="createTime != null  ">
-		create_time=#{createTime},
-	</if>
-	<if test="status != null  ">
-		status=#{status},
-	</if>
-	</trim> where id=#{id}
-</update>
-<!-- 根据id，修改记录-->  
- <update id="updateByPrimaryKey" parameterType="com.yj.oauth.entity.OApps" >
-  update o_apps set app_id=#{appId},app_secret=#{appSecret},app_name=#{appName},create_time=now(),status=#{status} where id=#{id}
- </update>
-  	
-<!-- 查询客户端列表 -->
-<select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
-	select 
-	<include refid="Base_Column_List"/>
-	from o_apps 
-	<include refid="Example_Where_Clause"/>
-	<if test="orderByClause != null and orderByClause != ''" >
-       order by  ${orderByClause}
-    </if>
-</select>
-	<!-- 查询客户端列表 -->
-	<select id="selectOne" resultMap="BaseResultMap"  parameterType="Object">
-		select
-		<include refid="Base_Column_List"/>
-		from o_apps
-		<include refid="Example_Where_Clause"/>
-		limit 1
-	</select>
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yj.oauth.dao.OAppsDao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="com.yj.oauth.entity.OApps">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="app_id" property="appId" jdbcType="VARCHAR"/>
+        <result column="app_secret" property="appSecret" jdbcType="VARCHAR"/>
+        <result column="app_name" property="appName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="DATE"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+    </resultMap>
+    <!-- o_apps table all fields -->
+    <sql id="Base_Column_List">
+	id,app_id,app_secret,app_name,create_time,status
+	</sql>
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
 
+            <if test="id != null and id != ''">
+                and id = #{id,jdbcType=INTEGER}
+            </if>
 
+            <if test="appId != null and appId != ''">
+                and app_id = #{appId,jdbcType=VARCHAR}
+            </if>
 
-</mapper>   
+            <if test="appSecret != null and appSecret != ''">
+                and app_secret = #{appSecret,jdbcType=VARCHAR}
+            </if>
+
+            <if test="appName != null and appName != ''">
+                and app_name = #{appName,jdbcType=VARCHAR}
+            </if>
+
+            <if test="createTime != null and createTime != ''">
+                and create_time = #{createTime,jdbcType=DATE}
+            </if>
+
+            <if test="status != null and status != ''">
+                and status = #{status,jdbcType=TINYINT}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 根据id查询 客户端 -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from o_apps
+        where id = #{id}
+    </select>
+    <!-- 根据id查询 客户端 -->
+    <select id="get" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from o_apps
+        where id = #{id}
+    </select>
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	  delete
+		  from o_apps where id = #{id}
+	</delete>
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="com.yj.oauth.entity.OApps">
+				insert into o_apps(id,app_id,app_secret,app_name,create_time,status)
+		 values(
+			#{id,jdbcType=INTEGER},
+			#{appId,jdbcType=VARCHAR},
+			#{appSecret,jdbcType=VARCHAR},
+			#{appName,jdbcType=VARCHAR},
+			#{createTime,jdbcType=DATE},
+			#{status,jdbcType=TINYINT})
+	</insert>
+    <!-- 插入记录 -->
+    <insert id="insertSelective" parameterType="com.yj.oauth.entity.OApps">
+        insert into o_apps
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null  ">
+                id,
+            </if>
+            <if test="appId != null  ">
+                app_id,
+            </if>
+            <if test="appSecret != null  ">
+                app_secret,
+            </if>
+            <if test="appName != null  ">
+                app_name,
+            </if>
+            <if test="createTime != null  ">
+                create_time,
+            </if>
+            <if test="status != null  ">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null  ">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="appId != null  ">
+                #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="appSecret != null  ">
+                #{appSecret,jdbcType=VARCHAR},
+            </if>
+            <if test="appName != null  ">
+                #{appName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null  ">
+                #{createTime,jdbcType=DATE},
+            </if>
+            <if test="status != null  ">
+                #{status,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="com.yj.oauth.entity.OApps">
+        update o_apps set
+        <trim suffixOverrides=",">
+            <if test="appId != null ">
+                app_id=#{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="appSecret != null ">
+                app_secret=#{appSecret,jdbcType=VARCHAR},
+            </if>
+            <if test="appName != null ">
+                app_name=#{appName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null ">
+                create_time=#{createTime,jdbcType=DATE},
+            </if>
+            <if test="status != null ">
+                status=#{status,jdbcType=TINYINT},
+            </if>
+        </trim>
+        where id=#{id,jdbcType=INTEGER}
+    </update>
+    <!-- 根据id，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="com.yj.oauth.entity.OApps">
+		update o_apps set 	app_id=#{appId,jdbcType=VARCHAR},
+	app_secret=#{appSecret,jdbcType=VARCHAR},
+	app_name=#{appName,jdbcType=VARCHAR},
+	create_time=#{createTime,jdbcType=DATE},
+	status=#{status,jdbcType=TINYINT} where id=#{id,jdbcType=INTEGER}
+	</update>
+
+    <!-- 查询客户端列表 -->
+    <select id="selectList" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List"/>
+        from o_apps
+        <include refid="Example_Where_Clause"/>
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <!-- 查询客户端列表 -->
+    <select id="selectOne" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List"/>
+        from o_apps
+        <include refid="Example_Where_Clause"/>
+        limit 1
+    </select>
+    <select id="selectCount" parameterType="Object" resultType="java.lang.Long">
+        SELECT COUNT(1) from o_apps
+        <include refid="Example_Where_Clause"/>
+    </select>
+
+    <insert id="insertInBatch" parameterType="java.util.List">
+        insert into o_apps(
+        app_id, app_secret, app_name, create_time, status) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.appId,jdbcType=VARCHAR},
+            #{item.appSecret,jdbcType=VARCHAR},
+            #{item.appName,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=DATE},
+            #{item.status,jdbcType=TINYINT})
+        </foreach>
+    </insert>
+    <update id="updateInBatch" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+            update o_apps
+            <set>
+                <if test="item.appId != null ">
+                    app_id = #{item.appId,jdbcType=VARCHAR},
+                </if>
+                <if test="item.appSecret != null ">
+                    app_secret = #{item.appSecret,jdbcType=VARCHAR},
+                </if>
+                <if test="item.appName != null ">
+                    app_name = #{item.appName,jdbcType=VARCHAR},
+                </if>
+                <if test="item.createTime != null ">
+                    create_time=#{item.createTime,jdbcType=DATE},
+                </if>
+                <if test="item.status != null ">
+                    status=#{item.status,jdbcType=TINYINT},
+                </if>
+            </set>
+            where id= #{item.id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+    <delete id="deleteByPrimaryKeyInBatch" parameterType="java.util.List">
+        DELETE from o_apps where id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #item
+        </foreach>
+    </delete>
+</mapper>

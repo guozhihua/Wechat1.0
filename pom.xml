@@ -665,7 +665,7 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <scope>provided</scope>
+                <!--<scope>provided</scope>-->
                 <version>${lombok_version}</version>
             </dependency>
           <!--百度语音 解析-->

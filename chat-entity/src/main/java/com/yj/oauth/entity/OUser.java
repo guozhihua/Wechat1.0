@@ -1,1 +1,26 @@
-package com.yj.oauth.entity;import com.weixin.entity.chat.SuperVO;/** * 用户资源 * <br> * <b>功能：</b>OUserEntity<br> */public class OUser extends SuperVO {			private String uuid;//	private String userName;//   用户名	private String password;//   密码	private String salt;//   加密盐	public String getUuid() {	    return this.uuid;	}	public void setUuid(String uuid) {	    this.uuid=uuid;	}	public String getUserName() {	    return this.userName;	}	public void setUserName(String userName) {	    this.userName=userName;	}	public String getPassword() {	    return this.password;	}	public void setPassword(String password) {	    this.password=password;	}	public String getSalt() {	    return this.salt;	}	public void setSalt(String salt) {	    this.salt=salt;	}}
+package com.yj.oauth.entity;
+
+import com.weixin.entity.chat.SuperVO;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * 用户资源
+ * <br>
+ * <b>功能：</b>OUserEntity<br>
+ */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class OUser extends SuperVO {
+	
+	
+	private String uuid;//
+	private String userName;//   用户名
+	private String password;//   密码
+	private String salt;//   加密盐
+}
+
