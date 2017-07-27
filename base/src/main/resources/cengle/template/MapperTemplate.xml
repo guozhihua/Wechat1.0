@@ -101,7 +101,7 @@
 	<delete id="deleteByPrimaryKeyInBatch" parameterType="java.util.List">
       DELETE  from ${tableName} where $!{SQL.keyName} in
 		<foreach collection="list"  index="index" item="item" open="(" separator="," close=")"  >
-			#{item}
+		  ${var}
 		</foreach>
 	</delete>
 </mapper>

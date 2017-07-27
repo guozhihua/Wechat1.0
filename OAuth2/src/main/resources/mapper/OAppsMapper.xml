@@ -187,7 +187,7 @@
         </foreach>
     </insert>
     <update id="updateInBatch" parameterType="java.util.List">
-        <foreach collection="list" item="item" index="index" open="begin" close=";end;" separator=";">
+        <foreach collection="list" item="item" index="index"  separator=";">
             update o_apps
             <set>
                 <if test="item.appId != null ">
@@ -212,7 +212,7 @@
     <delete id="deleteByPrimaryKeyInBatch" parameterType="java.util.List">
         DELETE from o_apps where id in
         <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
-            #item
+            #{item}
         </foreach>
     </delete>
 </mapper>

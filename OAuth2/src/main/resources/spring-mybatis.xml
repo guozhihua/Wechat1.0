@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
-	   xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 http://www.springframework.org/schema/tx
 http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
 http://www.springframework.org/schema/aop
-http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 
 	<!-- JNDI方式配置数据源 -->
 	<!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> <property name="jndiName" value="${jndiName}"></property> </bean> -->
 	<!-- 引入属性文件 -->
-	<context:property-placeholder location="classpath:jdbc.properties"  ignore-unresolvable="true"  />
+
 	<!-- 配置数据源 -->
-	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+	<bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close" >
 	<property name="driverClassName" value="${jdbc_driverClassName}"/>
 		<property name="url" value="${jdbc_url}" />
 		<property name="username" value="${jdbc_username}" />
@@ -27,6 +27,13 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springfr
 		<property name="minIdle" value="5" />
 		<!-- 获取连接最大等待时间 -->
 		<property name="maxWait" value="60000" />
+		<property name="connectProperties">
+			<props>
+				<prop key="allowMultiQueries" >true</prop>
+				<prop key="rewriteBatchedStatements">true</prop>
+			</props>
+			
+		</property>
 
 		<!-- <property name="poolPreparedStatements" value="true" /> <property name="maxPoolPreparedStatementPerConnectionSize" value="33" /> -->
 
@@ -51,6 +58,7 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springfr
 		<!-- <property name="filters" value="stat" /> -->
 		<property name="filters" value="mergeStat" />
 		<property name="connectionInitSqls" value="set names utf8mb4;"/>
+		<property name="accessToUnderlyingConnectionAllowed" value="true"></property>
 	</bean>
 
 	<!-- myBatis文件 -->

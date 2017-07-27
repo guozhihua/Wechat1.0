@@ -1,6 +1,8 @@
 package com.yj.oauth.controller;
 
 import com.yj.oauth.Constansts;
+import com.yj.oauth.entity.OApps;
+import com.yj.oauth.service.OAppsService;
 import com.yj.oauth.service.OAuthService;
 
 import org.apache.logging.log4j.LogManager;
@@ -26,12 +28,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 /**
  * Created by :Guozhihua
@@ -42,10 +47,16 @@ import java.net.URISyntaxException;
 public class OauthController {
 
     private static final Logger logger = LogManager.getLogger("OauthController");
+
+
     @Autowired
-    private OAuthService oAuthService;
+    private  OAuthService oAuthService;
+
+    @Autowired
+    private  OAppsService appsService;
 
     @RequestMapping("/authorize")
+    @ResponseBody
     public Object authorize(Model model, HttpServletRequest request)
             throws URISyntaxException, OAuthSystemException {
         try {
@@ -106,6 +117,7 @@ public class OauthController {
 
 
     @RequestMapping("/accessToken")
+    @ResponseBody
     public HttpEntity token(HttpServletRequest request)
             throws URISyntaxException, OAuthSystemException {
         try {
@@ -168,6 +180,28 @@ public class OauthController {
             return new ResponseEntity(res.getBody(), HttpStatus.valueOf(res.getResponseStatus()));
         }
     }
+
+
+    @RequestMapping("updateBatch")
+    @ResponseBody
+   public void updateBatch(){
+        try {
+            List<OApps> oAppses = appsService.selectList(null);
+            for(OApps oa :oAppses){
+                if(oa.getId()==22){
+                    oa.setStatus(null);
+                    oa.setAppId("12321cdshui");
+                }else{
+                    oa.setStatus(3);
+                }
+            }
+            int num = appsService.updateInBatch(oAppses);
+            System.out.println("更新：" + num);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
 

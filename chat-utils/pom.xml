@@ -255,10 +255,7 @@
            <groupId>com.googlecode.ehcache-spring-annotations</groupId>
            <artifactId>ehcache-spring-annotations</artifactId>
        </dependency>
-       <dependency>
-           <groupId>org.projectlombok</groupId>
-           <artifactId>lombok</artifactId>
-       </dependency>
+
        <!-- redis 结束 -->
        <!-- http://mvnrepository.com/artifact/org.apache.poi/poi -->
        <dependency>

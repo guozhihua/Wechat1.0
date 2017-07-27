@@ -63,6 +63,7 @@ public class CodeGenerateFactory
     context.put("lowerName", lowerName);
     context.put("codeName", codeName);
     context.put("tableName", tableName.toLowerCase());
+    context.put("var", "#{item}");
     context.put("bussPackage", buss_package);
     context.put("base_service",CodeResourceUtil.base_service);
     context.put("base_dao",CodeResourceUtil.base_dao);

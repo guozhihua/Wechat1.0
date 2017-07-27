@@ -5,7 +5,9 @@
 <!-- 配置管理器 -->
 <configuration>
     <settings>
-        <setting name="logImpl" value="Log4J"/>
+        <!--<setting name="logImpl" value="Log4J"/>-->
+        <!-- 打印查询语句 -->
+        <setting name="logImpl" value="STDOUT_LOGGING" />
         <setting name="callSettersOnNulls" value="true"/>
     </settings>
 

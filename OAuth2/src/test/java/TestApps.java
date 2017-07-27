@@ -2,6 +2,7 @@ import com.yj.oauth.entity.OApps;
 import com.yj.oauth.service.OAppsService;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -49,6 +50,19 @@ public class TestApps extends BaseTest {
             e.printStackTrace();
         }
     }
-
+    @org.junit.Test
+    public void deleteBatch() {
+        try {
+            List<Serializable> idList =new ArrayList<>();
+            idList.add(1);
+            idList.add(21);
+            idList.add(22);
+            idList.add(34);
+            int num = oAppsService.deleteByPrimaryKeyInBatch(idList);
+            System.out.println("删除：" + num);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

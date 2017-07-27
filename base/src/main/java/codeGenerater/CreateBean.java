@@ -471,17 +471,14 @@ public class CreateBean {
 
 	public String getUpdateBatch(String tableBName,List<ColumnData> columnDatas){
 		StringBuilder sb = new StringBuilder();
-		sb.append(" <foreach collection=\"list\" item=\"item\" index=\"index\" open=\"begin\" close=\";end;\" separator=\";\">\n");
+		sb.append(" <foreach collection=\"list\" item=\"item\" index=\"index\"  separator=\";\">\n");
 		sb.append("\tupdate  ").append(tableBName).append(" set \n");
 		for(int i =1;i<columnDatas.size();i++){
 			ColumnData data=  columnDatas.get(i);
 			String columnName = data.getColumnName();
 			sb.append("\t<if test=\"item.").append(CommUtil.formatName(columnName)).append(" != null");
 			sb.append(" \">\n");
-			sb.append("\t\t"+columnName + "=#{item." + CommUtil.formatName(columnName) + ",jdbcType="+data.getColumnType()+"}");
-			if(i!=columnDatas.size()-1){
-				sb.append(",\n");
-			}
+			sb.append("\t\t"+columnName + "=#{item." + CommUtil.formatName(columnName) + ",jdbcType="+data.getColumnType()+"},");
 			sb.append("\n\t</if>\n");
 		}
 		sb.append("\n\t\twhere ").append(columnDatas.get(0).getColumnName()).append("= #{item.").

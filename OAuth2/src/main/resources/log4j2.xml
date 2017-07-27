@@ -37,7 +37,7 @@
         </Root>
 
         <!--!&#45;&#45;过滤掉spring和hibernate的一些无用的debug信息&ndash;&gt;-->
-        <Logger name="org.springframework" level="INFO"/>
+        <Logger name="org.springframework" level="DEBUG"/>
         <!-- 为某些包/类配置Log级别，这些logger继承了root logger -->
         <Logger name="com.alibaba.dubbo" level="DEBUG" additivity="false">
             <AppenderRef ref="Console"/>
