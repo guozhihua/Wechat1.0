@@ -32,7 +32,6 @@ public class UserListController  extends  ABaseController{
             Map<String,Object> headers=new HashMap<>();
             headers.put("token", paramsMap.get("token").toString());
             headers.put("version", "3.3.3");
-            headers.put("Content-Type", "application/x-www-form-urlencoded");
             JSONObject jsonObject = HttpUtils.postForm(urkl,headers,null);
             webModel.setDatas(jsonObject);
         } catch (Exception ex) {
@@ -51,9 +50,44 @@ public class UserListController  extends  ABaseController{
             Map<String,Object> headers=new HashMap<>();
             headers.put("token", paramsMap.get("token").toString());
             headers.put("version", "3.3.3");
-            headers.put("Content-Type", "application/x-www-form-urlencoded");
             JSONObject jsonObject = HttpUtils.postForm(urkl,headers,paramsMap);
             webModel.setDatas(jsonObject);
+        } catch (Exception ex) {
+            logger.error("error", ex);
+            webModel.isFail();
+        }
+        return webModel;
+    }
+    @RequestMapping("/msgList")
+    @ResponseBody
+    public WebModel  msgList(@RequestParam("params") String params) {
+        WebModel webModel = WebModel.getInstance();
+        try {
+            Map<String,Object> paramsMap =super.getParamMap();
+            String  urkl ="http://pod.dsylove.com/msg/getMsgPageV2";
+            Map<String,Object> headers=new HashMap<>();
+            headers.put("token", paramsMap.get("token").toString());
+            headers.put("version", "3.3.3");
+            paramsMap.put("pageSize",100);
+            paramsMap.put("pageNumber",1);
+            JSONObject jsonObject = HttpUtils.postForm(urkl,headers,paramsMap);
+            webModel.setDatas(jsonObject);
+        } catch (Exception ex) {
+            logger.error("error", ex);
+            webModel.isFail();
+        }
+        return webModel;
+    }
+    @RequestMapping("/login")
+    @ResponseBody
+    public WebModel  login(@RequestParam("params") String params) {
+        WebModel webModel = WebModel.getInstance();
+        try {
+            Map<String,Object> paramsMap =super.getParamMap();
+            if(!paramsMap.get("userName").toString().equals("guozhihua")){
+                webModel.setCode(701);
+                webModel.setMsg("登陆失败");
+            }
         } catch (Exception ex) {
             logger.error("error", ex);
             webModel.isFail();

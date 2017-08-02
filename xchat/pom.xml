@@ -222,13 +222,6 @@
       <version>2.3.1</version>
     </dependency>
 
-    <!-- 引用uuims 开始 -->
-    <dependency>
-      <groupId>com.eeduspace</groupId>
-      <artifactId>uuims-comm-util</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
-    <!-- 引用uuims 结束 -->
 
     <dependency>
       <groupId>com.thetransactioncompany</groupId>
@@ -254,12 +247,7 @@
       <version>2.8.1</version>
     </dependency>
 
-    <!--使用spring封装好的redis -->
-    <dependency>
-      <groupId>org.springframework.data</groupId>
-      <artifactId>spring-data-redis</artifactId>
-      <version>1.4.1.RELEASE</version>
-    </dependency>
+
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
@@ -280,11 +268,7 @@
       <artifactId>spring-test</artifactId>
       <version>4.1.4.RELEASE</version>
     </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-test</artifactId>
-      <version>4.1.4.RELEASE</version>
-    </dependency>
+
     <dependency>
       <groupId>com.ibm.icu</groupId>
       <artifactId>icu4j</artifactId>
@@ -334,7 +318,13 @@
       </plugin>
     </plugins>
   </build>
-
+  <repositories>
+    <repository>
+      <id>central</id>
+      <name>central</name>
+      <url>http://101.200.55.143:8081/nexus/content/groups/public/</url>
+    </repository>
+  </repositories>
 
 
 </project>

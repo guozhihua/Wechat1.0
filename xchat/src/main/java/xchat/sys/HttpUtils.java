@@ -33,6 +33,7 @@ public class HttpUtils {
         List<String> res = new ArrayList<>();
         try {
             HttpPost httppost = new HttpPost(url);
+            httppost.addHeader("Content-Type", "application/x-www-form-urlencoded");
             if (headers != null && !headers.isEmpty()) {
                 for (String key : headers.keySet()) {
                     httppost.addHeader(key, headers.get(key).toString());
