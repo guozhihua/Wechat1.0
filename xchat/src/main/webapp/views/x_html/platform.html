@@ -18,27 +18,55 @@
 </head>
 <body>
 
-      <div class="login">
-          <label > 账号：</label><input type="text"  id="userName"name="userName"  value=""/>
-          <button type="button" onclick="login()">提交</button>
+<div data-role="page" data-fullscreen="false"
+     style="background:url(./images/login-back.jpg) 0 0 no-repeat;background-size:cover">
+    <!--<div data-role="header"  class="login-footer">-->
+    <!--<h1>Login</h1>-->
+    <!--</div>-->
+    <div data-role="main" class="ui-content  ">
+        <div class="login ">
 
-      </div>
+            <div class="ui-grid-solo">
+                <input type="text" id="userName" name="userName" placeholder="请输入账号" >
+                    </input>
+            </div>
+            <div class="ui-grid-solo">
+                <input type="password" id="password" name="password" placeholder="请输入密码">
+                </input>
+            </div>
+            <div class="ui-grid-solo">
+                <div class="ui-block-a"><button type="submit" data-theme="b" onclick="login()">提交</button></div>
+            </div>
+        </div>
 
+    </div>
 
+    <div data-role="footer" data-position="fixed" class="ui-bar-b" style="background:none;border:0px">
+        <h4>打击盗版，违者必究</h4>
+    </div>
+</div>
 </body>
 <script type="text/javascript">
-//    onload
-    $(function(){
+    //    onload
+    $(function () {
     });
-    function  login(){
-        var username =$("#userName").val();
-        var url="/user/login";
-        var  obj =new Object();
-        obj.userName=username;
-        var params={
-            "params":JSON.stringify(obj)
+    function login() {
+        var username = $("#userName").val();
+        var url = "/user/login";
+        var obj = new Object();
+        obj.userName = username;
+        var params = {
+            "params": JSON.stringify(obj)
         };
-        ajaxObject.postFormAjax(url,params,callback,"JSON")
+        var  callbackFunc=function(data){
+            if(data.code==200){
+                 window.location.href="./app_index.html";
+            }else{
+                alert(data.msg);
+            }
+
+        }
+        ajaxObject.postFormAjax(url, params, callbackFunc, "JSON")
     }
 
 

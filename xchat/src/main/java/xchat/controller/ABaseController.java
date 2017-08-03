@@ -44,8 +44,12 @@ public abstract class ABaseController {
     }
 
     protected void  setCookie(String key,String val){
-        Cookie cookie = new Cookie(key,val);
-        this.response.addCookie(cookie);
+        Cookie cookie2 = new Cookie(key,val);
+        cookie2.setDomain("dev.edu.cn");
+        cookie2.setMaxAge(60*200);
+        cookie2.setHttpOnly(false);
+        cookie2.setPath("/");
+        this.response.addCookie(cookie2);
     }
 
 

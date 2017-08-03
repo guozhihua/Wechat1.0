@@ -1,5 +1,6 @@
 package xchat.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import xchat.sys.HttpUtils;
 import xchat.sys.WebModel;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -22,7 +24,7 @@ import java.util.Map;
 public class UserListController  extends  ABaseController{
     private final Logger logger = LoggerFactory.getLogger(UserListController.class);
 
-    @RequestMapping("/session_list")
+    @RequestMapping("/session")
     @ResponseBody
     public WebModel list(@RequestParam("params") String params) {
         WebModel webModel = WebModel.getInstance();
@@ -32,7 +34,9 @@ public class UserListController  extends  ABaseController{
             Map<String,Object> headers=new HashMap<>();
             headers.put("token", paramsMap.get("token").toString());
             headers.put("version", "3.3.3");
-            JSONObject jsonObject = HttpUtils.postForm(urkl,headers,null);
+            Map<String,Object> pa=new HashMap<>();
+            pa.put("sessionId", paramsMap.get("sessionId").toString());
+            JSONObject jsonObject = HttpUtils.postForm(urkl,headers,pa);
             webModel.setDatas(jsonObject);
         } catch (Exception ex) {
             logger.error("error", ex);
@@ -68,8 +72,8 @@ public class UserListController  extends  ABaseController{
             Map<String,Object> headers=new HashMap<>();
             headers.put("token", paramsMap.get("token").toString());
             headers.put("version", "3.3.3");
-            paramsMap.put("pageSize",100);
-            paramsMap.put("pageNumber",1);
+            paramsMap.put("pageSize",paramsMap.get("pageSize"));
+            paramsMap.put("pageNumber",paramsMap.get("pageNumber"));
             JSONObject jsonObject = HttpUtils.postForm(urkl,headers,paramsMap);
             webModel.setDatas(jsonObject);
         } catch (Exception ex) {

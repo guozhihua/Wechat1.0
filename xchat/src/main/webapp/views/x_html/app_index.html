@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- meta使用viewport以确保页面可自由缩放 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- 引入 jQuery Mobile 样式 -->
+    <link rel="stylesheet" href="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="./css/app_index.css">
+    <!-- 引入 jQuery 库 -->
+    <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <!-- 引入 jQuery Mobile 库 -->
+    <script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="./js/baseJS.js"></script>
+    <script src="./js/jquery.cookie.js"></script>
+    <meta charset="UTF-8">
+    <title>兴趣部落</title>
+</head>
+<body>
+
+<div data-role="page" data-fullscreen="false"
+     style="background:url(./images/login-back.jpg) 0 0 no-repeat;background-size:cover">
+    <!--<div data-role="header"  class="login-footer">-->
+    <!--<h1>Login</h1>-->
+    <!--</div>-->
+    <div data-role="main" class="ui-content  ">
+        <ul data-role="listview" id="msgList">
+        </ul>
+    </div>
+    <a href="#popupBasic" data-rel="popup" id="openwin">Open Popup</a>
+    <div data-role="popup" id="popupBasic" hidden="hidden">
+          <p id="content" ></p>
+          <button type="button" onclick="sendMsg();">发送</button>
+    </div>
+    <div data-role="footer" data-position="fixed" class="ui-bar-b" style="background:none;border:0px">
+        <h4>打击盗版，违者必究</h4>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    //    onload
+    $(function () {
+        msglist();
+    });
+//    私信列表
+    function msglist() {
+        $("#msgList").html("");
+        var p =new Object();
+        p.token=token;
+        p.pageSize=200;
+        p.pageNumber=0;
+        var url = "/user/msgList";
+        var params = {
+            "params":JSON.stringify(p)
+        };
+        var  callbackFunc=function(data){
+            if(data.code==200){
+                var html ="";
+              var msgList =data.datas.page.content;
+                if(msgList.length>0){
+                    for(var i =0;i<msgList.length;i++){
+                        html+="<li id="+msgList[i].id+"><img src="+msgList[i].id+"  onclick=\"openMsgWin('"+msgList[i].id+"');\" />"+msgList[i].nickName+"</li>";
+                    }
+                    $("#msgList").html(html);
+                }
+            }else{
+                alert(data.msg);
+            }
+        }
+        ajaxObject.postFormAjax(url, params, callbackFunc, "JSON")
+    }
+
+    //打开聊天记录信息
+  function  openMsgWin(sessionId){
+      var p =new Object();
+      p.token=token;
+      p.sessionId=sessionId;
+      var url = "/user/session";
+      var params = {
+          "params":JSON.stringify(p)
+      };
+      ajaxObject.postFormAjax(url, params, openMsgWinCall, "JSON")
+  }
+
+   var openMsgWinCall= function  callBackFunc2(data){
+       var pp =$("#content");
+       pp.empty();
+       $("#openwin").click();
+       $("#popupBasic").show();
+
+       var  xx ="";
+       var datalist= data.datas.message;
+       if(datalist.length>0){
+           for(var i=0;i<datalist.length;i++){
+               if(datalist[i].type=='IMG'){
+                   xx +='<li><img  scr ='+datalist[i].content.imgUrl+'  /></li>';
+               }else{
+                   xx +='<li>'+datalist[i].content.text+'</li>';
+               }
+
+           }
+           pp.html(xx);
+       }
+    }
+
+
+</script>
+</html>

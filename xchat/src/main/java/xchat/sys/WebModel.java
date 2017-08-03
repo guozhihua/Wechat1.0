@@ -15,7 +15,7 @@ public class WebModel implements Serializable {
 
     public  static  WebModel getInstance(){
 
-        return new WebModel(400,"success");
+        return new WebModel(200,"success");
     }
 
     public void isFail(){
