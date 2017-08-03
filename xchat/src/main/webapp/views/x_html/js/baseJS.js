@@ -1,14 +1,9 @@
 /**
  * Created by 志华 on 2017/8/2.
  */
-
-var ajaxObject = new Object();
-
+var ajaxObject = {};
 var contextUrl = "http://localhost:8086/xchat";
 //var contextUrl="http://101.200.55.143/xchat";
-//headers: {
-//    'Access-Token':$.cookie('access_token')
-//},
 
 ajaxObject.postFormAjax = function ajaxPostForm(url, datas, callbak, dataType) {
     url = contextUrl + url;
@@ -16,7 +11,7 @@ ajaxObject.postFormAjax = function ajaxPostForm(url, datas, callbak, dataType) {
         url: url, data: datas, type: "POST", asyc: true, dataType: dataType,
         success: callbak,
         //beforeSend:beforeSend,
-        headers: {'Passport_ticket':"123456"},
+        headers: {'Passport_ticket':$.cookie('passport_ticket')},
         error: error,
         statusCode: {
             702: function () {
@@ -28,7 +23,7 @@ ajaxObject.postFormAjax = function ajaxPostForm(url, datas, callbak, dataType) {
 
 }
 var callback = function success(data) {
-    alert(data.msg);
+    console.log(data);
 }
 var error = function (jqXHR, textStatus, errorMsg) {
 }

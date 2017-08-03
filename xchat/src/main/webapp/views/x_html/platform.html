@@ -6,17 +6,24 @@
 
     <!-- 引入 jQuery Mobile 样式 -->
     <link rel="stylesheet" href="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="./css/platform.css">
     <!-- 引入 jQuery 库 -->
     <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <!-- 引入 jQuery Mobile 库 -->
     <script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="./js/baseJS.js"></script>
+    <script src="./js/jquery.cookie.js"></script>
     <meta charset="UTF-8">
     <title>兴趣部落</title>
 </head>
 <body>
-         账号：<input type="text"  id="userName"name="userName"  value=""/>
+
+      <div class="login">
+          <label > 账号：</label><input type="text"  id="userName"name="userName"  value=""/>
           <button type="button" onclick="login()">提交</button>
+
+      </div>
+
 
 </body>
 <script type="text/javascript">

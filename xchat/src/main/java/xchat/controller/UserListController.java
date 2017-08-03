@@ -87,6 +87,9 @@ public class UserListController  extends  ABaseController{
             if(!paramsMap.get("userName").toString().equals("guozhihua")){
                 webModel.setCode(701);
                 webModel.setMsg("登陆失败");
+                setCookie("passport_ticket",null);
+            }else{
+                setCookie("passport_ticket","123456");
             }
         } catch (Exception ex) {
             logger.error("error", ex);

@@ -2,8 +2,11 @@ package xchat.controller;
 
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.util.CookieGenerator;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +23,9 @@ public abstract class ABaseController {
     @Autowired
     protected HttpSession session;
 
+    @Autowired
+    protected HttpServletResponse response;
+
 
     protected String getParamString() {
         String json = request.getParameter("params");
@@ -35,6 +41,11 @@ public abstract class ABaseController {
         String json = request.getParameter("params");
 
         return JSON.parseObject(json, HashMap.class);
+    }
+
+    protected void  setCookie(String key,String val){
+        Cookie cookie = new Cookie(key,val);
+        this.response.addCookie(cookie);
     }
 
 
