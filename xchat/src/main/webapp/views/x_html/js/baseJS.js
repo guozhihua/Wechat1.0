@@ -8,7 +8,6 @@ var contextUrl="http://101.200.55.143/xchat";
 
 ajaxObject.postFormAjax = function ajaxPostForm(url, datas, callbak, dataType) {
     url = contextUrl + url;
-    alert($.cookie('passport_ticket'));
     $.ajax({
         url: url, data: datas, type: "POST", asyc: true, dataType: dataType,
         success: callbak,
@@ -17,7 +16,6 @@ ajaxObject.postFormAjax = function ajaxPostForm(url, datas, callbak, dataType) {
         error: error,
         statusCode: {
             702: function () {
-                alert("Token 失效");
                 window.location.href="../x_htmls/platform.html";
             }
         }

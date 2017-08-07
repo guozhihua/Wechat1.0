@@ -29,7 +29,9 @@
     </div>
     <a href="#popupBasic" data-rel="popup" id="openwin">Open Popup</a>
     <div data-role="popup" id="popupBasic" hidden="hidden">
+         <input type="hidden" value="" id="session_id">
           <p id="content" ></p>
+        <input type="text" value="" id="msg">
           <button type="button" onclick="sendMsg();">发送</button>
     </div>
     <div data-role="footer" data-position="fixed" class="ui-bar-b" style="background:none;border:0px">
@@ -75,33 +77,58 @@
       var p =new Object();
       p.token=token;
       p.sessionId=sessionId;
+      $("#session_id").val(sessionId);
       var url = "/user/session";
       var params = {
           "params":JSON.stringify(p)
       };
+      var openMsgWinCall= function  callBackFunc2(data){
+          var pp =$("#content");
+          pp.empty();
+
+          var  xx ="";
+          var datalist= data.datas.message;
+          if(datalist.length>0){
+              for(var i=0;i<datalist.length;i++){
+                  var owner ='';
+                  if(datalist[i].side=='OPPOSITE'){
+                      owner="她："
+                  }else{
+                      owner="我："
+                  }
+                  if(datalist[i].type=='IMG'){
+                      xx +="<li>"+owner+"<img  scr ="+datalist[i].content.imgUrl+"  /></li>";
+                  }else{
+                      xx +="<li>"+owner+datalist[i].content.text+"</li>";
+                  }
+              }
+              pp.html(xx);
+          }
+          $("#openwin").click();
+          $("#popupBasic").show();
+      }
       ajaxObject.postFormAjax(url, params, openMsgWinCall, "JSON")
   }
 
-   var openMsgWinCall= function  callBackFunc2(data){
-       var pp =$("#content");
-       pp.empty();
-       $("#openwin").click();
-       $("#popupBasic").show();
+    function sendMsg(){
+        var sessionId=$("#session_id").val();
+        var content=$("#msg").val();
+        var p =new Object();
+        p.token=token;
+        p.sessionId=sessionId;
+        p.isSMS=false;
+        p.content=content;
+        var url = "/user/sendMsg";
+        var params = {
+            "params":JSON.stringify(p)
+        };
+        var callbackFunc=function(data){
+           openMsgWin(sessionId);
 
-       var  xx ="";
-       var datalist= data.datas.message;
-       if(datalist.length>0){
-           for(var i=0;i<datalist.length;i++){
-               if(datalist[i].type=='IMG'){
-                   xx +='<li><img  scr ='+datalist[i].content.imgUrl+'  /></li>';
-               }else{
-                   xx +='<li>'+datalist[i].content.text+'</li>';
-               }
-
-           }
-           pp.html(xx);
-       }
+        }
+        ajaxObject.postFormAjax(url, params, callbackFunc, "JSON")
     }
+
 
 
 </script>
