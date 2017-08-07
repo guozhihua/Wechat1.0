@@ -1,7 +1,8 @@
 package xchat.interceptors;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Component
 public class LoginInterceptor extends HandlerInterceptorAdapter {
-    private static final Logger logger = Logger.getLogger(LoginInterceptor.class);
+    private static final Logger logger = LogManager.getLogger("LoginInterceptor");
     private static final String passport_ticket = "Passport_ticket";
 
 
@@ -26,10 +27,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         //验证token是否失效，失效则重新登录
         if (handler instanceof HandlerMethod) {
            String passport =request.getHeader(passport_ticket);
-            if(StringUtils.isEmpty(passport)||!"123456".equals(passport)){
-                response.sendError(702,"ticket is miss");
-                flag=false;
-            }
+            logger.info("passport is :"+passport);
+//            if(StringUtils.isEmpty(passport)||!"123456".equals(passport)){
+//                response.sendError(702,"ticket is miss");
+//                flag=false;
+//            }
         }
         return flag;
     }
