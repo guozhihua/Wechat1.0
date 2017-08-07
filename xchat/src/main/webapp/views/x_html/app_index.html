@@ -32,7 +32,11 @@
          <input type="hidden" value="" id="session_id">
           <p id="content" ></p>
         <input type="text" value="" id="msg">
-          <button type="button" onclick="sendMsg();">发送</button>
+        <div data-role="controlgroup" data-type="horizontal">
+            <button type="button" onclick="closeDialog();">关闭</button>
+            <button type="button" onclick="sendMsg();">发送</button>
+        </div>
+
     </div>
     <div data-role="footer" data-position="fixed" class="ui-bar-b" style="background:none;border:0px">
         <h4>打击盗版，违者必究</h4>
@@ -40,6 +44,7 @@
 </div>
 </body>
 <script type="text/javascript">
+
     //    onload
     $(function () {
         msglist();
@@ -129,6 +134,10 @@
         ajaxObject.postFormAjax(url, params, callbackFunc, "JSON")
     }
 
+    function closeDialog(){
+        alert(123);
+        $("#popupBasic").hide();
+    }
 
 
 </script>

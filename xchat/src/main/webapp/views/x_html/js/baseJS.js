@@ -23,6 +23,24 @@ ajaxObject.postFormAjax = function ajaxPostForm(url, datas, callbak, dataType) {
     });
 
 }
+ajaxObject.getFormAjax = function ajaxGetForm(url, datas, callbak, dataType) {
+    url = contextUrl + url;
+    $.ajax({
+        url: url, data: datas, type: "GET", asyc: true, dataType: dataType,
+        success: callbak,
+        //beforeSend:beforeSend,
+        headers: {'Passport_ticket':$.cookie('passport_ticket')},
+        error: error,
+        statusCode: {
+            702: function () {
+                window.location.href="../x_htmls/platform.html";
+            }
+        }
+
+    });
+
+}
+
 var callback = function success(data) {
     console.log(data);
 }
