@@ -23,14 +23,10 @@
     <!--<div data-role="header"  class="login-footer">-->
     <!--<h1>Login</h1>-->
     <!--</div>-->
-    <div data-role="main" class="ui-content  ">
-        <ul data-role="listview" id="msgList">
-        </ul>
-    </div>
     <a href="#popupBasic" data-rel="popup" id="openwin">Open Popup</a>
     <div data-role="popup" id="popupBasic" hidden="hidden">
-         <input type="hidden" value="" id="session_id">
-          <p id="content" ></p>
+        <input type="hidden" value="" id="session_id">
+        <p id="content" ></p>
         <input type="text" value="" id="msg">
         <div data-role="controlgroup" data-type="horizontal">
             <button type="button" onclick="closeDialog();">关闭</button>
@@ -38,6 +34,11 @@
         </div>
 
     </div>
+    <div data-role="main" class="ui-content  ">
+        <ul data-role="listview" id="msgList">
+        </ul>
+    </div>
+
     <div data-role="footer" data-position="fixed" class="ui-bar-b" style="background:none;border:0px">
         <h4>打击盗版，违者必究</h4>
     </div>
@@ -66,7 +67,7 @@
               var msgList =data.datas.page.content;
                 if(msgList.length>0){
                     for(var i =0;i<msgList.length;i++){
-                        html+="<li id="+msgList[i].id+"><img src="+msgList[i].id+"  onclick=\"openMsgWin('"+msgList[i].id+"');\" />"+msgList[i].nickName+"</li>";
+                        html+="<li id="+msgList[i].id+"><div class='to'><img src="+msgList[i].img+"    class='img' onclick=\"openMsgWin('"+msgList[i].id+"');\" /></div>"+msgList[i].nickName+"</li>";
                     }
                     $("#msgList").html(html);
                 }
@@ -90,7 +91,8 @@
       var openMsgWinCall= function  callBackFunc2(data){
           var pp =$("#content");
           pp.empty();
-
+          $("#openwin").click();
+          $("#popupBasic").show();
           var  xx ="";
           var datalist= data.datas.message;
           if(datalist.length>0){
@@ -99,18 +101,17 @@
                   if(datalist[i].side=='OPPOSITE'){
                       owner="她："
                   }else{
-                      owner="我："
+                      owner="<font color='red'>我：</font>"
                   }
                   if(datalist[i].type=='IMG'){
-                      xx +="<li>"+owner+"<img  scr ="+datalist[i].content.imgUrl+"  /></li>";
+                      xx +="<li>"+owner+"<img  src ="+datalist[i].content.imgUrl+"  width='100px' height='100px'/></li>";
                   }else{
                       xx +="<li>"+owner+datalist[i].content.text+"</li>";
                   }
               }
               pp.html(xx);
           }
-          $("#openwin").click();
-          $("#popupBasic").show();
+
       }
       ajaxObject.postFormAjax(url, params, openMsgWinCall, "JSON")
   }
