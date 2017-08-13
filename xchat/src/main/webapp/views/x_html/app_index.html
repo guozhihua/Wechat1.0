@@ -4,13 +4,12 @@
     <!-- meta使用viewport以确保页面可自由缩放 -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- 引入 jQuery Mobile 样式 -->
-    <link rel="stylesheet" href="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="./jquery-m/jquery.mobile-1.4.5.min.css">
     <link rel="stylesheet" href="./css/app_index.css">
     <!-- 引入 jQuery 库 -->
-    <script src="http://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="./jquery-m/jquery.min.js"></script>
     <!-- 引入 jQuery Mobile 库 -->
-    <script src="http://apps.bdimg.com/libs/jquerymobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="./jquery-m/jquery.mobile-1.4.5.min.js"></script>
     <script src="./js/baseJS.js"></script>
     <script src="./js/jquery.cookie.js"></script>
     <meta charset="UTF-8">
@@ -65,12 +64,12 @@
             if(data.code==200){
                 var html ="";
               var msgList =data.datas.page.content;
-                if(msgList.length>0){
-                    for(var i =0;i<msgList.length;i++){
-                        html+="<li id="+msgList[i].id+"><div class='to'><img src="+msgList[i].img+"    class='img' onclick=\"openMsgWin('"+msgList[i].id+"');\" /></div>"+msgList[i].nickName+"</li>";
-                    }
-                    $("#msgList").html(html);
-                }
+//                if(msgList.length>0){
+//                    for(var i =0;i<msgList.length;i++){
+//                        html+="<li id="+msgList[i].id+"><div class='to'><img src="+msgList[i].img+"    class='img' onclick=\"openMsgWin('"+msgList[i].id+"');\" /></div>"+msgList[i].nickName+"</li>";
+//                    }
+//                    $("#msgList").html(html);
+//                }
             }else{
                 alert(data.msg);
             }
