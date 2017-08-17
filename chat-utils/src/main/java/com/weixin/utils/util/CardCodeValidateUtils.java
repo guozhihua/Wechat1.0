@@ -9,11 +9,7 @@ import java.util.regex.Pattern;
  */
 public class CardCodeValidateUtils {
     public static void main(String[] args) {
-        String card = "6214830116573931";
-        System.out.println("      card: " + card);
-        System.out.println("check code: " + getBankCardCheckCode(card));
-        System.out.println("   card id: " + card + getBankCardCheckCode(card));
-        System.out.println(checkBankCard(card));
+        System.out.println(checkPhoneNum("17212387909"));
     }
 
 
