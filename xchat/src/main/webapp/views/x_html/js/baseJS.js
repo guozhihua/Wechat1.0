@@ -2,9 +2,8 @@
  * Created by 志华 on 2017/8/2.
  */
 var ajaxObject = {};
-//var contextUrl = "http://dev.edu.cn:8086/xchat";
 var token =402167221;
-var contextUrl="http://101.200.55.143/xchat";
+var contextUrl="https://wchat.5awo.com/xchat";
 
 ajaxObject.postFormAjax = function ajaxPostForm(url, datas, callbak, dataType) {
     url = contextUrl + url;
