@@ -13,15 +13,15 @@
         <module>chat-service</module>
         <module>chat-entity</module>
         <module>chat-utils</module>
-        <module>dubbo-demo</module>
+        <!--<module>dubbo-demo</module>-->
         <module>chat-sdk</module>
-        <module>message-queue</module>
-        <module>chat-cache</module>
-        <module>chat-search</module>
-        <module>webservices</module>
-        <module>chat-sso</module>
+        <!--<module>message-queue</module>-->
+        <!--<module>chat-cache</module>-->
+        <!--<module>chat-search</module>-->
+        <!--<module>webservices</module>-->
+        <!--<module>chat-sso</module>-->
         <module>base</module>
-        <module>OAuth2</module>
+        <!--<module>OAuth2</module>-->
     </modules>
 
     <!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId 和 artifactId 即可 -->
@@ -95,17 +95,17 @@
                 <version>3.2.9</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/jstl/jstl -->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>dubbo</artifactId>
-                <version>${dubbox.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>spring</artifactId>
-                        <groupId>org.springframework</groupId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>com.alibaba</groupId>-->
+                <!--<artifactId>dubbo</artifactId>-->
+                <!--<version>${dubbox.version}</version>-->
+                <!--<exclusions>-->
+                    <!--<exclusion>-->
+                        <!--<artifactId>spring</artifactId>-->
+                        <!--<groupId>org.springframework</groupId>-->
+                    <!--</exclusion>-->
+                <!--</exclusions>-->
+            <!--</dependency>-->
             <dependency>
                 <groupId>com.googlecode.xmemcached</groupId>
                 <artifactId>xmemcached</artifactId>
@@ -748,7 +748,7 @@
         <kryo_version>2.24.0</kryo_version>
         <kryo-serializers_version>0.37</kryo-serializers_version>
         <fst_version>2.44</fst_version>
-        <dubbox.version>2.9.0</dubbox.version>
+        <!--<dubbox.version>2.9.0</dubbox.version>-->
         <log4j2.version>2.5</log4j2.version>
         <!--<log4j_version>1.2.17</log4j_version>-->
         <curator_version>2.5.0</curator_version>
@@ -807,12 +807,12 @@
             </plugin>
         </plugins>
     </build>
-    <repositories>
-        <repository>
-            <id>central</id>
-            <name>central</name>
-            <url>http://101.200.55.143:8081/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>central</id>-->
+            <!--<name>central</name>-->
+            <!--<url>http://101.200.55.143:8081/nexus/content/groups/public/</url>-->
+        <!--</repository>-->
+    <!--</repositories>-->
 </project>
 

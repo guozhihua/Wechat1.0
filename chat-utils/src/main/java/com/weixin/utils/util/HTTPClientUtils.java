@@ -18,6 +18,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +36,7 @@ import java.util.Map.Entry;
  */
 public class HTTPClientUtils {
 
-    protected static final Logger log = LoggerFactory.getLogger(HTTPClientUtils.class);
+    private static final org.apache.logging.log4j.Logger log = LogManager.getLogger("OauthController");
 
     //连接时间(单位毫秒)
     private static final Integer CONNECTION_TIMEOUT_TIME = 30000;

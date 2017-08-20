@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xchat.dao.VideoDao" >
+	<!-- Result Map-->
+	<resultMap id="BaseResultMap" type="xchat.pojo.Video">
+				<result column="video_name" property="videoName" jdbcType="VARCHAR"/>
+				<result column="video_id" property="videoId" jdbcType="BIGINT"/>
+				<result column="video_uuid" property="videoUuid" jdbcType="INTEGER"/>
+				<result column="video_type" property="videoType" jdbcType="VARCHAR"/>
+				<result column="video_html" property="videoHtml" jdbcType="VARCHAR"/>
+			</resultMap>
+	<!-- video table all fields -->
+	<sql id="Base_Column_List" >
+	video_name,video_id,video_uuid,video_type,video_html
+	</sql>
+	<!-- 查询条件 -->
+	<sql id="Example_Where_Clause">
+	where 1=1
+		<trim  suffixOverrides="," >
+						
+			<if test="videoName != null and videoName != ''" >
+				and video_name =  #{videoName,jdbcType=VARCHAR}
+			</if>
+						
+			<if test="videoId != null and videoId != ''" >
+				and video_id =  #{videoId,jdbcType=BIGINT}
+			</if>
+						
+			<if test="videoUuid != null and videoUuid != ''" >
+				and video_uuid =  #{videoUuid,jdbcType=INTEGER}
+			</if>
+						
+			<if test="videoType != null and videoType != ''" >
+				and video_type =  #{videoType,jdbcType=VARCHAR}
+			</if>
+						
+			<if test="videoHtml != null and videoHtml != ''" >
+				and video_html =  #{videoHtml,jdbcType=VARCHAR}
+			</if>
+					</trim>
+	</sql>
+
+	<!-- 根据id查询 视频 -->
+	<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	  select
+	 <include refid="Base_Column_List" /> 
+		from video
+	 where video_name = #{videoName}
+	</select>
+	<!-- 根据id查询 视频 -->
+	<select id="get"  resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	  select
+	 <include refid="Base_Column_List" /> 
+		from video
+	 where video_name = #{videoName}
+	</select>
+	<!-- 删除记录 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+	  delete
+		  from video where video_name = #{videoName}
+	</delete>
+	<!-- 插入记录 -->
+	<insert id="insert" parameterType="xchat.pojo.Video" >
+				insert into video(video_name,video_id,video_uuid,video_type,video_html)
+		 values(
+			#{videoName,jdbcType=VARCHAR},
+			#{videoId,jdbcType=BIGINT},
+			#{videoUuid,jdbcType=INTEGER},
+			#{videoType,jdbcType=VARCHAR},
+			#{videoHtml,jdbcType=VARCHAR})
+	</insert>
+	<!-- 插入记录 -->
+	<insert id="insertSelective" parameterType="xchat.pojo.Video" >
+				insert into video
+	<trim  prefix="(" suffix=")"  suffixOverrides="," >
+	<if test="videoName != null  ">
+		video_name,
+	</if>
+	<if test="videoId != null  ">
+		video_id,
+	</if>
+	<if test="videoUuid != null  ">
+		video_uuid,
+	</if>
+	<if test="videoType != null  ">
+		video_type,
+	</if>
+	<if test="videoHtml != null  ">
+		video_html,
+	</if>
+	</trim>
+	<trim  prefix="values (" suffix=")"  suffixOverrides="," >
+	<if test="videoName != null  ">
+		#{videoName,jdbcType=VARCHAR},
+	</if>
+	<if test="videoId != null  ">
+		#{videoId,jdbcType=BIGINT},
+	</if>
+	<if test="videoUuid != null  ">
+		#{videoUuid,jdbcType=INTEGER},
+	</if>
+	<if test="videoType != null  ">
+		#{videoType,jdbcType=VARCHAR},
+	</if>
+	<if test="videoHtml != null  ">
+		#{videoHtml,jdbcType=VARCHAR},
+	</if>
+	</trim>
+	</insert>
+	<!-- 修改记录，只修改只不为空的字段 -->
+	<update id="updateByPrimaryKeySelective" parameterType="xchat.pojo.Video" >
+		update video set 
+	<trim  suffixOverrides="," >
+
+	<if test="videoUuid != null ">
+		video_uuid=#{videoUuid,jdbcType=INTEGER},
+	</if>
+	<if test="videoType != null ">
+		video_type=#{videoType,jdbcType=VARCHAR},
+	</if>
+	<if test="videoHtml != null ">
+		video_html=#{videoHtml,jdbcType=VARCHAR},
+	</if>
+	</trim> where video_id=#{videoId,jdbcType=INTEGER}
+	</update>
+	<!-- 根据id，修改记录-->
+	<update id="updateByPrimaryKey" parameterType="xchat.pojo.Video" >
+		update video set 	video_name=#{videoName,jdbcType=VARCHAR},
+	video_uuid=#{videoUuid,jdbcType=INTEGER},
+	video_type=#{videoType,jdbcType=VARCHAR},
+	video_html=#{videoHtml,jdbcType=VARCHAR} where video_id=#{videoId,jdbcType=INTEGER}
+	</update>
+
+	<!-- 查询视频列表 -->
+	<select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
+		select
+		<include refid="Base_Column_List"/>
+		from video
+		<include refid="Example_Where_Clause"/>
+		<if test="orderByClause != null and orderByClause != ''" >
+			order by  ${orderByClause}
+		</if>
+	</select>
+	<!-- 查询视频列表 -->
+	<select id="selectOne" resultMap="BaseResultMap"  parameterType="Object">
+		select
+		<include refid="Base_Column_List"/>
+		from video
+		<include refid="Example_Where_Clause"/>
+		limit 1
+	</select>
+	<select id="selectCount" parameterType="Object" resultType="java.lang.Long">
+		SELECT COUNT(1) from video
+		<include refid="Example_Where_Clause"/>
+	</select>
+
+	<insert id="insertInBatch" parameterType="java.util.List">
+      insert into video(
+	video_name,	video_uuid,	video_type,	video_html) values
+		<foreach collection="list" item="item" index="index" separator=",">
+    (	#{item.videoName,jdbcType=VARCHAR},
+	#{item.videoUuid,jdbcType=INTEGER},
+	#{item.videoType,jdbcType=VARCHAR},
+	#{item.videoHtml,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	<update id="updateInBatch"  parameterType="java.util.List">
+	   <foreach collection="list" item="item" index="index"  separator=";">
+	update  video set 
+
+	<if test="item.videoType != null ">
+		video_type=#{item.videoType,jdbcType=VARCHAR},
+	</if>
+	<if test="item.videoHtml != null ">
+		video_html=#{item.videoHtml,jdbcType=VARCHAR},
+	</if>
+
+		where video_id= #{item.videoId,jdbcType=INTEGER}
+</foreach>
+	</update>
+	<delete id="deleteByPrimaryKeyInBatch" parameterType="java.util.List">
+      DELETE  from video where videoName in
+		<foreach collection="list"  index="index" item="item" open="(" separator="," close=")"  >
+		  #{item}
+		</foreach>
+	</delete>
+</mapper>

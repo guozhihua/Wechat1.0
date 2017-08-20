@@ -7,6 +7,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -51,6 +52,35 @@ public class HttpUtils {
             HttpEntity entity = response.getEntity();
             jsonObject = JSON.parseObject(EntityUtils.toString(entity, "UTF-8")).getJSONObject("data");
 
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+        }finally {
+            if(response!=null){
+                try {
+                    response.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return jsonObject;
+    }
+
+
+    public static String get(String url) {
+        String jsonObject = null;
+        // 创建默认的httpClient实例.
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        // 创建httppost
+        CloseableHttpResponse response = null;
+        List<String> res = new ArrayList<>();
+        try {
+            HttpGet httpGet = new HttpGet(url);
+            response = httpclient.execute(httpGet);
+
+            HttpEntity entity = response.getEntity();
+            jsonObject = EntityUtils.toString(entity, "UTF-8");
         } catch (Exception ex) {
             ex.printStackTrace();
 

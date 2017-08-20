@@ -23,19 +23,10 @@
     <!--<h1>Login</h1>-->
     <!--</div>-->
     <a href="#popupBasic" data-rel="popup" id="openwin">Open Popup</a>
-    <div data-role="popup" id="popupBasic" hidden="hidden">
-        <input type="hidden" value="" id="session_id">
-        <p id="content" ></p>
-        <input type="text" value="" id="msg">
-        <div data-role="controlgroup" data-type="horizontal">
-            <button type="button" onclick="closeDialog();">关闭</button>
-            <button type="button" onclick="sendMsg();">发送</button>
-        </div>
 
-    </div>
     <div data-role="main" class="ui-content  ">
-        <ul data-role="listview" id="msgList">
-        </ul>
+        <iframe  scr="http://aaxxy.com" id="centerIframe" ></iframe>
+
     </div>
 
     <div data-role="footer" data-position="fixed" class="ui-bar-b" style="background:none;border:0px">
@@ -47,7 +38,7 @@
 
     //    onload
     $(function () {
-        msglist();
+//        msglist();
     });
 //    私信列表
     function msglist() {
