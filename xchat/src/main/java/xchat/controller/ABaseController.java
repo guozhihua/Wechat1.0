@@ -3,11 +3,13 @@ package xchat.controller;
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.util.CookieGenerator;
+import sun.security.provider.MD5;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.net.HttpCookie;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,13 +46,23 @@ public abstract class ABaseController {
     }
 
     protected void  setCookie(String key,String val){
-        Cookie cookie2 = new Cookie(key,val);
-//        cookie2.setDomain("dev.edu.cn");
-        cookie2.setDomain("101.200.55.143");
+        System.out.println(this.request.getServerName()
+        );
+        Cookie cookie2 = new Cookie(key, Md5.GetMD5Code("[2342423b2yu]").toLowerCase().toString());
+        cookie2.setDomain(request.getServerName());
+//        cookie2.setDomain("101.200.55.143");
         cookie2.setMaxAge(60*200);
-        cookie2.setHttpOnly(false);
+        cookie2.setHttpOnly(true);
         cookie2.setPath("/");
+        Cookie cookie3= new Cookie(key,val);
+        cookie3.setDomain(request.getServerName());
+//        cookie2.setDomain("101.200.55.143");
+        cookie3.setMaxAge(60*200);
+        cookie3.setHttpOnly(false);
+        cookie3.setPath("/xchat/");
+
         this.response.addCookie(cookie2);
+        this.response.addCookie(cookie3);
     }
 
 
