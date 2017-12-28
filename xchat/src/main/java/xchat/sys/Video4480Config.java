@@ -1,8 +1,5 @@
 package xchat.sys;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -47,7 +44,6 @@ public class Video4480Config {
 
                    String videoPageinfo =matchRegexList.get(i);
                    if(videoPageinfo.contains("︱")&&videoPageinfo.contains("4480")){
-                       System.out.println("**********"+videoPageinfo);
                        int typeindex =videoPageinfo.indexOf("︱");
                        int nameIndex=videoPageinfo.indexOf("4480");
                        String type =videoPageinfo.substring(2,typeindex);
@@ -63,7 +59,7 @@ public class Video4480Config {
                        }
                       Video video = Video.builder().videoUuid(Integer.valueOf(id)).videoName(name.trim()).videoType(type.trim()).build();
                        videos.add(video);
-                       System.out.println( type+"  " +name +"   "+id);
+//                       System.out.println( type+"  " +name +"   "+id);
                    }
                }
 
@@ -78,15 +74,77 @@ public class Video4480Config {
 
 
 
-    public static void main(String[] args) {
-        String  url  = Video4480Config.single_video_html.replace("{vid}",15107+"");
-        String bodyHtml= HttpUtils.get(url);
+    public static List<Video> setVideoHtml(List<Video> videos){
+
+        if (!org.springframework.util.CollectionUtils.isEmpty(videos)) {
+            for (Video video : videos) {
+                if (video.getVideoHtml() != null) continue;
+                String url = Video4480Config.single_video_html.replace("{vid}", video.getVideoUuid() + "");
+                String bodyHtml = HttpUtils.get(url);
+                Document document = Jsoup.parse(bodyHtml);
+                Elements elements = document.getElementsByTag("iframe");
+                if (!elements.isEmpty()) {
+                    String src = elements.get(0).attr("src");
+                    video.setVideoName(video.getVideoName().trim());
+                    video.setVideoHtml(src);
+                    System.out.println(video.getVideoName()+"      "+video.getVideoHtml());
+                }
+            }
+        }
+        return videos;
+    }
+
+    public static List<VideoItem> videoItemList(Video video) throws Exception{
+        List<VideoItem>  result = null;
+        String bodyHtml = HttpUtils.get(video.getVideoHtml());
         Document document = Jsoup.parse(bodyHtml);
-       Elements elements = document.getElementsByTag("iframe");
-       String src =  elements.get(0).attr("src");
-        System.out.println(1);
+        Elements elements = document.getElementsByClass("play-list");
+        if(elements!=null&&elements.size()>0){
+            result = new ArrayList<>();
+            Element element = elements.get(0);
+            for(Element element1 :element.children()){
+                Elements a = element1.getElementsByTag("a");
+                String href ="http://aaxxy.com"+ a.attr("href");
+                System.out.println(href);
+            }
+
+        }
+        return  result ;
+    }
+
+
+
+    public static void main(String[] args) {
+        try{
+
+            List<Video> videos = initVideoList();
+            setVideoHtml(videos);
+            videoItemList(videos.get(0));
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
 
     }
 
+
+    class VideoItem{
+        private  String  name ;
+
+        private  String itemUrl;
+
+        public VideoItem(String name, String itemUrl) {
+            this.name = name;
+            this.itemUrl = itemUrl;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getItemUrl() {
+            return itemUrl;
+        }
+    }
 
 }
