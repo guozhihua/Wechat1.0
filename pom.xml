@@ -9,8 +9,8 @@
     <name>hxs-wechat-parent</name>
     <url>http://maven.apache.org</url>
     <modules>
-        <module>web</module>
-        <module>chat-service</module>
+        <!--<module>web</module>-->
+        <!--<module>chat-service</module>-->
         <module>chat-entity</module>
         <module>chat-utils</module>
         <!--<module>dubbo-demo</module>-->

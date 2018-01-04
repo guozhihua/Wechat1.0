@@ -105,9 +105,9 @@ public class Video4480Config {
             for(Element element1 :element.children()){
                 Elements a = element1.getElementsByTag("a");
                 String href ="http://aaxxy.com"+ a.attr("href");
-                System.out.println(href);
+                String text=  a.get(0).childNodes().get(0).attr("text");;
+                System.out.println(text+" -----------" +   href);
             }
-
         }
         return  result ;
     }

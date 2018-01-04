@@ -1,6 +1,5 @@
 package xchat.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -8,7 +7,6 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.CollectionUtils;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +20,9 @@ import xchat.sys.WebModel;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,6 +43,7 @@ public class VideoController extends ABaseController {
     public WebModel init() {
         WebModel webModel = WebModel.getInstance();
         try {
+
             List<Video> videos = Video4480Config.initVideoList();
             videoService.insertInBatch(videos);
             webModel.setDatas(videos);
@@ -147,10 +148,10 @@ public class VideoController extends ABaseController {
 
     @RequestMapping(value = "/getHtml",produces = MediaType.TEXT_HTML_VALUE)
     public void getOutHtml(@RequestParam("url")  String  url){
-        String res=HttpUtils.get(url);
         PrintWriter pw =null;
         try {
-             pw =super.response.getWriter();
+            String res=new String(HttpUtils.get(url).getBytes("gbk"));
+            pw =super.response.getWriter();
             pw.print(res);
         } catch (IOException e) {
             e.printStackTrace();

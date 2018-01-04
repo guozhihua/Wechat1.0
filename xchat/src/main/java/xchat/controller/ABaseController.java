@@ -2,7 +2,6 @@ package xchat.controller;
 
 import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.util.CookieGenerator;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +47,6 @@ public abstract class ABaseController {
 //        cookie2.setDomain("dev.edu.cn");
         cookie2.setDomain("101.200.55.143");
         cookie2.setMaxAge(60*200);
-        cookie2.setHttpOnly(false);
         cookie2.setPath("/");
         this.response.addCookie(cookie2);
     }
