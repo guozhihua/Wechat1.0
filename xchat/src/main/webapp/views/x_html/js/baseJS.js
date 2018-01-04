@@ -3,7 +3,8 @@
  */
 var ajaxObject = {};
 var token =402167221;
-var contextUrl="https://wchat.5awo.com/xchat";
+//var contextUrl="https://wchat.5awo.com/xchat";
+var contextUrl="http://www.dev.com:8080/xchat";
 
 ajaxObject.postFormAjax = function ajaxPostForm(url, datas, callbak, dataType) {
     url = contextUrl + url;

@@ -26,6 +26,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         boolean flag = true;
         //验证token是否失效，失效则重新登录
         if (handler instanceof HandlerMethod) {
+            System.out.println(request.getCookies());
            String passport =request.getHeader(passport_ticket);
             logger.info("passport is :"+passport);
 //            if(StringUtils.isEmpty(passport)||!"123456".equals(passport)){
