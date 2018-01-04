@@ -148,9 +148,11 @@ public class VideoController extends ABaseController {
 
     @RequestMapping(value = "/getHtml",produces = MediaType.TEXT_HTML_VALUE)
     public void getOutHtml(@RequestParam("url")  String  url){
+        String res=HttpUtils.get(url);
         PrintWriter pw =null;
         try {
-            String res=new String(HttpUtils.get(url).getBytes("gbk"));
+            System.out.println(res);
+            response.setCharacterEncoding("utf-8");
             pw =super.response.getWriter();
             pw.print(res);
         } catch (IOException e) {
