@@ -30,7 +30,8 @@ public class CoderController extends  ABaseController{
             Map<String,Object> paramsMap =super.getParamMap();
             String code =paramsMap.get("code").toString();
             int size =Integer.parseInt(paramsMap.get("size").toString());
-            int last =ZhiShiCode.setCode(code,size);
+            int fistCode =Integer.parseInt(paramsMap.get("fistCode").toString());
+            int last =ZhiShiCode.setCode(code,size,fistCode);
             webModel.setDatas(last);
             webModel.setMsg("成功充值"+last+"张复活卡");
             logger.info("code is {},size is{},result is  {}",code,size,last);
