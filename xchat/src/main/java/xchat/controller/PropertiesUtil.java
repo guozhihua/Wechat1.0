@@ -50,7 +50,7 @@ public class PropertiesUtil {
         try {
             URL fileUrl = PropertiesUtil.class.getResource(PROPERTIES_FILE_NAME);//得到文件路径
             FileOutputStream fos = new FileOutputStream(new File(fileUrl.toURI()));
-            properties.store(fos, "the primary key of article table");
+            properties.store(fos, KEY_LASTID);
             fos.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,6 +61,7 @@ public class PropertiesUtil {
     public static void main(String[] args) {
         System.out.println(getPrimaryKey());
         saveLastKey(1);
+        System.out.println(getPrimaryKey());
 
     }
 }
