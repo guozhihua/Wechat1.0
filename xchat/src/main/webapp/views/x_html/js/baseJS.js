@@ -43,7 +43,7 @@ ajaxObject.getFormAjax = function ajaxGetForm(url, datas, callbak, dataType) {
 
 var callback = function success(data) {
     if(data!=null&&data!='undefine'){
-        alert(data);
+        alert(data.msg);
     }
 }
 var error = function (jqXHR, textStatus, errorMsg) {
