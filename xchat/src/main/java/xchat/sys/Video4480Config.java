@@ -21,7 +21,7 @@ public class Video4480Config {
 
     /**
      * 初始化视频列表基础信息
-     * @return
+     * @returnSimpleDateFormat
      */
    public  static   List<Video> initVideoList(){
        List<Video> videos = new ArrayList<>();

@@ -50,11 +50,11 @@ http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd http://www.springfr
 		</property>
 	</bean>
 
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/**"/>
-			<mvc:exclude-mapping path="/user/login"></mvc:exclude-mapping>
-			<bean class="xchat.interceptors.LoginInterceptor"/>
-		</mvc:interceptor>
-	</mvc:interceptors>
+	<!--<mvc:interceptors>-->
+		<!--<mvc:interceptor>-->
+			<!--<mvc:mapping path="/**"/>-->
+			<!--<mvc:exclude-mapping path="/user/login"></mvc:exclude-mapping>-->
+			<!--<bean class="xchat.interceptors.LoginInterceptor"/>-->
+		<!--</mvc:interceptor>-->
+	<!--</mvc:interceptors>-->
 </beans>

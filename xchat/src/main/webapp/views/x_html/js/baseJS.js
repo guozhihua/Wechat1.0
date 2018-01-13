@@ -4,7 +4,7 @@
 var ajaxObject = {};
 var token =402167221;
 //var contextUrl="https://wchat.5awo.com/xchat";
-var contextUrl="http://www.dev.com:8080/xchat";
+var contextUrl="http://localhost:8080/xchat";
 
 ajaxObject.postFormAjax = function ajaxPostForm(url, datas, callbak, dataType) {
     url = contextUrl + url;
@@ -12,7 +12,7 @@ ajaxObject.postFormAjax = function ajaxPostForm(url, datas, callbak, dataType) {
         url: url, data: datas, type: "POST", asyc: true, dataType: dataType,
         success: callbak,
         //beforeSend:beforeSend,
-        headers: {'Passport_ticket':$.cookie('passport_ticket')},
+        //headers: {'Passport_ticket':$.cookie('passport_ticket')},
         error: error,
         statusCode: {
             702: function () {
@@ -29,7 +29,7 @@ ajaxObject.getFormAjax = function ajaxGetForm(url, datas, callbak, dataType) {
         url: url, data: datas, type: "GET", asyc: true, dataType: dataType,
         success: callbak,
         //beforeSend:beforeSend,
-        headers: {'Passport_ticket':$.cookie('passport_ticket')},
+        //headers: {'Passport_ticket':$.cookie('passport_ticket')},
         error: error,
         statusCode: {
             702: function () {
@@ -42,7 +42,9 @@ ajaxObject.getFormAjax = function ajaxGetForm(url, datas, callbak, dataType) {
 }
 
 var callback = function success(data) {
-    console.log(data);
+    if(data!=null&&data!='undefine'){
+        alert(data);
+    }
 }
 var error = function (jqXHR, textStatus, errorMsg) {
 }

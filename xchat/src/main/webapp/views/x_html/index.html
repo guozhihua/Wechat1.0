@@ -1,25 +1,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>家庭影院</title>
+    <title>充值</title>
     <script src="jquery-m/jquery.min-1.4.5.js"></script>
-    <style>
-        .ui-sponsor{
-            display: none;
-        }
-        #ft_couplet_right{
-            display: none;
-        }
+    <script src="js/baseJS.js"></script>
 
-    </style>
 </head>
 <body>
-<iframe  height="800" width="1000"  src="http://aaxxy.com" onload="removeAd();" id="center" name="center"> </iframe>
+ 邀请码: <input type="text" name ="code" id ="code"></br>
+ 数  目：<input type="text" name="size" id="size">
+ <input type="button" value="提交" onclick="submit()"/>
+
+
 </body>
 
 <script  type="text/javascript">
-    function removeAd(){
-       var ifame  =$("#center").context;
+
+    function submit(){
+
+       var code  =$("#code").val();
+       var size  =$("#size").val();
+        if(size>0&&""!=code){
+            var  p =new Object();
+            p.code = code;
+            p.size = size;
+            var params = {
+                "params": JSON.stringify(p)
+            };
+            ajaxObject.postFormAjax("/code/zhishi",params,callback(),"JSON");
+        }else{
+            alert("请输入邀请码和数目");
+        }
+
+
+
     }
 
 
