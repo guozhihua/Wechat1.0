@@ -22,6 +22,9 @@ public class ZhiShiCode {
         int lastnum = 0 ;
         String url1="http://service.h7tuho5mf.cn//api/invite_code/bind?cc=TG43109&lc=3e5563h89bab84l5&mtxid=f0b429348d78&devi=864284033024273&sid=30YvOEBbKXiCFDGdkFttt2xGmjqR5i26pdi0JJo8wmbNQg3A5Ai3i3&osversion=android_23&cv=CR1.2.00_Android&imei=86428203002O243&proto=8&conn=wifi&ua=vivovivoX7&logid=&icc=89890315750100596714&aid=9c44daa698745211&smid=&imsi=409110013449164&mtid=6592643e9abd9c877cb57d9037a1a60c&code="+inviteCode;
         for(int i =0;i<300;i++){
+            if(lastnum==size||lastnum>size){
+                break;
+            }
                 String cur =url1.concat("&uid=")+(fistCode+i);
                 try {
                     String result = "";
