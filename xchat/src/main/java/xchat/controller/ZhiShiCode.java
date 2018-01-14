@@ -53,4 +53,8 @@ public class ZhiShiCode {
             }
         return  lastnum;
     }
+
+    public static void main(String[] args) {
+        System.out.println(setCode("4H552",100,7430290));
+    }
 }
