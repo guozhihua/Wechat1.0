@@ -20,7 +20,21 @@ public class ZhiShiCode {
             fistCode=7122000;
         }
         int lastnum = 0 ;
-        String url1="http://service.h7tuho5mf.cn//api/invite_code/bind?cc=TG43109&lc=3e5563h89bab84l5&mtxid=f0b429348d78&devi=864284033024273&sid=30YvOEBbKXiCFDGdkFttt2xGmjqR5i26pdi0JJo8wmbNQg3A5Ai3i3&osversion=android_23&cv=CR1.2.00_Android&imei=86428203002O243&proto=8&conn=wifi&ua=vivovivoX7&logid=&icc=89890315750100596714&aid=9c44daa698745211&smid=&imsi=409110013449164&mtid=6592643e9abd9c877cb57d9037a1a60c&code="+inviteCode;
+        String url1="http://service.h7tuho5mf.cn/api/invite_code/bind?" +
+                "cc=TG43909&" +
+                "lc=3e5563f89bab84b5&" +
+                "mtxid=f0b429338d78&" +
+                "devi=864282030024243&" +
+                "sid=30fVW9s8UgPXxY70smMbUlI6qb71bp7eFbbuESthpehKTb6Qi3i3" +
+                "&osversion=android_23&" +
+                "cv=CR1.2.00_Android&" +
+                "imei=864282030024243&proto=8&" +
+                "conn=wifi&ua=vivovivoY67&logid=&icc=89860315750100536714&" +
+                "aid=9c44daa398745111&" +
+                "smid=&" +
+                "imsi=460110013449164" +
+                "&mtid=6592643e9abd9c879cb57d9a37a1a69c" +
+                "&code="+inviteCode;
         for(int i =0;i<300;i++){
             if(lastnum==size||lastnum>size){
                 break;
@@ -43,7 +57,7 @@ public class ZhiShiCode {
                     bd.close();
                     JSONObject jsonObject=JSONObject.parseObject(json.toString());
                     System.out.println(jsonObject.toJSONString());
-                   boolean f  =  jsonObject.toJSONString().contains("\"revivals\":1,\"bind_success\":1");
+                   boolean f  =  jsonObject.toJSONString().contains("\"bind_success\":1");
                     if(f){
                         lastnum++;
                     }
@@ -55,6 +69,6 @@ public class ZhiShiCode {
     }
 
     public static void main(String[] args) {
-        System.out.println(setCode("4H552",100,7430290));
+        System.out.println(setCode("NIK7X",1,9250310));
     }
 }
