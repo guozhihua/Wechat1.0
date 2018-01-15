@@ -69,6 +69,6 @@ public class ZhiShiCode {
     }
 
     public static void main(String[] args) {
-        System.out.println(setCode("NIK7X",1,9204310));
+        System.out.println(setCode("NIK7X",1,9234310));
     }
 }
