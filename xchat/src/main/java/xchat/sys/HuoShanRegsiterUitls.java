@@ -95,7 +95,7 @@ public class HuoShanRegsiterUitls {
 
     public static void main(String[] args) {
         try {
-            String s = checkMobileRegister("17192892949");
+            String s = checkMobileRegister("17182585423");
             System.out.println(s);
         } catch (Exception e) {
             e.printStackTrace();

@@ -30,18 +30,18 @@ public class CollectMobile  extends  BaseTest{
                     huoShanMobileInfo.setMobile(phone);
                     //尚未注册
                     huoShanMobileInfo.setStatus(0);
-                    String authCode = YimaUtils.getAuthCode(YimaCodeConfig.Huoshan_code, huoShanMobileInfo.getMobile());
-                    System.out.println(huoShanMobileInfo.getMobile()+"的验证码信息是:"+authCode);
-                    huoShanMobileInfoService.insertSelective(huoShanMobileInfo);
-//                    list.add(huoShanMobileInfo);
+//                    String authCode = YimaUtils.getAuthCode(YimaCodeConfig.Huoshan_code, huoShanMobileInfo.getMobile());
+//                    System.out.println(huoShanMobileInfo.getMobile()+"的验证码信息是:"+authCode);
+//                    huoShanMobileInfoService.insertSelective(huoShanMobileInfo);
+                    list.add(huoShanMobileInfo);
 
 
                 }
             }
-//            for(HuoShanMobileInfo h:list){
-//                System.out.println("成功的找到了没有注册的号码："+h.getMobile());
-//                huoShanMobileInfoService.insertSelective(h);
-//            }
+            for(HuoShanMobileInfo h:list){
+                System.out.println("成功的找到了没有注册的号码："+h.getMobile());
+                huoShanMobileInfoService.insertSelective(h);
+            }
 //            for(HuoShanMobileInfo h:list){
 //                String authCode = YimaUtils.getAuthCode(YimaCodeConfig.Huoshan_code, h.getMobile());
 //                System.out.println(h.getMobile()+"的验证码信息是:"+authCode);
