@@ -5,6 +5,7 @@ package xchat.sys;
  */
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -31,7 +32,7 @@ public class HuoShanRegsiterUitls {
      * @return
      * @throws Exception
      */
-    public static String checkMobileRegister(String mobile) throws Exception {
+     public static String checkMobileRegister(String mobile) throws Exception {
         long time = new Date().getTime();
         mobile=converMoblie(mobile);
         String url=huoshan_resister_check.concat("&_rticket=").concat(time+"&ts=").concat(time/1000+"");
@@ -51,14 +52,35 @@ public class HuoShanRegsiterUitls {
         return "110";
     }
 
+    public static String checkMobile(String mobile) throws Exception {
+        if(StringUtils.isBlank(mobile)){
+            mobile=null;
+        }
+        String mobile1 = YimaUtils.getMobile(YimaCodeConfig.Huoshan_code, mobile);
+        if(StringUtils.isBlank(mobile1)){
+             mobile1 = YimaUtils.getMobile(YimaCodeConfig.Huoshan_code, mobile);
+        }
+        if(StringUtils.isBlank(mobile1)){
+            return "error:110";
+        }
+        //检查火上注册过没
+        String s = checkMobileRegister(mobile1);
+        return   mobile1+":"+s;
+    }
+
+
 
     public static void main(String[] args) {
         try {
-            checkMobileRegister("17310704220");
+            String s = checkMobile(null);
+            System.out.println(s);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
+
 
     private static String converMoblie(String mobile) {
         StringBuilder sb = new StringBuilder();
@@ -71,5 +93,8 @@ public class HuoShanRegsiterUitls {
 
 
     private static String[] emnc = new String[]{"35", "34", "37", "36", "31", "30", "33", "32", "3d", "3c"};
+
+
+
 
 }

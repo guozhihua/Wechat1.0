@@ -25,7 +25,6 @@ public class YimaUtils {
         if(response.contains("success")){
           result= response.substring(8);
         }
-
         return result;
     }
 
