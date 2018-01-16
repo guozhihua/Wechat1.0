@@ -94,7 +94,4 @@ public class HuoShanRegsiterUitls {
 
     private static String[] emnc = new String[]{"35", "34", "37", "36", "31", "30", "33", "32", "3d", "3c"};
 
-
-
-
 }
