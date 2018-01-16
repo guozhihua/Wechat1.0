@@ -51,7 +51,7 @@ public class YimaUtils {
 
 
     /**
-     * 获取短信内容
+     * 获取短信内容  如果传递mobile，则为指定mobile 内容
      * @param itemId
      * @param mobile
      * @return
@@ -68,8 +68,12 @@ public class YimaUtils {
                 break;
             }else{
                 retry++;
-                Thread.sleep(6000);
+                Thread.sleep(7000);
             }
+        }
+        if(result!=null){
+            //释放
+            releaseMobile(itemId,mobile);
         }
         return  result;
 
