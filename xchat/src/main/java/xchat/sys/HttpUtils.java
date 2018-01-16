@@ -4,11 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
@@ -24,6 +27,11 @@ import java.util.Map;
  * Date： 2017/8/2.
  */
 public class HttpUtils {
+    private static final RequestConfig defaultRequestConfig = RequestConfig.custom()
+            .setSocketTimeout(5000)
+            .setConnectTimeout(5000)
+            .setConnectionRequestTimeout(5000)
+            .build();
 
     public static JSONObject postForm(String url, Map<String, Object> headers, Map<String, Object> paramsMap) {
         JSONObject jsonObject = null;
@@ -96,4 +104,37 @@ public class HttpUtils {
         return jsonObject;
     }
 
+
+    /**
+     * JSON
+     *
+     * @throws IOException
+     * @throws RuntimeException
+     */
+    public static String postJson(String url, Map<String, String> params) throws IOException {
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setConfig(defaultRequestConfig);
+        CloseableHttpClient client = HttpClients.createDefault();
+        String respContent = null;
+        if (params != null && !params.isEmpty()) {
+            net.sf.json.JSONObject jsonParam = new net.sf.json.JSONObject();
+            for (String key : params.keySet()) {
+                jsonParam.put(key, params.get(key));
+            }
+            StringEntity entity = new StringEntity(jsonParam.toString(), "utf-8");//解决中文乱码问题
+            httpPost.setEntity(entity);
+            entity.setContentEncoding("UTF-8");
+            entity.setContentType("application/json");
+        }
+        HttpResponse resp = client.execute(httpPost);
+        if (resp.getStatusLine().getStatusCode() == 200) {
+            HttpEntity he = resp.getEntity();
+
+            respContent = EntityUtils.toString(he, "UTF-8");
+        } else {
+            throw new IOException("请求失败" + resp);
+        }
+        client.close();
+        return respContent;
+    }
 }
