@@ -60,6 +60,7 @@ public class HuoShanRegsiterUitls {
         if(StringUtils.isBlank(mobile1)){
              mobile1 = YimaUtils.getMobile(YimaCodeConfig.Huoshan_code, mobile);
         }
+        System.out.println("=======易码返回的手机号："+mobile1);
         if(StringUtils.isBlank(mobile1)){
             return "error:110";
         }

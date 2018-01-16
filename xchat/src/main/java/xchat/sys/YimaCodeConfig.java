@@ -16,10 +16,10 @@ public class YimaCodeConfig {
    public static String get_userInfo="http://api.51ym.me/UserInterface.aspx?action=getaccountinfo&format=1&token=token"+user_token;
 
    //send code
-    public static String get_mobile="http://api.51ym.me/UserInterface.aspx?action=getmobile&itemid={itemid}&mobile={mobile}&token="+user_token;
+    public static String get_mobile="http://api.51ym.me/UserInterface.aspx?action=getmobile&itemid={itemid}&token="+user_token;
     public static String  release_mobile="http://api.51ym.me/UserInterface.aspx?action=release&mobile={mobile}&itemid={itemid}&token="+user_token;
     public static String get_auth_code="http://api.51ym.me/UserInterface.aspx?action=getsms&mobile={mobile}&itemid={itemid}&token="+user_token;
     public static String check_authCode_status="http://api.51ym.me/UserInterface.aspx?action=getsendsmsstate&mobile={mobile}&itemid={itemid}&token="+user_token;
-
+    public static  String releaseAll="http://api.51ym.me/UserInterface.aspx?action=releaseall&token="+user_token;
 
 }

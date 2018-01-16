@@ -1,4 +1,4 @@
-package xchat.controller;
+package xchat.sys;
 
 import com.alibaba.fastjson.JSONObject;
 

@@ -15,13 +15,12 @@ public class YimaUtils {
     public static String getMobile(String itemId, String mobile) throws Exception {
         String result=null;
         String url = YimaCodeConfig.get_mobile;
-        if(StringUtils.isBlank(mobile)){
-            url = url.replace("{mobile}", "");
-        }else {
-            url = url.replace("{mobile}", mobile);
+        if(StringUtils.isNotBlank(mobile)){
+            url = url.concat("&mobile="+mobile);
         }
         url = url.replace("{itemid}", itemId);
         String response = HttpUtils.get(url);
+        System.out.println(response);
         if(response.contains("success")){
           result= response.substring(8);
         }
@@ -47,6 +46,10 @@ public class YimaUtils {
         result = HttpUtils.get(url);
 
         return  result;
+    }
+
+    public static void releaseAll(){
+      HttpUtils.get(YimaCodeConfig.releaseAll);
     }
 
 

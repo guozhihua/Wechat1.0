@@ -1,4 +1,4 @@
-package xchat.controller;
+package xchat.sys;
 
 import java.io.File;
 import java.io.FileOutputStream;
