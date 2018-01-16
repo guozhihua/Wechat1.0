@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xchat.dao.InviteCodeStaticsDao" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="xchat.pojo.InviteCodeStatics" >
+	<result column="id" property="id"/>
+	<result column="invite_code" property="inviteCode"/>
+	<result column="num" property="num"/>
+	<result column="order_num" property="orderNum"/>
+	<result column="app_name" property="appName"/>
+	<result column="remark" property="remark"/>
+	<result column="create_ttime" property="createTtime"/>
+</resultMap>
+       
+<!-- invite_code_statics table all fields -->
+<sql id="Base_Column_List" >
+	 id,invite_code,num,order_num,app_name,remark,create_ttime
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="inviteCode != null and inviteCode != ''" >
+	    and invite_code =  #{inviteCode}
+	</if>
+	<if test="num != null and num != ''" >
+	    and num =  #{num}
+	</if>
+	<if test="orderNum != null and orderNum != ''" >
+	    and order_num =  #{orderNum}
+	</if>
+	<if test="appName != null and appName != ''" >
+	    and app_name =  #{appName}
+	</if>
+	<if test="remark != null and remark != ''" >
+	    and remark =  #{remark}
+	</if>
+	<if test="createTtime != null and createTtime != ''" >
+	    and create_ttime =  #{createTtime}
+	</if>
+</trim>
+</sql>
+   
+<!-- 根据id查询 统计邀请码 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.String">
+	select <include refid="Base_Column_List" /> 
+	 from invite_code_statics where id = #{id}
+</select>
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	delete 	 from invite_code_statics where id = #{id}
+</delete>
+<!-- 插入记录 -->
+<insert id="insert" parameterType="xchat.pojo.InviteCodeStatics" >
+  insert into invite_code_statics(id,invite_code,num,order_num,app_name,remark,create_ttime)
+ values(#{id},#{inviteCode},#{num},#{orderNum},#{appName},#{remark},#{createTtime})
+</insert>
+<!-- 插入记录 -->
+<insert id="insertSelective" parameterType="xchat.pojo.InviteCodeStatics" >
+  insert into invite_code_statics
+	<trim  prefix="(" suffix=")"  suffixOverrides="," >
+	<if test="id != null  ">
+		id,
+	</if>
+	<if test="inviteCode != null  ">
+		invite_code,
+	</if>
+	<if test="num != null  ">
+		num,
+	</if>
+	<if test="orderNum != null  ">
+		order_num,
+	</if>
+	<if test="appName != null  ">
+		app_name,
+	</if>
+	<if test="remark != null  ">
+		remark,
+	</if>
+	<if test="createTtime != null  ">
+		create_ttime,
+	</if>
+	</trim>
+	<trim  prefix="values (" suffix=")"  suffixOverrides="," >
+	<if test="id != null  ">
+		#{id},
+	</if>
+	<if test="inviteCode != null  ">
+		#{inviteCode},
+	</if>
+	<if test="num != null  ">
+		#{num},
+	</if>
+	<if test="orderNum != null  ">
+		#{orderNum},
+	</if>
+	<if test="appName != null  ">
+		#{appName},
+	</if>
+	<if test="remark != null  ">
+		#{remark},
+	</if>
+	<if test="createTtime != null  ">
+		#{createTtime},
+	</if>
+	</trim>
+</insert>
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="xchat.pojo.InviteCodeStatics" >
+	update invite_code_statics set 
+	<trim  suffixOverrides="," >
+	<if test="inviteCode != null  ">
+		invite_code=#{inviteCode},
+	</if>
+	<if test="num != null  ">
+		num=#{num},
+	</if>
+	<if test="orderNum != null  ">
+		order_num=#{orderNum},
+	</if>
+	<if test="appName != null  ">
+		app_name=#{appName},
+	</if>
+	<if test="remark != null  ">
+		remark=#{remark},
+	</if>
+	<if test="createTtime != null  ">
+		create_ttime=#{createTtime},
+	</if>
+	</trim> where id=#{id}
+</update>
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="xchat.pojo.InviteCodeStatics" >
+  update invite_code_statics set invite_code=#{inviteCode},num=#{num},order_num=#{orderNum},app_name=#{appName},remark=#{remark},create_ttime=#{createTtime} where id=#{id}
+ </update>
+  	
+<!-- 查询统计邀请码列表 -->
+<select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from invite_code_statics 
+	<include refid="Example_Where_Clause"/>
+	<if test="orderByClause != null and orderByClause != ''" >
+       order by  ${orderByClause}
+    </if>
+</select>
+  	
+</mapper>   

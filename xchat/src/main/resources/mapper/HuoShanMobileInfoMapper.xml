@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xchat.dao.HuoShanMobileInfoDao" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="xchat.pojo.HuoShanMobileInfo" >
+	<result column="id" property="id"/>
+	<result column="mobile" property="mobile"/>
+	<result column="status" property="status"/>
+	<result column="invite_code" property="inviteCode"/>
+	<result column="password" property="password"/>
+	<result column="update_time" property="updateTime"/>
+	<result column="create_time" property="createTime"/>
+</resultMap>
+       
+<!-- huo_shan_mobile_info table all fields -->
+<sql id="Base_Column_List" >
+	 id,mobile,status,invite_code,password,update_time,create_time
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="mobile != null and mobile != ''" >
+	    and mobile =  #{mobile}
+	</if>
+	<if test="status != null and status != ''" >
+	    and status =  #{status}
+	</if>
+	<if test="inviteCode != null and inviteCode != ''" >
+	    and invite_code =  #{inviteCode}
+	</if>
+	<if test="password != null and password != ''" >
+	    and password =  #{password}
+	</if>
+	<if test="updateTime != null and updateTime != ''" >
+	    and update_time =  #{updateTime}
+	</if>
+	<if test="createTime != null and createTime != ''" >
+	    and create_time =  #{createTime}
+	</if>
+</trim>
+</sql>
+   
+<!-- 根据id查询 火山用户信息 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.String">
+	select <include refid="Base_Column_List" /> 
+	 from huo_shan_mobile_info where id = #{id}
+</select>
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	delete 	 from huo_shan_mobile_info where id = #{id}
+</delete>
+<!-- 插入记录 -->
+<insert id="insert" parameterType="xchat.pojo.HuoShanMobileInfo" >
+  insert into huo_shan_mobile_info(id,mobile,status,invite_code,password,update_time,create_time)
+ values(#{id},#{mobile},#{status},#{inviteCode},#{password},now(),now())
+</insert>
+<!-- 插入记录 -->
+<insert id="insertSelective" parameterType="xchat.pojo.HuoShanMobileInfo" >
+  insert into huo_shan_mobile_info
+	<trim  prefix="(" suffix=")"  suffixOverrides="," >
+	<if test="id != null  ">
+		id,
+	</if>
+	<if test="mobile != null  ">
+		mobile,
+	</if>
+	<if test="status != null  ">
+		status,
+	</if>
+	<if test="inviteCode != null  ">
+		invite_code,
+	</if>
+	<if test="password != null  ">
+		password,
+	</if>
+	<if test="updateTime != null  ">
+		update_time,
+	</if>
+	<if test="createTime != null  ">
+		create_time,
+	</if>
+	</trim>
+	<trim  prefix="values (" suffix=")"  suffixOverrides="," >
+	<if test="id != null  ">
+		#{id},
+	</if>
+	<if test="mobile != null  ">
+		#{mobile},
+	</if>
+	<if test="status != null  ">
+		#{status},
+	</if>
+	<if test="inviteCode != null  ">
+		#{inviteCode},
+	</if>
+	<if test="password != null  ">
+		#{password},
+	</if>
+	<if test="updateTime != null  ">
+		now(),
+	</if>
+	<if test="createTime != null  ">
+		now(),
+	</if>
+	</trim>
+</insert>
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="xchat.pojo.HuoShanMobileInfo" >
+	update huo_shan_mobile_info set 
+	<trim  suffixOverrides="," >
+	<if test="mobile != null  ">
+		mobile=#{mobile},
+	</if>
+	<if test="status != null  ">
+		status=#{status},
+	</if>
+	<if test="inviteCode != null  ">
+		invite_code=#{inviteCode},
+	</if>
+	<if test="password != null  ">
+		password=#{password},
+	</if>
+	<if test="updateTime != null  ">
+		update_time=#{updateTime},
+	</if>
+	<if test="createTime != null  ">
+		create_time=#{createTime},
+	</if>
+	</trim> where id=#{id}
+</update>
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="xchat.pojo.HuoShanMobileInfo" >
+  update huo_shan_mobile_info set mobile=#{mobile},status=#{status},invite_code=#{inviteCode},password=#{password},update_time=now(),create_time=now() where id=#{id}
+ </update>
+  	
+<!-- 查询火山用户信息列表 -->
+<select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from huo_shan_mobile_info 
+	<include refid="Example_Where_Clause"/>
+	<if test="orderByClause != null and orderByClause != ''" >
+       order by  ${orderByClause}
+    </if>
+</select>
+  	
+</mapper>   
