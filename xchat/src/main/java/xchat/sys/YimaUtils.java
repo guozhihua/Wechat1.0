@@ -13,87 +13,91 @@ import org.apache.commons.lang.StringUtils;
 public class YimaUtils {
 
     public static String getMobile(String itemId, String mobile) throws Exception {
-        String result=null;
+        String result = null;
         String url = YimaCodeConfig.get_mobile;
-        if(StringUtils.isNotBlank(mobile)){
-            url = url.concat("&mobile="+mobile);
+        if (StringUtils.isNotBlank(mobile)) {
+            url = url.concat("&mobile=" + mobile);
         }
         url = url.replace("{itemid}", itemId);
         String response = HttpUtils.get(url);
         System.out.println(response);
-        if(response.contains("success")){
-          result= response.substring(8);
+        if (response.contains("success")) {
+            result = response.substring(8);
         }
         return result;
     }
 
     /**
      * 获取短信内容
+     *
      * @param itemId
      * @param mobile
      * @return
      * @throws Exception
      */
-    private static String getCode(String itemId,String mobile) throws Exception{
-        String result=null;
+    private static String getCode(String itemId, String mobile) throws Exception {
+        String result = null;
         String url = YimaCodeConfig.get_auth_code;
-        if(StringUtils.isBlank(mobile)){
+        if (StringUtils.isBlank(mobile)) {
             url = url.replace("{mobile}", "");
-        }else {
+        } else {
             url = url.replace("{mobile}", mobile);
         }
         url = url.replace("{itemid}", itemId);
         result = HttpUtils.get(url);
 
-        return  result;
+        return result;
     }
 
-    public static void releaseAll(){
-      HttpUtils.get(YimaCodeConfig.releaseAll);
+    public static void releaseAll() {
+        String s = HttpUtils.get(YimaCodeConfig.releaseAll);
+        System.out.println(s);
     }
 
 
     /**
      * 获取短信内容  如果传递mobile，则为指定mobile 内容
+     *
      * @param itemId
      * @param mobile
      * @return
      * @throws Exception
      */
-    public static String getAuthCode(String itemId,String mobile) throws Exception{
-        String result =null;
-        int retry=0;
-        for(int i=0;i<6;i++){
-            System.out.println("开始获取验证码....");
-             result=getCode(itemId,mobile);
-            if(result.contains("success")){
-                result= result.substring(8);
+    public static String getAuthCode(String itemId, String mobile) throws Exception {
+        String result = null;
+        int retry = 0;
+        for (int i = 0; i < 20; i++) {
+            System.out.println("开始获取【" + mobile + "】验证码....");
+            result = getCode(itemId, mobile);
+            if (result.contains("success")) {
+//                result= result.substring(8);
                 break;
-            }else{
+            } else {
                 retry++;
-                Thread.sleep(7000);
+                Thread.sleep(5000);
             }
         }
-        if(result!=null){
+        if (result != null) {
             //释放
-            releaseMobile(itemId,mobile);
+            releaseMobile(itemId, mobile);
         }
-        return  result;
+        return result;
 
     }
 
     /**
      * 释放手机号码
+     *
      * @param itemId
      * @param mobile
      * @return
      */
-    public static String releaseMobile(String itemId,String mobile){
-        String result=null;
+    public static String releaseMobile(String itemId, String mobile) {
+        String result = null;
         String url = YimaCodeConfig.release_mobile;
-        if(StringUtils.isBlank(mobile)){
+        if (StringUtils.isBlank(mobile)) {
             url = url.replace("{mobile}", "");
-        }else {
+        } else {
             url = url.replace("{mobile}", mobile);
         }
         url = url.replace("{itemid}", itemId);
@@ -102,11 +106,13 @@ public class YimaUtils {
     }
 
     public static void main(String[] args) {
-        try{
+        try {
 //            System.out.println(getMobile(YimaCodeConfig.Xigua_code,null));
-            System.out.println(getAuthCode(YimaCodeConfig.Xigua_code,"18426330965"));
-
-
-        }catch (Exception ex){ex.printStackTrace();}
+            System.out.println(getAuthCode(YimaCodeConfig.Huoshan_code, "17182585423"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            releaseAll();
+        }
     }
 }

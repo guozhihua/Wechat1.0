@@ -17,8 +17,10 @@ import java.util.Map;
 public class HuoShanRegsiterUitls {
 
      //os_api 22:头条的  23：火上的
-    private static String huoshan_resister_check = "https://iu.snssdk.com/passport/mobile/send_code/?" +
-            "os_api=1&device_type=vivo+Y9&device_platform=android&ssmix=a&iid=22765174858" ;
+    private static String huoshan_resister_check = "https://iu.snssdk.com/user/mobile/send_code/v2/?os_api=23&" +
+             "device_type=vivo+Y70&device_platform=android&ssmix=a&iid=22765174858" ;
+//             "&manifest_version_code=313&dpi=320&uuid=864282030024547&version_code=313" +
+//             "&app_name=live_stream&version_name=3.1.3&openudid=9c44daa398745111&device_id=35800373860&resolution=720*1280&os_version=6.0&language=zh&device_brand=vivo&ac=wifi&update_version_code=3131&aid=1112&channel=vivo&_rticket=1516089952624&ts=1516089954&as=a2d55b75b2663ae2cd&cp=b16baf5129db5222e2&mas=003a68bde17a99c6070d257fe6f48e681e22064e22" ;
 //            "&manifest_version_code=313&dpi=320&uuid=864282020024243&version_code=313" +
 //            "&app_name=live_stream&version_name=3.1.3&openudid=9c44daa398746111&device_id" +
 //            "=35800373860&resolution=720*1280&os_version=6.0&language=zh&" +
@@ -38,15 +40,17 @@ public class HuoShanRegsiterUitls {
         String url=huoshan_resister_check.concat("&_rticket=").concat(time+"&ts=").concat(time/1000+"");
         Map<String,Object> paramsMap=new HashMap<>();
         paramsMap.put("mix_mode","1");
-        paramsMap.put("type","34");
+        paramsMap.put("type","31");
         paramsMap.put("mobile",mobile);
         paramsMap.put("os_api","23");
         JSONObject jsonObject = HttpUtils.postForm(url, null, paramsMap);
         String res=jsonObject.toJSONString();
+         System.out.println("火山res:"+mobile+res);
         if(res.contains("error_code")){
-            return "300";
+            //c错误说明没注册过
+            return "200";
         }else if(res.contains("retry_time")){
-           return "200";
+           return "300";
         }
         System.out.println(jsonObject.toJSONString());
         return "110";
@@ -69,11 +73,29 @@ public class HuoShanRegsiterUitls {
         return   mobile1+":"+s;
     }
 
+    /**
+     * 获取某个手机的验证码
+     * @param mobile
+     * @return
+     * @throws Exception
+     */
+    public static String getAuthCode(String mobile) throws Exception {
+        String result = null;
+        String authCode = YimaUtils.getAuthCode(YimaCodeConfig.Huoshan_code, mobile);
+        if(StringUtils.isBlank(authCode)){
+            throw  new Exception(mobile+"获取验证码失败了....");
+        }
+        if(authCode.length()>8){
+            result= authCode.substring(8);
+        }
+        return  result;
+    }
+
 
 
     public static void main(String[] args) {
         try {
-            String s = checkMobile(null);
+            String s = checkMobileRegister("17192892949");
             System.out.println(s);
         } catch (Exception e) {
             e.printStackTrace();
