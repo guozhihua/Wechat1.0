@@ -12,6 +12,15 @@ import xchat.sys.ZhiShiCode;
 import java.util.Map;
 
 /**
+ *
+ * 1.通过易码获取手机号
+ * 2.验证是否注册 过火山或者西瓜
+ * 3.没有 则发送验证码，5秒后开启监听获取验证码
+ *
+ *
+ * 4.模拟登陆app,获取必备 参数，注意app设备ID导致不增加复活卡
+ * 5.调用邀请码接口，输入邀请码
+ *
  * Created by :Guozhihua
  * Date： 2018/1/16.
  */
