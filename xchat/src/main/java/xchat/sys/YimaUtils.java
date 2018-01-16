@@ -37,7 +37,7 @@ public class YimaUtils {
      */
     private static String getCode(String itemId, String mobile) throws Exception {
         String result = null;
-        String url = YimaCodeConfig.get_auth_code;
+        String url = YimaCodeConfig.get_auth_code.concat("&release=1");
         if (StringUtils.isBlank(mobile)) {
             url = url.replace("{mobile}", "");
         } else {

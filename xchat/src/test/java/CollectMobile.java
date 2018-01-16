@@ -22,7 +22,7 @@ public class CollectMobile  extends  BaseTest{
         List<HuoShanMobileInfo> list = new ArrayList<>();
         try {
             YimaUtils.releaseAll();
-            for(int i=0;i<15;i++){
+            for(int i=0;i<10;i++){
                 String s = HuoShanRegsiterUitls.checkMobile(null);
                 if(s.endsWith(":200")){
                     String phone = s.replace(":200", "");

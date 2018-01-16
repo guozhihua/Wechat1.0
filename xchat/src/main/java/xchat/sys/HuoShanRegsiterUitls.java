@@ -40,17 +40,17 @@ public class HuoShanRegsiterUitls {
         String url=huoshan_resister_check.concat("&_rticket=").concat(time+"&ts=").concat(time/1000+"");
         Map<String,Object> paramsMap=new HashMap<>();
         paramsMap.put("mix_mode","1");
-        paramsMap.put("type","31");
+         //31 找回密码  34 注册
+        paramsMap.put("type","34");
         paramsMap.put("mobile",mobile);
         paramsMap.put("os_api","23");
         JSONObject jsonObject = HttpUtils.postForm(url, null, paramsMap);
         String res=jsonObject.toJSONString();
          System.out.println("火山res:"+mobile+res);
         if(res.contains("error_code")){
-            //c错误说明没注册过
-            return "200";
+            return "300";
         }else if(res.contains("retry_time")){
-           return "300";
+           return "200";
         }
         System.out.println(jsonObject.toJSONString());
         return "110";
