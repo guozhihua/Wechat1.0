@@ -112,10 +112,8 @@ public class XGCode {
            post.addHeader(new BasicHeader("Cookie", "alert_coverage=4"));
            post.addHeader(new BasicHeader("Cookie", "install_id=23221104831"));
            post.addHeader(new BasicHeader("Cookie", "login_flag=db36f315d025990fcdf3f67175fc7109"));
-           post.addHeader(new BasicHeader("Cookie", "odin_tt=9da4bf711b0aa4563cad63af91c2ad665baf08e34928b80462c102b3ce27aade636061022636dfbf09c5dd0ac02c9e89"));
            post.addHeader(new BasicHeader("Cookie", "qh[360]=1"));
-           post.addHeader(new BasicHeader("Cookie", "sessionid=9e69ae258886fc9eb860144d867b1366"));
-           post.addHeader(new BasicHeader("Cookie", "sid_guard=9e69ae258886fc9eb860144d867b1366%7C1516002066%7C2592000%7CWed%2C+14-Feb-2018+07%3A41%3A06+GMT"));
+           post.addHeader(new BasicHeader("Cookie", "sessionid=976ff96f9feecdcd08ba4925be0b2d8a"));
            post.addHeader(new BasicHeader("Cookie", "sid_tt=9e69ae258886fc9eb860144d867b1366"));
            post.addHeader(new BasicHeader("Cookie", "ttreq=1$b80c5dc3fd322e6f99143e45ad982789a8817f77"));
            post.addHeader(new BasicHeader("Cookie", "uid_tt=828426ce5782d0bb3388759ce4eba163"));
