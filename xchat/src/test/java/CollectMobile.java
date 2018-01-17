@@ -42,10 +42,10 @@ public class CollectMobile  extends  BaseTest{
                 System.out.println("成功的找到了没有注册的号码："+h.getMobile());
                 huoShanMobileInfoService.insertSelective(h);
             }
-//            for(HuoShanMobileInfo h:list){
-//                String authCode = YimaUtils.getAuthCode(YimaCodeConfig.Huoshan_code, h.getMobile());
-//                System.out.println(h.getMobile()+"的验证码信息是:"+authCode);
-//            }
+            for(HuoShanMobileInfo h:list){
+                String authCode = YimaUtils.getAuthCode(YimaCodeConfig.Huoshan_code, h.getMobile());
+                System.out.println(h.getMobile()+"的验证码信息是:"+authCode);
+            }
 
 
         } catch (Exception e) {
