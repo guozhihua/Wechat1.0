@@ -16,7 +16,7 @@ ajaxObject.postFormAjax = function ajaxPostForm(url, datas, callbak, dataType) {
         error: error,
         statusCode: {
             702: function () {
-                window.location.href="../x_htmls/platform.html";
+                window.location.href="../coder/platform.html";
             }
         }
 
@@ -33,7 +33,7 @@ ajaxObject.getFormAjax = function ajaxGetForm(url, datas, callbak, dataType) {
         error: error,
         statusCode: {
             702: function () {
-                window.location.href="../x_htmls/platform.html";
+                window.location.href="../coder/platform.html";
             }
         }
 
