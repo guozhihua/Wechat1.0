@@ -5,6 +5,7 @@ package xchat.sys;
  * Date： 2018/1/16.
  */
 
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -12,15 +13,17 @@ import org.apache.commons.lang.StringUtils;
  */
 public class YimaUtils {
 
-    public static String getMobile(String itemId, String mobile) throws Exception {
+    public static String getMobile(String itemId, String mobile,String ext) throws Exception {
         String result = null;
         String url = YimaCodeConfig.get_mobile;
+        if(StringUtils.isNotBlank(ext)){
+            url=url.concat("&excludeno=").concat(ext);
+        }
         if (StringUtils.isNotBlank(mobile)) {
             url = url.concat("&mobile=" + mobile);
         }
         url = url.replace("{itemid}", itemId);
         String response = HttpUtils.get(url);
-        System.out.println(response);
         if (response.contains("success")) {
             result = response.substring(8);
         }
@@ -65,21 +68,15 @@ public class YimaUtils {
      */
     public static String getAuthCode(String itemId, String mobile) throws Exception {
         String result = null;
-        int retry = 0;
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
             System.out.println("开始获取【" + mobile + "】验证码....");
             result = getCode(itemId, mobile);
             if (result.contains("success")) {
-//                result= result.substring(8);
+                result= result.substring(8);
                 break;
             } else {
-                retry++;
                 Thread.sleep(5000);
             }
-        }
-        if (result != null) {
-            //释放
-            releaseMobile(itemId, mobile);
         }
         return result;
 
@@ -103,6 +100,18 @@ public class YimaUtils {
         url = url.replace("{itemid}", itemId);
         result = HttpUtils.get(url);
         return result;
+    }
+
+    /**
+     * 手机号，密码
+     * @param phone
+     * @param code
+     * @return
+     */
+    public static JSONObject login(String phone,String code ){
+
+
+        return  null;
     }
 
     public static void main(String[] args) {

@@ -13,7 +13,7 @@ import java.util.List;
  * Created by :Guozhihua
  * Date： 2018/1/16.
  */
-public class CollectMobile  extends  BaseTest{
+public class CollectMobileTest extends  BaseTest{
 
     @Autowired
     private HuoShanMobileInfoService huoShanMobileInfoService;
@@ -23,30 +23,27 @@ public class CollectMobile  extends  BaseTest{
         try {
             YimaUtils.releaseAll();
             for(int i=0;i<10;i++){
-                String s = HuoShanRegsiterUitls.checkMobile(null);
+                String s = HuoShanRegsiterUitls.checkMobile(null,"170_171_172");
                 if(s.endsWith(":200")){
                     String phone = s.replace(":200", "");
                     HuoShanMobileInfo huoShanMobileInfo=new HuoShanMobileInfo();
                     huoShanMobileInfo.setMobile(phone);
                     //尚未注册
                     huoShanMobileInfo.setStatus(0);
-//                    String authCode = YimaUtils.getAuthCode(YimaCodeConfig.Huoshan_code, huoShanMobileInfo.getMobile());
-//                    System.out.println(huoShanMobileInfo.getMobile()+"的验证码信息是:"+authCode);
-//                    huoShanMobileInfoService.insertSelective(huoShanMobileInfo);
                     list.add(huoShanMobileInfo);
-
-
+                    break;
                 }
             }
             for(HuoShanMobileInfo h:list){
-                System.out.println("成功的找到了没有注册的号码："+h.getMobile());
+                System.out.println("找到了没有注册的号码："+h.getMobile());
                 huoShanMobileInfoService.insertSelective(h);
             }
             for(HuoShanMobileInfo h:list){
                 String authCode = YimaUtils.getAuthCode(YimaCodeConfig.Huoshan_code, h.getMobile());
                 System.out.println(h.getMobile()+"的验证码信息是:"+authCode);
-            }
+                HuoShanRegsiterUitls.registeruUser(h.getMobile(),authCode);
 
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -25,7 +25,7 @@ public class CollectMobileTask {
         try {
             YimaUtils.releaseAll();
             for(int i=0;i<20;i++){
-                String s = HuoShanRegsiterUitls.checkMobile(null);
+                String s = HuoShanRegsiterUitls.checkMobile(null,"170|171|172");
                 if(s.endsWith(":200")){
                     String phone = s.replace(":200", "");
 
