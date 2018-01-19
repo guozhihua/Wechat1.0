@@ -54,7 +54,6 @@ public class YimaUtils {
 
     public static void releaseAll() {
         String s = HttpUtils.get(YimaCodeConfig.releaseAll);
-        System.out.println(s);
     }
 
 
@@ -71,8 +70,8 @@ public class YimaUtils {
         for (int i = 0; i < 10; i++) {
             System.out.println("开始获取【" + mobile + "】验证码....");
             result = getCode(itemId, mobile);
-            if (result.contains("success")) {
-                result= result.substring(8);
+            if (result.contains("success")&&result.indexOf("】")>0) {
+                result= result.substring(result.indexOf("】")+1,result.indexOf("】")+5);
                 break;
             } else {
                 Thread.sleep(5000);
@@ -116,8 +115,9 @@ public class YimaUtils {
 
     public static void main(String[] args) {
         try {
+            String s ="success|【火山小视频】2796（火山小视频验证码），30分钟内有效，请勿泄露";
 //            System.out.println(getMobile(YimaCodeConfig.Xigua_code,null));
-            System.out.println(getAuthCode(YimaCodeConfig.Huoshan_code, "17182585423"));
+            System.out.println(s.substring(s.indexOf("】")+1,s.indexOf("】")+5));
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {

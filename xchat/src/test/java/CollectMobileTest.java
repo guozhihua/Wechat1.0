@@ -22,7 +22,7 @@ public class CollectMobileTest extends  BaseTest{
         List<HuoShanMobileInfo> list = new ArrayList<>();
         try {
             YimaUtils.releaseAll();
-            for(int i=0;i<10;i++){
+            for(int i=0;i<5;i++){
                 String s = HuoShanRegsiterUitls.checkMobile(null,"170_171_172");
                 if(s.endsWith(":200")){
                     String phone = s.replace(":200", "");
@@ -41,8 +41,14 @@ public class CollectMobileTest extends  BaseTest{
             for(HuoShanMobileInfo h:list){
                 String authCode = YimaUtils.getAuthCode(YimaCodeConfig.Huoshan_code, h.getMobile());
                 System.out.println(h.getMobile()+"的验证码信息是:"+authCode);
-                HuoShanRegsiterUitls.registeruUser(h.getMobile(),authCode);
-
+                String s = HuoShanRegsiterUitls.registeruUser(h.getMobile(), authCode);
+                if(s.startsWith("200:")){
+                    s=s.substring(s.indexOf(":")+1);
+                    String[] split = s.split("@");
+                    String sessionKey=split[0];
+                    String a38YB = HuoShanRegsiterUitls.setCode("A38YB", sessionKey);
+                    System.out.println(a38YB);
+                }
             }
 
         } catch (Exception e) {
