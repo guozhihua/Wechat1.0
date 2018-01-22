@@ -45,7 +45,7 @@ public class HttpUtils {
             .build();
 
 
-    public  static CookieStore cookieStore ;
+    public  static CookieStore cookieStore = new BasicCookieStore();
 
     /**
      * form 表单的形式
@@ -57,7 +57,7 @@ public class HttpUtils {
     public static JSONObject postForm(String url, Map<String, Object> headers, Map<String, Object> paramsMap) {
         JSONObject jsonObject = null;
         // 创建默认的httpClient实例.
-        cookieStore = new BasicCookieStore();
+
         CloseableHttpClient httpclient = HttpClients.custom().setDefaultCookieStore(cookieStore).build();
         // 创建httppost
         CloseableHttpResponse response = null;

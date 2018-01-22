@@ -72,6 +72,7 @@ public class HuoShanRegsiterUitls {
                 "\u0005" + inviteCode + "\u0010 \b\u0018    \u0001";
         String res = HttpUtils.postRequestBody(check_inviteCode, inviteCode, paramsMap);
         System.out.println("开始填写邀请码：" + res);
+        HttpUtils.cookieStore.clear();
         return res;
 
     }
