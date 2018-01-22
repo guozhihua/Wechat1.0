@@ -40,7 +40,7 @@ public class HuoShanRegsiterUitls {
             "ac=wifi&channel=vivo&aid=1112&app_name=live_stream&version_code=313&version_name=3.1.3&device_platform=android&" +
             "ssmix=a&device_type=vivo+X9&device_brand=vivo&language=zh&os_api=23&os_version=6.0&" +
             "&manifest_version_code=313&resolution=720*1280" +
-            "&dpi=320&update_version_code=3131";
+            "";
 
 
     public static String setCode(String inviteCode, String sessionKey) throws IOException {
