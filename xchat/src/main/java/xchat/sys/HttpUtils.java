@@ -44,6 +44,9 @@ public class HttpUtils {
 //            .setProxy(new HttpHost("localhost",8888))
             .build();
 
+
+    public  static CookieStore cookieStore ;
+
     /**
      * form 表单的形式
      * @param url
@@ -54,7 +57,7 @@ public class HttpUtils {
     public static JSONObject postForm(String url, Map<String, Object> headers, Map<String, Object> paramsMap) {
         JSONObject jsonObject = null;
         // 创建默认的httpClient实例.
-        CookieStore cookieStore = new BasicCookieStore();
+        cookieStore = new BasicCookieStore();
         CloseableHttpClient httpclient = HttpClients.custom().setDefaultCookieStore(cookieStore).build();
         // 创建httppost
         CloseableHttpResponse response = null;

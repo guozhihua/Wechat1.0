@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.RandomUtils;
+import org.apache.http.cookie.Cookie;
 
 import java.io.IOException;
 import java.util.Date;
@@ -18,18 +19,18 @@ import java.util.Map;
  * 火山注册助手
  */
 public class HuoShanRegsiterUitls {
-    public static long iid = 23853073710L;
-    public static long uuid = 864282030024243L;
-    public static long device_id = 35800373860L;
+    public static long iid = 23998073710L;
+    public static long uuid = 898282030024243L;
+    public static long device_id = 77880373860L;
     //+ 5111
-    public static String openId = "9c44daa398745111";
+    public static String openId = "9c74gar398t45111";
 
     public static String test_Url = "http://http://textbooktest.e-edusky.com//textbook/common/get_area";
 
 
     //os_api 22:头条的  23：火上的
     private static String huoshan_resister_check = "https://iu.snssdk.com/passport/mobile/send_code/?os_api=23&" +
-            "device_type=vivo+Y70&device_platform=android&ssmix=a&cp=557ea3582814666ce2";
+            "device_type=vivo+Y70&device_platform=android";
 
     private static String registerUrl = "https://iu.snssdk.com//passport/mobile/register/?os_api=23&device_type=vivo+X9&device_platform=android&ssmix=a" +
             "&manifest_version_code=313&dpi=320";
@@ -50,15 +51,20 @@ public class HuoShanRegsiterUitls {
         check_inviteCode = check_inviteCode.concat("&openudid=" + openId);
         check_inviteCode = check_inviteCode.concat("&_rticket=" + time);
         Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("install_id", iid + "");
-        paramsMap.put("sessionid", sessionKey);
-        paramsMap.put("sid_tt", sessionKey);
+        if(HttpUtils.cookieStore!=null){
+            for(Cookie cookie:HttpUtils.cookieStore.getCookies()){
+                paramsMap.put(cookie.getName(),cookie.getValue());
+            }
+        }
+//        paramsMap.put("install_id", iid + "");
+//        paramsMap.put("sessionid", sessionKey);
+//        paramsMap.put("sid_tt", sessionKey);
 //        paramsMap.put("sid_guard", "03a8e6730ff1d905c1377eb1605209a4%7C1516332973%7C2592000%7CSun%2C+18-Feb-2018+03%3A36%3A13+GMT");
 //        paramsMap.put("uid_tt", "16b7d63c7612daa3390c2b867b09aace");
 //        paramsMap.put("ttreq", "1$1dced4aa7bddfa75472b1a4113881a3ebd071126");
 //
 //        paramsMap.put("login_flag", "1befe68ae14653042c00ef4c5e8aab88");
-        paramsMap.put("qh[360]", "1");
+//        paramsMap.put("qh[360]", "1");
 //        paramsMap.put("_ga", "GA1.2.971146136.1516073055");
 //        paramsMap.put("_gid", "GA1.2.1397006827.1516332894");
         inviteCode = "\n" +
@@ -152,7 +158,8 @@ public class HuoShanRegsiterUitls {
 //        paramsMap.put("device_id", device_id);
         paramsMap.put("_rticket=", time);
 //        paramsMap.put("uuid", uuid);
-        paramsMap.put("iid", iid+RandomUtils.nextInt(1000));
+        iid=iid + (RandomUtils.nextInt(400000)+9009999);
+        paramsMap.put("iid", iid);
         JSONObject jsonObject = HttpUtils.postForm(url, null, paramsMap);
         String res = jsonObject.toJSONString();
         System.out.println("检测手机号是不是在火山注册:" + mobile + res);
@@ -236,9 +243,9 @@ public class HuoShanRegsiterUitls {
     private static String[] emnc = new String[]{"35", "34", "37", "36", "31", "30", "33", "32", "3d", "3c"};
 
     private static void setRandomInfo() {
-        iid = iid + (RandomUtils.nextInt(40000)+999999);
-        uuid = uuid + RandomUtils.nextInt(100000);
-        device_id = device_id + (RandomUtils.nextInt(100000)+99999);
+//        iid = iid + (RandomUtils.nextInt(40000)+999999);
+        uuid = uuid + RandomUtils.nextInt(1000000);
+        device_id = device_id + (RandomUtils.nextInt(1000000)+99999);
         openId = openId.substring(0,openId.length()-5) + (RandomUtils.nextInt(97999) + 20000);
         System.out.println("iid=" + iid);
         System.out.println("uuid=" + uuid);
