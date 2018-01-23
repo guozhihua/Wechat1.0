@@ -223,6 +223,7 @@ public class HuoShanRegsiterUitls {
         long uuid= (860480451187309L + RandomUtils.nextInt(1000000));
         url= url.concat("&uuid=") +uuid;
         String s = HttpUtils.get(url);
+        System.out.println("local push response:" +s);
         JSONObject jsonObject = JSONObject.parseObject(s);
         if(jsonObject!=null&&jsonObject.getInteger("status_code")!=null&&jsonObject.getInteger("status_code")==0){
             return  uuid+"";
@@ -233,7 +234,7 @@ public class HuoShanRegsiterUitls {
 
     public static JSONObject  diviceRegister(String uuid){
         String url=device_register.concat("&_rticket=")+new Date().getTime();
-        String openId= (3083046630144805L + RandomUtils.nextInt(1000000))+"";
+        String openId= (3083046630144805L + RandomUtils.nextInt(1))+"";
         url= url.concat("&uuid=") +uuid;
         url=url.concat("&openudid="+openId);
 
