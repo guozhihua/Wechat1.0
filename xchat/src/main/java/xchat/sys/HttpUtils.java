@@ -3,6 +3,7 @@ package xchat.sys;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.RandomUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -180,6 +181,7 @@ public class HttpUtils {
                 .build();
         String respContent = null;
         HttpPost httppost = new HttpPost(url);
+
         httppost.addHeader("Cookie",sb.toString());
 //			httppost.addHeader(new BasicHeader("Content-Type", "application/x-www-form-urlencoded"));
 			httppost.addHeader(new BasicHeader("Content-Type", "application/octet-stream;tt-data=a"));
@@ -190,6 +192,7 @@ public class HttpUtils {
         if (StringUtils.isNotEmpty(data)) {
             httppost.setEntity(new StringEntity(data));
         }
+        httppost.addHeader("zpw",87356844383L+ RandomUtils.nextInt(100000000)+"");
         HttpResponse resp = client.execute(httppost);
         System.out.println("resp is:"+resp);
         if (resp.getStatusLine().getStatusCode() == 200) {

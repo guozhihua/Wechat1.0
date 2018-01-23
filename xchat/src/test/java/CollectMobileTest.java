@@ -46,7 +46,7 @@ public class CollectMobileTest extends  BaseTest{
                     s=s.substring(s.indexOf(":")+1);
                     String[] split = s.split("@");
                     String sessionKey=split[0];
-                    String a38YB = HuoShanRegsiterUitls.setCode("A38YB", sessionKey);
+                    String a38YB = HuoShanRegsiterUitls.setCode("A6FMY", sessionKey);
                     System.out.println(a38YB);
                 }
             }

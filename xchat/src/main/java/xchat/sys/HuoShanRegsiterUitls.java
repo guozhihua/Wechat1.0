@@ -64,7 +64,7 @@ public class HuoShanRegsiterUitls {
 //        paramsMap.put("ttreq", "1$1dced4aa7bddfa75472b1a4113881a3ebd071126");
 //
 //        paramsMap.put("login_flag", "1befe68ae14653042c00ef4c5e8aab88");
-//        paramsMap.put("qh[360]", "1");
+        paramsMap.put("qh[360]", "1");
 //        paramsMap.put("_ga", "GA1.2.971146136.1516073055");
 //        paramsMap.put("_gid", "GA1.2.1397006827.1516332894");
         inviteCode = "\n" +
@@ -159,7 +159,7 @@ public class HuoShanRegsiterUitls {
 //        paramsMap.put("device_id", device_id);
         paramsMap.put("_rticket=", time);
 //        paramsMap.put("uuid", uuid);
-        iid=iid + (RandomUtils.nextInt(400000)+9009999);
+        iid=iid + (RandomUtils.nextInt(400000)+9699999);
         paramsMap.put("iid", iid);
         JSONObject jsonObject = HttpUtils.postForm(url, null, paramsMap);
         String res = jsonObject.toJSONString();
@@ -246,8 +246,8 @@ public class HuoShanRegsiterUitls {
     private static void setRandomInfo() {
 //        iid = iid + (RandomUtils.nextInt(40000)+999999);
         uuid = uuid + RandomUtils.nextInt(1000000);
-        device_id = device_id + (RandomUtils.nextInt(1000000)+99999);
-        openId = openId.substring(0,openId.length()-5) + (RandomUtils.nextInt(97999) + 20000);
+        device_id = device_id + (RandomUtils.nextInt(1000000)+9999999);
+        openId = openId.substring(0,openId.length()-5) + (RandomUtils.nextInt(97999) + 200000);
         System.out.println("iid=" + iid);
         System.out.println("uuid=" + uuid);
         System.out.println("device_id=" + device_id);

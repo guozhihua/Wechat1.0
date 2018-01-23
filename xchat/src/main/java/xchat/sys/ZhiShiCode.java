@@ -22,10 +22,10 @@ public class ZhiShiCode {
         int lastnum = 0 ;
         String url1="http://service.h7tuho5mf.cn/api/invite_code/bind?" +
                 "cc=TG43909&" +
-                "lc=3e5563f89bab84b5&" +
+                "lc=32182257247424ed&" +
                 "mtxid=f0b429338d78&" +
                 "devi=864282030024243&" +
-                "sid=30fVW9s8UgPXxY70smMbUlI6qb71bp7eFbbuESthpehKTb6Qi3i3" +
+                "sid=30jQqfJCZ6oBVdFlJuvnnOIi1AxnnZggTG49Gv9G1dMuGBkHAi3i3" +
                 "&osversion=android_23&" +
                 "cv=CR1.2.00_Android&" +
                 "imei=864282030024243&proto=8&" +
@@ -35,11 +35,11 @@ public class ZhiShiCode {
                 "imsi=460110013449164" +
                 "&mtid=6592643e9abd9c879cb57d9a37a1a69c" +
                 "&code="+inviteCode;
-        for(int i =0;i<300;i++){
+        for(int i =0;i<10;i++){
             if(lastnum==size||lastnum>size){
                 break;
             }
-                String cur =url1.concat("&uid=")+(fistCode+i);
+                String cur =url1.concat("&uid=")+(7050031);
                 try {
                     String result = "";
                     StringBuilder json = new StringBuilder();
@@ -69,6 +69,6 @@ public class ZhiShiCode {
     }
 
     public static void main(String[] args) {
-        System.out.println(setCode("NIK7X",1,9234310));
+        System.out.println(setCode("WU9SH",1,9234310));
     }
 }
