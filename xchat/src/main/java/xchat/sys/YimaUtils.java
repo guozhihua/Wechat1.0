@@ -67,7 +67,7 @@ public class YimaUtils {
      */
     public static String getAuthCode(String itemId, String mobile) throws Exception {
         String result = null;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 8; i++) {
             System.out.println("开始获取【" + mobile + "】验证码....");
             result = getCode(itemId, mobile);
             if (result.contains("success")&&result.indexOf("】")>0) {

@@ -228,6 +228,11 @@ public class HuoShanRegsiterUitls {
     }
 
 
+    /**
+     * 火山数字解码
+     * @param mobile
+     * @return
+     */
     private static String converMoblie(String mobile) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < mobile.length(); i++) {

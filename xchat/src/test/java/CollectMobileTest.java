@@ -22,7 +22,7 @@ public class CollectMobileTest extends  BaseTest{
         List<HuoShanMobileInfo> list = new ArrayList<>();
         try {
             YimaUtils.releaseAll();
-            for(int i=0;i<5;i++){
+            for(int i=0;i<10;i++){
                 String s = HuoShanRegsiterUitls.checkMobile(null,"170_171_172");
                 if(s.endsWith(":200")){
                     String phone = s.replace(":200", "");
@@ -46,7 +46,7 @@ public class CollectMobileTest extends  BaseTest{
                     s=s.substring(s.indexOf(":")+1);
                     String[] split = s.split("@");
                     String sessionKey=split[0];
-                    String a38YB = HuoShanRegsiterUitls.setCode("A6FMY", sessionKey);
+                    String a38YB = HuoShanRegsiterUitls.setCode("A38YB", sessionKey);
                     System.out.println(a38YB);
                 }
             }

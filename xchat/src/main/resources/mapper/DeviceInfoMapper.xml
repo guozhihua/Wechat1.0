@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xchat.dao.DeviceInfoDao" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="xchat.pojo.DeviceInfo" >
+	<result column="id" property="id"/>
+	<result column="iid" property="iid"/>
+	<result column="uuid" property="uuid"/>
+	<result column="openid" property="openid"/>
+	<result column="deviceid" property="deviceid"/>
+	<result column="status" property="status"/>
+	<result column="create_time" property="createTime"/>
+</resultMap>
+       
+<!-- device_info table all fields -->
+<sql id="Base_Column_List" >
+	 id,iid,uuid,openid,deviceid,status,create_time
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="id != null and id != ''" >
+	    and id =  #{id}
+	</if>
+	<if test="iid != null and iid != ''" >
+	    and iid =  #{iid}
+	</if>
+	<if test="uuid != null and uuid != ''" >
+	    and uuid =  #{uuid}
+	</if>
+	<if test="openid != null and openid != ''" >
+	    and openid =  #{openid}
+	</if>
+	<if test="deviceid != null and deviceid != ''" >
+	    and deviceid =  #{deviceid}
+	</if>
+	<if test="status != null and status != ''" >
+	    and status =  #{status}
+	</if>
+	<if test="createTime != null and createTime != ''" >
+	    and create_time =  #{createTime}
+	</if>
+</trim>
+</sql>
+   
+<!-- 根据id查询 统计邀请码 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.String">
+	select <include refid="Base_Column_List" /> 
+	 from device_info where id = #{id}
+</select>
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	delete 	 from device_info where id = #{id}
+</delete>
+<!-- 插入记录 -->
+<insert id="insert" parameterType="xchat.pojo.DeviceInfo" >
+  insert into device_info(id,iid,uuid,openid,deviceid,status,create_time)
+ values(#{id},#{iid},#{uuid},#{openid},#{deviceid},#{status},now())
+</insert>
+<!-- 插入记录 -->
+<insert id="insertSelective" parameterType="xchat.pojo.DeviceInfo" >
+  insert into device_info
+	<trim  prefix="(" suffix=")"  suffixOverrides="," >
+	<if test="id != null  ">
+		id,
+	</if>
+	<if test="iid != null  ">
+		iid,
+	</if>
+	<if test="uuid != null  ">
+		uuid,
+	</if>
+	<if test="openid != null  ">
+		openid,
+	</if>
+	<if test="deviceid != null  ">
+		deviceid,
+	</if>
+	<if test="status != null  ">
+		status,
+	</if>
+	<if test="createTime != null  ">
+		create_time,
+	</if>
+	</trim>
+	<trim  prefix="values (" suffix=")"  suffixOverrides="," >
+	<if test="id != null  ">
+		#{id},
+	</if>
+	<if test="iid != null  ">
+		#{iid},
+	</if>
+	<if test="uuid != null  ">
+		#{uuid},
+	</if>
+	<if test="openid != null  ">
+		#{openid},
+	</if>
+	<if test="deviceid != null  ">
+		#{deviceid},
+	</if>
+	<if test="status != null  ">
+		#{status},
+	</if>
+	<if test="createTime != null  ">
+		now(),
+	</if>
+	</trim>
+</insert>
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="xchat.pojo.DeviceInfo" >
+	update device_info set 
+	<trim  suffixOverrides="," >
+	<if test="iid != null  ">
+		iid=#{iid},
+	</if>
+	<if test="uuid != null  ">
+		uuid=#{uuid},
+	</if>
+	<if test="openid != null  ">
+		openid=#{openid},
+	</if>
+	<if test="deviceid != null  ">
+		deviceid=#{deviceid},
+	</if>
+	<if test="status != null  ">
+		status=#{status},
+	</if>
+	<if test="createTime != null  ">
+		create_time=#{createTime},
+	</if>
+	</trim> where id=#{id}
+</update>
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="xchat.pojo.DeviceInfo" >
+  update device_info set iid=#{iid},uuid=#{uuid},openid=#{openid},deviceid=#{deviceid},status=#{status},create_time=now() where id=#{id}
+ </update>
+  	
+<!-- 查询统计邀请码列表 -->
+<select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from device_info 
+	<include refid="Example_Where_Clause"/>
+	<if test="orderByClause != null and orderByClause != ''" >
+       order by  ${orderByClause}
+    </if>
+</select>
+  	
+</mapper>   
