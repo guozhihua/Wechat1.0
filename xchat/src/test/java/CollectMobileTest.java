@@ -1,13 +1,16 @@
+import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import xchat.pojo.DeviceInfo;
 import xchat.pojo.HuoShanMobileInfo;
+import xchat.service.DeviceInfoService;
 import xchat.service.HuoShanMobileInfoService;
 import xchat.sys.HuoShanRegsiterUitls;
 import xchat.sys.YimaCodeConfig;
 import xchat.sys.YimaUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by :Guozhihua
@@ -17,12 +20,20 @@ public class CollectMobileTest extends  BaseTest{
 
     @Autowired
     private HuoShanMobileInfoService huoShanMobileInfoService;
+
+    @Autowired
+    private DeviceInfoService deviceInfoService;
     @Test
     public void colletMobile(){
         List<HuoShanMobileInfo> list = new ArrayList<>();
         try {
             YimaUtils.releaseAll();
+            Map<String,Object> paramns= new HashMap<>();
+            paramns.put("status","0");
+            List<DeviceInfo> deviceInfos = deviceInfoService.queryList(paramns, 1, 10);
             for(int i=0;i<10;i++){
+                DeviceInfo deviceInfo = deviceInfos.get(i);
+                HuoShanRegsiterUitls.setRandomInfo(deviceInfo);
                 String s = HuoShanRegsiterUitls.checkMobile(null,"170_171_172");
                 if(s.endsWith(":200")){
                     String phone = s.replace(":200", "");
@@ -63,6 +74,30 @@ public class CollectMobileTest extends  BaseTest{
     @Test
     public void releaseAll(){
         YimaUtils.releaseAll();
+    }
+
+
+    /**
+     * 初始化设备信息进行注册
+     */
+    @Test
+    public void deviceRegistger(){
+        for(int i=0;i<10;i++){
+            String s = HuoShanRegsiterUitls.localPush();
+            if(StringUtils.isNotBlank(s)){
+                JSONObject jsonObject = HuoShanRegsiterUitls.diviceRegister(s);
+                if(jsonObject!=null){
+                    DeviceInfo deviceInfo = new DeviceInfo();
+                    deviceInfo.setStatus(0);
+                    deviceInfo.setCreateTime(new Date());
+                    deviceInfo.setDeviceid(jsonObject.getString("device_id"));
+                    deviceInfo.setIid(jsonObject.getString("install_id"));
+                    deviceInfo.setUuid(jsonObject.getString(s));
+                    deviceInfo.setOpenid(jsonObject.getString("openId"));
+                    deviceInfoService.insertSelective(deviceInfo);
+                }
+            }
+        }
     }
 
 

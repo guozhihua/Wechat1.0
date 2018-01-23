@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.apache.http.cookie.Cookie;
+import xchat.pojo.DeviceInfo;
 
 import java.io.IOException;
 import java.util.Date;
@@ -25,8 +26,30 @@ public class HuoShanRegsiterUitls {
     //+ 5111
     public static String openId = "9c74gar398t45111";
 
-    public static String test_Url = "http://http://textbooktest.e-edusky.com//textbook/common/get_area";
+    public static String test_Url = "http://textbooktest.e-edusky.com//textbook/common/get_area";
 
+    /**
+     * uuid  860480451187309  是更具什么生成的   get
+     */
+    public static String local_push_data = "https://hotsoon.snssdk.com/hotsoon/local_push_data/?" +
+            "ac=wifi&channel=tengxun&aid=1112&app_name=live_stream&version_code=313&version_name=3.1.3" +
+            "&device_platform=android&ssmix=a&device_type=MI+5s&device_brand=Xiaomi&" +
+            "language=zh&os_api=19&os_version=4.4.4" +
+            "&" +
+            "manifest_version_code=313&resolution=720*1280&dpi=192&" +
+            "update_version_code=3131" +
+            "";
+
+    /**
+     * 注册设备，openId是怎么来的 需要知道  post
+     */
+    public static String device_register = "http://ib.snssdk.com/service/2/device_register/?" +
+            "ac=wifi&channel=tengxun&aid=1112&app_name=live_stream&version_code=313&" +
+            "version_name=3.1.3&device_platform=android&" +
+            "ssmix=a&device_type=MI+5s&device_brand=Xiaomi&" +
+            "language=zh&os_api=19&os_version=4.4.4" +
+            "&manifest_version_code=313&resolution=720*1280&dpi=192&update_version_code=3131" +
+            "&tt_data=a";
 
     //os_api 22:头条的  23：火上的
     private static String huoshan_resister_check = "https://iu.snssdk.com/passport/mobile/send_code/?os_api=23&" +
@@ -86,10 +109,8 @@ public class HuoShanRegsiterUitls {
      * @return
      */
     public static String registeruUser(String mobile, String authCode) {
-        setRandomInfo();
         long time = new Date().getTime();
         mobile = converMoblie(mobile);
-
         String url = registerUrl.concat("&_rticket=").concat(time + "&ts=").concat(time / 1000 + "");
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("password", pwd);
@@ -155,11 +176,7 @@ public class HuoShanRegsiterUitls {
         paramsMap.put("mobile", mobile);
         paramsMap.put("os_api", "23");
         paramsMap.put("app_name", "live_stream");
-//        paramsMap.put("openudid", openId);
-//        paramsMap.put("device_id", device_id);
         paramsMap.put("_rticket=", time);
-//        paramsMap.put("uuid", uuid);
-        iid=iid + (RandomUtils.nextInt(400000)+9699999);
         paramsMap.put("iid", iid);
         JSONObject jsonObject = HttpUtils.postForm(url, null, paramsMap);
         String res = jsonObject.toJSONString();
@@ -196,6 +213,40 @@ public class HuoShanRegsiterUitls {
         String s = checkMobileRegister(mobile1);
         return mobile1 + ":" + s;
     }
+
+    /**
+     * 本地推送服务器uuid
+     * @return
+     */
+    public static String  localPush(){
+        String url=local_push_data.concat("&_rticket=")+new Date().getTime();
+        long uuid= (860480451187309L + RandomUtils.nextInt(1000000));
+        url= url.concat("&uuid=") +uuid;
+        String s = HttpUtils.get(url);
+        JSONObject jsonObject = JSONObject.parseObject(s);
+        if(jsonObject!=null&&jsonObject.getInteger("status_code")!=null&&jsonObject.getInteger("status_code")==0){
+            return  uuid+"";
+        }
+        return  null;
+
+    }
+
+    public static JSONObject  diviceRegister(String uuid){
+        String url=device_register.concat("&_rticket=")+new Date().getTime();
+        String openId= (3083046630144805L + RandomUtils.nextInt(1000000))+"";
+        url= url.concat("&uuid=") +uuid;
+        url=url.concat("&openudid="+openId);
+
+        JSONObject jsonObject = HttpUtils.postForm(url,null,null);
+        if(jsonObject!=null&&jsonObject.getInteger("new_user")!=null&&jsonObject.getInteger("new_user")==1){
+            jsonObject.put("openId",openId);
+            return   jsonObject;
+        }
+        return  null;
+
+    }
+
+
 
     /**
      * 获取某个手机的验证码
@@ -248,11 +299,11 @@ public class HuoShanRegsiterUitls {
 
     private static String[] emnc = new String[]{"35", "34", "37", "36", "31", "30", "33", "32", "3d", "3c"};
 
-    private static void setRandomInfo() {
-//        iid = iid + (RandomUtils.nextInt(40000)+999999);
-        uuid = uuid + RandomUtils.nextInt(1000000);
-        device_id = device_id + (RandomUtils.nextInt(1000000)+9999999);
-        openId = openId.substring(0,openId.length()-5) + (RandomUtils.nextInt(97999) + 200000);
+    public static void setRandomInfo(DeviceInfo deviceInfo) {
+        iid = Long.parseLong(deviceInfo.getIid());
+        uuid = Long.parseLong(deviceInfo.getUuid());
+        device_id = Long.parseLong(deviceInfo.getDeviceid());
+        openId = deviceInfo.getOpenid();
         System.out.println("iid=" + iid);
         System.out.println("uuid=" + uuid);
         System.out.println("device_id=" + device_id);

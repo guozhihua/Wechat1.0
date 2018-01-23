@@ -46,10 +46,11 @@ public class HttpUtils {
             .build();
 
 
-    public  static CookieStore cookieStore = new BasicCookieStore();
+    public static CookieStore cookieStore = new BasicCookieStore();
 
     /**
      * form 表单的形式
+     *
      * @param url
      * @param headers
      * @param paramsMap
@@ -83,7 +84,9 @@ public class HttpUtils {
             response = httpclient.execute(httppost);
             System.out.println("cookie store:" + cookieStore.getCookies());
             HttpEntity entity = response.getEntity();
-            jsonObject = JSON.parseObject(EntityUtils.toString(entity, "UTF-8")).getJSONObject("data");
+            String res11 = EntityUtils.toString(entity, "UTF-8");
+            System.out.println(res11);
+            jsonObject = JSON.parseObject(res11);
 
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -132,7 +135,8 @@ public class HttpUtils {
 
     /**
      * JSON
-     *  json 形式的数据格式
+     * json 形式的数据格式
+     *
      * @throws IOException
      * @throws RuntimeException
      */
@@ -165,26 +169,27 @@ public class HttpUtils {
 
     /**
      * 直接发送字符串类型数据
+     *
      * @param url
      * @param data
      * @return
      * @throws IOException
      */
-    public static String postRequestBody(String url, String data,Map<String,String> cookies) throws IOException {
-        StringBuilder sb=new StringBuilder();
-        if(cookies!=null){
-            for(String key:cookies.keySet()){
-                sb.append(key+"="+cookies.get(key)).append(";");
+    public static String postRequestBody(String url, String data, Map<String, String> cookies) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        if (cookies != null) {
+            for (String key : cookies.keySet()) {
+                sb.append(key + "=" + cookies.get(key)).append(";");
             }
         }
-        CloseableHttpClient client= HttpClientBuilder.create().setDefaultRequestConfig(defaultRequestConfig)
+        CloseableHttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(defaultRequestConfig)
                 .build();
         String respContent = null;
         HttpPost httppost = new HttpPost(url);
 
-        httppost.addHeader("Cookie",sb.toString());
+        httppost.addHeader("Cookie", sb.toString());
 //			httppost.addHeader(new BasicHeader("Content-Type", "application/x-www-form-urlencoded"));
-			httppost.addHeader(new BasicHeader("Content-Type", "application/octet-stream;tt-data=a"));
+        httppost.addHeader(new BasicHeader("Content-Type", "application/octet-stream;tt-data=a"));
 //        httppost.addHeader(new BasicHeader("Content-Type", "application/json; charset=utf-8"));
         httppost.addHeader("Accept-Encoding", " zh-CN,zh;q=0.8");
 //        httppost.addHeader("Accept", "application/json");
@@ -192,9 +197,9 @@ public class HttpUtils {
         if (StringUtils.isNotEmpty(data)) {
             httppost.setEntity(new StringEntity(data));
         }
-        httppost.addHeader("zpw",87356844383L+ RandomUtils.nextInt(100000000)+"");
+        httppost.addHeader("zpw", 87356844383L + RandomUtils.nextInt(100000000) + "");
         HttpResponse resp = client.execute(httppost);
-        System.out.println("resp is:"+resp);
+        System.out.println("resp is:" + resp);
         if (resp.getStatusLine().getStatusCode() == 200) {
             HttpEntity he = resp.getEntity();
 
