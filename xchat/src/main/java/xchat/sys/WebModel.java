@@ -9,25 +9,25 @@ import java.io.Serializable;
 public class WebModel implements Serializable {
     public Object datas;
 
-    public int code;
+    public String code;
 
     public  String msg;
 
     public  static  WebModel getInstance(){
 
-        return new WebModel(200,"success");
+        return new WebModel("200","success");
     }
 
     public void isFail(){
-        this.code=500;
+        this.code="500";
         this.msg="error";
     }
-    public WebModel(int code, String msg) {
+    public WebModel(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public WebModel(Object datas, int code, String msg) {
+    public WebModel(Object datas, String code, String msg) {
         this.datas = datas;
         this.code = code;
         this.msg = msg;
@@ -41,11 +41,11 @@ public class WebModel implements Serializable {
         this.datas = datas;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

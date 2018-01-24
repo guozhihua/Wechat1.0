@@ -1,0 +1,51 @@
+.login {
+    display: table;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.row {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+/* centered columns styles */
+.row-centered {
+    text-align: right;
+}
+
+#main {
+    display: table;
+    height: 94%;
+    width: 100%;
+    position: absolute;
+    bottom: 6%;
+    background: url("../images/login_index.png") no-repeat;
+    background-size: cover;
+
+}
+
+.col-centered {
+    display: inline-block;
+    float: none;
+    text-align: left;
+    margin-right: -4px;
+    margin-bottom: 3%;
+}
+.footer-div{
+    padding:16px 0px;
+    text-align: center;
+    background-color: #456f94;
+    font-size: 18px;
+    color: white;
+    font-weight: 400;
+}
+.platform-name{
+    font-size: 25px;
+    color: #27a9bf;
+    font-weight: 600;
+    text-align: center;
+}

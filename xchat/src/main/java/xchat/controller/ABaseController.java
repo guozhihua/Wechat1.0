@@ -1,7 +1,10 @@
 package xchat.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.weixin.utils.responsecode.ResponseCode;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import xchat.sys.ValiResult;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -49,6 +52,34 @@ public abstract class ABaseController {
         cookie2.setMaxAge(60*200);
         cookie2.setPath("/");
         this.response.addCookie(cookie2);
+    }
+    protected ValiResult validataParams(String... names) {
+        boolean isSuccess = true;
+        ResponseCode responseCode = ResponseCode.SUCCESS;
+        StringBuilder sb= new StringBuilder("");
+        if (names.length > 0) {
+            Map<String, Object> pamrasMap = this.getParamMap();
+            for (String name : names) {
+                Object val = pamrasMap.get(name);
+                if (val == null) {
+                    sb.append("参数【"+name+"】缺失！");
+                    responseCode=ResponseCode.PARAMETER_MISS;
+                    isSuccess = false;
+                    break;
+                } else {
+                    if (val instanceof String) {
+                        if (StringUtils.isBlank(val.toString())) {
+                            sb.append("参数【"+name+"】的值为null！");
+                            responseCode= ResponseCode.PARAMETER_MISS;
+                            isSuccess = false;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        ValiResult valiResult= new ValiResult(isSuccess,sb.toString(),responseCode);
+        return valiResult;
     }
 
 

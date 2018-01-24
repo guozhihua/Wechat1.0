@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>卡券管理平台</title>
+    <script src="./coder/jquery-m/jquery.min-1.4.5.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="./coder/css/index.css"/>
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <script src="./coder/js/url.js"></script>
+    <script src="./coder/js/baseJS.js"></script>
+    <script src="./coder/js/index.js"></script>
+</head>
+<body>
+<div id="main" class="container">
+    <div class="row login">
+        <div class="col-xs-7  col-sm-offset-5 row-centered">
+            <div class="col-md-7 col-md-offset-5 col-centered">
+                <form:form  method="post" role="form">
+                    <div class="  platform-name"><p>卡商管理平台<br/></p></div>
+                    <div class="input-group input-group-md">
+                    <span class="input-group-addon" id="sizing-addon0"><i class="glyphicon glyphicon-user"
+                                                                          aria-hidden="true"></i></span>
+                        <input type="text" class="form-control" id="username" name="userid" placeholder="请输入账号"/>
+                    </div>
+                    <br/>
+                    <div class="input-group input-group-md">
+                        <span class="input-group-addon" id="sizing-addon1"><i
+                                class="glyphicon glyphicon-lock"></i></span>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码"/>
+                    </div>
+                    <br/>
+                    <button type="button" class="btn btn-primary btn-block" onclick="login()">登录</button>
+                </form:form>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="footer navbar-fixed-bottom ">
+      <div class="container col-sm-12 footer-div">
+      <div class="row   col-sm-12"><span >@指尖工作室版权所有,盗版必究。Version 1.0 Date:2018-01-24</span></div>
+
+      </div>
+</footer>
+</body>
+</html>
