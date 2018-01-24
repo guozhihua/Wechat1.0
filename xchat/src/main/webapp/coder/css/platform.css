@@ -8,7 +8,7 @@ body{
   float: left;
 
     height: 90vh;
-    background-color: #0f0f0f;
+    background-color: #35646f;
     overflow:auto;
     overflow-x:hidden;
 }
@@ -16,12 +16,8 @@ body{
     float: right;
 
     height: 90vh;
-    /*height:100%; position:absolute;*/
     background-color: #2b542c;
     overflow:auto;
-    /*max-height: 700px;*/
-    /*overflow-x:hidden;*/
-    /*max-height: 800px;*/
 }
 #header{
     height: 7vh;
