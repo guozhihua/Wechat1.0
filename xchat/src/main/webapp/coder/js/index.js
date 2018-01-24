@@ -6,5 +6,11 @@ function login() {
         "params": JSON.stringify(obj)
     };
     ajaxObject.getFormAjax(login_submit,params , function (data) {
+        if(data.code==200&&data.datas==888888){
+
+        }else{
+            alert(data.msg)
+        }
+
     }, "JSON");
 }

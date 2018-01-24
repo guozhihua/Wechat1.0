@@ -32,6 +32,9 @@ public class UserController extends  ABaseController{
                 String pwd=paramsMap.get("pwd").toString();
                 if(userId.equals("admin")&&pwd.equals("admin123")){
                     webModel.setDatas("登陆成功");
+                    webModel.setDatas(88888888);
+                }else{
+                    webModel.setMsg("登录失败");
                 }
             }else{
                webModel.setCode(valiResult.getHttpCode().code);
