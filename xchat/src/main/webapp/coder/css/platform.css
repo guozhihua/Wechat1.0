@@ -1,0 +1,43 @@
+#main{
+}
+/*禁用浏览器的滚动条*/
+body{
+    overflow-y:hidden;
+    overflow-x: hidden}
+#left{
+  float: left;
+
+    height: 90vh;
+    background-color: #0f0f0f;
+    overflow:auto;
+    overflow-x:hidden;
+}
+#right{
+    float: right;
+
+    height: 90vh;
+    /*height:100%; position:absolute;*/
+    background-color: #2b542c;
+    overflow:auto;
+    /*max-height: 700px;*/
+    /*overflow-x:hidden;*/
+    /*max-height: 800px;*/
+}
+#header{
+    height: 7vh;
+    background-color: #2aabd2;
+
+}
+#footer{
+    clear:both;
+    height: 3vh;
+}
+.footer-div{
+    padding:1px 0px;
+    text-align: center;
+    background-color: #456f94;
+    vertical-align: text-top;
+    font-size: 18px;
+    color: white;
+    font-weight: 400;
+}
