@@ -6,8 +6,8 @@ function login() {
         "params": JSON.stringify(obj)
     };
     ajaxObject.getFormAjax(login_submit,params , function (data) {
-        if(data.code==200&&data.datas==888888){
-
+        if(data.code==200&&data.datas==88888888){
+            window.location.href="./platform_index.html";
         }else{
             alert(data.msg)
         }
