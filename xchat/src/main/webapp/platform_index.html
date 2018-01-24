@@ -14,60 +14,47 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div id="header" class="row row-fluid">2312</div>
-    <div id="hh" class="row-fluid row">
-        <div class="col-sm-2" id="left">
+    <div id="header" class="row row-fluid">
+        <table class="table">
+            <tr>
+                <td>欢迎你，管理员</td>
+                <td>系统设置</td>
+                <td>卡券中心</td>
+                <td>用户管理</td>
 
-
-        </div>
-        <div class="col-sm-10" id="right">
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-            123<br/>
-
-
-        </div>
+            </tr>
+        </table>
     </div>
-    <div id="footer" class="row row-fluid footer-div"><span >@指尖工作室版权所有,盗版必究。Version 1.0 Date:2018-01-24</span></div>
+    <div id="hh" class="row-fluid row">
+        <table class="table" id="center-table">
+            <tr>
+                <td class="td">
+                    <div id="left">
+
+                    </div>
+                </td>
+                <td class="td">
+                    <div id="right"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="footer" class="row row-fluid footer-div"><span>@指尖工作室版权所有,盗版必究。Version 1.0 Date:2018-01-24</span></div>
 
 </div>
 
 </body>
+<script type="text/javascript">
+    $(
+            $(".table tr td").each(function () {
+                $(this).css({"padding": "0px 0px 0px 0px"});
+            })
+            $(".table").each(function(){
+//              $(this).css("border")
+            })
+    );
+
+
+</script>
 </html>

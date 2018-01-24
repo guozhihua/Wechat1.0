@@ -4,24 +4,34 @@
 body{
     overflow-y:hidden;
     overflow-x: hidden}
-#left{
-  float: left;
-
+#center-table{
     height: 90vh;
-    background-color: #35646f;
-    overflow:auto;
-    overflow-x:hidden;
+}
+
+#left{
+    height: 90vh;
+    width: 20vw;
+    background-color: #2b542c;
+    padding: 0px 0px;
+}
+
+.td{
+    margin: 0 0;
+    padding: 0px 0px;
 }
 #right{
-    float: right;
-
     height: 90vh;
-    background-color: #2b542c;
-    overflow:auto;
+    width: 80vw;
+    background-color: #1f1f1f;
+    padding: 0px 0px;
 }
+
+
+
 #header{
     height: 7vh;
     background-color: #0e759c;
+    line-height: 7vh;
 
 }
 #footer{
