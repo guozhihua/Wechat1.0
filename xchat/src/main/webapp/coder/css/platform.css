@@ -46,7 +46,7 @@ body {
     background-color: #22883cd9;
     line-height: 7vh;
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 600;
 
 }
 
@@ -63,7 +63,7 @@ body {
 }
 
 #AdminUser {
-    font-weight: 500;
+    font-weight: 600;
     color: #e38d13;
     font-size: 18px;
 }
