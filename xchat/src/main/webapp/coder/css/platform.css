@@ -8,10 +8,15 @@ body{
     height: 90vh;
 }
 
+.tb-header{
+    margin: 0 !important;
+    padding: 0px 0px;
+    height: 7vh;
+}
 #left{
     height: 93vh;
     width: 20vw;
-    background-color: #2b542c;
+    background-color: #49a74f70;
     padding: 0px 0px;
     margin-right: -1px;
 }
@@ -20,12 +25,13 @@ body{
     border-color: transparent;
     /*border-style: none;*/
     border-collapse: collapse;
+    vertical-align: middle;
 }
 
 #right{
     height: 93vh;
     width: 80vw;
-    background-color: #1f1f1f;
+    background-color: #1f1f1f00;
     padding: 0px 0px;
 }
 
@@ -33,7 +39,7 @@ body{
 
 #header{
     height: 7vh;
-    background-color: #0e759c;
+    background-color: #22883cd9;
     line-height: 7vh;
 
 }
@@ -41,4 +47,5 @@ body{
 .td-border{
     border:  0px !important;
     padding: 0px 0px !important;
+    vertical-align: middle !important;
 }
