@@ -12,6 +12,8 @@ body{
     margin: 0 !important;
     padding: 0px 0px;
     height: 7vh;
+    word-wrap:break-word;
+    /*table-layout:fixed;*/
 }
 #left{
     height: 93vh;
@@ -44,8 +46,13 @@ body{
 
 }
 
-.td-border{
+.td-border-header{
     border:  0px !important;
     padding: 0px 0px !important;
     vertical-align: middle !important;
+    /*width: 50px;*/
+}
+.td-border{
+    border:  0px !important;
+    padding: 0px 0px !important;
 }
