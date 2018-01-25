@@ -1,5 +1,6 @@
 package xchat.interceptors;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.LogFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,6 +30,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             System.out.println(request.getCookies());
            String passport =request.getHeader(passport_ticket);
             logger.info("passport is :"+passport);
+            if(StringUtils.isNotBlank(passport)){
+                request.setAttribute(passport_ticket,passport);
+            }
 //            if(StringUtils.isEmpty(passport)||!"123456".equals(passport)){
 //                response.sendError(702,"ticket is miss");
 //                flag=false;
