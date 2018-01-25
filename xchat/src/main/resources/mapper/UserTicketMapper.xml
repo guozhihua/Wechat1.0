@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xchat.dao.UserTicketDao" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="xchat.pojo.UserTicket" >
+	<result column="user_id" property="userId"/>
+	<result column="ticket" property="ticket"/>
+</resultMap>
+       
+<!-- user_ticket table all fields -->
+<sql id="Base_Column_List" >
+	 user_id,ticket
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="userId != null and userId != ''" >
+	    and user_id =  #{userId}
+	</if>
+	<if test="ticket != null and ticket != ''" >
+	    and ticket =  #{ticket}
+	</if>
+</trim>
+</sql>
+   
+<!-- 根据id查询 用户票据表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.String">
+	select <include refid="Base_Column_List" /> 
+	 from user_ticket where user_id = #{userId}
+</select>
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	delete 	 from user_ticket where user_id = #{userId}
+</delete>
+<!-- 插入记录 -->
+<insert id="insert" parameterType="xchat.pojo.UserTicket" >
+  insert into user_ticket(user_id,ticket)
+ values(#{userId},#{ticket})
+</insert>
+<!-- 插入记录 -->
+<insert id="insertSelective" parameterType="xchat.pojo.UserTicket" >
+  insert into user_ticket
+	<trim  prefix="(" suffix=")"  suffixOverrides="," >
+	<if test="userId != null  ">
+		user_id,
+	</if>
+	<if test="ticket != null  ">
+		ticket,
+	</if>
+	</trim>
+	<trim  prefix="values (" suffix=")"  suffixOverrides="," >
+	<if test="userId != null  ">
+		#{userId},
+	</if>
+	<if test="ticket != null  ">
+		#{ticket},
+	</if>
+	</trim>
+</insert>
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="xchat.pojo.UserTicket" >
+	update user_ticket set 
+	<trim  suffixOverrides="," >
+	<if test="ticket != null  ">
+		ticket=#{ticket},
+	</if>
+	</trim> where user_id=#{userId}
+</update>
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="xchat.pojo.UserTicket" >
+  update user_ticket set ticket=#{ticket} where user_id=#{userId}
+ </update>
+  	
+<!-- 查询用户票据表列表 -->
+<select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from user_ticket 
+	<include refid="Example_Where_Clause"/>
+	<if test="orderByClause != null and orderByClause != ''" >
+       order by  ${orderByClause}
+    </if>
+</select>
+  	
+</mapper>   
