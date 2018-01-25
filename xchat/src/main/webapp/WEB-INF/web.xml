@@ -41,7 +41,7 @@
     </init-param>
     <init-param>
       <param-name>cors.supportedHeaders</param-name>
-      <param-value>Accept, Origin, X-Requested-With, Content-Type, Last-Modified,Passport_ticket</param-value>
+      <param-value>Accept, Origin, X-Requested-With, Content-Type, Last-Modified,passport-ticket,token,md5</param-value>
     </init-param>
     <init-param>
       <param-name>cors.exposedHeaders</param-name>

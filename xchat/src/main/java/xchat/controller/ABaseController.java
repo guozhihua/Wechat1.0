@@ -45,13 +45,6 @@ public abstract class ABaseController {
         return JSON.parseObject(json, HashMap.class);
     }
 
-    protected void  setCookie(String key,String val){
-        Cookie cookie2 = new Cookie(key,val);
-        cookie2.setDomain("dev.edu.cn");
-//        cookie2.setMaxAge(60*200);
-        cookie2.setPath("/");
-        this.response.addCookie(cookie2);
-    }
     protected ValiResult validataParams(String... names) {
         boolean isSuccess = true;
         ResponseCode responseCode = ResponseCode.SUCCESS;

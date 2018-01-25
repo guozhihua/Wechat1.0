@@ -120,10 +120,10 @@
        </dependency>
 
 
-       <dependency>
-           <groupId>org.mortbay.jetty</groupId>
-           <artifactId>jetty</artifactId>
-       </dependency>
+       <!--<dependency>-->
+           <!--<groupId>org.mortbay.jetty</groupId>-->
+           <!--<artifactId>jetty</artifactId>-->
+       <!--</dependency>-->
 
        <dependency>
            <groupId>junit</groupId>

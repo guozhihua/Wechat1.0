@@ -17,6 +17,7 @@ import xchat.sys.ThreadLocaUser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 
 /**
  * Created by zhusen on 2017/1/4.
@@ -24,7 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class LoginInterceptor extends HandlerInterceptorAdapter {
     private static final Logger logger = LogManager.getLogger("LoginInterceptor");
-    private static final String passport_ticket = "passport_ticket";
+    //nginx 对于下划线的header不支持
+    private static final String passport_ticket = "passport-ticket";
 
     @Autowired
     private UserTicketService userTicketService;
@@ -36,10 +38,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         boolean flag = true;
         //验证token是否失效，失效则重新登录
         if (handler instanceof HandlerMethod) {
-            System.out.println(request.getCookies());
            String passport =request.getHeader(passport_ticket);
-            logger.info("passport is :"+passport);
+            logger.info("passport_ticket is :"+passport);
             HandlerMethod handler2 = (HandlerMethod) handler;
+            Enumeration<String> headerNames = request.getHeaderNames();
+
             //获取注解
             NeedLogin needLogin = handler2.getMethodAnnotation(NeedLogin.class);
             if(needLogin!=null){
@@ -47,7 +50,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                     request.setAttribute(passport_ticket,passport);
                     UserTicket userTicket = userTicketService.selectByTicket(passport);
                     if(userTicket==null){
-                        response.sendError(709, "Passport ticket  is timeout.");
+                        response.setStatus(709);
                         flag=false;
                     }else{
                         //可以放在线程变量里面
@@ -56,7 +59,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
                         }
                     }
                 }else{
-                    response.sendError(709, "Passport ticket  is timeout.");
+                    response.setStatus(709);
                     flag=false;
                 }
             }

@@ -14,10 +14,7 @@ import xchat.pojo.User;
 import xchat.pojo.UserTicket;
 import xchat.service.UserService;
 import xchat.service.UserTicketService;
-import xchat.sys.Md5;
-import xchat.sys.ThreadLocaUser;
-import xchat.sys.ValiResult;
-import xchat.sys.WebModel;
+import xchat.sys.*;
 
 import java.sql.Date;
 import java.util.List;
@@ -62,6 +59,7 @@ public class UserController extends ABaseController {
                         userTicket.setTicket(Md5.GetMD5Code(user.getUserId()+salt+ RandomUtils.nextInt(100000)));
                         userTicketService.updateByIdSelective(userTicket);
                     }
+                    CookieUtils.setCookie(response,request.getServerName(),"passport-ticket",userTicket.getTicket(),true,-1);
                 }else{
                     webModel.isFail();
                 }
@@ -84,7 +82,7 @@ public class UserController extends ABaseController {
         try {
             UserTicket userTicket = ThreadLocaUser.get();
             userTicketService.delete(userTicket);
-            setCookie("passport_ticket", null);
+            CookieUtils.removeCookie(request,response);
         } catch (Exception ex) {
             logger.error("error", ex);
             webModel.isFail();

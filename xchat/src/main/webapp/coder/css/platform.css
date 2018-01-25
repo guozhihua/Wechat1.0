@@ -1,21 +1,25 @@
-#main{
+#main {
 }
+
 /*禁用浏览器的滚动条*/
-body{
-    overflow-y:hidden;
-    overflow-x: hidden}
-#center-table{
+body {
+    overflow-y: hidden;
+    overflow-x: hidden
+}
+
+#center-table {
     height: 90vh;
 }
 
-.tb-header{
+.tb-header {
     margin: 0 !important;
     padding: 0px 0px;
     height: 7vh;
-    word-wrap:break-word;
+    word-wrap: break-word;
     /*table-layout:fixed;*/
 }
-#left{
+
+#left {
     height: 93vh;
     width: 20vw;
     background-color: #49a74f70;
@@ -23,36 +27,43 @@ body{
     margin-right: -1px;
 }
 
-.table{
+.table {
     border-color: transparent;
     /*border-style: none;*/
     border-collapse: collapse;
     vertical-align: middle;
 }
 
-#right{
+#right {
     height: 93vh;
     width: 80vw;
     background-color: #1f1f1f00;
     padding: 0px 0px;
 }
 
-
-
-#header{
+#header {
     height: 7vh;
     background-color: #22883cd9;
     line-height: 7vh;
+    font-size: 16px;
+    font-weight: 400;
 
 }
 
-.td-border-header{
-    border:  0px !important;
+.td-border-header {
+    border: 0px !important;
     padding: 0px 0px !important;
     vertical-align: middle !important;
     /*width: 50px;*/
 }
-.td-border{
-    border:  0px !important;
+
+.td-border {
+    border: 0px !important;
     padding: 0px 0px !important;
+}
+
+#AdminUser {
+    font-weight: 500;
+    color: #e38d13;
+    font-size: 18px;
 }

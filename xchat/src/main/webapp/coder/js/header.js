@@ -18,5 +18,4 @@ function showTime(){
     second<10?second='0'+second:second;
     var now_time=''+year+'年'+month+'月'+date+'日'+' '+show_day[day]+'';
     document.getElementById('timer').innerHTML=now_time;
-    /* setTimeout("showTime();",1000);  */
 }

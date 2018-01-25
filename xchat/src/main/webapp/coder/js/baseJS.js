@@ -7,11 +7,13 @@ ajaxObject.postFormAjax = function ajaxPostForm(url, datas, callbak, dataType) {
     $.ajax({
         url: url, data: datas, type: "POST", asyc: true, dataType: dataType,
         success: callbak,
-        //beforeSend:beforeSend,
-        headers: {'Passport_ticket':$.cookie('passport_ticket')},
+        beforeSend:function(request){
+            request.setRequestHeader("passport-ticket", $.cookie('passport-ticket'));
+        },
+        //headers: {'passport_ticket':$.cookie('passport_ticket')},
         error: error,
         statusCode: {
-            702: function () {
+            709: function () {
                 window.location.href="../coder/index.html";
             }
         }
@@ -24,7 +26,7 @@ ajaxObject.getFormAjax = function ajaxGetForm(url, datas, callbak, dataType) {
         url: url, data: datas, type: "GET", asyc: true, dataType: dataType,
         success: callbak,
         //beforeSend:beforeSend,
-        headers: {'Passport_ticket':$.cookie('passport_ticket')},
+        headers: {'passport_ticket':$.cookie('passport_ticket')},
         error: error,
         statusCode: {
             702: function () {
