@@ -9,18 +9,21 @@ body{
 }
 
 #left{
-    height: 90vh;
+    height: 93vh;
     width: 20vw;
     background-color: #2b542c;
     padding: 0px 0px;
+    margin-right: -1px;
 }
 
-.td{
-    margin: 0 0;
-    padding: 0px 0px;
+.table{
+    border-color: transparent;
+    /*border-style: none;*/
+    border-collapse: collapse;
 }
+
 #right{
-    height: 90vh;
+    height: 93vh;
     width: 80vw;
     background-color: #1f1f1f;
     padding: 0px 0px;
@@ -34,16 +37,8 @@ body{
     line-height: 7vh;
 
 }
-#footer{
-    clear:both;
-    height: 3vh;
-}
-.footer-div{
-    padding:1px 0px;
-    text-align: center;
-    background-color: #456f94;
-    vertical-align: text-top;
-    font-size: 18px;
-    color: white;
-    font-weight: 400;
+
+.td-border{
+    border:  0px !important;
+    padding: 0px 0px !important;
 }
