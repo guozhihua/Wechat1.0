@@ -72,3 +72,13 @@ body {
     font-weight: 500;
     font-size: 16px;
 }
+.page-title{
+    padding: 0px 0px !important;
+    margin: 0 !important;
+    height: 7vh;
+    line-height: 7vh;
+    text-align: center;
+}
+.page-title-selected{
+    background-color:#15c1b8;
+}

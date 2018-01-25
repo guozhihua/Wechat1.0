@@ -22,16 +22,27 @@
                 <td class="td-border-header" style="width: 20vw;"><span>&nbsp;&nbsp;</span><span
                         id="AdminUser"></span><span id="timer"></span></span>
                 </td>
-                <td class="td-border-header">系统设置</td>
-                <td class="td-border-header">卡券中心</td>
-                <td class="td-border-header">用户管理</td>
-                <td class="td-border-header">用户管理</td>
-                <td class="td-border-header">用户管理</td>
-                <td class="td-border-header">用户管理</td>
-                <td class="td-border-header">用户管理</td>
-                <td class="td-border-header">用户管理</td>
-                <td class="td-border-header">用户管理</td>
-
+                <td class="td-border-header">
+                    <div class=" page-title">系统设置</div>
+                </td>
+                <td class="td-border-header">
+                    <div class=" page-title">用户中心</div>
+                </td>
+                <td class="td-border-header">
+                    <div class=" page-title">卡商管理</div>
+                </td>
+                <td class="td-border-header">
+                    <div class=" page-title">实时信息</div>
+                </td>
+                <td class="td-border-header">
+                    <div class=" page-title">财务信息</div>
+                </td>
+                <td class="td-border-header">
+                    <div class=" page-title">系统设置</div>
+                </td>
+                <td class="td-border-header">
+                    <div class=" page-title">系统设置</div>
+                </td>
             </tr>
         </table>
     </div>
@@ -59,10 +70,30 @@
 <script type="text/javascript">
     $(function () {
         showTime();
-        //获取用户信息
+        $(".page-title").each(function () {
+            $(this).hover(function () {
+                if(!$(this).hasClass("page-title-selected")){
+                    $(this).css({"background-color": "#16c14c"});
+                }
+            }, function () {
+                if(!$(this).hasClass("page-title-selected")){
+                    $(this).css({"background-color": ""});
+                }
+            });
+            ;
+            $(this).click(function () {
+                var selected =$(".page-title-selected");
+                if(selected!=undefined||selected!=null){
+                    selected.removeClass("page-title-selected")
+                }
+                $(this).css({"background-color": ""});
+                $(this).addClass("page-title-selected")
+            });
+        });
+        //获取用户信
         ajaxObject.postFormAjax(getUserInfo, {}, function (data) {
             if (data.code == 200) {
-                var adminInfo = data.datas.realName+"    ";
+                var adminInfo = data.datas.realName + "    ";
 
                 $("#AdminUser").text(adminInfo);
             } else {
