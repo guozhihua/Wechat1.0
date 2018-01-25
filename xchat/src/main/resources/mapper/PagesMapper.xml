@@ -1,142 +1,182 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="xchat.dao.PagesDao" > 
-<!-- Result Map-->
-<resultMap id="BaseResultMap" type="xchat.pojo.Pages" >
-	<result column="page_id" property="pageId"/>
-	<result column="page_name" property="pageName"/>
-	<result column="page_url" property="pageUrl"/>
-	<result column="page_level" property="pageLevel"/>
-	<result column="parent_id" property="parentId"/>
-	<result column="create_time" property="createTime"/>
-</resultMap>
-       
-<!-- pages table all fields -->
-<sql id="Base_Column_List" >
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xchat.dao.PagesDao">
+    <!-- Result Map-->
+    <resultMap id="BaseResultMap" type="xchat.pojo.Pages">
+        <result column="page_id" property="pageId"/>
+        <result column="page_name" property="pageName"/>
+        <result column="page_url" property="pageUrl"/>
+        <result column="page_level" property="pageLevel"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+    <resultMap id="PageVoMap" type="xchat.pojo.vo.PagesVo">
+        <result column="page_id" property="pageId"/>
+        <result column="page_name" property="pageName"/>
+        <result column="page_url" property="pageUrl"/>
+        <result column="child_id" property="childId"/>
+        <result column="child_name" property="childName"/>
+        <result column="child_url" property="childUrl"/>
+    </resultMap>
+
+    <!-- pages table all fields -->
+    <sql id="Base_Column_List">
 	 page_id,page_name,page_url,page_level,parent_id,create_time
 </sql>
-   
-   
-<!-- 查询条件 -->
-<sql id="Example_Where_Clause">
-where 1=1
-<trim  suffixOverrides="," >
-	<if test="pageId != null and pageId != ''" >
-	    and page_id =  #{pageId}
-	</if>
-	<if test="pageName != null and pageName != ''" >
-	    and page_name =  #{pageName}
-	</if>
-	<if test="pageUrl != null and pageUrl != ''" >
-	    and page_url =  #{pageUrl}
-	</if>
-	<if test="pageLevel != null and pageLevel != ''" >
-	    and page_level =  #{pageLevel}
-	</if>
-	<if test="parentId != null and parentId != ''" >
-	    and parent_id =  #{parentId}
-	</if>
-	<if test="createTime != null and createTime != ''" >
-	    and create_time =  #{createTime}
-	</if>
-</trim>
-</sql>
-   
-<!-- 根据id查询 页面菜单 -->
-<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.String">
-	select <include refid="Base_Column_List" /> 
-	 from pages where page_id = #{pageId}
-</select>
-<!-- 删除记录 -->
-<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+
+
+    <!-- 查询条件 -->
+    <sql id="Example_Where_Clause">
+        where 1=1
+        <trim suffixOverrides=",">
+            <if test="pageId != null and pageId != ''">
+                and page_id = #{pageId}
+            </if>
+            <if test="pageName != null and pageName != ''">
+                and page_name = #{pageName}
+            </if>
+            <if test="pageUrl != null and pageUrl != ''">
+                and page_url = #{pageUrl}
+            </if>
+            <if test="pageLevel != null and pageLevel != ''">
+                and page_level = #{pageLevel}
+            </if>
+            <if test="parentId != null and parentId != ''">
+                and parent_id = #{parentId}
+            </if>
+            <if test="createTime != null and createTime != ''">
+                and create_time = #{createTime}
+            </if>
+        </trim>
+    </sql>
+
+    <!-- 根据id查询 页面菜单 -->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from pages where page_id = #{pageId}
+    </select>
+    <!-- 删除记录 -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
 	delete 	 from pages where page_id = #{pageId}
 </delete>
-<!-- 插入记录 -->
-<insert id="insert" parameterType="xchat.pojo.Pages" >
+    <!-- 插入记录 -->
+    <insert id="insert" parameterType="xchat.pojo.Pages">
   insert into pages(page_id,page_name,page_url,page_level,parent_id,create_time)
  values(#{pageId},#{pageName},#{pageUrl},#{pageLevel},#{parentId},now())
 </insert>
-<!-- 插入记录 -->
-<insert id="insertSelective" parameterType="xchat.pojo.Pages" >
-  insert into pages
-	<trim  prefix="(" suffix=")"  suffixOverrides="," >
-	<if test="pageId != null  ">
-		page_id,
-	</if>
-	<if test="pageName != null  ">
-		page_name,
-	</if>
-	<if test="pageUrl != null  ">
-		page_url,
-	</if>
-	<if test="pageLevel != null  ">
-		page_level,
-	</if>
-	<if test="parentId != null  ">
-		parent_id,
-	</if>
-	<if test="createTime != null  ">
-		create_time,
-	</if>
-	</trim>
-	<trim  prefix="values (" suffix=")"  suffixOverrides="," >
-	<if test="pageId != null  ">
-		#{pageId},
-	</if>
-	<if test="pageName != null  ">
-		#{pageName},
-	</if>
-	<if test="pageUrl != null  ">
-		#{pageUrl},
-	</if>
-	<if test="pageLevel != null  ">
-		#{pageLevel},
-	</if>
-	<if test="parentId != null  ">
-		#{parentId},
-	</if>
-	<if test="createTime != null  ">
-		now(),
-	</if>
-	</trim>
-</insert>
- <!-- 修改记录，只修改只不为空的字段 -->
-<update id="updateByPrimaryKeySelective" parameterType="xchat.pojo.Pages" >
-	update pages set 
-	<trim  suffixOverrides="," >
-	<if test="pageName != null  ">
-		page_name=#{pageName},
-	</if>
-	<if test="pageUrl != null  ">
-		page_url=#{pageUrl},
-	</if>
-	<if test="pageLevel != null  ">
-		page_level=#{pageLevel},
-	</if>
-	<if test="parentId != null  ">
-		parent_id=#{parentId},
-	</if>
-	<if test="createTime != null  ">
-		create_time=#{createTime},
-	</if>
-	</trim> where page_id=#{pageId}
-</update>
-<!-- 根据id，修改记录-->  
- <update id="updateByPrimaryKey" parameterType="xchat.pojo.Pages" >
+    <!-- 插入记录 -->
+    <insert id="insertSelective" parameterType="xchat.pojo.Pages">
+        insert into pages
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pageId != null  ">
+                page_id,
+            </if>
+            <if test="pageName != null  ">
+                page_name,
+            </if>
+            <if test="pageUrl != null  ">
+                page_url,
+            </if>
+            <if test="pageLevel != null  ">
+                page_level,
+            </if>
+            <if test="parentId != null  ">
+                parent_id,
+            </if>
+            <if test="createTime != null  ">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pageId != null  ">
+                #{pageId},
+            </if>
+            <if test="pageName != null  ">
+                #{pageName},
+            </if>
+            <if test="pageUrl != null  ">
+                #{pageUrl},
+            </if>
+            <if test="pageLevel != null  ">
+                #{pageLevel},
+            </if>
+            <if test="parentId != null  ">
+                #{parentId},
+            </if>
+            <if test="createTime != null  ">
+                now(),
+            </if>
+        </trim>
+    </insert>
+    <!-- 修改记录，只修改只不为空的字段 -->
+    <update id="updateByPrimaryKeySelective" parameterType="xchat.pojo.Pages">
+        update pages set
+        <trim suffixOverrides=",">
+            <if test="pageName != null  ">
+                page_name=#{pageName},
+            </if>
+            <if test="pageUrl != null  ">
+                page_url=#{pageUrl},
+            </if>
+            <if test="pageLevel != null  ">
+                page_level=#{pageLevel},
+            </if>
+            <if test="parentId != null  ">
+                parent_id=#{parentId},
+            </if>
+            <if test="createTime != null  ">
+                create_time=#{createTime},
+            </if>
+        </trim>
+        where page_id=#{pageId}
+    </update>
+    <!-- 根据id，修改记录-->
+    <update id="updateByPrimaryKey" parameterType="xchat.pojo.Pages">
   update pages set page_name=#{pageName},page_url=#{pageUrl},page_level=#{pageLevel},parent_id=#{parentId},create_time=now() where page_id=#{pageId}
  </update>
-  	
-<!-- 查询页面菜单列表 -->
-<select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
-	select 
-	<include refid="Base_Column_List"/>
-	from pages 
-	<include refid="Example_Where_Clause"/>
-	<if test="orderByClause != null and orderByClause != ''" >
-       order by  ${orderByClause}
-    </if>
-</select>
-  	
+
+    <!-- 查询页面菜单列表 -->
+    <select id="selectList" resultMap="BaseResultMap" parameterType="Object">
+        select
+        <include refid="Base_Column_List"/>
+        from pages
+        <include refid="Example_Where_Clause"/>
+        <if test="orderByClause != null and orderByClause != ''">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="getPagesByParentList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from pages WHERE parent_id =#{parentId}
+
+    </select>
+
+
+    <select id="getGrandPagesByParentId" resultMap="PageVoMap" parameterType="java.lang.Integer">
+SELECT
+	p1.page_id,
+	p1.page_name,
+	p1.page_url,
+	p2.page_id AS child_id,
+	p2.page_name AS child_name,
+	p2.page_url AS chile_url
+FROM
+	`pages` p1
+JOIN pages p2 ON p1.page_id = p2.parent_id
+WHERE
+	p2.parent_id IN (
+		SELECT
+			page_id
+		FROM
+			pages
+		WHERE
+			parent_id = #{parentId}
+	)
+ORDER BY
+	p1.page_id;
+	</select>
 </mapper>   

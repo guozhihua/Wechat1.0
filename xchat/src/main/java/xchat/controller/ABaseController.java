@@ -1,6 +1,7 @@
 package xchat.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.weixin.utils.responsecode.ResponseCode;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,14 @@ public abstract class ABaseController {
         String json = request.getParameter("params");
 
         return JSON.parseObject(json, HashMap.class);
+    }
+
+    protected JSONObject getJSONobj() {
+        String json = request.getParameter("params");
+        if(StringUtils.isBlank(json)){
+            return null;
+        }
+        return JSON.parseObject(json);
     }
 
     protected ValiResult validataParams(String... names) {

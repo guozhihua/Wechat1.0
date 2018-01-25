@@ -10,6 +10,8 @@ import xchat.pojo.Pages;
 import xchat.service.BaseServiceImpl;
 import xchat.service.PagesService;
 
+import java.util.List;
+
 /**
  * 
  * <br>
@@ -30,4 +32,13 @@ public class PagesServiceImpl extends BaseServiceImpl<Pages> implements PagesSer
 		return pagesDao;
 	}
 
+	@Override
+	public List<Pages> getPagesByParentList(Integer parentId) {
+		return pagesDao.getPagesByParentList(parentId);
+	}
+
+	@Override
+	public List<Pages> getGrandPagesByParentId(Integer parentId) {
+		return pagesDao.getGrandPagesByParentId(parentId);
+	}
 }
