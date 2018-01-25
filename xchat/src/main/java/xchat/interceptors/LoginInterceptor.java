@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class LoginInterceptor extends HandlerInterceptorAdapter {
     private static final Logger logger = LogManager.getLogger("LoginInterceptor");
-    private static final String passport_ticket = "Passport_ticket";
+    private static final String passport_ticket = "passport_ticket";
 
     @Autowired
     private UserTicketService userTicketService;
