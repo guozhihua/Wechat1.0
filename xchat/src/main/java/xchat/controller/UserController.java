@@ -1,15 +1,26 @@
 package xchat.controller;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import xchat.aop.NeedLogin;
+import xchat.pojo.User;
+import xchat.pojo.UserTicket;
+import xchat.service.UserService;
+import xchat.service.UserTicketService;
 import xchat.sys.Md5;
+import xchat.sys.ThreadLocaUser;
 import xchat.sys.ValiResult;
 import xchat.sys.WebModel;
 
+import java.sql.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,30 +29,44 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/user/")
-public class UserController extends  ABaseController{
+public class UserController extends ABaseController {
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    private static final String salt="12suidhfi213h123918ncjkncjx__+A_S+DS_";
+    @Autowired
+    private UserTicketService userTicketService;
+    @Autowired
+    private UserService userService;
+
+    private static final String salt = "12suidhfi213h123918ncjkncjx__+A_S+DS_";
 
     @RequestMapping("/login")
     @ResponseBody
     public WebModel login(@RequestParam("params") String params) {
         WebModel webModel = WebModel.getInstance();
         try {
-            ValiResult valiResult = validataParams("username", "pwd");
-            if(valiResult.isSuccess()){
-                Map<String,Object> paramsMap =super.getParamMap();
-                String userId=paramsMap.get("username").toString();
-                String pwd=paramsMap.get("pwd").toString();
-                if(userId.equals("admin")&&pwd.equals("admin123")){
-                    webModel.setDatas("登陆成功");
-                    webModel.setDatas(88888888);
-                    setCookie("Passport_ticket", Md5.GetMD5Code(userId+salt));
+            ValiResult valiResult = validataParams("userName", "password");
+            if (valiResult.isSuccess()) {
+                Map<String, Object> paramsMap = super.getParamMap();
+                List<User> users = userService.queryList(paramsMap,1,1);
+                if(CollectionUtils.isNotEmpty(users)){
+                    User user =users.get(0);
+                    user.setPassword(null);
+                    webModel.setDatas(user);
+                    UserTicket userTicket = userTicketService.queryById(user.getUserId());
+                    if(userTicket==null){
+                        userTicket=new UserTicket();
+                        userTicket.setUserId(user.getUserId());
+                        userTicket.setTicket(Md5.GetMD5Code(user.getUserId()+salt+ RandomUtils.nextInt(100000)));
+                        userTicketService.insertSelective(userTicket);
+                    }else{
+                        userTicket.setTicket(Md5.GetMD5Code(user.getUserId()+salt+ RandomUtils.nextInt(100000)));
+                        userTicketService.updateByIdSelective(userTicket);
+                    }
                 }else{
-                    webModel.setMsg("登录失败");
+                    webModel.isFail();
                 }
-            }else{
-               webModel.setCode(valiResult.getHttpCode().code);
+            } else {
+                webModel.setCode(valiResult.getHttpCode().code);
                 webModel.setMsg(valiResult.getMessage());
             }
         } catch (Exception ex) {
@@ -53,33 +78,33 @@ public class UserController extends  ABaseController{
 
     @RequestMapping("/logout")
     @ResponseBody
-    public WebModel  logout(@RequestParam("params") String params) {
+    @NeedLogin
+    public WebModel logout(@RequestParam("params") String params) {
         WebModel webModel = WebModel.getInstance();
         try {
-            Map<String,Object> paramsMap =super.getParamMap();
-            if(!paramsMap.get("username").toString().equals("admin")){
-                webModel.setCode("701");
-                webModel.setMsg("登陆失败");
-                setCookie("passport_ticket",null);
-            }else{
-                setCookie("Passport_ticket","123456");
-            }
+            UserTicket userTicket = ThreadLocaUser.get();
+            userTicketService.delete(userTicket);
+            setCookie("passport_ticket", null);
         } catch (Exception ex) {
             logger.error("error", ex);
             webModel.isFail();
         }
         return webModel;
     }
+
+    @NeedLogin
     @RequestMapping("/getUserInfo")
     @ResponseBody
-    public WebModel  getUserInfo(@RequestParam("params") String params) {
+    public WebModel getUserInfo() {
         WebModel webModel = WebModel.getInstance();
         try {
-            Map<String,Object> paramsMap =super.getParamMap();
-            if(!paramsMap.get("userName").toString().equals("admin")){
-                webModel.setMsg("登陆失败");
-            }else{
-                webModel.setCode("709");
+            UserTicket userTicket = ThreadLocaUser.get();
+            User user = userService.queryById(userTicket.getUserId());
+            if (user != null) {
+                user.setPassword(null);
+                webModel.setDatas(user);
+            } else {
+                webModel.isFail();
             }
         } catch (Exception ex) {
             logger.error("error", ex);

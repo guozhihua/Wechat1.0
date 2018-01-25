@@ -30,4 +30,8 @@ public class UserTicketServiceImpl extends BaseServiceImpl<UserTicket> implement
 		return userTicketDao;
 	}
 
+	@Override
+	public UserTicket selectByTicket(String ticket) {
+		return userTicketDao.selectByTicket(ticket);
+	}
 }

@@ -12,5 +12,5 @@ import xchat.pojo.UserTicket;
  @Repository
 public interface UserTicketDao extends BaseDao<UserTicket> {
 	
-	
+	public UserTicket selectByTicket(String ticket);
 }
