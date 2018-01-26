@@ -73,5 +73,21 @@ function getHeaderPages() {
     }, "JSON");
 }
 function getGandPageListInfo(id) {
-    alert(id);
+    var pages1 = new Object();
+    pages1.parentId = id;
+    ajaxObject.postFormAjax(grandPage, {'params': JSON.stringify(pages1)}, function (data) {
+        if (data.code == 200) {
+            if (data.datas != null) {
+                var html ="";
+                $("#left").empty();
+                for (var i = 0; i < data.datas.length; i++) {
+                    html += "<div  data-id='" + data.datas[i].pageId + "'>"
+                        + data.datas[i].pageName + "</div>";
+                }
+                $("#left").html(html);
+            }
+        } else {
+            alert(data.msg);
+        }
+    }, "JSON");
 }
