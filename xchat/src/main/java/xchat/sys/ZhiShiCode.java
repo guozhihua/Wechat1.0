@@ -21,13 +21,13 @@ public class ZhiShiCode {
         }
         int lastnum = 0 ;
         String url1="http://service.h7tuho5mf.cn/api/invite_code/bind?" +
-                "cc=TG43909&" +
-                "lc=32182257247424ed&" +
-                "mtxid=f0b429338d78&" +
-                "devi=864282030024243&" +
+                "cc=TG43909&"+
+                "lc=32182257247424ed&"+
+                "mtxid=f0b429338d78&"+
+                "devi=864282030024243&"+
                 "sid=30jQqfJCZ6oBVdFlJuvnnOIi1AxnnZggTG49Gv9G1dMuGBkHAi3i3" +
-                "&osversion=android_23&" +
-                "cv=CR1.2.00_Android&" +
+                "&osversion=android_23&"+
+                "cv=CR1.2.00_Android&"+
                 "imei=864282030024243&proto=8&" +
                 "conn=wifi&ua=vivovivoY67&logid=&icc=89860315750100536714&" +
                 "aid=9c44daa398745111&" +
