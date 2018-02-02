@@ -114,6 +114,7 @@ a{
 }
 #content{
     margin-left: 0px;
-    background-color:#aedab070 ;
+    /*background-color:#aedab070 ;*/
     height: 93vh;
+    border: 0px solid whitesmoke;
 }

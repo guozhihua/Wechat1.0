@@ -2,7 +2,7 @@
  * Created by Administrator on 2018/1/25.
  */
 function showTime() {
-    var show_day = new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
+    var show_day = new Array('周日', '周一', '周二', '周三', '周四', '周五', '周六');
     var time = new Date();
     var year = time.getFullYear();
     var month = time.getMonth() + 1;
@@ -15,7 +15,7 @@ function showTime() {
     hour < 10 ? hour = '0' + hour : hour;
     minutes < 10 ? minutes = '0' + minutes : minutes;
     second < 10 ? second = '0' + second : second;
-    var now_time = '' + year + '年' + month + '月' + date + '日' + ' ' + show_day[day] + '';
+    var now_time = '&nbsp;&nbsp;&nbsp;&nbsp;'+ month + '月' + date + '日  ' +  hour+': '+minutes+"   " + show_day[day] + '';
     document.getElementById('timer').innerHTML = now_time;
 }
 function  setSelectedPages() {
@@ -116,12 +116,16 @@ $(".left-head-c").each(function(){
             //var dataId=$(this).attr('data-id');
             var dataName=$(this).attr('data-name');
             var dataURL=$(this).attr('data-url');
+            if(dataURL==null||dataURL==undefined){
+                $("#content").attr("src",notfound);
+                return;
+            }
             var pName=$(this).attr('p-name');
             $("#content").empty();
             $("#panelName").empty();
             var html='<span style="font-weight: 400;font-size: 15px">'+pName+"-"+dataName+'</span>';
             $("#panelName").append(html);
-            $("#content").load(dataURL);
+            $("#content").attr("src",dataURL);
         });
     });
 }

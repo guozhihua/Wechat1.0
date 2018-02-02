@@ -38,7 +38,7 @@
                 <td class="td-border">
                     <div id="right" class="container">
                         <div id="panelName" class="row row-fluid col-sm-12"></div>
-                        <div id="content" class="row row-fluid col-sm-12"></div>
+                        <iframe id="content" class="row row-fluid col-sm-12" src=""></iframe>
                     </div>
                 </td>
             </tr>
@@ -58,7 +58,8 @@
         //获取header pages
         getHeaderPages();
         //显示时间
-        showTime();
+        setInterval("showTime()", 1000);
+
 
 
     });
