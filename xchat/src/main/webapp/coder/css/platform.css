@@ -106,3 +106,14 @@ a{
     text-decoration:none;
     color:#252527;
 }
+#panelName{
+    height: 40px;
+    line-height: 40px;
+    background-color:#40a26b4a;
+    margin-left: 0px;
+}
+#content{
+    margin-left: 0px;
+    background-color:#aedab070 ;
+    height: 93vh;
+}

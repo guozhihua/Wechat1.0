@@ -82,6 +82,8 @@ function getGandPageListInfo(id) {
                 var json =data.datas;
                 var html ="<br/><br/>";
                 $("#left").empty();
+                $("#content").empty();
+                $("#panelName").empty();
                 html+="  <div class='accordion-group'>";
                 for(var k in json){
                     html += "<div  data-id='" + k + "' class='accordion-heading left-head-p'><div  " +
@@ -91,7 +93,8 @@ function getGandPageListInfo(id) {
                         html+="<div  id='"+ k.substr(k.indexOf("@")+1)+"'  class='accordion-body collapse'>";
                         for(var i = 0;i<json[k].length;i++){
                             var c1 =json[k][i];
-                            html+="<div data-id='"+c1['childId']+"'  class='accordion-inner left-head-c' href='#'><a href='#'>"
+                            html+="<div data-id='"+c1['childId']+"'  data-name='"+c1['childName']+"' data-url='"+c1['childUrl']+"' " +
+                                "p-name='"+c1['pageName']+"'  class='accordion-inner left-head-c' href='#'><a href='#'>"
                                 +c1['childName']+"</a></div>";
                         }
                         html+= "</div>";
@@ -110,8 +113,15 @@ function getGandPageListInfo(id) {
 function leftAddClick(){
 $(".left-head-c").each(function(){
         $(this).click(function(){
-            var dataId=$(this).attr('data-id');
-            alert(dataId);
+            //var dataId=$(this).attr('data-id');
+            var dataName=$(this).attr('data-name');
+            var dataURL=$(this).attr('data-url');
+            var pName=$(this).attr('p-name');
+            $("#content").empty();
+            $("#panelName").empty();
+            var html='<span style="font-weight: 400;font-size: 15px">'+pName+"-"+dataName+'</span>';
+            $("#panelName").append(html);
+            $("#content").load(dataURL);
         });
     });
 }

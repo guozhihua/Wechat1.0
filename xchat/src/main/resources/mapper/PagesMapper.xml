@@ -163,7 +163,7 @@ SELECT
 	p1.page_url,
 	p2.page_id AS child_id,
 	p2.page_name AS child_name,
-	p2.page_url AS chile_url
+	p2.page_url AS child_url
 FROM
 	`pages` p1
 JOIN pages p2 ON p1.page_id = p2.parent_id
