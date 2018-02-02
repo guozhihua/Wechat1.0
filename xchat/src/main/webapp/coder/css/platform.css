@@ -21,7 +21,7 @@ body {
 
 #left {
     height: 93vh;
-    width: 20vw;
+    width: 15vw;
     background-color: #49a74f70;
     padding: 0px 0px;
     margin-right: -1px;
@@ -37,7 +37,7 @@ body {
 
 #right {
     height: 93vh;
-    width: 80vw;
+    width: 85vw;
     background-color: #1f1f1f00;
     padding: 0px 0px;
 }
@@ -82,4 +82,27 @@ body {
 }
 .page-title-selected{
     background-color:#15c1b8;
+}
+.left-head-p{
+ background-color:#21676d8c;
+    font-size: 18px;
+    font-weight: 900;
+    border-bottom:4px solid seagreen;
+    min-height: 40px;
+    line-height: 40px;
+}
+.left-head-c{
+    background-color: #28b1ab;
+    height: 50px;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 50px;
+    font-size: 18px;
+    font-weight: 500;
+    border-bottom:2px solid seagreen;
+}
+/*去除超链接下划线和蓝色字体*/
+a{
+    text-decoration:none;
+    color:#252527;
 }

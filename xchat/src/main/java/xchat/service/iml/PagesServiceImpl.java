@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import xchat.dao.BaseDao;
 import xchat.dao.PagesDao;
 import xchat.pojo.Pages;
+import xchat.pojo.vo.PagesVo;
 import xchat.service.BaseServiceImpl;
 import xchat.service.PagesService;
 
@@ -38,7 +39,7 @@ public class PagesServiceImpl extends BaseServiceImpl<Pages> implements PagesSer
 	}
 
 	@Override
-	public List<Pages> getGrandPagesByParentId(Integer parentId) {
+	public List<PagesVo> getGrandPagesByParentId(Integer parentId) {
 		return pagesDao.getGrandPagesByParentId(parentId);
 	}
 }

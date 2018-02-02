@@ -1,7 +1,6 @@
 /**
  * Created by Administrator on 2018/1/25.
  */
-
 function showTime() {
     var show_day = new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
     var time = new Date();
@@ -19,7 +18,7 @@ function showTime() {
     var now_time = '' + year + '年' + month + '月' + date + '日' + ' ' + show_day[day] + '';
     document.getElementById('timer').innerHTML = now_time;
 }
-function setSelectedPages() {
+function  setSelectedPages() {
     $(".page-title").each(function () {
         $(this).hover(function () {
             if (!$(this).hasClass("page-title-selected")) {
@@ -41,6 +40,7 @@ function setSelectedPages() {
             getGandPageListInfo($(this).attr('data-id'));
         });
     });
+    isHead =true;
 }
 function getUserBaseInfo() {
     ajaxObject.postFormAjax(getUserInfo, {}, function (data) {
@@ -66,6 +66,7 @@ function getHeaderPages() {
                 }
                 $("#header_tr").html(html);
                 setSelectedPages();
+                defaultSelcctHead();
             }
         } else {
             alert(data.msg);
@@ -78,16 +79,43 @@ function getGandPageListInfo(id) {
     ajaxObject.postFormAjax(grandPage, {'params': JSON.stringify(pages1)}, function (data) {
         if (data.code == 200) {
             if (data.datas != null) {
-                var html ="";
+                var json =data.datas;
+                var html ="<br/><br/>";
                 $("#left").empty();
-                for (var i = 0; i < data.datas.length; i++) {
-                    html += "<div  data-id='" + data.datas[i].pageId + "'>"
-                        + data.datas[i].pageName + "</div>";
+                html+="  <div class='accordion-group'>";
+                for(var k in json){
+                    html += "<div  data-id='" + k + "' class='accordion-heading left-head-p'><div  " +
+                        "class='accordion-toggle' data-toggle='collapse' data-parent='#accorde2' href='#"+k.substr(k.indexOf("@")+1)+"'><a href='javascript:void(0)'>" +
+                          k.substr(0, k.indexOf("@"))+"</a></div></div>";
+                    if(json[k].length>0){
+                        html+="<div  id='"+ k.substr(k.indexOf("@")+1)+"'  class='accordion-body collapse'>";
+                        for(var i = 0;i<json[k].length;i++){
+                            var c1 =json[k][i];
+                            html+="<div data-id='"+c1['childId']+"'  class='accordion-inner left-head-c' href='#'><a href='#'>"
+                                +c1['childName']+"</a></div>";
+                        }
+                        html+= "</div>";
+                    }
                 }
+                html+="</div>";
                 $("#left").html(html);
+                leftAddClick();
             }
         } else {
             alert(data.msg);
         }
     }, "JSON");
+}
+
+function leftAddClick(){
+$(".left-head-c").each(function(){
+        $(this).click(function(){
+            var dataId=$(this).attr('data-id');
+            alert(dataId);
+        });
+    });
+}
+function defaultSelcctHead(){
+    $("#header_tr").find("td").eq(1).find(".page-title").click();
+
 }

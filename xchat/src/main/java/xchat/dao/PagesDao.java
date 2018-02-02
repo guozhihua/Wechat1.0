@@ -3,6 +3,7 @@ package xchat.dao;
 
 import org.springframework.stereotype.Repository;
 import xchat.pojo.Pages;
+import xchat.pojo.vo.PagesVo;
 
 import java.util.List;
 
@@ -15,5 +16,5 @@ import java.util.List;
 public interface PagesDao extends BaseDao<Pages> {
 
  public List<Pages> getPagesByParentList(Integer parentId) ;
- public List<Pages> getGrandPagesByParentId(Integer parentId) ;
+ public List<PagesVo> getGrandPagesByParentId(Integer parentId) ;
 }
