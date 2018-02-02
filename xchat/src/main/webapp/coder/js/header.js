@@ -40,7 +40,6 @@ function  setSelectedPages() {
             getGandPageListInfo($(this).attr('data-id'));
         });
     });
-    isHead =true;
 }
 function getUserBaseInfo() {
     ajaxObject.postFormAjax(getUserInfo, {}, function (data) {
@@ -102,6 +101,8 @@ function getGandPageListInfo(id) {
                 }
                 html+="</div>";
                 $("#left").html(html);
+                $("#content").attr("src","");
+                $("#panelName").empty();
                 leftAddClick();
             }
         } else {
@@ -126,6 +127,8 @@ $(".left-head-c").each(function(){
             var html='<span style="font-weight: 400;font-size: 15px">'+pName+"-"+dataName+'</span>';
             $("#panelName").append(html);
             $("#content").attr("src",dataURL);
+
+
         });
     });
 }

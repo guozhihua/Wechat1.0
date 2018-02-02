@@ -60,6 +60,11 @@
         //显示时间
         setInterval("showTime()", 1000);
 
+        $("#content").onreadystatechange=function(){
+            if( $("#content").readyState != "complete" ||  $("#content").readyState != "loaded"){
+                $("#content").attr("src",notfound);
+            }
+        }
 
 
     });
