@@ -1,6 +1,7 @@
 package xchat.service.iml;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.LogFactory;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +19,7 @@ import xchat.service.InviteCodeStaticsService;
 @Service
 @Transactional
 public class InviteCodeStaticsServiceImpl extends BaseServiceImpl<InviteCodeStatics> implements InviteCodeStaticsService {
-  private final static Logger log= Logger.getLogger(InviteCodeStaticsServiceImpl.class);
+  private final static Logger log= (Logger) LogFactory.getLog(InviteCodeStaticsServiceImpl.class);
 	
 
 	@Autowired

@@ -38,6 +38,11 @@
                 <artifactId>commons-dbcp2</artifactId>
                 <version>2.1.1</version>
             </dependency>
+            <dependency>
+                <groupId>com.baidu.aip</groupId>
+                <artifactId>java-sdk</artifactId>
+                <version>4.0.0</version>
+            </dependency>y>
 
             <dependency>
                 <groupId>commons-dbutils</groupId>
