@@ -1,9 +1,9 @@
+package xchat.controller.task;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.weixin.utils.util.HTTPClientUtils;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
@@ -18,25 +18,22 @@ import xchat.pojo.Information;
 import xchat.service.SearchAnswers;
 import xchat.service.iml.CommonPatternService;
 
-import java.io.*;
-import java.util.Calendar;
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Created by 志华 on 2018/2/4.
  */
-public class HuangjinDarenTest {
-
-
-    public static void main(String[] args) {
-        JSONObject jsonObject =JSON.parseObject("{\"val\":\"题目还在路上，请稍等片刻..\",\"type\":\"1\"}");
-
-    }
+public class HuangjinDarenAnswer {
     static String url ="https://dt.same.com/api/v1/answer/get-question";
+    public static  Set<String> allQuestions =new HashSet<>();
+
+
     private static final RequestConfig defaultRequestConfig = RequestConfig.custom()
             .setSocketTimeout(5000)
             .setConnectTimeout(5000)
@@ -45,42 +42,35 @@ public class HuangjinDarenTest {
             .build();
     private static final CommonPatternService COMMON_PATTERN = new CommonPatternService();
 
+//    /**
+//     * 提高百度的搜索准确率
+//     */
+//    public  void testAnswerActive(){
+//        String jsonstring="{\"code\":0,\"msg\":\"ok\",\"data\":{\"question_id\":8,\"question_num\":12,\"question\":\"《水浒传》中绰号为“及时雨”的是哪个人物？\",\"options\":[{\"answer_id\":1,\"content\":\"A 宋江\"},{\"answer_id\":2,\"content\":\"B 武松 \"},{\"answer_id\":3,\"content\":\"C 鲁智深\"}],\"health\":0,\"alive\":0,\"expire\":10}}";
+//        JSONObject jsonObject= JSON.parseObject(jsonstring);
+//        if(jsonObject!=null&&jsonObject.getInteger("code")==0){
+//            JSONObject data = (JSONObject) jsonObject.get("data");
+//            String question=data.getString("question");
+//            JSONArray options = data.getJSONArray("options");
+//            String[]  answers =new String[options.size()];
+//            for (int j=0;j<answers.length;j++ ) {
+//                JSONObject opt = (JSONObject) options.get(j);
+//                String content = opt.getString("content");
+//                answers[j] = content;
+//            }
+//            String rs = null;
+//            try {
+//                Information information=new Information(question,answers);
+//                rs=new SearchAnswers().getAnswer(information);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//            System.out.println(rs);
+//        }
+//    }
 
-
-
-    /**
-     * 提高百度的搜索准确率
-     */
-    @Test
-    public  void testAnswerActive(){
-        String jsonstring="{\"code\":0,\"msg\":\"ok\",\"data\":{\"question_id\":8,\"question_num\":12,\"question\":\"《水浒传》中绰号为“及时雨”的是哪个人物？\",\"options\":[{\"answer_id\":1,\"content\":\"A 宋江\"},{\"answer_id\":2,\"content\":\"B 武松 \"},{\"answer_id\":3,\"content\":\"C 鲁智深\"}],\"health\":0,\"alive\":0,\"expire\":10}}";
-        JSONObject jsonObject= JSON.parseObject(jsonstring);
-        if(jsonObject!=null&&jsonObject.getInteger("code")==0){
-            JSONObject data = (JSONObject) jsonObject.get("data");
-            String question=data.getString("question");
-            JSONArray options = data.getJSONArray("options");
-            String[]  answers =new String[options.size()];
-            for (int j=0;j<answers.length;j++ ) {
-                JSONObject opt = (JSONObject) options.get(j);
-                String content = opt.getString("content");
-                answers[j] = content;
-            }
-            String rs = null;
-            try {
-                Information information=new Information(question,answers);
-                rs=new SearchAnswers().getAnswer(information);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            System.out.println(rs);
-        }
-    }
-
-    @Test
-    public void getQuestins(){
+    public  static String getQuestins(){
         String result =null;
-        int count =10 ;
-        for(int i =0 ;i<count;i++){
             try {
                 HttpPost httpPost = new HttpPost(url);
                 httpPost.setConfig(defaultRequestConfig);
@@ -95,24 +85,13 @@ public class HuangjinDarenTest {
                     for (String key : params.keySet()) {
                         jsonParam.put(key, params.get(key));
                     }
-                    Thread.sleep(1000);
                     StringEntity entity = new StringEntity(jsonParam.toString(), "utf-8");//解决中文乱码问题
                     httpPost.setEntity(entity);
                     entity.setContentEncoding("UTF-8");
                     entity.setContentType("application/json");
                 }
                 HttpResponse resp = client.execute(httpPost);
-//                InputStream inStream =     resp.getEntity().getContent();
-//                BufferedReader reader = new BufferedReader(new InputStreamReader(inStream,"utf-8"));  //请注意这里的编码
-//                StringBuilder strber = new StringBuilder();
-//                String line = null;
-//                while ((line = reader.readLine()) != null){
-//                    strber.append(line );}
-//                inStream.close();
-//                System.out.println(unicodeToString(strber.toString()));
-
                 resp.setHeader(new BasicHeader("Content-Type", "application/json; charset=utf-8"));
-                System.out.println(resp.getStatusLine().getStatusCode());
                 if (resp.getStatusLine().getStatusCode() == 200) {
                     HttpEntity he = resp.getEntity();
                     respContent = EntityUtils.toString(he, "UTF-8");
@@ -128,27 +107,24 @@ public class HuangjinDarenTest {
                             String content = opt.getString("content");
                             answers[j]=content;
                         }
-
-                        result = COMMON_PATTERN.run(question, answers);
+                        result =question;
                     }else{
-                        result="这道题我不会做呀！";
+                        result="000000";
                     }
                 } else {
+                    result="000000";
                     throw new IOException("请求失败" + resp);
                 }
                 client.close();
             }catch (Exception ex){
                 ex.printStackTrace();
-            }finally {
-                System.out.println(result);
+                result="000000";
             }
-
-        }
-
-
-
-
+        return result;
     }
+
+
+
 
     /**
      * unicode转中文

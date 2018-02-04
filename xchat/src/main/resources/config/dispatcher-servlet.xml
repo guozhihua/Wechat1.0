@@ -54,6 +54,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd http://www.springfr
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
 			<mvc:exclude-mapping path="/user/login"></mvc:exclude-mapping>
+			<mvc:exclude-mapping path="/websocket"></mvc:exclude-mapping>
 			<bean class="xchat.interceptors.LoginInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>
