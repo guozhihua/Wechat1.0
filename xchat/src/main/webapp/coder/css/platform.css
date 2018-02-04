@@ -22,7 +22,7 @@ body {
 #left {
     height: 93vh;
     width: 15vw;
-    background-color: #49a74f70;
+    background-color: #abc8e9;
     padding: 0px 0px;
     margin-right: -1px;
     text-align: center;
@@ -38,13 +38,12 @@ body {
 #right {
     height: 93vh;
     width: 85vw;
-    background-color: #1f1f1f00;
     padding: 0px 0px;
 }
 
 #header {
     height: 7vh;
-    background-color: #22883cd9;
+    background-color: #097c8b;
     line-height: 7vh;
     font-size: 16px;
     font-weight: 600;
@@ -84,7 +83,7 @@ body {
     background-color:#15c1b8;
 }
 .left-head-p{
- background-color:#21676d8c;
+ background-color:#6fb7dd;
     font-size: 18px;
     font-weight: 900;
     border-bottom:4px solid seagreen;
@@ -92,7 +91,7 @@ body {
     line-height: 40px;
 }
 .left-head-c{
-    background-color: #28b1ab;
+    background-color: #b3dddb;
     height: 50px;
     vertical-align: middle;
     text-align: center;
@@ -109,7 +108,7 @@ a{
 #panelName{
     height: 40px;
     line-height: 40px;
-    background-color:#40a26b4a;
+    background-color:#9bc7d0;
     margin-left: 0px;
 }
 #content{

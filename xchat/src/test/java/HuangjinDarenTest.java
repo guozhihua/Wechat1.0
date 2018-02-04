@@ -14,6 +14,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
 import org.junit.Test;
+import xchat.pojo.Information;
+import xchat.service.SearchAnswers;
 import xchat.service.iml.CommonPatternService;
 
 import java.io.*;
@@ -56,8 +58,9 @@ public class HuangjinDarenTest {
             }
             String rs = null;
             try {
-                rs = COMMON_PATTERN.run(question,answers);
-            } catch (UnsupportedEncodingException e) {
+                Information information=new Information(question,answers);
+                rs=new SearchAnswers().getAnswer(information);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             System.out.println(rs);
