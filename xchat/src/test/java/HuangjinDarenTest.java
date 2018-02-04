@@ -35,16 +35,32 @@ public class HuangjinDarenTest {
 //            .setProxy(new HttpHost("localhost",8888))
             .build();
     private static final CommonPatternService COMMON_PATTERN = new CommonPatternService();
-    @Test
-    public  void getAnswer(){
-       String question="静夜思的作者是谁？";
-        String[] ansers =new String[]{"杜甫","玩置换","李白"};
-        try {
-            String rs =COMMON_PATTERN.run(question,ansers);
-            System.out.println(rs);
 
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+
+    /**
+     * 提高百度的搜索准确率
+     */
+    @Test
+    public  void testAnswerActive(){
+        String jsonstring="{\"code\":0,\"msg\":\"ok\",\"data\":{\"question_id\":8,\"question_num\":12,\"question\":\"《水浒传》中绰号为“及时雨”的是哪个人物？\",\"options\":[{\"answer_id\":1,\"content\":\"A 宋江\"},{\"answer_id\":2,\"content\":\"B 武松 \"},{\"answer_id\":3,\"content\":\"C 鲁智深\"}],\"health\":0,\"alive\":0,\"expire\":10}}";
+        JSONObject jsonObject= JSON.parseObject(jsonstring);
+        if(jsonObject!=null&&jsonObject.getInteger("code")==0){
+            JSONObject data = (JSONObject) jsonObject.get("data");
+            String question=data.getString("question");
+            JSONArray options = data.getJSONArray("options");
+            String[]  answers =new String[options.size()];
+            for (int j=0;j<answers.length;j++ ) {
+                JSONObject opt = (JSONObject) options.get(j);
+                String content = opt.getString("content");
+                answers[j] = content;
+            }
+            String rs = null;
+            try {
+                rs = COMMON_PATTERN.run(question,answers);
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            System.out.println(rs);
         }
     }
 
