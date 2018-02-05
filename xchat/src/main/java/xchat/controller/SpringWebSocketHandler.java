@@ -58,7 +58,6 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
      * @param session
      */
     private void registerHjDRWorker(WebSocketSession session){
-        hjdrWorker.addSocketSession(session);
         hjdrWorker.startWorker();
     }
 
