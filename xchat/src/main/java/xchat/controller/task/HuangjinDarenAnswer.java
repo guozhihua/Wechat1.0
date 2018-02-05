@@ -47,7 +47,7 @@ public class HuangjinDarenAnswer {
                 httpPost.addHeader(new BasicHeader("Content-Type", "application/json; charset=utf-8"));
 //                httpPost.addHeader("Authorization","6067bb6c74fdbbb30b06484cd6f635b0c4e63f8d_3558905");
 //                httpPost.addHeader("Authorization","de5a814762fe77fa8d9b3825d14a1de3478a5669_3558905");
-                httpPost.addHeader("Authorization","6067bb6c74fdbbb30b06484cd6f635b0c4e63f8d_3558905");
+                httpPost.addHeader("Authorization","de5a814762fe77fa8d9b3825d14a1de3478a5669_3558905");
                 if (params != null && !params.isEmpty()) {
                     net.sf.json.JSONObject jsonParam = new net.sf.json.JSONObject();
                     for (String key : params.keySet()) {

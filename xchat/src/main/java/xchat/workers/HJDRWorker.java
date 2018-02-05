@@ -94,9 +94,9 @@ private  SessionBucket sessionBucket=SessionBucket.getInstance();
                 }
                 try {
                     if (getNewQuestion) {
-                        Thread.sleep(12000);
+                        Thread.sleep(15000);
                     } else {
-                        Thread.sleep(1000);
+                        Thread.sleep(1300);
                     }
                 }catch (Exception ex){
                   logger.error("执行任务异常结束",ex);
