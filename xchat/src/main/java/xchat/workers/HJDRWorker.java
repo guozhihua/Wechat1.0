@@ -11,6 +11,7 @@ import xchat.aop.QueueUtils;
 import xchat.controller.task.HuangjinDarenAnswer;
 import xchat.listeners.MsgEvent;
 import xchat.sys.MessageType;
+import xchat.sys.SessionBucket;
 
 import java.util.*;
 
@@ -32,11 +33,7 @@ public class HJDRWorker extends BaseWorker {
     @Autowired
     private QueueUtils queueUtils;
 
-    private List<WebSocketSession> sessionList = Collections.synchronizedList(new ArrayList<WebSocketSession>());
-
-    public void addSocketSession(WebSocketSession session) {
-        sessionList.add(session);
-    }
+private  SessionBucket sessionBucket=SessionBucket.getInstance();
 
     public boolean startWorker() {
         if (!start) {
@@ -51,7 +48,7 @@ public class HJDRWorker extends BaseWorker {
     public void execute(MsgEvent msgEvent) throws Exception {
 
         while (start) {
-            if(sessionList==null||sessionList.size()==0){
+            if(sessionBucket.getAllsessionMap()==null||sessionBucket.getAllsessionMap().size()==0){
                 start=false;
             }
             try {
@@ -77,8 +74,8 @@ public class HJDRWorker extends BaseWorker {
                 }
                 String msg = mes.get("type").toString().concat("@").concat(mes.get("val").toString());
                 TextMessage text = new TextMessage(msg);
-                  List<WebSocketSession> closedSession=new ArrayList<>();
-                    for (WebSocketSession session : sessionList) {
+                  List<String> closedSession=new ArrayList<>();
+                    for (WebSocketSession session : sessionBucket.getAllsessionMap().values()) {
                         if (session.isOpen()) {
                             try{
                                 session.sendMessage(text);
@@ -86,11 +83,13 @@ public class HJDRWorker extends BaseWorker {
                                 logger.error("执行任务异常结束",ex);
                             }
                         }else{
-                            closedSession.add(session);
+                            closedSession.add(session.getId());
                         }
                     }
                 if(closedSession.size()>0){
-                    sessionList.removeAll(closedSession);
+                    for (String sessionId : closedSession) {
+                        sessionBucket.removeSessionId(sessionId);
+                    }
                 }
                 try {
                     if (getNewQuestion) {
