@@ -42,6 +42,7 @@ public class UserController extends ABaseController {
         WebModel webModel = WebModel.getInstance();
         try {
             ValiResult valiResult = validataParams("userName", "password");
+            request.getSession();
             if (valiResult.isSuccess()) {
                 Map<String, Object> paramsMap = super.getParamMap();
                 List<User> users = userService.queryList(paramsMap,1,1);

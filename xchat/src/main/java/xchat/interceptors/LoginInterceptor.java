@@ -36,6 +36,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         boolean flag = true;
+        logger.info(request.getRequestURL().toString());
         //验证token是否失效，失效则重新登录
         if (handler instanceof HandlerMethod) {
            String passport =request.getHeader(passport_ticket);

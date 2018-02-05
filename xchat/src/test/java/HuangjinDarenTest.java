@@ -16,7 +16,6 @@ import org.apache.http.util.EntityUtils;
 import org.junit.Test;
 import xchat.pojo.Information;
 import xchat.service.SearchAnswers;
-import xchat.service.iml.CommonPatternService;
 
 import java.io.*;
 import java.util.Calendar;
@@ -43,7 +42,6 @@ public class HuangjinDarenTest {
             .setConnectionRequestTimeout(5000).setCookieSpec(CookieSpecs.BROWSER_COMPATIBILITY)
 //            .setProxy(new HttpHost("localhost",8888))
             .build();
-    private static final CommonPatternService COMMON_PATTERN = new CommonPatternService();
 
 
 
@@ -129,7 +127,6 @@ public class HuangjinDarenTest {
                             answers[j]=content;
                         }
 
-                        result = COMMON_PATTERN.run(question, answers);
                     }else{
                         result="这道题我不会做呀！";
                     }

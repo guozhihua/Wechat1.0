@@ -13,16 +13,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
-import org.junit.Test;
-import xchat.pojo.Information;
-import xchat.service.SearchAnswers;
-import xchat.service.iml.CommonPatternService;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,34 +33,7 @@ public class HuangjinDarenAnswer {
             .setConnectionRequestTimeout(5000).setCookieSpec(CookieSpecs.BROWSER_COMPATIBILITY)
 //            .setProxy(new HttpHost("localhost",8888))
             .build();
-    private static final CommonPatternService COMMON_PATTERN = new CommonPatternService();
 
-//    /**
-//     * 提高百度的搜索准确率
-//     */
-//    public  void testAnswerActive(){
-//        String jsonstring="{\"code\":0,\"msg\":\"ok\",\"data\":{\"question_id\":8,\"question_num\":12,\"question\":\"《水浒传》中绰号为“及时雨”的是哪个人物？\",\"options\":[{\"answer_id\":1,\"content\":\"A 宋江\"},{\"answer_id\":2,\"content\":\"B 武松 \"},{\"answer_id\":3,\"content\":\"C 鲁智深\"}],\"health\":0,\"alive\":0,\"expire\":10}}";
-//        JSONObject jsonObject= JSON.parseObject(jsonstring);
-//        if(jsonObject!=null&&jsonObject.getInteger("code")==0){
-//            JSONObject data = (JSONObject) jsonObject.get("data");
-//            String question=data.getString("question");
-//            JSONArray options = data.getJSONArray("options");
-//            String[]  answers =new String[options.size()];
-//            for (int j=0;j<answers.length;j++ ) {
-//                JSONObject opt = (JSONObject) options.get(j);
-//                String content = opt.getString("content");
-//                answers[j] = content;
-//            }
-//            String rs = null;
-//            try {
-//                Information information=new Information(question,answers);
-//                rs=new SearchAnswers().getAnswer(information);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            System.out.println(rs);
-//        }
-//    }
 
     public  static String getQuestins(){
         String result =null;
@@ -79,6 +45,8 @@ public class HuangjinDarenAnswer {
                 Map<String, Object> params = new HashMap<>();
                 params.put("notice",0);
                 httpPost.addHeader(new BasicHeader("Content-Type", "application/json; charset=utf-8"));
+//                httpPost.addHeader("Authorization","6067bb6c74fdbbb30b06484cd6f635b0c4e63f8d_3558905");
+//                httpPost.addHeader("Authorization","de5a814762fe77fa8d9b3825d14a1de3478a5669_3558905");
                 httpPost.addHeader("Authorization","6067bb6c74fdbbb30b06484cd6f635b0c4e63f8d_3558905");
                 if (params != null && !params.isEmpty()) {
                     net.sf.json.JSONObject jsonParam = new net.sf.json.JSONObject();
@@ -96,6 +64,7 @@ public class HuangjinDarenAnswer {
                     HttpEntity he = resp.getEntity();
                     respContent = EntityUtils.toString(he, "UTF-8");
                     respContent=unicodeToString(respContent);
+                    System.out.println(respContent);
                     JSONObject jsonObject= JSON.parseObject(respContent);
                     if(jsonObject!=null&&jsonObject.getInteger("code")==0){
                        JSONObject data = (JSONObject) jsonObject.get("data");
@@ -151,5 +120,9 @@ public class HuangjinDarenAnswer {
 
         return str;
 
+    }
+
+    public static void main(String[] args) {
+        getQuestins();
     }
 }
