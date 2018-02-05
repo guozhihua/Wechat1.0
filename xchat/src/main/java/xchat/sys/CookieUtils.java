@@ -26,7 +26,7 @@ public class CookieUtils {
     private static Set<String> cookieNames = new HashSet<>();
 
     {
-        cookieNames.add("passport_ticket");
+        cookieNames.add("passport-ticket");
     }
 
 

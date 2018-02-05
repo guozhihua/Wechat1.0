@@ -46,6 +46,7 @@ function getUserBaseInfo() {
         if (data.code == 200) {
             var adminInfo = data.datas.realName + "   ";
             $("#AdminUser").text(adminInfo);
+            $("#passport_token").val($.cookie('passport-ticket'))
         } else {
             window.location.href = contextUrl + "/index.html";
         }

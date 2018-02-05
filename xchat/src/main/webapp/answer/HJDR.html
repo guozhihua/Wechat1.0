@@ -4,11 +4,16 @@
     <meta charset="UTF-8">
     <title>黄金答人</title>
     <link href="./HJDR.css" rel="stylesheet">
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.css"/>
+    <script src="../coder/jquery-m/jquery.min-1.4.5.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
-<input id="text" type="text"  width="300px"/> &nbsp;&nbsp;&nbsp;&nbsp;
-<button onclick="send()" >发送消息</button>&nbsp;&nbsp;&nbsp;&nbsp;
-<a target="_blank" href="HJDR.html">新窗口答题</a>&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="closeWebSocket()" >关闭socket</button>
+<br/>
+<input id="text" type="text" /> &nbsp;&nbsp;&nbsp;&nbsp;
+<button onclick="send()">发送消息</button>&nbsp;&nbsp;&nbsp;&nbsp;
+<button onclick="closeWebSocket()" >关闭socket</button>
+&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="getTicket()" >获取上级iD</button>
 <hr/>
  <div id="message"></div>
 <iframe  id="answer" src=""></iframe>
@@ -17,7 +22,8 @@
     var websocket = null;
     //判断当前浏览器是否支持WebSocket
     if ('WebSocket' in window) {
-        websocket = new WebSocket("ws://localhost:8086/coder/websocket/socketServer.do");
+
+        websocket = new WebSocket("ws://dev.edu.cn/coder/websocket/socketServer.do");
 //        websocket = new WebSocket("ws://dev.deu.cn/coder/websocket");
     }
     else {
@@ -73,5 +79,9 @@
         var message = document.getElementById('text').value;
         websocket.send(message);
     }
+    //ifame 获取上级元素
+//    function getTicket(){
+//      return  $("#passport_token",window.parent.document).val();
+//    }
 </script>
 </html>

@@ -8,12 +8,11 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import xchat.sys.SessionBucket;
 import xchat.workers.HJDRWorker;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by :Guozhihua
@@ -21,11 +20,14 @@ import java.util.List;
  */
 @Component
 public class SpringWebSocketHandler extends TextWebSocketHandler {
-    private static final List<WebSocketSession> users= Collections.synchronizedList(new ArrayList<WebSocketSession>());//这个会出现性能问题，最好用Map来存储，key用userid
     private static Logger logger = LoggerFactory.getLogger(SpringWebSocketHandler.class);
 
     @Autowired
     private HJDRWorker hjdrWorker;
+    
+    private SessionBucket sessionBucket =SessionBucket.getInstance();
+
+
 
 
 
@@ -38,11 +40,16 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
      * 连接成功时候，会触发页面上onopen方法
      */
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        users.add(session);
-        //黄金答人注册
-        registerHjDRWorker(session);
 
-        System.out.println("connect to the websocket success......当前数量:"+users.size());
+        Map<String, Object> attributes = session.getAttributes();
+        if(attributes!=null&&attributes.size()>0&&attributes.containsKey("token")){
+           sessionBucket.addSession(attributes.get("token").toString(),session);
+            //黄金答人注册
+            registerHjDRWorker(session);
+            System.out.println("connect to the websocket success......当前数量:"+sessionBucket.getPepleNum());
+        }else {
+            session.close();
+        }
 
     }
 
@@ -61,8 +68,8 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
         logger.debug("websocket connection closed......");
         session.close();
-        users.remove(session);
-        System.out.println("剩余在线用户"+users.size());
+        sessionBucket.removeSessionId(session.getId());
+        System.out.println("剩余在线用户"+sessionBucket.getPepleNum());
     }
 
     /**
@@ -79,7 +86,7 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
         if(session.isOpen()){session.close();}
         logger.debug("websocket connection closed......");
-        users.remove(session);
+        sessionBucket.removeSessionId(session.getId());
     }
 
     public boolean supportsPartialMessages() {
@@ -96,7 +103,7 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
      */
     public void sendMessageToUser(String userName, TextMessage message) {
         logger.info("sendMessageToUser");
-        for (WebSocketSession user : users) {
+        for (WebSocketSession user : sessionBucket.getAllsessionMap().values()) {
             if (user.getAttributes().get("WEBSOCKET_USERNAME").equals(userName)) {
                 try {
                     if (user.isOpen()) {
@@ -116,8 +123,7 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
      * @param message
      */
     public void sendMessageToUsers(TextMessage message) {
-        logger.info("sendMessageToUsers");
-        for (WebSocketSession user : users) {
+        for (WebSocketSession user : sessionBucket.getAllsessionMap().values()) {
             try {
                 if (user.isOpen()) {
                     user.sendMessage(message);
