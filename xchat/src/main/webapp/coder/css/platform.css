@@ -118,3 +118,7 @@ a{
     border: 0px solid whitesmoke;
     /*padding: 0px 0px;*/
 }
+
+.btn-left{
+    margin-left: 50px;
+}

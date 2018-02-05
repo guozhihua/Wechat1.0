@@ -125,7 +125,7 @@ $(".left-head-c").each(function(){
             var pName=$(this).attr('p-name');
             $("#content").empty();
             $("#panelName").empty();
-            var html='<span style="font-weight: 400;font-size: 15px">'+pName+"-"+dataName+'</span> <input type="button" class="btn btn-primary" onclick="hideAll()" value="隐藏其他" />';
+            var html='<span style="font-weight: 400;font-size: 15px">'+pName+"-"+dataName+'</span> <input type="button" class="btn btn-primary btn-left" onclick="hideAll()" value="隐藏其他" />';
             $("#panelName").append(html);
             $("#content").attr("src",dataURL);
 
