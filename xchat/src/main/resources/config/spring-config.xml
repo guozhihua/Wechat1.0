@@ -12,6 +12,7 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.
 	<context:component-scan base-package="xchat">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:exclude-filter>
 	</context:component-scan>
+	<bean id="consumerIniter" class="xchat.listeners.MsgConsumerIniter" init-method="initConsumer"></bean>
 	<!-- 启动定时器 -->
 	<task:annotation-driven/>
 </beans>

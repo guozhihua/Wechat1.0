@@ -2,46 +2,57 @@ package xchat.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
-import xchat.controller.task.HuangjinDarenAnswer;
-import xchat.controller.task.HuangjindaRen;
+import xchat.workers.HJDRWorker;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by :Guozhihua
  * Date： 2018/2/5.
  */
+@Component
 public class SpringWebSocketHandler extends TextWebSocketHandler {
-    private static final ArrayList<WebSocketSession> users;//这个会出现性能问题，最好用Map来存储，key用userid
+    private static final List<WebSocketSession> users= Collections.synchronizedList(new ArrayList<WebSocketSession>());//这个会出现性能问题，最好用Map来存储，key用userid
     private static Logger logger = LoggerFactory.getLogger(SpringWebSocketHandler.class);
-    static {
-        users = new ArrayList<WebSocketSession>();
-    }
+
+    @Autowired
+    private HJDRWorker hjdrWorker;
+
 
 
 
     public SpringWebSocketHandler() {
-        logger.info("SpringWebSocketHandler");
-        // TODO Auto-generated constructor stub
+        logger.info("SpringWebSocketHandler construct ....");
     }
 
     /**
      * 连接成功时候，会触发页面上onopen方法
      */
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        // TODO Auto-generated method stub
         users.add(session);
-        System.out.println("connect to the websocket success......当前数量:"+users.size());
-        new Thread(new HuangjindaRen(session)).start();
+        //黄金答人注册
+        registerHjDRWorker(session);
 
+        System.out.println("connect to the websocket success......当前数量:"+users.size());
+
+    }
+
+    /**
+     * 监听黄金答人的题目
+     * @param session
+     */
+    private void registerHjDRWorker(WebSocketSession session){
+        hjdrWorker.addSocketSession(session);
+        hjdrWorker.startWorker();
     }
 
     /**
@@ -49,8 +60,7 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
      */
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
         logger.debug("websocket connection closed......");
-        String username= (String) session.getAttributes().get("WEBSOCKET_USERNAME");
-        System.out.println("用户"+username+"已退出！");
+        session.close();
         users.remove(session);
         System.out.println("剩余在线用户"+users.size());
     }
@@ -117,4 +127,6 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
             }
         }
     }
+
+
 }

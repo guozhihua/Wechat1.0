@@ -25,7 +25,9 @@
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-
+  <listener>
+    <listener-class>xchat.listeners.MsgPoolDestroyListener</listener-class>
+  </listener>
   <!-- 跨域访问 -->
   <filter>
     <filter-name>CORS</filter-name>

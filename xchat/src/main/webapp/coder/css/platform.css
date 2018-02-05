@@ -20,7 +20,7 @@ body {
 }
 
 #left {
-    height: 93vh;
+    height: 100vh;
     width: 15vw;
     background-color: #abc8e9;
     padding: 0px 0px;
@@ -114,7 +114,7 @@ a{
 #content{
     margin-left: 0px;
     /*background-color:#aedab070 ;*/
-    height: 93vh;
+    height: 100vh;
     border: 0px solid whitesmoke;
     padding: 0px 0px;
 }

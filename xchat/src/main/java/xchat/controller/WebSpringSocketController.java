@@ -28,16 +28,6 @@ public class WebSpringSocketController {
         return new SpringWebSocketHandler();
     }
 
-    @RequestMapping("/websocket/login")
-    public ModelAndView login(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String username = request.getParameter("username");
-        System.out.println(username+"登录");
-        HttpSession session = request.getSession(false);
-        session.setAttribute("SESSION_USERNAME", username);
-        //response.sendRedirect("/quicksand/jsp/websocket.jsp");
-        return new ModelAndView("websocket");
-    }
-
     @RequestMapping("/websocket/send")
     @ResponseBody
     public String send(HttpServletRequest request) {
