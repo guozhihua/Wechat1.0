@@ -1,6 +1,7 @@
 package xchat.workers;
 
 import com.weixin.utils.RandomUtils;
+import com.weixin.utils.util.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -62,7 +63,7 @@ private  SessionBucket sessionBucket=SessionBucket.getInstance();
                 if (questins == null || "000000".equals(questins)) {
                     mes.clear();
                     mes.put("type", "1");
-                    mes.put("val", "题目快来了"+ RandomUtils.getLowerCaseRandom(1));
+                    mes.put("val", "题目快来了."+ DateUtil.getCurrentTime());
                 } else {
                     mes.clear();
                     mes.put("type", "2");
