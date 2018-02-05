@@ -66,7 +66,6 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
      */
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
         logger.debug("websocket connection closed......");
-        session.close();
         sessionBucket.removeSessionId(session.getId());
         System.out.println("剩余在线用户"+sessionBucket.getPepleNum());
     }
