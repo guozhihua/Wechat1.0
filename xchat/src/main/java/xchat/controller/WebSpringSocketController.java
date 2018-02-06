@@ -33,7 +33,8 @@ public class WebSpringSocketController {
     @ResponseBody
     public WebModel send(HttpServletRequest request) {
         WebModel webModel = WebModel.getInstance();
-        HuangjinDarenAnswer.setAuthHeader(request.getParameter("auth"));
+        HuangjinDarenAnswer.setAuthHeader(request.getParameter("auth").trim());
+        logger.info("set 黄金答人的auth 为：{}",HuangjinDarenAnswer.authHeder);
         return webModel;
     }
 

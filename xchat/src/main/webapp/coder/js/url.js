@@ -13,4 +13,4 @@ var grandPage=contextUrl+"/pages/getGrandByParent";
 
 //黄金答人
 
-var setAuth=contextUrl+"/hjdr/setAuth";
+var setAuth_URL=contextUrl+"/hjdr/setAuth";

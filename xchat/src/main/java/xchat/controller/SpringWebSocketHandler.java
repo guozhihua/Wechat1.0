@@ -40,7 +40,9 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
      * 连接成功时候，会触发页面上onopen方法
      */
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-
+        if(sessionBucket.getPepleNum()==0){
+            HJDRWorker.start=false;
+        }
         Map<String, Object> attributes = session.getAttributes();
         if(attributes!=null&&attributes.size()>0&&attributes.containsKey("token")){
            sessionBucket.addSession(attributes.get("token").toString(),session);

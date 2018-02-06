@@ -6,14 +6,17 @@
     <link href="./HJDR.css" rel="stylesheet">
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.css"/>
     <script src="../coder/jquery-m/jquery.min-1.4.5.js"></script>
+    <script src="../coder/js/baseJS.js"></script>
+    <script src="../coder/js/url.js"></script>
+    <script src="../coder/js/jquery.cookie.js"></script>
     <script src="../bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 <br/>
 <input id="text" type="text" class="input-group-sm  col-sm-3"/>
-<button onclick="send()" class="btn-primary btn-group-sm search-btn"  >发送消息</button>
+<!--<button onclick="send()" class="btn-primary btn-group-sm search-btn"  >发送消息</button>-->
+<button onclick="setAuth()" class="btn-group-sm btn-primary search-btn">设置AUTH</button>
 <button onclick="closeWebSocket()" class="btn-group-sm btn-danger search-btn">关闭socket</button>
-<button onclick="setAuth()" class="btn-group-sm btn-danger search-btn">设置AUTH</button>
 <!--&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="getTicket()" >获取上级iD</button>-->
 <hr/>
  <div id="message"></div>
@@ -81,7 +84,8 @@
         websocket.send(message);
     }
     function setAuth(){
-
+        var  auth =$("#text").val();
+        ajaxObject.postFormAjax(setAuth_URL+"?auth="+auth,{},callback,"JSON");
     }
     //ifame 获取上级元素
 //    function getTicket(){

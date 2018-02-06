@@ -50,13 +50,13 @@ private  SessionBucket sessionBucket=SessionBucket.getInstance();
 
         while (start) {
             if(sessionBucket.getAllsessionMap()==null||sessionBucket.getAllsessionMap().size()==0){
-                start=false;
+                this.start=false;
             }
             try {
                 boolean getNewQuestion = false;
                 int i = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
                 String questins = null;
-                if (i == 20 || i == 12 || i == 19) {
+                if (i == 20 || i == 12 || i == 13) {
                     questins = HuangjinDarenAnswer.getQuestins();
                 }
                 Map<String, String> mes = new HashMap<>();
