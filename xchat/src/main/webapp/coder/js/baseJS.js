@@ -57,8 +57,8 @@ var alertCommon=function(msg){
         content:msg,
         area:"auto",
         option:1,
-        close:"true",
-        closeTime:2500
+        close:"true"
+        //closeTime:2500
     };
     method.msg_layer(obj);
 }

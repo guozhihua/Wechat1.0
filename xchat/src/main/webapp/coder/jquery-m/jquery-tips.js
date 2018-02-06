@@ -47,7 +47,7 @@ var method = {
         }
         parent.append('<div class="msg-layer-bg"></div><div class="msg-layer showAlert">' +
             '<h5 class="titleH5"></h5>' +
-            '<div class="msg-con"></div><div class="layer-close">&times;</div>' +
+            '<div class="msg-con"></div><div class="layer-close"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>' +
             '<div class="layer-btn">' +
             '<input type="button" class="layer-cancel"/>' +
             '<input type="button" class="layer-commit"/></div></div>');
@@ -60,7 +60,7 @@ var method = {
             if(obj.option) {
                 //1 代表一般弹框  2-代表错误弹框 3-正确
                 if (obj.option == 1) {
-                    titleHtml = '<span class="title-common">' + obj.title + '</span>'
+                    titleHtml = '<span class="title-common ">' + obj.title + '</span>'
                     if(titleH5){
                         titleH5.css({"background-color": "#f3f3f3"});
                     }
