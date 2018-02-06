@@ -1,6 +1,5 @@
 package xchat.workers;
 
-import com.weixin.utils.RandomUtils;
 import com.weixin.utils.util.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,7 +101,7 @@ private  SessionBucket sessionBucket=SessionBucket.getInstance();
                     if (getNewQuestion) {
                         Thread.sleep(15000);
                     } else {
-                        Thread.sleep(1300);
+                        Thread.sleep(1000);
                     }
                 }catch (Exception ex){
                   logger.error("执行任务异常结束",ex);

@@ -12,5 +12,5 @@ var childPage=contextUrl+"/pages/getByParent";
 var grandPage=contextUrl+"/pages/getGrandByParent";
 
 //黄金答人
-
 var setAuth_URL=contextUrl+"/hjdr/setAuth";
+var setQuestionFlag_V=contextUrl+"/hjdr/setQuestionFlag";

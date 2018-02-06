@@ -8,10 +8,13 @@
 </head>
 <body>
 <br/>
+<input id="flag" type="text" disabled class="input-group-sm  col-sm-1">
 <input id="text" type="text" class="input-group-sm  col-sm-3"/>
-<!--<button onclick="send()" class="btn-primary btn-group-sm search-btn"  >发送消息</button>-->
 <button onclick="setAuth()" class="btn-group-sm btn-primary search-btn">设置AUTH</button>
+<button onclick="getQuestion($(this))" class="btn-primary btn-group-sm search-btn" value="1">关闭开关</button>
 <button onclick="closeWebSocket()" class="btn-group-sm btn-danger search-btn">关闭socket</button>
+
+
 <!--&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="getTicket()" >获取上级iD</button>-->
 <hr/>
 <div id="message"></div>
@@ -60,6 +63,13 @@
     function setMessageInnerHTML(innerHTML) {
         var msgs = innerHTML.split("@");
         document.getElementById('message').innerHTML = msgs[1] + '<br/>';
+        if(msgs[0]==3){
+            if(msgs[1]==1){
+                $("#flag").val("开！")
+            }else{
+                $("#flag").val("关！")
+            }
+        }
     }
     function searchAnswere(innerHTML) {
         var msgs = innerHTML.split("@");
@@ -86,6 +96,25 @@
         }
         ajaxObject.postFormAjax(setAuth_URL + "?auth=" + auth, {}, window.parent.callback, "JSON");
     }
+    function getQuestion(obj) {
+        ajaxObject.postFormAjax(setQuestionFlag_V, {"params": obj.val()}, function (data) {
+            if (data.code == 200) {
+                if (obj.val() == "1") {
+                    obj.val("0");
+                    obj.text("打开开关");
+
+                } else {
+                    obj.val("1");
+                    obj.text("关闭开关");
+                }
+                window.parent.alertSuccess(data.msg);
+            } else {
+                window.parent.alertError(data.msg);
+            }
+        }, "JSON");
+
+    }
+
     //ifame 获取上级元素
     //    function getTicket(){
     //      return  $("#passport_token",window.parent.document).val();

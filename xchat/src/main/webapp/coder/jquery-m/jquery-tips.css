@@ -1057,11 +1057,11 @@
 }
 
 .hideAlert[data-animation=layer-spread] {
-    animation: hide-spread .5s forwards;
-    -webkit-animation:hide-spread .5s forwards;
-    -moz-animation: hide-spread .5s forwards;
-    -ms-animation: hide-spread .5s forwards;
-    -o-animation: hide-spread .5s forwards;
+    animation: hide-spread .3s forwards;
+    -webkit-animation:hide-spread .3s forwards;
+    -moz-animation: hide-spread .3s forwards;
+    -ms-animation: hide-spread .3s forwards;
+    -o-animation: hide-spread .3s forwards;
 
 }
 .hideAlert[data-animation=slideFromTop] {
