@@ -5,7 +5,9 @@
     <title>黄金答人</title>
     <link href="./HJDR.css" rel="stylesheet">
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.css"/>
+    <link rel="stylesheet" href="../coder/jquery-m/jquery-tips.css">
     <script src="../coder/jquery-m/jquery.min-1.4.5.js"></script>
+    <script src="../coder/jquery-m/jquery-tips.js"></script>
     <script src="../coder/js/baseJS.js"></script>
     <script src="../coder/js/url.js"></script>
     <script src="../coder/js/jquery.cookie.js"></script>
@@ -86,7 +88,13 @@
     function setAuth(){
         var  auth =$("#text").val();
         if(auth==undefined||auth==''){
-            alert("Auth 不能为空");
+            var obj={
+                type:"layer-fadeIn",
+                title:"标题",
+                content:'内容不能为空',
+                area:"auto"
+            };
+            method.msg_layer(obj);
             return;
         }
         ajaxObject.postFormAjax(setAuth_URL+"?auth="+auth,{},callback,"JSON");

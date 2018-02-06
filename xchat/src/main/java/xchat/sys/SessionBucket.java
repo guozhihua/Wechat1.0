@@ -51,18 +51,21 @@ public class SessionBucket implements Serializable {
      * @param uuid
      */
     public void removeSessionUUId(String uuid) {
-        WebSocketSession session = sessionMap.get(uuid);
-        if (session != null) {
-             if(session.isOpen()){
-                 try {
-                     session.close();
-                 } catch (IOException e) {
-                     e.printStackTrace();
-                 }
-             }
-            sessionIdList.remove(session.getId());
-            sessionMap.remove(uuid);
+        if(StringUtils.isNotBlank(uuid)){
+            WebSocketSession session = sessionMap.get(uuid);
+            if (session != null) {
+                if(session.isOpen()){
+                    try {
+                        session.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                sessionIdList.remove(session.getId());
+                sessionMap.remove(uuid);
+            }
         }
+
     }
 
     /**
@@ -74,16 +77,20 @@ public class SessionBucket implements Serializable {
         String uuid = sessionIdList.get(sessionId);
         if (StringUtils.isNotBlank(uuid)) {
             sessionIdList.remove(sessionId);
-        }
-        WebSocketSession session = sessionMap.get(uuid);
-        if(session!=null&&session.isOpen()){
-            try {
-                session.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            WebSocketSession session = sessionMap.get(uuid);
+            if(null!=session){
+                try {
+                    if(session.isOpen()){
+                        session.close();
+                    }
+                    sessionMap.remove(uuid);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
-            sessionMap.remove(uuid);
         }
+
     }
 
     /**

@@ -81,6 +81,8 @@ public class HuangjinDarenAnswer {
                             answers[j]=content;
                         }
                         result =question;
+                    }else if(jsonObject!=null&&jsonObject.getInteger("code")==2){
+                        result="999999";
                     }else{
                         result="000000";
                     }

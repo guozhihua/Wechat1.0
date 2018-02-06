@@ -52,11 +52,12 @@ private  SessionBucket sessionBucket=SessionBucket.getInstance();
             if(sessionBucket.getAllsessionMap()==null||sessionBucket.getAllsessionMap().size()==0){
                 this.start=false;
             }
+
             try {
                 boolean getNewQuestion = false;
                 int i = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
                 String questins = null;
-                if (i == 20 || i == 12 || i == 13) {
+                if (i >=12) {
                     questins = HuangjinDarenAnswer.getQuestins();
                 }
                 Map<String, String> mes = new HashMap<>();
@@ -64,7 +65,12 @@ private  SessionBucket sessionBucket=SessionBucket.getInstance();
                     mes.clear();
                     mes.put("type", "1");
                     mes.put("val", "题目快来了."+ DateUtil.getCurrentTime());
-                } else {
+                } else if("999999".equals(questins)){
+                    mes.clear();
+                    mes.put("type", "1");
+                    mes.put("val", "票据Auth 出错了！！,请马上设置Auth.  "+ DateUtil.getCurrentTime());
+                    Thread.sleep(5000);
+                }else {
                     mes.clear();
                     mes.put("type", "2");
                     mes.put("val", questins);
