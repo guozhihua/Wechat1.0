@@ -11,10 +11,22 @@
     display: table-cell;
     vertical-align: middle;
 }
+.title{
+    background-color: #1b1b1b;
+    height: 3em;
+    text-align: center;
+    vertical-align: baseline;
+    font-size: 18px;
+    font-weight: 400;
+    color: whitesmoke;
+    line-height: 3em;
+}
 
 /* centered columns styles */
 .row-centered {
-    text-align: right;
+    text-align: center;
+    background: url("../images/tmbg-white.png");
+    width: 32em;
 }
 
 #main {
@@ -23,17 +35,18 @@
     width: 100%;
     position: absolute;
     bottom: 3%;
-    background: url("../images/login_index.png") no-repeat;
+    background: url("../images/bg.jpg") no-repeat;
     background-size: cover;
+    padding: 0px 0px !important;
 
 }
 
 .col-centered {
     display: inline-block;
     float: none;
-    text-align: left;
-    margin-right: -4px;
-    margin-bottom: 3%;
+    text-align: center;
+    vertical-align: baseline;
+    margin: 40px 24px;
 }
 .footer-div{
     padding:1px 0px;
@@ -46,9 +59,11 @@
 }
 .platform-name{
     font-size: 25px;
-    color: #27a9bf;
+    color: #1b1b1b;
     font-weight: 600;
     text-align: center;
+    vertical-align: baseline;
+    height: 4em;
 }
 .navbar-fixed-bottom{
  height: 3%;
