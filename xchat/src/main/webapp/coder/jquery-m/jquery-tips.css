@@ -978,6 +978,7 @@
     -moz-animation: layerFadeIn .3s;
     -ms-animation: layerFadeIn .3s;
     -o-animation: layerFadeIn .3s;
+    padding: 0px 0px;
 }
 .showAlert[data-animation=showSweetAlert] {
     animation: showSweetAlert .3s;
@@ -985,6 +986,7 @@
     -moz-animation: showSweetAlert .3s;
     -ms-animation: showSweetAlert .3s;
     -o-animation: showSweetAlert .3s;
+    padding: 0px 0px;
 }
 
 .showAlert[data-animation=none] {
@@ -993,6 +995,7 @@
     -moz-animation: none;
     -ms-animation: none;
     -o-animation: none;
+    padding: 0px 0px;
 }
 
 .showAlert[data-animation=slideFromTop] {
@@ -1001,6 +1004,7 @@
     -moz-animation: slideFromTop .3s;
     -ms-animation: slideFromTop .3s;
     -o-animation: slideFromTop .3s;
+    padding: 0px 0px;
 }
 
 .showAlert[data-animation=slideFromBottom] {
@@ -1009,6 +1013,7 @@
     -moz-animation: slideFromBottom .2s;
     -ms-animation: slideFromBottom .2s;
     -o-animation: slideFromBottom .2s;
+    padding: 0px 0px;
 }
 .showAlert[data-animation=layer-fadeInUpBig] {
     animation: layer-fadeInUpBig .2s;
@@ -1016,6 +1021,7 @@
     -moz-animation: layer-fadeInUpBig .2s;
     -ms-animation: layer-fadeInUpBig .2s;
     -o-animation: layer-fadeInUpBig .2s;
+    padding: 0px 0px;
 }
 .showAlert[data-animation=layer-rollIn] {
     animation: layer-rollIn .3s;
@@ -1023,6 +1029,7 @@
     -moz-animation: layer-rollIn .3s;
     -ms-animation: layer-rollIn .3s;
     -o-animation: layer-rollIn .3s;
+    padding: 0px 0px;
 }
 .showAlert[data-animation=layer-fadeIn] {
     animation: layer-fadeIn .3s;
@@ -1030,6 +1037,7 @@
     -moz-animation: layer-fadeIn .3s;
     -ms-animation: layer-fadeIn .3s;
     -o-animation: layer-fadeIn .3s;
+    padding: 0px 0px;
 }
 .showAlert[data-animation=layer-shake] {
     animation: layer-shake .3s;
@@ -1037,6 +1045,7 @@
     -moz-animation: layer-shake .3s;
     -ms-animation: layer-shake .3s;
     -o-animation: layer-shake .3s;
+    padding: 0px 0px;
 }
 .showAlert[data-animation=layer-spread] {
     animation: layer-spread .2s;
@@ -1044,6 +1053,7 @@
     -moz-animation: layer-spread .2s;
     -ms-animation: layer-spread .2s;
     -o-animation: layer-spread .2s;
+    padding: 0px 0px;
 }
 
 .hideAlert[data-animation=layer-spread] {
@@ -1052,6 +1062,7 @@
     -moz-animation: hide-spread .5s forwards;
     -ms-animation: hide-spread .5s forwards;
     -o-animation: hide-spread .5s forwards;
+
 }
 .hideAlert[data-animation=slideFromTop] {
     animation: hideFromTop .2s forwards;
@@ -1109,6 +1120,9 @@
     -ms-animation: hide-shake .2s forwards;
     -o-animation: hide-shake .2s forwards;
 }
+.hideAlert{
+    padding: 0px 0px;
+}
 
 .msg-layer-bg {
     width: 100%;
@@ -1143,16 +1157,19 @@
     position: absolute;
     right: 10px;
     top: 0;
-    font-size: 32px;
-    color: #d02f30;
+    font-size: 45px;
+    color: #EB6572;
     height: 30px;
     line-height: 30px;
     cursor: pointer;
+    margin-right: -24px;
+    margin-top: -18px;
 }
 .msg-layer>h5{
     font-size:18px;
     line-height:38px;
     border-bottom:1px solid #ccc;
+    margin-top: auto;
 }
 .layer-btn{
     padding:16px 0 10px;
@@ -1188,7 +1205,7 @@
     padding: 10px;
     text-align: center;
     line-height: 20px;
-    font-size: 14px;
+    font-size: 15px;
     color: #9f3e42;
     z-index: 99999;
     background: #fff;
@@ -1198,4 +1215,13 @@
     -moz-box-shadow:0 0 7px 0 #b5b3b3;
     -ms-box-shadow:0 0 7px 0 #b5b3b3;
     -o-box-shadow:0 0 7px 0 #b5b3b3;
+}
+.title-common{
+    color: #1b1b1b;
+}
+.title-error{
+    color: whitesmoke;
+}
+.title-success{
+    color: whitesmoke;
 }

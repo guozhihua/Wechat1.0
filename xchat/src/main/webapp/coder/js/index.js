@@ -10,7 +10,7 @@ function login() {
             window.sessionStorage.setItem("userinfo",JSON.stringify(data.datas))
             window.location.href="./platform_index.html";
         }else{
-            alert(data.msg)
+            alertError(data.msg);
         }
 
     }, "JSON");

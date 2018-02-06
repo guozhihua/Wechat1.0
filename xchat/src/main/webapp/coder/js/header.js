@@ -70,7 +70,7 @@ function getHeaderPages() {
                 defaultSelcctHead();
             }
         } else {
-            alert(data.msg);
+            alertError(data.msg);
         }
     }, "JSON");
 }
@@ -108,7 +108,7 @@ function getGandPageListInfo(id) {
                 leftAddClick();
             }
         } else {
-            alert(data.msg);
+            alertError(data.msg);
         }
     }, "JSON");
 }

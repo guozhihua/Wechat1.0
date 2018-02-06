@@ -14,8 +14,8 @@
 <button onclick="closeWebSocket()" class="btn-group-sm btn-danger search-btn">关闭socket</button>
 <!--&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="getTicket()" >获取上级iD</button>-->
 <hr/>
- <div id="message"></div>
-<iframe  id="answer" src=""></iframe>
+<div id="message"></div>
+<iframe id="answer" src=""></iframe>
 </body>
 <script type="text/javascript">
     var websocket = null;
@@ -26,7 +26,7 @@
 //        websocket = new WebSocket("ws://dev.deu.cn/coder/websocket");
     }
     else {
-        alert('当前浏览器 Not support websocket')
+        window.parent.alertCommon('当前浏览器 Not support websocket')
     }
 
     //连接发生错误的回调方法
@@ -58,15 +58,15 @@
 
     //将消息显示在网页上
     function setMessageInnerHTML(innerHTML) {
-     var msgs=   innerHTML.split("@");
-       document.getElementById('message').innerHTML = msgs[1]+ '<br/>';
+        var msgs = innerHTML.split("@");
+        document.getElementById('message').innerHTML = msgs[1] + '<br/>';
     }
- function  searchAnswere(innerHTML){
-     var msgs=   innerHTML.split("@");
-     if(msgs[0]=='2'){
-         document.getElementById('answer').src = 'https://m.baidu.com/s?sa=ikb&word='+msgs[1];
-     }
- }
+    function searchAnswere(innerHTML) {
+        var msgs = innerHTML.split("@");
+        if (msgs[0] == '2') {
+            document.getElementById('answer').src = 'https://m.baidu.com/s?sa=ikb&word=' + msgs[1];
+        }
+    }
     //关闭WebSocket连接
     function closeWebSocket() {
         websocket.send("8888");
@@ -78,23 +78,17 @@
         var message = document.getElementById('text').value;
         websocket.send(message);
     }
-    function setAuth(){
-        var  auth =$("#text").val();
-        if(auth==undefined||auth==''){
-            var obj={
-                type:"layer-fadeIn",
-                title:"标题",
-                content:'内容不能为空',
-                area:"auto"
-            };
-            method.msg_layer(obj);
+    function setAuth() {
+        var auth = $("#text").val();
+        if (auth == undefined || auth == '') {
+            window.parent.alertCommon("AUTH 内容不能为空！");
             return;
         }
-        ajaxObject.postFormAjax(setAuth_URL+"?auth="+auth,{},callback,"JSON");
+        ajaxObject.postFormAjax(setAuth_URL + "?auth=" + auth, {}, window.parent.callback, "JSON");
     }
     //ifame 获取上级元素
-//    function getTicket(){
-//      return  $("#passport_token",window.parent.document).val();
-//    }
+    //    function getTicket(){
+    //      return  $("#passport_token",window.parent.document).val();
+    //    }
 </script>
 </html>
