@@ -5,7 +5,7 @@
     text-align: center;
 }
 #quit{
-    margin-left: 15px;
+    margin-left: 13px;
 }
 /*禁用浏览器的滚动条*/
 body {
@@ -60,6 +60,7 @@ body {
     border: 0px !important;
     padding: 0px 0px !important;
     vertical-align: middle !important;
+
     /*width: 50px;*/
 }
 
@@ -76,7 +77,8 @@ body {
 #timer{
     color: #b2415f;
     font-size: 16px;
-    height: 4em;
+    height: 100px;
+    background: url("../images/tmbg-white.png");
 }
 .page-title{
     padding: 0px 0px !important;

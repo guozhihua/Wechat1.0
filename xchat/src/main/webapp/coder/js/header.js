@@ -15,7 +15,7 @@ function showTime() {
     hour < 10 ? hour = '0' + hour : hour;
     minutes < 10 ? minutes = '0' + minutes : minutes;
     second < 10 ? second = '0' + second : second;
-    var now_time = '<br/>'+ month + '月' + date + '日  ' +  hour+': '+minutes+"   " + show_day[day] + '';
+    var now_time = '<br/>'+ month + '月' + date + '日  ' +  hour+': '+minutes+":"+second+"  " + show_day[day] + '';
     document.getElementById('timer').innerHTML = now_time;
 }
 function  setSelectedPages() {
