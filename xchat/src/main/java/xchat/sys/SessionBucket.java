@@ -82,8 +82,8 @@ public class SessionBucket implements Serializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            sessionMap.remove(uuid);
         }
-        sessionMap.remove(uuid);
     }
 
     /**

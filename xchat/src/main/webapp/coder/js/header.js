@@ -125,7 +125,7 @@ $(".left-head-c").each(function(){
             var pName=$(this).attr('p-name');
             $("#content").empty();
             $("#panelName").empty();
-            var html='<span style="font-weight: 400;font-size: 15px">'+pName+"-"+dataName+'</span> <input type="button" class="btn btn-primary btn-left" onclick="hideAll()" value="隐藏头部" />';
+            var html='<span style="font-weight: 400;font-size: 15px">'+pName+"-"+dataName+'</span> <input type="button" class="btn btn-primary btn-left" onclick="hideAll($(this))" value="隐藏头部" />';
             $("#panelName").append(html);
             $("#content").attr("src",dataURL);
 
@@ -137,12 +137,13 @@ function defaultSelcctHead(){
     $("#header_tr").find("td").eq(1).find(".page-title").click();
 
 }
-function hideAll(){
+function hideAll(obj){
     if($("#header").css("display")=="none"){
         $("#header").show();
-        $(this).val("显示头部");
+        obj.val("隐藏头部");
+
     }else{
         $("#header").hide();
-        $(this).val("隐藏头部");
+        obj.val("显示头部");
     }
 }
