@@ -85,6 +85,10 @@
     }
     function setAuth(){
         var  auth =$("#text").val();
+        if(auth==undefined||auth==''){
+            alert("Auth 不能为空");
+            return;
+        }
         ajaxObject.postFormAjax(setAuth_URL+"?auth="+auth,{},callback,"JSON");
     }
     //ifame 获取上级元素
