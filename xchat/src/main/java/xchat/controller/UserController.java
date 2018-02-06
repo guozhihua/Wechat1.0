@@ -78,11 +78,11 @@ public class UserController extends ABaseController {
     @RequestMapping("/logout")
     @ResponseBody
     @NeedLogin
-    public WebModel logout(@RequestParam("params") String params) {
+    public WebModel logout() {
         WebModel webModel = WebModel.getInstance();
         try {
             UserTicket userTicket = ThreadLocaUser.get();
-            userTicketService.delete(userTicket);
+            userTicketService.deleteById(userTicket.getUserId());
             CookieUtils.removeCookie(request,response);
         } catch (Exception ex) {
             logger.error("error", ex);

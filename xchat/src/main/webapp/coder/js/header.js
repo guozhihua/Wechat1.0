@@ -15,7 +15,7 @@ function showTime() {
     hour < 10 ? hour = '0' + hour : hour;
     minutes < 10 ? minutes = '0' + minutes : minutes;
     second < 10 ? second = '0' + second : second;
-    var now_time = '&nbsp;&nbsp;&nbsp;&nbsp;'+ month + '月' + date + '日  ' +  hour+': '+minutes+"   " + show_day[day] + '';
+    var now_time = '<br/>'+ month + '月' + date + '日  ' +  hour+': '+minutes+"   " + show_day[day] + '';
     document.getElementById('timer').innerHTML = now_time;
 }
 function  setSelectedPages() {
@@ -46,6 +46,7 @@ function getUserBaseInfo() {
         if (data.code == 200) {
             var adminInfo = data.datas.realName + "   ";
             $("#AdminUser").text(adminInfo);
+
             $("#passport_token").val($.cookie('passport-ticket'))
         } else {
             window.location.href = contextUrl + "/index.html";
@@ -80,10 +81,10 @@ function getGandPageListInfo(id) {
         if (data.code == 200) {
             if (data.datas != null) {
                 var json =data.datas;
-                var html ="<br/><br/>";
-                $("#left").empty();
+                var html ="";
+                $("#leftpages").empty();
                 $("#content").empty();
-                $("#panelName").empty();
+                $("#title").empty();
                 html+="  <div class='accordion-group'>";
                 for(var k in json){
                     html += "<div  data-id='" + k + "' class='accordion-heading left-head-p'><div  " +
@@ -101,9 +102,9 @@ function getGandPageListInfo(id) {
                     }
                 }
                 html+="</div>";
-                $("#left").html(html);
+                $("#leftpages").html(html);
                 $("#content").attr("src","");
-                $("#panelName").empty();
+                $("#title").empty();
                 leftAddClick();
             }
         } else {
@@ -124,9 +125,9 @@ $(".left-head-c").each(function(){
             }
             var pName=$(this).attr('p-name');
             $("#content").empty();
-            $("#panelName").empty();
+            $("#title").empty();
             var html='<span style="font-weight: 400;font-size: 15px">'+pName+"-"+dataName+'</span> <input type="button" class="btn btn-primary btn-left" onclick="hideAll($(this))" value="隐藏头部" />';
-            $("#panelName").append(html);
+            $("#title").append(html);
             $("#content").attr("src",dataURL);
 
 
@@ -146,4 +147,14 @@ function hideAll(obj){
         $("#header").hide();
         obj.val("显示头部");
     }
+}
+
+function quit(){
+    ajaxObject.postFormAjax(login_out,{},function(data){
+        if (data.code == 200) {
+            window.location.href = contextUrl + "/index.html";
+        }else{
+
+        }
+    },"JSON");
 }

@@ -1,6 +1,12 @@
 #main {
 }
 
+.td-border-header{
+    text-align: center;
+}
+#quit{
+    margin-left: 15px;
+}
 /*禁用浏览器的滚动条*/
 body {
     overflow-y: hidden;
@@ -68,9 +74,9 @@ body {
     font-size: 18px;
 }
 #timer{
-    color: #e8bd17;
-    font-weight: 500;
+    color: #b2415f;
     font-size: 16px;
+    height: 4em;
 }
 .page-title{
     padding: 0px 0px !important;

@@ -1,7 +1,7 @@
 .login {
     display: table;
     position: absolute;
-    top: 55%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
 
@@ -31,13 +31,13 @@
 
 #main {
     display: table;
-    height: 97%;
+    height: 98%;
     width: 100%;
     position: absolute;
-    bottom: 3%;
     background: url("../images/bg.jpg") no-repeat;
     background-size: cover;
     padding: 0px 0px !important;
+
 
 }
 
@@ -64,7 +64,8 @@
     text-align: center;
     vertical-align: baseline;
     height: 4em;
+
 }
 .navbar-fixed-bottom{
- height: 3%;
+   height: 3%;
 }
