@@ -10,3 +10,7 @@ var notfound=contextUrl+"/404.html";
 //获取页面page列表信息
 var childPage=contextUrl+"/pages/getByParent";
 var grandPage=contextUrl+"/pages/getGrandByParent";
+
+//黄金答人
+
+var setAuth=contextUrl+"/hjdr/setAuth";

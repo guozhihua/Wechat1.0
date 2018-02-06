@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.socket.TextMessage;
 import xchat.controller.task.HuangjinDarenAnswer;
+import xchat.sys.WebModel;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,12 +29,12 @@ public class WebSpringSocketController {
         return new SpringWebSocketHandler();
     }
 
-    @RequestMapping("/websocket/send")
+    @RequestMapping("/hjdr/setAuth")
     @ResponseBody
-    public String send(HttpServletRequest request) {
-        String username = request.getParameter("username");
-        infoHandler().sendMessageToUser(username, new TextMessage("你好，测试！！！！"));
-        return null;
+    public WebModel send(HttpServletRequest request) {
+        WebModel webModel = WebModel.getInstance();
+        HuangjinDarenAnswer.setAuthHeader(request.getParameter("auth"));
+        return webModel;
     }
 
 
