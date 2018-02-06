@@ -22,7 +22,7 @@ function  setSelectedPages() {
     $(".page-title").each(function () {
         $(this).hover(function () {
             if (!$(this).hasClass("page-title-selected")) {
-                $(this).css({"background-color": "#16c14c"});
+                $(this).css({"background-color": "#b6e0da"});
             }
         }, function () {
             if (!$(this).hasClass("page-title-selected")) {
