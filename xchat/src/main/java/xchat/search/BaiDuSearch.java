@@ -33,31 +33,38 @@ public class BaiDuSearch implements Search {
      */
     @Override
     public SearchResult search(String question, String[] options) throws Exception {
-        List<SearchCounter> searchResultList=new ArrayList<>();
-        for(String  option: options){
-            SearchCounter searchCounter=new SearchCounter(option,0);
+        List<SearchCounter> searchResultList = new ArrayList<>();
+        for (String option : options) {
+            SearchCounter searchCounter = new SearchCounter(option, 0);
             searchResultList.add(searchCounter);
         }
         String url = zhidaoUrl.concat(URLEncoder.encode(question));
         String result = HttpUtils.getBaiduSearch(url);
+
         if (StringUtils.isNotBlank(result)) {
             System.out.println("-------------------------------analyse start---------------------------------------");
-            Document  document = Jsoup.parse(result);
-            if(document!=null){
-                List<JSONObject> reslt=null;
+            Document document = Jsoup.parse(result);
+            if (document != null) {
+                List<JSONObject> reslt = null;
                 Elements answer1 = document.select("dd.answer");
                 AnalyzeUtils.clearResult();
                 for (Element element : answer1) {
                     String text = element.text();
                     reslt = AnalyzeUtils.getAllAnalyzeResult(text);
                 }
-                getReslutList(reslt,searchResultList);
+                getReslutList(reslt, searchResultList);
                 Collections.sort(searchResultList, new SortByCount());
 
             }
         }
-        SearchCounter searchCounter = searchResultList.get(0);
-        SearchResult searchResult =new SearchResult(true,searchCounter.getOption());
+        SearchCounter searchCounter = null;
+        if (question.contains("不是") || question.contains("不正确") || question.contains("不属于") ||
+                question.contains("没有") || question.contains("不存在")) {
+            searchCounter = searchResultList.get(searchResultList.size() - 1);
+        } else {
+            searchCounter = searchResultList.get(0);
+        }
+        SearchResult searchResult = new SearchResult(true, searchCounter.getOption());
         return searchResult;
     }
 
@@ -68,11 +75,11 @@ public class BaiDuSearch implements Search {
         public int compare(Object o1, Object o2) {
             SearchCounter s1 = (SearchCounter) o1;
             SearchCounter s2 = (SearchCounter) o2;
-            if(s1.getCount()>s2.getCount()){
+            if (s1.getCount() > s2.getCount()) {
                 return -1;
-            }else if(s1.getCount()==s2.getCount()){
+            } else if (s1.getCount() == s2.getCount()) {
                 return 0;
-            } else{
+            } else {
                 return 1;
             }
         }
@@ -97,22 +104,22 @@ public class BaiDuSearch implements Search {
         }
     }
 
-    public static void  getReslutList(List<JSONObject> jsonObjects,List<SearchCounter> searchCounters){
-        HashSet<String> set = new HashSet<>();
+    public static void getReslutList(List<JSONObject> jsonObjects, List<SearchCounter> searchCounters) {
+        StringBuilder stringBuilder = new StringBuilder();
         for (SearchCounter searchCounter : searchCounters) {
-            set.add(searchCounter.getOption());
+            stringBuilder.append(searchCounter.getOption()).append("      ");
         }
-        if(jsonObjects!=null){
+        if (jsonObjects != null) {
             for (JSONObject jsonObject : jsonObjects) {
                 JSONArray items = jsonObject.getJSONArray("items");
-                if(items!=null&&items.length()>0){
+                if (items != null && items.length() > 0) {
                     for (Object item : items) {
-                        JSONObject oj= (JSONObject) item;
+                        JSONObject oj = (JSONObject) item;
                         String item1 = oj.getString("item").trim();
-                        if(set.contains(item1)){
+                        if (stringBuilder.toString().contains(item1)) {
                             for (SearchCounter searchCounter : searchCounters) {
-                                if(searchCounter.getOption().equals(item1)){
-                                    searchCounter.setCount(searchCounter.getCount()+1);
+                                if (searchCounter.getOption().equals(item1)) {
+                                    searchCounter.setCount(searchCounter.getCount() + 1);
                                 }
                             }
                         }
@@ -124,14 +131,15 @@ public class BaiDuSearch implements Search {
     }
 
 }
+
 /**
  * 每个选项投票算法
  */
-class SearchCounter{
+class SearchCounter {
 
-    private String option ;
+    private String option;
 
-    private  Integer count ;
+    private Integer count;
 
     public SearchCounter(String option, int count) {
         this.option = option;
