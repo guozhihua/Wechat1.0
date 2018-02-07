@@ -13,3 +13,9 @@
     border-top: 1px solid #76bfdc;
 
 }
+#flag.suc{
+    background-color: seagreen;
+}
+#flag.error{
+    background-color: mediumvioletred;
+}

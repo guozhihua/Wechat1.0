@@ -63,9 +63,13 @@
         if(msgs.length>0){
             if(msgs[0]==3){
                 if(msgs[1]==1){
-                    $("#flag").val("开！")
+                    $("#flag").val("开！");
+                    $("#flag").removeClass("error");
+                    $("#flag").addClass("suc");
                 }else{
-                    $("#flag").val("关！")
+                    $("#flag").val("关！");
+                    $("#flag").removeClass("suc");
+                    $("#flag").addClass("error");
                 }
             }else{
                 document.getElementById('message').innerHTML = msgs[1] + '<br/>';

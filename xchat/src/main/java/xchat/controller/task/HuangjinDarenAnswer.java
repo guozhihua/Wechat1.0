@@ -15,7 +15,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,11 +60,12 @@ public class HuangjinDarenAnswer {
         String t2 =shortDateStr.concat(time2);
         long date1 = DateUtils.parseDate(t1).getTime();
         long date2 = DateUtils.parseDate(t2).getTime();
-        long date11 =date1+38*60&1000;
-        long date12 =date2+38*60&1000;
+        long date11 =date1+38*60*1000;
+        long date12 =date2+38*60*1000;
         //在直播时间内
         if((currentTime>date1&&currentTime<date11)||(currentTime>date2&&currentTime<date12)){
             try {
+                System.out.println("开始获取题目..");
                 HttpPost httpPost = new HttpPost(url);
                 httpPost.setConfig(defaultRequestConfig);
                 CloseableHttpClient client = HttpClients.createDefault();

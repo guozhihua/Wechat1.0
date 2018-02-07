@@ -40,6 +40,7 @@ public class HJDRWorker extends BaseWorker {
         if (!start) {
             queueUtils.sendMsg(null, MessageType.HUANG_JIN_DAREN);
             start = !start;
+            notifyAll();
         }
         return start;
     }
@@ -52,6 +53,7 @@ public class HJDRWorker extends BaseWorker {
             sleepTime = 1000;
             if (sessionBucket.getAllsessionMap() == null || sessionBucket.getAllsessionMap().size() == 0) {
                 this.start = false;
+                break;
             }
             try {
                 String questins = HuangjinDarenAnswer.getQuestins();
