@@ -13,9 +13,10 @@
 <button onclick="setAuth()" class="btn-group-sm btn-primary search-btn">设置AUTH</button>
 <button onclick="getQuestion($(this))" class="btn-primary btn-group-sm search-btn" value="1">关闭开关</button>
 <button onclick="closeWebSocket()" class="btn-group-sm btn-danger search-btn">关闭socket</button>
+
 <!--&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="getTicket()" >获取上级iD</button>-->
 <hr class="hjdr_hr"/>
-<div id="message"></div>
+<span id="message"></span><span  style="color: firebrick" id="dd-answer"></span>
 <iframe id="answer" src=""></iframe>
 </body>
 <script type="text/javascript">
@@ -32,23 +33,26 @@
 
     //连接发生错误的回调方法
     websocket.onerror = function () {
+        console.log("error。。。")
         setMessageInnerHTML("WebSocket连接发生错误");
     };
 
     //连接成功建立的回调方法
     websocket.onopen = function () {
+        console.log("打开连接了")
         setMessageInnerHTML("WebSocket连接成功");
     }
 
     //接收到消息的回调方法
     websocket.onmessage = function (event) {
-
+        console.log("收到消息了"+event.data)
         setMessageInnerHTML(event.data);
         searchAnswere(event.data);
     }
 
     //连接关闭的回调方法
     websocket.onclose = function () {
+        console.log("关闭....")
         setMessageInnerHTML("WebSocket连接关闭");
     }
 
@@ -71,6 +75,9 @@
                     $("#flag").removeClass("suc");
                     $("#flag").addClass("error");
                 }
+            }else if(msgs[0]=='answer'){
+                document.getElementById('dd-answer').innerHTML = msgs[1] + '<br/>';
+
             }else{
                 document.getElementById('message').innerHTML = msgs[1] + '<br/>';
             }

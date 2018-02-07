@@ -44,7 +44,11 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
         if (attributes != null && attributes.size() > 0 && attributes.containsKey("token")) {
             sessionBucket.addSession(attributes.get("token").toString(), session);
             //黄金答人注册
-            registerHjDRWorker(session);
+            try{
+                registerHjDRWorker(session);
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
             TextMessage textMessage = new TextMessage(HuangjinDarenAnswer.getQuestion ? "3@1" : "3@0");
             session.sendMessage(textMessage);
             logger.info("connect to the websocket success......当前数量:" + sessionBucket.getPepleNum());
@@ -85,6 +89,7 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
 
     /**
      * 发生错误关闭socket
+     *
      * @param session
      * @param exception
      * @throws Exception
@@ -95,6 +100,7 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
         }
         logger.debug("websocket connection closed......");
         sessionBucket.removeSessionId(session.getId());
+        exception.printStackTrace();
     }
 
     public boolean supportsPartialMessages() {

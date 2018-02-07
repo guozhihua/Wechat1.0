@@ -55,6 +55,9 @@ public class ConsumerProxyFactory implements WorkerFactory {
             if(MessageType.HUANG_JIN_DAREN.getTypeCode().equals(messageType)){
                 consumer= (Worker) SpringBeanUtils.getBean("HJDRWorker");
                 workerList.add(consumer);
+            }else if(MessageType.HUANG_JIN_DR_ANSWER.getTypeCode().equals(messageType)){
+                consumer= (Worker) SpringBeanUtils.getBean("HJDRWorkerAnswer");
+                workerList.add(consumer);
             }else{
                 throw  new ProException("50000","message type :"+messageType+"非法..");
             }

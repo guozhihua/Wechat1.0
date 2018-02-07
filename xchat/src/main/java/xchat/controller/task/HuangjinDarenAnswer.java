@@ -14,6 +14,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
+import xchat.pojo.Question;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -35,10 +36,10 @@ public class HuangjinDarenAnswer {
     }
 
 
-    public static  String time1 =" 12:28:20";
+    public static String time1 = " 12:28:20";
 
 
-    public static  String time2 =" 19:58:20";
+    public static String time2 = " 19:58:20";
 
 
     private static final RequestConfig defaultRequestConfig = RequestConfig.custom()
@@ -49,21 +50,21 @@ public class HuangjinDarenAnswer {
             .build();
 
 
-    public static String getQuestins() throws Exception {
-        String result = null;
+    public static Question getQuestins() throws Exception {
+        Question question1 = new Question();
         if (!getQuestion) {
-            return result;
+            return null;
         }
         String shortDateStr = com.weixin.utils.util.DateUtils.getShortDateStr();
-        long currentTime= com.weixin.utils.util.DateUtils.getCurrentTime();
-        String t1 =shortDateStr.concat(time1);
-        String t2 =shortDateStr.concat(time2);
+        long currentTime = com.weixin.utils.util.DateUtils.getCurrentTime();
+        String t1 = shortDateStr.concat(time1);
+        String t2 = shortDateStr.concat(time2);
         long date1 = DateUtils.parseDate(t1).getTime();
         long date2 = DateUtils.parseDate(t2).getTime();
-        long date11 =date1+38*60*1000;
-        long date12 =date2+38*60*1000;
+        long date11 = date1 + 38 * 60 * 1000;
+        long date12 = date2 + 38 * 60 * 1000;
         //在直播时间内
-        if((currentTime>date1&&currentTime<date11)||(currentTime>date2&&currentTime<date12)){
+        if ((currentTime > date1 && currentTime < date11) || (currentTime > date2 && currentTime < date12)) {
             try {
                 System.out.println("开始获取题目..");
                 HttpPost httpPost = new HttpPost(url);
@@ -93,24 +94,27 @@ public class HuangjinDarenAnswer {
                             String content = opt.getString("content");
                             answers[j] = content;
                         }
-                        result = question;
+                        question1.setQuestion(question);
+                        question1.setStatus("200");
+                        question1.setOptions(answers);
+                        return question1;
                     } else if (jsonObject != null && jsonObject.getInteger("code") == 2) {
-                        result = "999999";
+                        question1.setStatus("999999");
                     } else {
-                        result = "000000";
+                        question1.setStatus("000000");
                     }
                 } else {
-                    result = "000000";
+                    question1.setStatus("000000");
                 }
                 client.close();
             } catch (Exception ex) {
                 ex.printStackTrace();
-                result = "000000";
+                question1.setStatus("000000");
             }
-        }else{
-            result="unstart";
+        } else {
+            question1.setStatus("unstart");
         }
-        return result;
+        return question1;
     }
 
     private static void setPostEntity(HttpPost httpPost, Map<String, Object> params) {

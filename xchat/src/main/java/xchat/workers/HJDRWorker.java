@@ -10,6 +10,7 @@ import org.springframework.web.socket.WebSocketSession;
 import xchat.aop.QueueUtils;
 import xchat.controller.task.HuangjinDarenAnswer;
 import xchat.listeners.MsgEvent;
+import xchat.pojo.Question;
 import xchat.sys.MessageType;
 import xchat.sys.SessionBucket;
 
@@ -38,9 +39,9 @@ public class HJDRWorker extends BaseWorker {
 
     public boolean startWorker() {
         if (!start) {
+            logger.info("开始触发获取黄金答人 题目的任务");
             queueUtils.sendMsg(null, MessageType.HUANG_JIN_DAREN);
             start = !start;
-            notifyAll();
         }
         return start;
     }
@@ -50,43 +51,48 @@ public class HJDRWorker extends BaseWorker {
     public void execute(MsgEvent msgEvent) throws Exception {
         long sleepTime = 100;
         while (start) {
-            sleepTime = 1000;
             if (sessionBucket.getAllsessionMap() == null || sessionBucket.getAllsessionMap().size() == 0) {
                 this.start = false;
                 break;
             }
             try {
-                String questins = HuangjinDarenAnswer.getQuestins();
+                System.out.println("............");
+                Question questins = HuangjinDarenAnswer.getQuestins();
                 Map<String, String> mes = new HashMap<>();
-                if (questins == null || "000000".equals(questins)) {
+                questins = new Question("夜盲症是缺少那种维生素？", new String[]{"维生素A", "维生素E", "维生素E"});
+                questins.setStatus("200");
+                if (questins == null || "000000".equals(questins.getStatus())) {
                     mes.clear();
                     mes.put("type", "1");
                     mes.put("val", "题目正在路上狂奔......");
                     sleepTime = 1300;
-                } else if ("999999".equals(questins)) {
+                } else if ("999999".equals(questins.getStatus())) {
                     mes.clear();
                     mes.put("type", "1");
                     mes.put("val", "票据Auth 出错了,请马上设置Auth!");
                     sleepTime = 6000;
-                } else if ("unstart".equals(questins)) {
+                } else if ("unstart".equals(questins.getStatus())) {
                     mes.clear();
                     mes.put("type", "1");
                     mes.put("val", "还没有到直播的时间呢！");
                     sleepTime = 50000;
-                } else {
+                } else if ("200".equals(questins.getStatus())) {
                     mes.clear();
                     mes.put("type", "2");
-                    mes.put("val", questins);
-                    if (!HuangjinDarenAnswer.allQuestions.contains(questins)) {
-                        HuangjinDarenAnswer.allQuestions.add(questins);
+                    mes.put("val", questins.getQuestion());
+                    if (!HuangjinDarenAnswer.allQuestions.contains(questins.getQuestion())) {
+                        HuangjinDarenAnswer.allQuestions.add(questins.getQuestion());
+                        //发布查询答案的任务信息
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("question", questins);
+                        queueUtils.sendMsg(map, MessageType.HUANG_JIN_DR_ANSWER);
                         sleepTime = 15000;
                     } else {
                         sleepTime = 1500;
                     }
                 }
+                //以下是发送消息
                 String msg = mes.get("type").toString().concat("@").concat(mes.get("val").toString());
-
-
                 TextMessage text = new TextMessage(msg);
                 List<String> closedSession = new ArrayList<>();
                 for (WebSocketSession session : sessionBucket.getAllsessionMap().values()) {

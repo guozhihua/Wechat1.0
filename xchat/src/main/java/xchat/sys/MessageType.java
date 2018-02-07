@@ -9,7 +9,8 @@ package xchat.sys;
  */
 public enum MessageType {
 
-    HUANG_JIN_DAREN("100","黄金答人答题任务"),
+    HUANG_JIN_DAREN("100","黄金答人获取试题任务任务"),
+    HUANG_JIN_DR_ANSWER("101","黄金答人分析答案任务"),
     ;
     private  String typeCode;
     private String typeDescription;
