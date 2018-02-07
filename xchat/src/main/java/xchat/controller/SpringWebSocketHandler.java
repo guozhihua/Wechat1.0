@@ -25,12 +25,8 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
 
     @Autowired
     private HJDRWorker hjdrWorker;
-    
-    private SessionBucket sessionBucket =SessionBucket.getInstance();
 
-
-
-
+    private SessionBucket sessionBucket = SessionBucket.getInstance();
 
 
     public SpringWebSocketHandler() {
@@ -41,18 +37,18 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
      * 连接成功时候，会触发页面上onopen方法
      */
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        if(sessionBucket.getPepleNum()==0){
-            HJDRWorker.start=false;
+        if (sessionBucket.getPepleNum() == 0) {
+            HJDRWorker.start = false;
         }
         Map<String, Object> attributes = session.getAttributes();
-        if(attributes!=null&&attributes.size()>0&&attributes.containsKey("token")){
-           sessionBucket.addSession(attributes.get("token").toString(),session);
+        if (attributes != null && attributes.size() > 0 && attributes.containsKey("token")) {
+            sessionBucket.addSession(attributes.get("token").toString(), session);
             //黄金答人注册
             registerHjDRWorker(session);
-            System.out.println("connect to the websocket success......当前数量:"+sessionBucket.getPepleNum());
-            TextMessage textMessage=new TextMessage(HuangjinDarenAnswer.getQuestion?"3@1":"3@0");
+            TextMessage textMessage = new TextMessage(HuangjinDarenAnswer.getQuestion ? "3@1" : "3@0");
             session.sendMessage(textMessage);
-        }else {
+            logger.info("connect to the websocket success......当前数量:" + sessionBucket.getPepleNum());
+        } else {
             session.close();
         }
 
@@ -60,9 +56,10 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
 
     /**
      * 监听黄金答人的题目
+     *
      * @param session
      */
-    private void registerHjDRWorker(WebSocketSession session){
+    private void registerHjDRWorker(WebSocketSession session) {
         hjdrWorker.startWorker();
     }
 
@@ -72,7 +69,7 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
         logger.debug("websocket connection closed......");
         sessionBucket.removeSessionId(session.getId());
-        System.out.println("剩余在线用户"+sessionBucket.getPepleNum());
+        System.out.println("剩余在线用户" + sessionBucket.getPepleNum());
     }
 
     /**
@@ -80,14 +77,22 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
      */
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-        logger.info("receive msg:"+message.toString());
-        TextMessage text=new TextMessage("1@你好！题目在准备中了");
+        logger.info("receive msg:" + message.toString());
+        TextMessage text = new TextMessage("1@你好！题目在准备中了");
         session.sendMessage(text);
 
     }
 
+    /**
+     * 发生错误关闭socket
+     * @param session
+     * @param exception
+     * @throws Exception
+     */
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-        if(session.isOpen()){session.close();}
+        if (session.isOpen()) {
+            session.close();
+        }
         logger.debug("websocket connection closed......");
         sessionBucket.removeSessionId(session.getId());
     }

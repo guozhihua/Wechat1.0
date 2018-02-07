@@ -110,6 +110,10 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     public static Date parseDate(String str) throws ParseException {
         return parseDate(str,DATE_FORMAT_DATETIME);
     }
+
+    public static long getCurrentTime(){
+        return System.currentTimeMillis();
+    }
     /**
      * 根据日期格式字符串解析日期字符串
      *

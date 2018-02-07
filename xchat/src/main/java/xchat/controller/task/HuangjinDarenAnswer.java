@@ -3,6 +3,7 @@ package xchat.controller.task;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.weixin.utils.util.DateUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.CookieSpecs;
@@ -35,6 +36,12 @@ public class HuangjinDarenAnswer {
     }
 
 
+    public static  String time1 =" 12:28:20";
+
+
+    public static  String time2 =" 19:58:20";
+
+
     private static final RequestConfig defaultRequestConfig = RequestConfig.custom()
             .setSocketTimeout(5000)
             .setConnectTimeout(5000)
@@ -43,53 +50,65 @@ public class HuangjinDarenAnswer {
             .build();
 
 
-    public static String getQuestins() {
+    public static String getQuestins() throws Exception {
         String result = null;
         if (!getQuestion) {
             return result;
         }
-        try {
-            HttpPost httpPost = new HttpPost(url);
-            httpPost.setConfig(defaultRequestConfig);
-            CloseableHttpClient client = HttpClients.createDefault();
-            String respContent = null;
-            Map<String, Object> params = new HashMap<>();
-            params.put("notice", 0);
-            httpPost.addHeader(new BasicHeader("Content-Type", "application/json; charset=utf-8"));
-            httpPost.addHeader("Authorization", authHeder);
-            setPostEntity(httpPost, params);
-            HttpResponse resp = client.execute(httpPost);
-            resp.setHeader(new BasicHeader("Content-Type", "application/json; charset=utf-8"));
-            if (resp.getStatusLine().getStatusCode() == 200) {
-                HttpEntity he = resp.getEntity();
-                respContent = EntityUtils.toString(he, "UTF-8");
-                respContent = unicodeToString(respContent);
-                System.out.println(respContent);
-                JSONObject jsonObject = JSON.parseObject(respContent);
-                if (jsonObject != null && jsonObject.getInteger("code") == 0) {
-                    JSONObject data = (JSONObject) jsonObject.get("data");
-                    String question = data.getString("question");
-                    JSONArray options = data.getJSONArray("options");
-                    String[] answers = new String[options.size()];
-                    for (int j = 0; j < answers.length; j++) {
-                        JSONObject opt = (JSONObject) options.get(j);
-                        String content = opt.getString("content");
-                        answers[j] = content;
+        String shortDateStr = com.weixin.utils.util.DateUtils.getShortDateStr();
+        long currentTime= com.weixin.utils.util.DateUtils.getCurrentTime();
+        String t1 =shortDateStr.concat(time1);
+        String t2 =shortDateStr.concat(time2);
+        long date1 = DateUtils.parseDate(t1).getTime();
+        long date2 = DateUtils.parseDate(t2).getTime();
+        long date11 =date1+38*60&1000;
+        long date12 =date2+38*60&1000;
+        //在直播时间内
+        if((currentTime>date1&&currentTime<date11)||(currentTime>date2&&currentTime<date12)){
+            try {
+                HttpPost httpPost = new HttpPost(url);
+                httpPost.setConfig(defaultRequestConfig);
+                CloseableHttpClient client = HttpClients.createDefault();
+                String respContent = null;
+                Map<String, Object> params = new HashMap<>();
+                params.put("notice", 0);
+                httpPost.addHeader(new BasicHeader("Content-Type", "application/json; charset=utf-8"));
+                httpPost.addHeader("Authorization", authHeder);
+                setPostEntity(httpPost, params);
+                HttpResponse resp = client.execute(httpPost);
+                resp.setHeader(new BasicHeader("Content-Type", "application/json; charset=utf-8"));
+                if (resp.getStatusLine().getStatusCode() == 200) {
+                    HttpEntity he = resp.getEntity();
+                    respContent = EntityUtils.toString(he, "UTF-8");
+                    respContent = unicodeToString(respContent);
+                    System.out.println(respContent);
+                    JSONObject jsonObject = JSON.parseObject(respContent);
+                    if (jsonObject != null && jsonObject.getInteger("code") == 0) {
+                        JSONObject data = (JSONObject) jsonObject.get("data");
+                        String question = data.getString("question");
+                        JSONArray options = data.getJSONArray("options");
+                        String[] answers = new String[options.size()];
+                        for (int j = 0; j < answers.length; j++) {
+                            JSONObject opt = (JSONObject) options.get(j);
+                            String content = opt.getString("content");
+                            answers[j] = content;
+                        }
+                        result = question;
+                    } else if (jsonObject != null && jsonObject.getInteger("code") == 2) {
+                        result = "999999";
+                    } else {
+                        result = "000000";
                     }
-                    result = question;
-                } else if (jsonObject != null && jsonObject.getInteger("code") == 2) {
-                    result = "999999";
                 } else {
                     result = "000000";
                 }
-            } else {
+                client.close();
+            } catch (Exception ex) {
+                ex.printStackTrace();
                 result = "000000";
-                throw new IOException("请求失败" + resp);
             }
-            client.close();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            result = "000000";
+        }else{
+            result="unstart";
         }
         return result;
     }
