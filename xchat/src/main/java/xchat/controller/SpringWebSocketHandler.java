@@ -8,6 +8,7 @@ import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+import xchat.controller.task.HuangjinDarenAnswer;
 import xchat.sys.SessionBucket;
 import xchat.workers.HJDRWorker;
 
@@ -49,6 +50,8 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
             //黄金答人注册
             registerHjDRWorker(session);
             System.out.println("connect to the websocket success......当前数量:"+sessionBucket.getPepleNum());
+            TextMessage textMessage=new TextMessage(HuangjinDarenAnswer.getQuestion?"3@1":"3@0");
+            session.sendMessage(textMessage);
         }else {
             session.close();
         }
