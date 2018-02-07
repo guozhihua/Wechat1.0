@@ -113,6 +113,7 @@ public class HttpUtils {
         List<String> res = new ArrayList<>();
         try {
             HttpGet httpGet = new HttpGet(url);
+            httpGet.setHeader("Content-Type","UTF-8");
             response = httpclient.execute(httpGet);
 
             HttpEntity entity = response.getEntity();
@@ -132,6 +133,34 @@ public class HttpUtils {
         return jsonObject;
     }
 
+
+    public static String getBaiduSearch(String url) {
+        String jsonObject = null;
+        // 创建默认的httpClient实例.
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        // 创建httppost
+        CloseableHttpResponse response = null;
+        List<String> res = new ArrayList<>();
+        try {
+            HttpGet httpGet = new HttpGet(url);
+            response = httpclient.execute(httpGet);
+
+            HttpEntity entity = response.getEntity();
+            jsonObject = EntityUtils.toString(entity, "GBK");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+
+        } finally {
+            if (response != null) {
+                try {
+                    response.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return jsonObject;
+    }
 
     /**
      * JSON

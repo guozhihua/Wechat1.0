@@ -21,7 +21,7 @@
         <!--<module>webservices</module>-->
         <!--<module>chat-sso</module>-->
         <module>base</module>
-        <!--<module>OAuth2</module>-->
+        <module>xchat</module>
     </modules>
 
     <!-- 预定义依赖项的version,scope与exclusions,子项目中只需定义groupId 和 artifactId 即可 -->
@@ -41,7 +41,7 @@
             <dependency>
                 <groupId>com.baidu.aip</groupId>
                 <artifactId>java-sdk</artifactId>
-                <version>4.0.0</version>
+                <version>4.1.1</version>
             </dependency>
             <dependency>
                 <groupId>commons-dbutils</groupId>
@@ -140,12 +140,12 @@
             <dependency>
                 <groupId>org.apache.lucene</groupId>
                 <artifactId>lucene-core</artifactId>
-                <version>7.0.0</version>
+                <version>4.7.2</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.lucene</groupId>
                 <artifactId>lucene-highlighter</artifactId>
-                <version>7.0.0</version>
+                <version>4.7.2</version>
             </dependency>
             <dependency>
                 <groupId>com.janeluo</groupId>

@@ -72,7 +72,7 @@ public class HJDRWorker extends BaseWorker {
                     mes.clear();
                     mes.put("type", "1");
                     mes.put("val", "还没有到直播的时间呢！");
-                    sleepTime = 30000;
+                    sleepTime = 50000;
                 } else {
                     mes.clear();
                     mes.put("type", "2");
@@ -81,10 +81,12 @@ public class HJDRWorker extends BaseWorker {
                         HuangjinDarenAnswer.allQuestions.add(questins);
                         sleepTime = 15000;
                     } else {
-                        sleepTime = 13000;
+                        sleepTime = 1500;
                     }
                 }
                 String msg = mes.get("type").toString().concat("@").concat(mes.get("val").toString());
+
+
                 TextMessage text = new TextMessage(msg);
                 List<String> closedSession = new ArrayList<>();
                 for (WebSocketSession session : sessionBucket.getAllsessionMap().values()) {
