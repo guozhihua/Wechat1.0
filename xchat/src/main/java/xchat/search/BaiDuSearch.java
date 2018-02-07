@@ -111,6 +111,7 @@ public class BaiDuSearch implements Search {
         }
         if (jsonObjects != null) {
             for (JSONObject jsonObject : jsonObjects) {
+                if(!jsonObject.has("items")) continue;
                 JSONArray items = jsonObject.getJSONArray("items");
                 if (items != null && items.length() > 0) {
                     for (Object item : items) {

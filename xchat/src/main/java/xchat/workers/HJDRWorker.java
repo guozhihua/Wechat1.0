@@ -62,8 +62,8 @@ public class HJDRWorker extends BaseWorker {
                 Question questins = HuangjinDarenAnswer.getQuestins();
                 Map<String, String> mes = new HashMap<>();
 //                questins = new Question("夜盲症是缺少那种维生素？", new String[]{"维生素A", "维生素E", "维生素E"});
-                questins = new Question("以下哪个人不是唐朝的诗人？", new String[]{"李白", "白居易", "苏轼"});
-                questins.setStatus("200");
+//                questins = new Question("以下哪个人不是唐朝的诗人？", new String[]{"李白", "白居易", "苏轼"});
+//                questins.setStatus("200");
                 if (questins == null || "000000".equals(questins.getStatus())) {
                     mes.clear();
                     mes.put("type", "1");
