@@ -1,7 +1,7 @@
 package xchat.workers;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -32,7 +32,7 @@ public class HJDRWorker extends BaseWorker {
         this.start = false;
     }
 
-    private static Logger logger = Logger.getLogger(HJDRWorker.class);
+    private static Logger logger = LoggerFactory.getLogger(HJDRWorker.class);
     @Autowired
     private QueueUtils queueUtils;
 
@@ -53,44 +53,50 @@ public class HJDRWorker extends BaseWorker {
 
     @Override
     public void execute(MsgEvent msgEvent) throws Exception {
-        long sleepTime = 100;
+        long sleepTime = 500;
         while (start) {
             if (sessionBucket.getAllsessionMap() == null || sessionBucket.getAllsessionMap().size() == 0) {
                 this.start = false;
                 break;
             }
             try {
-                Question questins = HuangjinDarenAnswer.getQuestins();
+                Question question = HuangjinDarenAnswer.getQuestins();
                 Map<String, String> mes = new HashMap<>();
-                if(questins==null){
-                    Question question = questionService.queryById(25);
-                }else if ("000000".equals(questins.getStatus())) {
+                if(question==null){
+                    question = questionService.queryById("25");
+                    HuangjinDarenAnswer.allQuestions.clear();
+                    sleepTime=8000;
+                }else if ("000000".equals(question.getStatus())) {
                     mes.clear();
                     mes.put("type", "1");
                     mes.put("val", "题目正在路上狂奔......");
                     sleepTime = 1400;
-                } else if ("999999".equals(questins.getStatus())) {
+                } else if ("999999".equals(question.getStatus())) {
                     mes.clear();
                     mes.put("type", "1");
                     mes.put("val", "票据Auth 出错了,请马上设置Auth!");
                     sleepTime = 6000;
-                } else if ("200".equals(questins.getStatus())) {
+                }
+                if (question!=null&&"200".equals(question.getStatus())) {
                     mes.clear();
                     mes.put("type", "2");
-                    mes.put("val", questins.getQuestion());
-                    if (!HuangjinDarenAnswer.allQuestions.contains(questins.getQuestion())) {
-                        HuangjinDarenAnswer.allQuestions.add(questins.getQuestion());
-                        questins.setCreateTime(new Date());
-                        questionService.insertSelective(questins);
+                    mes.put("val", question.getQuestion());
+                    if (!HuangjinDarenAnswer.allQuestions.contains(question.getQuestion())) {
+                        HuangjinDarenAnswer.allQuestions.add(question.getQuestion());
+                        if(question.getQuestionId()==null){
+                            question.setCreateTime(new Date());
+                            questionService.insertSelective(question);
+                        }
                         //发布查询答案的任务信息
                         Map<String, Object> map = new HashMap<>();
-                        map.put("question", questins);
+                        map.put("question", question);
                         queueUtils.sendMsg(map, MessageType.HUANG_JIN_DR_ANSWER);
                         sleepTime = 17000;
                     } else {
                         sleepTime = 1500;
                     }
                 }
+
                 //以下是发送消息
                 String msg = mes.get("type").toString().concat("@").concat(mes.get("val").toString());
                 TextMessage text = new TextMessage(msg);

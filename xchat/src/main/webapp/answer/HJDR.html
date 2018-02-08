@@ -89,7 +89,7 @@
     function searchAnswere(innerHTML) {
         var msgs = innerHTML.split("@");
         if (msgs.length>0&&msgs[0] == '2') {
-            document.getElementById('answer').src = 'https://zhidao.baidu.com/search?word=' + msgs[1]+'&ie=utf-8&site=-1&sites=0&date=0&pn=10';
+            document.getElementById('answer').src = 'https://zhidao.baidu.com/search?word=' + msgs[1]+'&ie=gbk&site=-1&sites=0&date=0&pn=10';
         }
     }
     //关闭WebSocket连接
