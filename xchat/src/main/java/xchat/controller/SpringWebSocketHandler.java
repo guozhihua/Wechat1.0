@@ -53,11 +53,11 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
             }
             TextMessage textMessage = new TextMessage(HuangjinDarenAnswer.getQuestion ? "3@1" : "3@0");
             session.sendMessage(textMessage);
-            Map<String, Object> map = new HashMap<>();
-            map.put("name", "zhangs");
-            map.put("age", 19);
-            TextMessage textMessage2 = new TextMessage(JSON.toJSONString(map));
-            session.sendMessage(textMessage2);
+//            Map<String, Object> map = new HashMap<>();
+//            map.put("name", "zhangs");
+//            map.put("age", 19);
+//            TextMessage textMessage2 = new TextMessage(JSON.toJSONString(map));
+//            session.sendMessage(textMessage2);
             logger.info("connect to the websocket success......当前数量:" + sessionBucket.getPepleNum());
         } else {
             session.close();
