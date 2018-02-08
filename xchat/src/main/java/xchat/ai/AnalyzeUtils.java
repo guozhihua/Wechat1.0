@@ -25,11 +25,13 @@ public class AnalyzeUtils {
 
     /**
      * 获取结果集合
-     * @param text
+     * @param options
      * @return
      */
-    public  static List<JSONObject> getAllAnalyzeResult(String text){
-        result.add(getAisearchReealse(text));
+    public  static List<JSONObject> getAllAnalyzeResult(String[] options){
+        for(String text:options){
+            result.add(getAisearchReealse(text));
+        }
         return result;
     }
     /**
@@ -39,6 +41,13 @@ public class AnalyzeUtils {
         result.clear();
     }
 
+    public static void main(String[] args) {
+        List<JSONObject> allAnalyzeResult = getAllAnalyzeResult(new String[]{"A  维生素A维生素E", "B. 维生素C", " C  SOS"});
+        for (JSONObject jsonObject : allAnalyzeResult) {
+            System.out.println(jsonObject.getString("items"));
+        }
+
+    }
 
 
 }

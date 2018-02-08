@@ -62,24 +62,18 @@ public class HJDRWorker extends BaseWorker {
             try {
                 Question questins = HuangjinDarenAnswer.getQuestins();
                 Map<String, String> mes = new HashMap<>();
-//                questins = new Question("夜盲症是缺少那种维生素？", new String[]{"维生素A", "维生素E", "维生素E"});
-                questins = new Question("以下哪个人不是唐朝的诗人？", StringUtils.join(new String[]{"李白", "白居易", "苏轼"},"#"));
-                questins.setStatus("200");
-                if (questins == null || "000000".equals(questins.getStatus())) {
+                if(questins==null){
+                    Question question = questionService.queryById(25);
+                }else if ("000000".equals(questins.getStatus())) {
                     mes.clear();
                     mes.put("type", "1");
                     mes.put("val", "题目正在路上狂奔......");
-                    sleepTime = 1300;
+                    sleepTime = 1400;
                 } else if ("999999".equals(questins.getStatus())) {
                     mes.clear();
                     mes.put("type", "1");
                     mes.put("val", "票据Auth 出错了,请马上设置Auth!");
                     sleepTime = 6000;
-                } else if ("unstart".equals(questins.getStatus())) {
-                    mes.clear();
-                    mes.put("type", "1");
-                    mes.put("val", "还没有到直播的时间呢！");
-                    sleepTime = 50000;
                 } else if ("200".equals(questins.getStatus())) {
                     mes.clear();
                     mes.put("type", "2");
@@ -92,7 +86,7 @@ public class HJDRWorker extends BaseWorker {
                         Map<String, Object> map = new HashMap<>();
                         map.put("question", questins);
                         queueUtils.sendMsg(map, MessageType.HUANG_JIN_DR_ANSWER);
-                        sleepTime = 15000;
+                        sleepTime = 17000;
                     } else {
                         sleepTime = 1500;
                     }
@@ -127,6 +121,5 @@ public class HJDRWorker extends BaseWorker {
                 logger.error("执行任务异常结束", ex);
             }
         }
-
     }
 }

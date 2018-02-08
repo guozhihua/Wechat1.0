@@ -15,6 +15,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
+import org.springframework.stereotype.Component;
 import xchat.pojo.Question;
 
 import java.util.*;
@@ -24,6 +25,7 @@ import java.util.regex.Pattern;
 /**
  * Created by 志华 on 2018/2/4.
  */
+@Component
 public class HuangjinDarenAnswer {
     static String url = "https://dt.same.com/api/v1/answer/get-question";
     public static Set<String> allQuestions = new HashSet<>();
@@ -52,10 +54,11 @@ public class HuangjinDarenAnswer {
 
 
     public static Question getQuestins() throws Exception {
-        Question question1 = new Question();
+        Question question1 =null;
         if (!getQuestion) {
-            return null;
+            return question1;
         }
+
         String shortDateStr = com.weixin.utils.util.DateUtils.getShortDateStr();
         long currentTime = com.weixin.utils.util.DateUtils.getCurrentTime();
         String t1 = shortDateStr.concat(time1);
@@ -66,6 +69,7 @@ public class HuangjinDarenAnswer {
         long date12 = date2 + 38 * 60 * 1000;
         //在直播时间内
         if ((currentTime > date1 && currentTime < date11) || (currentTime > date2 && currentTime < date12)) {
+             question1 = new Question();
             try {
                 System.out.println("开始获取题目..");
                 HttpPost httpPost = new HttpPost(url);
@@ -113,7 +117,7 @@ public class HuangjinDarenAnswer {
                 question1.setStatus("000000");
             }
         } else {
-            question1.setStatus("unstart");
+           return question1;
         }
         return question1;
     }
