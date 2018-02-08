@@ -65,8 +65,8 @@ public class HuangjinDarenAnswer {
         String t2 = shortDateStr.concat(time2);
         long date1 = DateUtils.parseDate(t1).getTime();
         long date2 = DateUtils.parseDate(t2).getTime();
-        long date11 = date1 + 38 * 60 * 1000;
-        long date12 = date2 + 38 * 60 * 1000;
+        long date11 = date1 + 35 * 60 * 1000;
+        long date12 = date2 + 35 * 60 * 1000;
         //在直播时间内
         if ((currentTime > date1 && currentTime < date11) || (currentTime > date2 && currentTime < date12)) {
              question1 = new Question();
