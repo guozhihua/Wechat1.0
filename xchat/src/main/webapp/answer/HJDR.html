@@ -13,10 +13,8 @@
 <button onclick="setAuth()" class="btn-group-sm btn-primary search-btn">设置AUTH</button>
 <button onclick="getQuestion($(this))" class="btn-primary btn-group-sm search-btn" value="1">关闭开关</button>
 <button onclick="closeWebSocket()" class="btn-group-sm btn-danger search-btn">关闭socket</button>
-
-<!--&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="getTicket()" >获取上级iD</button>-->
 <hr class="hjdr_hr"/>
-<span id="message"></span><span  style="color: firebrick" id="dd-answer"></span>
+<span id="message" class="col-sm-3"></span><span id="dd-answer" ></span>
 <iframe id="answer" src=""></iframe>
 </body>
 <script type="text/javascript">
@@ -52,7 +50,6 @@
 
     //连接关闭的回调方法
     websocket.onclose = function () {
-        console.log("关闭....")
         setMessageInnerHTML("WebSocket连接关闭");
     }
 
@@ -63,30 +60,34 @@
 
     //将消息显示在网页上
     function setMessageInnerHTML(innerHTML) {
-        var msgs = innerHTML.split("@");
-        if(msgs.length>0){
-            if(msgs[0]==3){
-                if(msgs[1]==1){
-                    $("#flag").val("开！");
-                    $("#flag").removeClass("error");
-                    $("#flag").addClass("suc");
-                }else{
-                    $("#flag").val("关！");
-                    $("#flag").removeClass("suc");
-                    $("#flag").addClass("error");
-                }
-            }else if(msgs[0]=='answer'){
-                document.getElementById('dd-answer').innerHTML = msgs[1] + '<br/>';
+            var msgs = innerHTML.split("@");
 
+            if(msgs.length>1){
+                if(msgs[0]==3){
+                    if(msgs[1]==1){
+                        $("#flag").val("开！");
+                        $("#flag").removeClass("error");
+                        $("#flag").addClass("suc");
+                    }else{
+                        $("#flag").val("关！");
+                        $("#flag").removeClass("suc");
+                        $("#flag").addClass("error");
+                    }
+                }else if(msgs[0]=='answer'){
+                    document.getElementById('dd-answer').innerHTML = msgs[1] + '';
+
+                }else{
+                    document.getElementById('message').innerHTML = msgs[1] + '';
+                }
             }else{
-                document.getElementById('message').innerHTML = msgs[1] + '<br/>';
+                document.getElementById('message').innerHTML = innerHTML+ '';
             }
-        }
+
 
     }
     function searchAnswere(innerHTML) {
         var msgs = innerHTML.split("@");
-        if (msgs[0] == '2') {
+        if (msgs.length>0&&msgs[0] == '2') {
             document.getElementById('answer').src = 'https://m.baidu.com/s?sa=ikb&word=' + msgs[1];
         }
     }
@@ -94,6 +95,7 @@
     function closeWebSocket() {
         websocket.send("8888");
         websocket.close();
+        setMessageInnerHTML("WebSocket连接关闭");
     }
 
     //发送消息

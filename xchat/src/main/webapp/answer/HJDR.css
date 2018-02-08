@@ -19,3 +19,13 @@
 #flag.error{
     background-color: mediumvioletred;
 }
+#message{
+    font-size: 16px;
+    color: #1b1b1b;
+    font-weight: 300;
+}
+#dd-answer{
+    font-size: 20px;
+    color: firebrick;
+    font-weight: 500;
+}
