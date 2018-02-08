@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>é»„é‡‘ç­”äºº</title>
+    <meta charset="GBK">
+    <title>»Æ½ğ´ğÈË</title>
     <link href="./HJDR.css" rel="stylesheet">
     <script src="../coder/js/baseJS.js"></script>
 </head>
@@ -10,96 +10,97 @@
 <br/>
 <input id="flag" type="text" disabled class="input-group-sm  col-sm-1">
 <input id="text" type="text" class="input-group-sm  col-sm-3"/>
-<button onclick="setAuth()" class="btn-group-sm btn-primary search-btn">è®¾ç½®AUTH</button>
-<button onclick="getQuestion($(this))" class="btn-primary btn-group-sm search-btn" value="1">å…³é—­å¼€å…³</button>
-<button onclick="closeWebSocket()" class="btn-group-sm btn-danger search-btn">å…³é—­socket</button>
+<button onclick="setAuth()" class="btn-group-sm btn-primary search-btn">ÉèÖÃAUTH</button>
+<button onclick="getQuestion($(this))" class="btn-primary btn-group-sm search-btn" value="1">¹Ø±Õ¿ª¹Ø</button>
+<button onclick="closeWebSocket()" class="btn-group-sm btn-danger search-btn">¹Ø±Õsocket</button>
 <hr class="hjdr_hr"/>
-<span id="message" class="col-sm-3"></span><span id="dd-answer" ></span>
+<span id="message" class="col-sm-3"></span><span id="dd-answer"></span>
 <iframe id="answer" src=""></iframe>
 </body>
 <script type="text/javascript">
     var websocket = null;
-    //åˆ¤æ–­å½“å‰æµè§ˆå™¨æ˜¯å¦æ”¯æŒWebSocket
+    //ÅĞ¶Ïµ±Ç°ä¯ÀÀÆ÷ÊÇ·ñÖ§³ÖWebSocket
     if ('WebSocket' in window) {
 
         websocket = new WebSocket("ws://dev.edu.cn/coder/websocket/socketServer.do");
 //        websocket = new WebSocket("ws://dev.deu.cn/coder/websocket");
     }
     else {
-        window.parent.alertCommon('å½“å‰æµè§ˆå™¨ Not support websocket')
+        window.parent.alertCommon('µ±Ç°ä¯ÀÀÆ÷ Not support websocket')
     }
 
-    //è¿æ¥å‘ç”Ÿé”™è¯¯çš„å›è°ƒæ–¹æ³•
+    //Á¬½Ó·¢Éú´íÎóµÄ»Øµ÷·½·¨
     websocket.onerror = function () {
-        console.log("errorã€‚ã€‚ã€‚")
-        setMessageInnerHTML("WebSocketè¿æ¥å‘ç”Ÿé”™è¯¯");
+        console.log("error¡£¡£¡£")
+        setMessageInnerHTML("WebSocketÁ¬½Ó·¢Éú´íÎó");
     };
 
-    //è¿æ¥æˆåŠŸå»ºç«‹çš„å›è°ƒæ–¹æ³•
+    //Á¬½Ó³É¹¦½¨Á¢µÄ»Øµ÷·½·¨
     websocket.onopen = function () {
-        console.log("æ‰“å¼€è¿æ¥äº†")
-        setMessageInnerHTML("WebSocketè¿æ¥æˆåŠŸ");
+        console.log("´ò¿ªÁ¬½ÓÁË")
+        setMessageInnerHTML("WebSocketÁ¬½Ó³É¹¦");
     }
 
-    //æ¥æ”¶åˆ°æ¶ˆæ¯çš„å›è°ƒæ–¹æ³•
+    //½ÓÊÕµ½ÏûÏ¢µÄ»Øµ÷·½·¨
     websocket.onmessage = function (event) {
-        console.log("æ”¶åˆ°æ¶ˆæ¯äº†"+event.data)
+        console.log("ÊÕµ½ÏûÏ¢ÁË" + event.data)
 //        var result =JSON.parse(event.data);
         setMessageInnerHTML(event.data);
         searchAnswere(event.data);
     }
 
-    //è¿æ¥å…³é—­çš„å›è°ƒæ–¹æ³•
+    //Á¬½Ó¹Ø±ÕµÄ»Øµ÷·½·¨
     websocket.onclose = function () {
-        setMessageInnerHTML("WebSocketè¿æ¥å…³é—­");
+        setMessageInnerHTML("WebSocketÁ¬½Ó¹Ø±Õ");
     }
 
-    //ç›‘å¬çª—å£å…³é—­äº‹ä»¶ï¼Œå½“çª—å£å…³é—­æ—¶ï¼Œä¸»åŠ¨å»å…³é—­websocketè¿æ¥ï¼Œé˜²æ­¢è¿æ¥è¿˜æ²¡æ–­å¼€å°±å…³é—­çª—å£ï¼Œserverç«¯ä¼šæŠ›å¼‚å¸¸ã€‚
+    //¼àÌı´°¿Ú¹Ø±ÕÊÂ¼ş£¬µ±´°¿Ú¹Ø±ÕÊ±£¬Ö÷¶¯È¥¹Ø±ÕwebsocketÁ¬½Ó£¬·ÀÖ¹Á¬½Ó»¹Ã»¶Ï¿ª¾Í¹Ø±Õ´°¿Ú£¬server¶Ë»áÅ×Òì³£¡£
     window.onbeforeunload = function () {
         closeWebSocket();
     }
 
-    //å°†æ¶ˆæ¯æ˜¾ç¤ºåœ¨ç½‘é¡µä¸Š
+    //½«ÏûÏ¢ÏÔÊ¾ÔÚÍøÒ³ÉÏ
     function setMessageInnerHTML(innerHTML) {
-            var msgs = innerHTML.split("@");
+        var msgs = innerHTML.split("@");
 
-            if(msgs.length>1){
-                if(msgs[0]==3){
-                    if(msgs[1]==1){
-                        $("#flag").val("å¼€ï¼");
-                        $("#flag").removeClass("error");
-                        $("#flag").addClass("suc");
-                    }else{
-                        $("#flag").val("å…³ï¼");
-                        $("#flag").removeClass("suc");
-                        $("#flag").addClass("error");
-                    }
-                }else if(msgs[0]=='answer'){
-                    document.getElementById('dd-answer').innerHTML = msgs[1] + '';
-
-                }else{
-                    document.getElementById('message').innerHTML = msgs[1] + '';
+        if (msgs.length > 1) {
+            if (msgs[0] == 3) {
+                if (msgs[1] == 1) {
+                    $("#flag").val("¿ª£¡");
+                    $("#flag").removeClass("error");
+                    $("#flag").addClass("suc");
+                } else {
+                    $("#flag").val("¹Ø£¡");
+                    $("#flag").removeClass("suc");
+                    $("#flag").addClass("error");
                 }
-            }else{
-                document.getElementById('message').innerHTML = innerHTML+ '';
+            } else if (msgs[0] == 'answer') {
+                document.getElementById('dd-answer').innerHTML = msgs[1] + '';
+
+            } else {
+                document.getElementById('message').innerHTML = msgs[1] + '';
             }
+        } else {
+            document.getElementById('message').innerHTML = innerHTML + '';
+        }
 
 
     }
     function searchAnswere(innerHTML) {
         var msgs = innerHTML.split("@");
-        if (msgs.length>0&&msgs[0] == '2') {
-            document.getElementById('answer').src = 'https://zhidao.baidu.com/search?word=' + msgs[1]+'&ie=gbk&site=-1&sites=0&date=0&pn=10';
+        if (msgs.length > 0 && msgs[0] == '2') {
+            var word = msgs[1];
+            document.getElementById('answer').src = 'https://zhidao.baidu.com/search?word=' + word;
         }
     }
-    //å…³é—­WebSocketè¿æ¥
+    //¹Ø±ÕWebSocketÁ¬½Ó
     function closeWebSocket() {
         websocket.send("8888");
         websocket.close();
-        setMessageInnerHTML("WebSocketè¿æ¥å…³é—­");
+        setMessageInnerHTML("WebSocketÁ¬½Ó¹Ø±Õ");
     }
 
-    //å‘é€æ¶ˆæ¯
+    //·¢ËÍÏûÏ¢
     function send() {
         var message = document.getElementById('text').value;
         websocket.send(message);
@@ -107,7 +108,7 @@
     function setAuth() {
         var auth = $("#text").val();
         if (auth == undefined || auth == '') {
-            window.parent.alertCommon("AUTH å†…å®¹ä¸èƒ½ä¸ºç©ºï¼");
+            window.parent.alertCommon("AUTH ÄÚÈİ²»ÄÜÎª¿Õ£¡");
             return;
         }
         ajaxObject.postFormAjax(setAuth_URL + "?auth=" + auth, {}, window.parent.callback, "JSON");
@@ -117,11 +118,11 @@
             if (data.code == 200) {
                 if (obj.val() == "1") {
                     obj.val("0");
-                    obj.text("æ‰“å¼€å¼€å…³");
+                    obj.text("´ò¿ª¿ª¹Ø");
 
                 } else {
                     obj.val("1");
-                    obj.text("å…³é—­å¼€å…³");
+                    obj.text("¹Ø±Õ¿ª¹Ø");
                 }
                 window.parent.alertSuccess(data.msg);
             } else {
@@ -131,7 +132,7 @@
 
     }
 
-    //ifame è·å–ä¸Šçº§å…ƒç´ 
+    //ifame »ñÈ¡ÉÏ¼¶ÔªËØ
     //    function getTicket(){
     //      return  $("#passport_token",window.parent.document).val();
     //    }

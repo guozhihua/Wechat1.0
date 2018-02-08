@@ -87,6 +87,7 @@ public class HJDRWorker extends BaseWorker {
                             question.setCreateTime(new Date());
                             questionService.insertSelective(question);
                         }
+                        System.out.println("question:"+question.getQuestion());
                         //发布查询答案的任务信息
                         Map<String, Object> map = new HashMap<>();
                         map.put("question", question);
