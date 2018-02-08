@@ -23,15 +23,18 @@ public class HJDRAnswerWorker extends BaseWorker {
     @Override
     public void execute(MsgEvent msgEvent) throws Exception {
         Question question = (Question)msgEvent.getDatas().get("question");
+        long t1=System.currentTimeMillis();
         SearchResult search = new BaiDuSearch().search(question.getQuestion(), question.getOptionArray());
         for(WebSocketSession session:sessionBucket.getAllsessionMap().values()){
-            String right="这题我不会！";
+            String right="这题我不会!";
             if(search!=null){
                 right=search.getRightAnswer();
             }
             TextMessage textMessage =new TextMessage("answer@"+right);
             session.sendMessage(textMessage);
         }
+        long t2=System.currentTimeMillis();
+        System.out.println("=====获取答案耗时："+(float)(t2-t1)/1000);
 
 
     }

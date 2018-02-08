@@ -63,7 +63,8 @@ public class HJDRWorker extends BaseWorker {
                 Question question = HuangjinDarenAnswer.getQuestins();
                 Map<String, String> mes = new HashMap<>();
                 if (question == null) {
-                    question = questionService.queryById("19");
+                    int id =new Random().nextInt(10)+15;
+                    question = questionService.queryById(id+"");
                     HuangjinDarenAnswer.allQuestions.clear();
                     sleepTime = 8000;
                 } else if ("000000".equals(question.getStatus())) {

@@ -112,7 +112,7 @@ public class HttpUtils {
         CloseableHttpResponse response = null;
         List<String> res = new ArrayList<>();
         try {
-            HttpGet httpGet = new HttpGet(url);
+            HttpGet httpGet = new HttpGet(url.trim());
             httpGet.setHeader("Content-Type","UTF-8");
             response = httpclient.execute(httpGet);
 
@@ -142,7 +142,7 @@ public class HttpUtils {
         CloseableHttpResponse response = null;
         List<String> res = new ArrayList<>();
         try {
-            HttpGet httpGet = new HttpGet(url);
+            HttpGet httpGet = new HttpGet(url.trim());
             response = httpclient.execute(httpGet);
 
             HttpEntity entity = response.getEntity();

@@ -2,6 +2,7 @@ package xchat.search;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.BasicConfigurator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -10,9 +11,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import xchat.ai.AnalyzeUtils;
 import xchat.sys.HttpUtils;
+import xchat.sys.PropertiesUtil;
 
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.*;
+
+import static org.apache.log4j.BasicConfigurator.configure;
 
 /**
  * Created by 618 on 2018/1/12.
@@ -23,6 +28,9 @@ import java.util.*;
 public class BaiDuSearch implements Search {
     private static final String zhidaoUrl = "https://zhidao.baidu.com/search?lm=0&rn=10&pn=0&fr=search&ie=gbk&word=";
     private static final String msearch = "https://m.baidu.com/s?sa=ikb&word=";
+
+    private static final String sogouSearch="http://www.sogou.com/sogou?ie=utf8&&_asf=null&dp=1&cid=&cid=&interation=196636&s_from=result_up&query=";
+    private static final String sogouSearch2="https://www.sogou.com/web?s_from=result_up&cid=&page=2&ie=utf8&w=01029901&dr=1&query=";
 
     /**
      * https://zhidao.baidu.com/index?word=%E5%A4%9C%E7%9B%B2%E7%97%87
@@ -35,6 +43,8 @@ public class BaiDuSearch implements Search {
      */
     @Override
     public SearchResult search(String question, String[] options) throws Exception {
+        URL fileUrl = PropertiesUtil.class.getResource("/log4j2.xml");//得到文件路径
+        System.setProperty("aip.log4j.conf",fileUrl.getPath());
         Map<String, Integer> reslutmap = new LinkedHashMap<>();
         //初始化选项统计情况
         for (String option : options) {
@@ -43,30 +53,48 @@ public class BaiDuSearch implements Search {
             }
         }
         //选项分词
+        long time1 =System.currentTimeMillis();
         Map<String, String> optionAnalyzeItem = getOptionAnalyzeItem(options);
+        long time2 =System.currentTimeMillis();
+        System.out.println("选项分词使用的时间是:"+(float)(time2-time1)/1000);
         String url = zhidaoUrl.concat(URLEncoder.encode(question));
         String result = HttpUtils.getBaiduSearch(url);
-        if (StringUtils.isNotBlank(result)) {
-            StringBuilder sb=new StringBuilder();
-            System.out.println("-------------------------------analyse start---------------------------------------");
-            Document document = Jsoup.parse(result);
-            if (document != null) {
-                Elements answer1 = document.select("dd.answer");
+        try {
+            if (StringUtils.isNotBlank(result)) {
+                StringBuilder sb = new StringBuilder();
+                System.out.println("-------------------------------analyse start---------------------------------------");
+                Document document = Jsoup.parse(result);
+                if (document != null) {
+                    Elements answer1 = document.select("dd.answer");
 //                AnalyzeUtils.clearResult();
-                for (Element element : answer1) {
-                    String text = element.text();
-                    sb.append(text).append("     ");
-                }
-                for(String option:options){
-                    optionItemsAnalyze(reslutmap, optionAnalyzeItem, sb.toString(), option);
-                    String trim = getOptionKey(option);
-                    int number = StringUtils.countMatches(sb.toString(),trim);
-                    reslutmap.put(option,number);
-                }
+                    for (Element element : answer1) {
+                        String text = element.text();
+                        sb.append(text).append("     ");
+                    }
+                    for (String option : options) {
+                        optionItemsAnalyze(reslutmap, optionAnalyzeItem, sb.toString(), option);
+                        String trim = getOptionKey(option);
+                        int number = StringUtils.countMatches(sb.toString(), trim);
+                        reslutmap.put(option, number);
+                    }
 
+                }
             }
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
+        long time3 =System.currentTimeMillis();
+        System.out.println("百度知道 耗时："+(float)(time3-time2)/1000);
         mSearch(reslutmap,optionAnalyzeItem,question, options);
+        long time4 =System.currentTimeMillis();
+        System.out.println("msearch 耗时："+(float)(time4-time3)/1000);
+
+        sougouSearch(reslutmap,optionAnalyzeItem,question,options);
+        sougouSearch2(reslutmap,optionAnalyzeItem,question,options);
+        long time5 =System.currentTimeMillis();
+        System.out.println("sogouSearch 耗时："+(float)(time5-time4)/1000);
+
+
         //合并投票简单
         boolean unkoown=true;
         for(Integer integer:reslutmap.values()){
@@ -94,6 +122,7 @@ public class BaiDuSearch implements Search {
             searchCounter = seachCount.get(0);
         }
         SearchResult searchResult = new SearchResult(true, searchCounter.getOption());
+        System.out.println("==========================AI分析完毕================================");
         return searchResult;
     }
 
@@ -140,29 +169,99 @@ public class BaiDuSearch implements Search {
      * @return
      */
     public void mSearch( Map<String, Integer> reslutmap ,  Map<String, String> optionAnalyzeItem,String question, String[] options) {
-        String url = msearch.concat(URLEncoder.encode(question));
+        try{
+            String url = msearch.concat(URLEncoder.encode(question));
+            String s = HttpUtils.get(url);
+            Document parse = Jsoup.parse(s);
+            Element results = parse.getElementById("results");
+            String text = results.text();
+            for(String option:options){
+                optionItemsAnalyze(reslutmap, optionAnalyzeItem, text, option);
+                String trim =getOptionKey(option);
+                int number = StringUtils.countMatches(text,trim);
+                reslutmap.put(option,reslutmap.get(option)+number);
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+
+    }
+    /**
+     * 搜狗搜索
+     * @param question
+     * @param options
+     * @return
+     */
+    public void sougouSearch( Map<String, Integer> reslutmap ,  Map<String, String> optionAnalyzeItem,String question, String[] options) {
+        try{
+            question=question.replace("\n","");
+            question=question.replace("\u2028","");
+            String url = sogouSearch.concat(question);
+            parseDocumentInfo(reslutmap, optionAnalyzeItem, options, url);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+
+    }
+
+    private void parseDocumentInfo(Map<String, Integer> reslutmap, Map<String, String> optionAnalyzeItem, String[] options, String url) {
         String s = HttpUtils.get(url);
-        Document parse = Jsoup.parse(s);
-        Element results = parse.getElementById("results");
-        String text = results.text();
-        for(String option:options){
-            optionItemsAnalyze(reslutmap, optionAnalyzeItem, text, option);
-            String trim =getOptionKey(option);
-            int number = StringUtils.countMatches(text,trim);
-            reslutmap.put(option,reslutmap.get(option)+number);
+        if(StringUtils.isNotBlank(s)){
+            Document parse = Jsoup.parse(s);
+            StringBuffer sogouApper=new StringBuffer();
+            for (Element element : parse.getElementsByClass("results")) {
+                sogouApper.append(element.text());
+            }
+            for(String option:options){
+                optionItemsAnalyze(reslutmap, optionAnalyzeItem, sogouApper.toString(), option);
+                String trim =getOptionKey(option);
+                int number = StringUtils.countMatches(sogouApper.toString(),trim);
+                reslutmap.put(option,reslutmap.get(option)+number);
+            }
         }
 
     }
 
+    /**
+     * 搜狗搜索
+     * @param question
+     * @param options
+     * @return
+     */
+    public void sougouSearch2( Map<String, Integer> reslutmap ,  Map<String, String> optionAnalyzeItem,String question, String[] options) {
+        try{
+            question=question.replace("\n","");
+            question=question.replace("\u2028","");
+            String url = sogouSearch2.concat(question);
+            parseDocumentInfo(reslutmap, optionAnalyzeItem, options, url);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
 
+
+    }
 
     public SearchResult wenku(String question, String[] options) {
         return null;
     }
 
     public static void main(String[] args) {
+      new BaiDuSearch().test();
+    }
+
+    public void test(){
         try {
-            SearchResult zhidao = new BaiDuSearch().search("人体正常体温大概是多少度？\u2028", new String[]{"A 41℃ ～47℃", "B 28℃ ～30℃","C 36℃ ～37℃"});
+            ClassLoader classLoader = getClass().getClassLoader();
+            /**
+             getResource()方法会去classpath下找这个文件，获取到url resource, 得到这个资源后，调用url.getFile获取到 文件 的绝对路径
+             */
+            URL url = classLoader.getResource("log4j2.xml");
+            /**
+             * url.getFile() 得到这个文件的绝对路径
+             */
+            System.out.println(url.getFile());
         } catch (Exception e) {
             e.printStackTrace();
         }

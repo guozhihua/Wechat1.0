@@ -1,6 +1,7 @@
 package xchat.listeners;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by :Guozhihua
@@ -8,7 +9,7 @@ import org.apache.log4j.Logger;
  */
 public   class MsgEventConsumer extends BaseConsumer {
 
-    private static Logger logger = Logger.getLogger(MsgEventConsumer.class);
+    private static Logger logger = LoggerFactory.getLogger(MsgEventConsumer.class);
 
     private  String consumerNum;
 

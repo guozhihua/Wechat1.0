@@ -91,6 +91,8 @@ public class HuangjinDarenAnswer {
                             String content = opt.getString("content");
                             answers[j] = content;
                         }
+                        question=question.replace("\n","");
+                        question=question.replace("\u2028","");
                         question1.setQuestion(question);
                         question1.setStatus("200");
                         question1.setOptions(StringUtils.join(answers,"#"));
