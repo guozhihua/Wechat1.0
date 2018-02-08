@@ -62,14 +62,12 @@ public class HJDRWorker extends BaseWorker {
             try {
                 Question question = HuangjinDarenAnswer.getQuestins();
                 Map<String, String> mes = new HashMap<>();
-                if(question==null){
+                if (question == null) {
                     question = questionService.queryById("25");
                     HuangjinDarenAnswer.allQuestions.clear();
-                    sleepTime=8000;
-                }else if ("000000".equals(question.getStatus())) {
+                    sleepTime = 8000;
+                } else if ("000000".equals(question.getStatus())) {
                     mes.clear();
-                    mes.put("type", "1");
-                    mes.put("val", "题目正在路上狂奔......");
                     sleepTime = 1400;
                 } else if ("999999".equals(question.getStatus())) {
                     mes.clear();
@@ -77,17 +75,17 @@ public class HJDRWorker extends BaseWorker {
                     mes.put("val", "票据Auth 出错了,请马上设置Auth!");
                     sleepTime = 6000;
                 }
-                if (question!=null&&"200".equals(question.getStatus())) {
+                if (question != null && "200".equals(question.getStatus())) {
                     mes.clear();
                     mes.put("type", "2");
                     mes.put("val", question.getQuestion());
                     if (!HuangjinDarenAnswer.allQuestions.contains(question.getQuestion())) {
                         HuangjinDarenAnswer.allQuestions.add(question.getQuestion());
-                        if(question.getQuestionId()==null){
+                        if (question.getQuestionId() == null) {
                             question.setCreateTime(new Date());
                             questionService.insertSelective(question);
                         }
-                        System.out.println("question:"+question.getQuestion());
+                        System.out.println("question:" + question.getQuestion());
                         //发布查询答案的任务信息
                         Map<String, Object> map = new HashMap<>();
                         map.put("question", question);
@@ -97,33 +95,25 @@ public class HJDRWorker extends BaseWorker {
                         sleepTime = 1500;
                     }
                 }
-
-                //以下是发送消息
-                String msg = mes.get("type").toString().concat("@").concat(mes.get("val").toString());
-                TextMessage text = new TextMessage(msg);
-                List<String> closedSession = new ArrayList<>();
-                for (WebSocketSession session : sessionBucket.getAllsessionMap().values()) {
-                    if (session.isOpen()) {
-                        try {
-                            session.sendMessage(text);
-                        } catch (Exception ex) {
-                            logger.error("执行任务异常结束", ex);
+                if (!mes.isEmpty()) {
+                    //以下是发送消息
+                    String msg = mes.get("type").toString().concat("@").concat(mes.get("val").toString());
+                    TextMessage text = new TextMessage(msg);
+                    List<String> closedSession = new ArrayList<>();
+                    for (WebSocketSession session : sessionBucket.getAllsessionMap().values()) {
+                        if (session.isOpen()) {
+                                session.sendMessage(text);
+                        } else {
+                            closedSession.add(session.getId());
                         }
-                    } else {
-                        closedSession.add(session.getId());
+                    }
+                    if (closedSession.size() > 0) {
+                        for (String sessionId : closedSession) {
+                            sessionBucket.removeSessionId(sessionId);
+                        }
                     }
                 }
-                if (closedSession.size() > 0) {
-                    for (String sessionId : closedSession) {
-                        sessionBucket.removeSessionId(sessionId);
-                    }
-                }
-                try {
-                    Thread.sleep(sleepTime);
-                } catch (Exception ex) {
-                    logger.error("执行任务异常结束", ex);
-                }
-
+                Thread.sleep(sleepTime);
             } catch (Exception ex) {
                 logger.error("执行任务异常结束", ex);
             }

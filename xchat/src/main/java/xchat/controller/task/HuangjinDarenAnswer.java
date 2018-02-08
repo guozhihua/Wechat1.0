@@ -18,6 +18,7 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Component;
 import xchat.pojo.Question;
 
+import java.text.ParseException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -58,17 +59,8 @@ public class HuangjinDarenAnswer {
         if (!getQuestion) {
             return question1;
         }
-
-        String shortDateStr = com.weixin.utils.util.DateUtils.getShortDateStr();
-        long currentTime = com.weixin.utils.util.DateUtils.getCurrentTime();
-        String t1 = shortDateStr.concat(time1);
-        String t2 = shortDateStr.concat(time2);
-        long date1 = DateUtils.parseDate(t1).getTime();
-        long date2 = DateUtils.parseDate(t2).getTime();
-        long date11 = date1 + 35 * 60 * 1000;
-        long date12 = date2 + 35 * 60 * 1000;
         //在直播时间内
-        if ((currentTime > date1 && currentTime < date11) || (currentTime > date2 && currentTime < date12)) {
+        if (isTime()){
              question1 = new Question();
             try {
                 System.out.println("开始获取题目..");
@@ -164,5 +156,20 @@ public class HuangjinDarenAnswer {
 
     }
 
+
+    public static boolean isTime() throws ParseException {
+        String shortDateStr = com.weixin.utils.util.DateUtils.getShortDateStr();
+        long currentTime = com.weixin.utils.util.DateUtils.getCurrentTime();
+        String t1 = shortDateStr.concat(time1);
+        String t2 = shortDateStr.concat(time2);
+        long date1 = DateUtils.parseDate(t1).getTime();
+        long date2 = DateUtils.parseDate(t2).getTime();
+        long date11 = date1 + 35 * 60 * 1000;
+        long date12 = date2 + 35 * 60 * 1000;
+       if((currentTime > date1 && currentTime < date11) || (currentTime > date2 && currentTime < date12)){
+           return true ;
+       }
+        return false ;
+    }
 
 }
