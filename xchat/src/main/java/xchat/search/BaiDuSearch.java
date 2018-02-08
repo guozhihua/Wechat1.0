@@ -2,10 +2,13 @@ package xchat.search;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import xchat.ai.AnalyzeUtils;
 import xchat.sys.HttpUtils;
 
 import java.net.URLEncoder;
@@ -32,7 +35,15 @@ public class BaiDuSearch implements Search {
      */
     @Override
     public SearchResult search(String question, String[] options) throws Exception {
-        Map<String,Integer> reslutmap=new LinkedHashMap<>();
+        Map<String, Integer> reslutmap = new LinkedHashMap<>();
+        //初始化选项统计情况
+        for (String option : options) {
+            if(!reslutmap.containsKey(option)){
+                reslutmap.put(option,0);
+            }
+        }
+        //选项分词
+        Map<String, String> optionAnalyzeItem = getOptionAnalyzeItem(options);
         String url = zhidaoUrl.concat(URLEncoder.encode(question));
         String result = HttpUtils.getBaiduSearch(url);
         if (StringUtils.isNotBlank(result)) {
@@ -47,6 +58,7 @@ public class BaiDuSearch implements Search {
                     sb.append(text).append("     ");
                 }
                 for(String option:options){
+                    optionItemsAnalyze(reslutmap, optionAnalyzeItem, sb.toString(), option);
                     String trim = getOptionKey(option);
                     int number = StringUtils.countMatches(sb.toString(),trim);
                     reslutmap.put(option,number);
@@ -54,19 +66,26 @@ public class BaiDuSearch implements Search {
 
             }
         }
-        List<SearchCounter> simpleSearch = mSearch(question, options);
+        mSearch(reslutmap,optionAnalyzeItem,question, options);
         //合并投票简单
-        for(SearchCounter search:simpleSearch){
-            reslutmap.put(search.getOption(),search.getCount()+reslutmap.get(search.getOption()));
+        boolean unkoown=true;
+        for(Integer integer:reslutmap.values()){
+            if(integer>0){
+                unkoown=false;
+                break;
+            }
+        }
+        if(unkoown){
+            return null;
         }
         List<SearchCounter> seachCount=new ArrayList<>();
+        //通过list进行排序
         for(String key:options){
             Integer integer = reslutmap.get(key);
             SearchCounter searchCounter=new SearchCounter(key,integer);
             seachCount.add(searchCounter);
             System.out.println(key+":"+searchCounter.getCount());
         }
-
         Collections.sort(seachCount, new SortByCount());
         SearchCounter searchCounter = null;
         if (isAskWronng(question)) {
@@ -76,6 +95,24 @@ public class BaiDuSearch implements Search {
         }
         SearchResult searchResult = new SearchResult(true, searchCounter.getOption());
         return searchResult;
+    }
+
+    private void optionItemsAnalyze(Map<String, Integer> reslutmap, Map<String, String> optionAnalyzeItem, String sb, String option) {
+        String optionAnalyzItems = optionAnalyzeItem.get(option);
+        if(StringUtils.isNotBlank(optionAnalyzItems)){
+            String[] split = optionAnalyzItems.split("&");
+            if(split.length>0){
+                for (String sp : split) {
+                     if(StringUtils.isBlank(sp)){
+                         continue;
+                     }else{
+                         int number = StringUtils.countMatches(sb,sp);
+                         reslutmap.put(option,reslutmap.get(option)+number);
+                     }
+                }
+
+            }
+        }
     }
 
     /**
@@ -102,26 +139,22 @@ public class BaiDuSearch implements Search {
      * @param options
      * @return
      */
-    public  List<SearchCounter> mSearch(String question, String[] options) {
-        List<SearchCounter> searchCounters =new ArrayList<>();
+    public void mSearch( Map<String, Integer> reslutmap ,  Map<String, String> optionAnalyzeItem,String question, String[] options) {
         String url = msearch.concat(URLEncoder.encode(question));
         String s = HttpUtils.get(url);
         Document parse = Jsoup.parse(s);
         Element results = parse.getElementById("results");
         String text = results.text();
         for(String option:options){
+            optionItemsAnalyze(reslutmap, optionAnalyzeItem, text, option);
             String trim =getOptionKey(option);
             int number = StringUtils.countMatches(text,trim);
-            SearchCounter searchCounter1 =new SearchCounter(option,number);
-            searchCounters.add(searchCounter1);
+            reslutmap.put(option,reslutmap.get(option)+number);
         }
-       return searchCounters;
+
     }
 
-    public SearchResult zhidao(String question, String[] options) throws Exception {
-        SearchResult search = search(question, options);
-        return search;
-    }
+
 
     public SearchResult wenku(String question, String[] options) {
         return null;
@@ -129,16 +162,56 @@ public class BaiDuSearch implements Search {
 
     public static void main(String[] args) {
         try {
-            Map<String, Object> map = new HashMap<>();
-            map.put("name", "zhangs");
-            map.put("age", 19);
-            System.out.println(JSON.toJSONString(map));
-//            SearchResult zhidao = new BaiDuSearch().mSearch("夜盲症是缺少哪种维生素？", new String[]{"维生素A", "维生素B"});
+            SearchResult zhidao = new BaiDuSearch().search("人体正常体温大概是多少度？\u2028", new String[]{"A 41℃ ～47℃", "B 28℃ ～30℃","C 36℃ ～37℃"});
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    public static Map<String,String> getOptionAnalyzeItem(String[] options){
+        Map<String,String> optionItems=new HashMap<>();
+        Map<String,Integer> counters=new HashMap<>();
+        for (String option : options) {
+            String optionKey = getOptionKey(option);
+            StringBuilder optinAnalyzeVal = new StringBuilder();
+            JSONObject aisearchReealse = AnalyzeUtils.getAisearchReealse(optionKey);
+            if(aisearchReealse!=null&&aisearchReealse.has("items")){
+                JSONArray items = aisearchReealse.getJSONArray("items");
+                if(items!=null){
+                    for (Object item : items) {
+                         JSONObject obj= (JSONObject) item;
+                        if(obj.has("item")){
+                            String itemVal =obj.getString("item");
+                            if(StringUtils.isNotBlank(itemVal.trim())){
+                                if(counters.containsKey(itemVal.trim())){
+                                    counters.put(itemVal.trim(),counters.get(itemVal.trim())+1);
+                                }else{
+                                    counters.put(itemVal.trim(),1);
+                                }
+                                optinAnalyzeVal.append(itemVal.trim()).append("&");
+                            }
+                        }
+                    }
+                    optionItems.put(option,optinAnalyzeVal.toString());
+                }
+            }
+        }
+        for (String  opkey : optionItems.keySet()) {
+            String value=optionItems.get(opkey);
+            for (String key : counters.keySet()) {
+                if(value.contains(key)){
+                    Integer integer = counters.get(key);
+                    if(integer>2){
+                        value=value.replaceAll(key,"");
+                        value= value.replaceAll("&&","&");
+                        value=value.replaceAll("&&&","&");
+                    }
+                }
+            }
+           optionItems.put(opkey,value);
+        }
+        return optionItems;
+    }
 
     public static String getOptionKey(String option){
         String reg="ABCDEFGH";

@@ -25,7 +25,11 @@ public class HJDRAnswerWorker extends BaseWorker {
         Question question = (Question)msgEvent.getDatas().get("question");
         SearchResult search = new BaiDuSearch().search(question.getQuestion(), question.getOptionArray());
         for(WebSocketSession session:sessionBucket.getAllsessionMap().values()){
-            TextMessage textMessage =new TextMessage("answer@"+search.getRightAnswer());
+            String right="这题我不会！";
+            if(search!=null){
+                right=search.getRightAnswer();
+            }
+            TextMessage textMessage =new TextMessage("answer@"+right);
             session.sendMessage(textMessage);
         }
 

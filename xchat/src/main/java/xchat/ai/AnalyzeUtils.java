@@ -1,6 +1,7 @@
 package xchat.ai;
 
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -23,17 +24,10 @@ public class AnalyzeUtils {
         return  new AiTuZi().getXMCient().lexer(text,null);
     }
 
-    /**
-     * 获取结果集合
-     * @param options
-     * @return
-     */
-    public  static List<JSONObject> getAllAnalyzeResult(String[] options){
-        for(String text:options){
-            result.add(getAisearchReealse(text));
-        }
-        return result;
-    }
+
+
+
+
     /**
      * 清楚上次分析的结果集
      */
@@ -41,11 +35,24 @@ public class AnalyzeUtils {
         result.clear();
     }
 
+
+
     public static void main(String[] args) {
-        List<JSONObject> allAnalyzeResult = getAllAnalyzeResult(new String[]{"A  维生素A维生素E", "B. 维生素C", " C  SOS"});
-        for (JSONObject jsonObject : allAnalyzeResult) {
-            System.out.println(jsonObject.getString("items"));
+        String[] strings = {"41℃ ～47℃", "28℃ ～30℃", "36℃ ～37℃"};
+        List<JSONObject> allAnalyzeResult = new ArrayList<>();
+        for(String key:strings){
+            JSONObject aisearchReealse = getAisearchReealse(key);
+            JSONArray items = aisearchReealse.getJSONArray("items");
+            if(items!=null){
+                for (Object item : items) {
+                    System.out.println(((JSONObject) item).getString("item"));
+                }
+            }
+            allAnalyzeResult.add(aisearchReealse);
         }
+
+
+
 
     }
 
