@@ -1,5 +1,6 @@
 package xchat.search;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -87,7 +88,7 @@ public class BaiDuSearch implements Search {
 
     }
 
-    public SearchResult mSearch(String question,String[] options){
+    public SearchResult mSearch(String question, String[] options) {
         String url = msearch.concat(URLEncoder.encode(question));
         String s = HttpUtils.get(url);
         Document parse = Jsoup.parse(s);
@@ -97,7 +98,7 @@ public class BaiDuSearch implements Search {
         System.out.println(number1);
 
 
-        return  null;
+        return null;
     }
 
     public SearchResult zhidao(String question, String[] options) throws Exception {
@@ -111,7 +112,11 @@ public class BaiDuSearch implements Search {
 
     public static void main(String[] args) {
         try {
-            SearchResult zhidao = new BaiDuSearch().mSearch("夜盲症是缺少哪种维生素？", new String[]{"维生素A", "维生素B"});
+            Map<String, Object> map = new HashMap<>();
+            map.put("name", "zhangs");
+            map.put("age", 19);
+            System.out.println(JSON.toJSONString(map));
+//            SearchResult zhidao = new BaiDuSearch().mSearch("夜盲症是缺少哪种维生素？", new String[]{"维生素A", "维生素B"});
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -124,7 +129,7 @@ public class BaiDuSearch implements Search {
         }
         if (jsonObjects != null) {
             for (JSONObject jsonObject : jsonObjects) {
-                if(!jsonObject.has("items")) continue;
+                if (!jsonObject.has("items")) continue;
                 JSONArray items = jsonObject.getJSONArray("items");
                 if (items != null && items.length() > 0) {
                     for (Object item : items) {

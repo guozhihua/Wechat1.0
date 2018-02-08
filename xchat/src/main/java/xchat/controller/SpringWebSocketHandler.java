@@ -1,5 +1,6 @@
 package xchat.controller;
 
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import xchat.sys.SessionBucket;
 import xchat.workers.HJDRWorker;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -51,6 +53,11 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
             }
             TextMessage textMessage = new TextMessage(HuangjinDarenAnswer.getQuestion ? "3@1" : "3@0");
             session.sendMessage(textMessage);
+            Map<String, Object> map = new HashMap<>();
+            map.put("name", "zhangs");
+            map.put("age", 19);
+            TextMessage textMessage2 = new TextMessage(JSON.toJSONString(map));
+            session.sendMessage(textMessage2);
             logger.info("connect to the websocket success......当前数量:" + sessionBucket.getPepleNum());
         } else {
             session.close();
@@ -100,7 +107,6 @@ public class SpringWebSocketHandler extends TextWebSocketHandler {
         }
         logger.debug("websocket connection closed......");
         sessionBucket.removeSessionId(session.getId());
-        exception.printStackTrace();
     }
 
     public boolean supportsPartialMessages() {

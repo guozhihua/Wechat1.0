@@ -44,6 +44,7 @@
     //接收到消息的回调方法
     websocket.onmessage = function (event) {
         console.log("收到消息了"+event.data)
+//        var result =JSON.parse(event.data);
         setMessageInnerHTML(event.data);
         searchAnswere(event.data);
     }
