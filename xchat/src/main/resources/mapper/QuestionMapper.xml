@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="xchat.dao.QuestionDao" > 
+<!-- Result Map-->
+<resultMap id="BaseResultMap" type="xchat.pojo.Question" >
+	<result column="question_id" property="questionId"/>
+	<result column="status" property="status"/>
+	<result column="options" property="options"/>
+	<result column="question" property="question"/>
+	<result column="create_time" property="createTime"/>
+</resultMap>
+       
+<!-- question table all fields -->
+<sql id="Base_Column_List" >
+	 question_id,status,options,question,create_time
+</sql>
+   
+   
+<!-- 查询条件 -->
+<sql id="Example_Where_Clause">
+where 1=1
+<trim  suffixOverrides="," >
+	<if test="questionId != null and questionId != ''" >
+	    and question_id =  #{questionId}
+	</if>
+	<if test="status != null and status != ''" >
+	    and status =  #{status}
+	</if>
+	<if test="options != null and options != ''" >
+	    and options =  #{options}
+	</if>
+	<if test="question != null and question != ''" >
+	    and question =  #{question}
+	</if>
+	<if test="createTime != null and createTime != ''" >
+	    and create_time =  #{createTime}
+	</if>
+</trim>
+</sql>
+   
+<!-- 根据id查询 问题表 -->
+<select id="selectByPrimaryKey"  resultMap="BaseResultMap" parameterType="java.lang.String">
+	select <include refid="Base_Column_List" /> 
+	 from question where question_id = #{questionId}
+</select>
+<!-- 删除记录 -->
+<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+	delete 	 from question where question_id = #{questionId}
+</delete>
+<!-- 插入记录 -->
+<insert id="insert" parameterType="xchat.pojo.Question" >
+  insert into question(question_id,status,options,question,create_time)
+ values(#{questionId},#{status},#{options},#{question},now())
+</insert>
+<!-- 插入记录 -->
+<insert id="insertSelective" parameterType="xchat.pojo.Question" >
+  insert into question
+	<trim  prefix="(" suffix=")"  suffixOverrides="," >
+	<if test="questionId != null  ">
+		question_id,
+	</if>
+	<if test="status != null  ">
+		status,
+	</if>
+	<if test="options != null  ">
+		options,
+	</if>
+	<if test="question != null  ">
+		question,
+	</if>
+	<if test="createTime != null  ">
+		create_time,
+	</if>
+	</trim>
+	<trim  prefix="values (" suffix=")"  suffixOverrides="," >
+	<if test="questionId != null  ">
+		#{questionId},
+	</if>
+	<if test="status != null  ">
+		#{status},
+	</if>
+	<if test="options != null  ">
+		#{options},
+	</if>
+	<if test="question != null  ">
+		#{question},
+	</if>
+	<if test="createTime != null  ">
+		now(),
+	</if>
+	</trim>
+</insert>
+ <!-- 修改记录，只修改只不为空的字段 -->
+<update id="updateByPrimaryKeySelective" parameterType="xchat.pojo.Question" >
+	update question set 
+	<trim  suffixOverrides="," >
+	<if test="status != null  ">
+		status=#{status},
+	</if>
+	<if test="options != null  ">
+		options=#{options},
+	</if>
+	<if test="question != null  ">
+		question=#{question},
+	</if>
+	<if test="createTime != null  ">
+		create_time=#{createTime},
+	</if>
+	</trim> where question_id=#{questionId}
+</update>
+<!-- 根据id，修改记录-->  
+ <update id="updateByPrimaryKey" parameterType="xchat.pojo.Question" >
+  update question set status=#{status},options=#{options},question=#{question},create_time=now() where question_id=#{questionId}
+ </update>
+  	
+<!-- 查询问题表列表 -->
+<select id="selectList" resultMap="BaseResultMap"  parameterType="Object">
+	select 
+	<include refid="Base_Column_List"/>
+	from question 
+	<include refid="Example_Where_Clause"/>
+	<if test="orderByClause != null and orderByClause != ''" >
+       order by  ${orderByClause}
+    </if>
+</select>
+  	
+</mapper>   

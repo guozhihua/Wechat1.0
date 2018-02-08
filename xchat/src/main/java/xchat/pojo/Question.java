@@ -2,20 +2,23 @@ package xchat.pojo;
 
 import xchat.sys.SuperVO;
 
+import java.util.Date;
+
 /**
  * Created by :Guozhihua
  * Date： 2018/2/7.
  */
 
 public class Question extends SuperVO {
-    private Integer quesionId;
-
+    private Integer questionId;
+    private java.util.Date createTime;//
     private String status ;
 
     private String question;
-    private String[] options;
 
-    public Question(String question, String[] options) {
+    private String options;
+
+    public Question(String question, String options) {
         this.question = question;
         this.options = options;
     }
@@ -31,12 +34,12 @@ public class Question extends SuperVO {
         this.status = status;
     }
 
-    public Integer getQuesionId() {
-        return quesionId;
+    public Integer getQuestionId() {
+        return questionId;
     }
 
-    public void setQuesionId(Integer quesionId) {
-        this.quesionId = quesionId;
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
     }
 
     public String getQuestion() {
@@ -47,11 +50,24 @@ public class Question extends SuperVO {
         this.question = question;
     }
 
-    public String[] getOptions() {
+    public String getOptions() {
         return options;
     }
 
-    public void setOptions(String[] options) {
+    public void setOptions(String options) {
         this.options = options;
+    }
+
+    public String[] getOptionArray(){
+        String[] split = options.split("#");
+        return split;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

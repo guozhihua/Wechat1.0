@@ -23,7 +23,7 @@ public class HJDRAnswerWorker extends BaseWorker {
     @Override
     public void execute(MsgEvent msgEvent) throws Exception {
         Question question = (Question)msgEvent.getDatas().get("question");
-        SearchResult search = new BaiDuSearch().search(question.getQuestion(), question.getOptions());
+        SearchResult search = new BaiDuSearch().search(question.getQuestion(), question.getOptionArray());
         for(WebSocketSession session:sessionBucket.getAllsessionMap().values()){
             TextMessage textMessage =new TextMessage("answer@"+search.getRightAnswer());
             session.sendMessage(textMessage);

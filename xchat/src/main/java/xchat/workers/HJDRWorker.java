@@ -1,5 +1,6 @@
 package xchat.workers;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -10,13 +11,11 @@ import xchat.aop.QueueUtils;
 import xchat.controller.task.HuangjinDarenAnswer;
 import xchat.listeners.MsgEvent;
 import xchat.pojo.Question;
+import xchat.service.QuestionService;
 import xchat.sys.MessageType;
 import xchat.sys.SessionBucket;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by :Guozhihua
@@ -36,6 +35,9 @@ public class HJDRWorker extends BaseWorker {
     private static Logger logger = Logger.getLogger(HJDRWorker.class);
     @Autowired
     private QueueUtils queueUtils;
+
+    @Autowired
+    private QuestionService questionService;
 
     private SessionBucket sessionBucket = SessionBucket.getInstance();
 
@@ -58,12 +60,11 @@ public class HJDRWorker extends BaseWorker {
                 break;
             }
             try {
-                System.out.println("............");
                 Question questins = HuangjinDarenAnswer.getQuestins();
                 Map<String, String> mes = new HashMap<>();
 //                questins = new Question("夜盲症是缺少那种维生素？", new String[]{"维生素A", "维生素E", "维生素E"});
-//                questins = new Question("以下哪个人不是唐朝的诗人？", new String[]{"李白", "白居易", "苏轼"});
-//                questins.setStatus("200");
+                questins = new Question("以下哪个人不是唐朝的诗人？", StringUtils.join(new String[]{"李白", "白居易", "苏轼"},"#"));
+                questins.setStatus("200");
                 if (questins == null || "000000".equals(questins.getStatus())) {
                     mes.clear();
                     mes.put("type", "1");
@@ -85,6 +86,8 @@ public class HJDRWorker extends BaseWorker {
                     mes.put("val", questins.getQuestion());
                     if (!HuangjinDarenAnswer.allQuestions.contains(questins.getQuestion())) {
                         HuangjinDarenAnswer.allQuestions.add(questins.getQuestion());
+                        questins.setCreateTime(new Date());
+                        questionService.insertSelective(questins);
                         //发布查询答案的任务信息
                         Map<String, Object> map = new HashMap<>();
                         map.put("question", questins);

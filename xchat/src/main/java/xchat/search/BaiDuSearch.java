@@ -21,6 +21,7 @@ import java.util.*;
 
 public class BaiDuSearch implements Search {
     private static final String zhidaoUrl = "https://zhidao.baidu.com/search?lm=0&rn=10&pn=0&fr=search&ie=gbk&word=";
+    private static final String msearch = "https://m.baidu.com/s?sa=ikb&word=";
 
     /**
      * https://zhidao.baidu.com/index?word=%E5%A4%9C%E7%9B%B2%E7%97%87
@@ -86,6 +87,19 @@ public class BaiDuSearch implements Search {
 
     }
 
+    public SearchResult mSearch(String question,String[] options){
+        String url = msearch.concat(URLEncoder.encode(question));
+        String s = HttpUtils.get(url);
+        Document parse = Jsoup.parse(s);
+        Element results = parse.getElementById("results");
+        String text = results.text();
+        int number1 = StringUtils.countMatches(text, "维生素A");
+        System.out.println(number1);
+
+
+        return  null;
+    }
+
     public SearchResult zhidao(String question, String[] options) throws Exception {
         SearchResult search = search(question, options);
         return search;
@@ -97,8 +111,7 @@ public class BaiDuSearch implements Search {
 
     public static void main(String[] args) {
         try {
-            SearchResult zhidao = new BaiDuSearch().zhidao("夜盲症是缺少哪种维生素？", new String[]{"维生素A", "维生素B"});
-            System.out.println(zhidao.getRightAnswer());
+            SearchResult zhidao = new BaiDuSearch().mSearch("夜盲症是缺少哪种维生素？", new String[]{"维生素A", "维生素B"});
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,7 +132,7 @@ public class BaiDuSearch implements Search {
                         String item1 = oj.getString("item").trim();
                         if (stringBuilder.toString().contains(item1)) {
                             for (SearchCounter searchCounter : searchCounters) {
-                                if (searchCounter.getOption().equals(item1)) {
+                                if (searchCounter.getOption().contains(item1)) {
                                     searchCounter.setCount(searchCounter.getCount() + 1);
                                 }
                             }

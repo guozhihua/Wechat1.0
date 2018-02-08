@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.weixin.utils.util.DateUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.CookieSpecs;
@@ -96,7 +97,7 @@ public class HuangjinDarenAnswer {
                         }
                         question1.setQuestion(question);
                         question1.setStatus("200");
-                        question1.setOptions(answers);
+                        question1.setOptions(StringUtils.join(answers,"#"));
                         return question1;
                     } else if (jsonObject != null && jsonObject.getInteger("code") == 2) {
                         question1.setStatus("999999");
