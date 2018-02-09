@@ -5,6 +5,7 @@
     <title>黄金答人</title>
     <link href="./HJDR.css" rel="stylesheet">
     <script src="../coder/js/baseJS.js"></script>
+    <script src="../coder/js/sockjs-0.3.min.js"></script>
 </head>
 <body>
 <br/>
@@ -19,19 +20,20 @@
 </body>
 <script type="text/javascript">
     var websocket = null;
+    WebSocket.prototype.isOpen = false;
     //判断当前浏览器是否支持WebSocket
     if ('WebSocket' in window) {
-
         websocket = new WebSocket("ws://dev.edu.cn/coder/websocket/socketServer.do");
-//        websocket = new WebSocket("ws://dev.deu.cn/coder/websocket");
     }
     else {
-        window.parent.alertCommon('当前浏览器 Not support websocket')
+        websocket = new SockJS("http://dev.edu.cn/coder/websocket/sockjs/socketServer.do");
+//        window.parent.alertCommon('当前浏览器 Not support websocket')
     }
 
     //连接发生错误的回调方法
     websocket.onerror = function () {
         console.log("error。。。")
+        websocket.isOpen = false;
         setMessageInnerHTML("WebSocket连接发生错误");
     };
 
@@ -39,19 +41,27 @@
     websocket.onopen = function () {
         console.log("打开连接了")
         setMessageInnerHTML("WebSocket连接成功");
+        websocket.isOpen = true;
+        setInterval(function () {
+            if (websocket.isOpen) {
+                websocket.send("ping..........")
+            }
+        }, 8000);
     }
-
     //接收到消息的回调方法
     websocket.onmessage = function (event) {
         console.log("收到消息了" + event.data)
 //        var result =JSON.parse(event.data);
-        setMessageInnerHTML(event.data);
-        searchAnswere(event.data);
+        if (event.data.indexOf("pong") == -1) {
+            setMessageInnerHTML(event.data);
+            searchAnswere(event.data);
+        }
     }
 
     //连接关闭的回调方法
     websocket.onclose = function () {
         setMessageInnerHTML("WebSocket连接关闭");
+        websocket.isOpen = false;
     }
 
     //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
@@ -79,9 +89,11 @@
 
             } else {
                 document.getElementById('message').innerHTML = msgs[1] + '';
+                $("#dd-answer").empty();
             }
         } else {
             document.getElementById('message').innerHTML = innerHTML + '';
+            $("#dd-answer").empty();
         }
 
 
@@ -98,6 +110,7 @@
     function closeWebSocket() {
         websocket.send("8888");
         websocket.close();
+        websocket.isOpen = false;
         setMessageInnerHTML("WebSocket连接关闭");
     }
 

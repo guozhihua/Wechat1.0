@@ -40,10 +40,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         //验证token是否失效，失效则重新登录
         if (handler instanceof HandlerMethod) {
            String passport =request.getHeader(passport_ticket);
-            logger.info("passport_ticket is :"+passport);
             HandlerMethod handler2 = (HandlerMethod) handler;
-            Enumeration<String> headerNames = request.getHeaderNames();
-
             //获取注解
             NeedLogin needLogin = handler2.getMethodAnnotation(NeedLogin.class);
             if(needLogin!=null){

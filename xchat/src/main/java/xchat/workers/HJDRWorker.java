@@ -25,7 +25,9 @@ import java.util.*;
 @Scope(value = "singleton")
 public class HJDRWorker extends BaseWorker {
 
-    public static boolean start = false;
+    public static volatile int  count =0;
+
+    public static volatile boolean start = false;
 
     @Override
     public void stop() {
@@ -44,6 +46,7 @@ public class HJDRWorker extends BaseWorker {
     public boolean startWorker() {
         if (!start) {
             logger.info("开始触发获取黄金答人 题目的任务");
+            System.out.println(this);
             queueUtils.sendMsg(null, MessageType.HUANG_JIN_DAREN);
             start = !start;
         }
