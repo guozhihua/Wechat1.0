@@ -1,8 +1,6 @@
 package xchat.search;
 
-import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.BasicConfigurator;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -17,7 +15,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.*;
 
-import static org.apache.log4j.BasicConfigurator.configure;
 
 /**
  * Created by 618 on 2018/1/12.
@@ -26,6 +23,9 @@ import static org.apache.log4j.BasicConfigurator.configure;
  */
 
 public class BaiDuSearch implements Search {
+    private static String logPath="";
+
+
     private static final String zhidaoUrl = "https://zhidao.baidu.com/search?lm=0&rn=10&pn=0&fr=search&ie=gbk&word=";
     private static final String msearch = "https://m.baidu.com/s?sa=ikb&word=";
 
@@ -43,8 +43,7 @@ public class BaiDuSearch implements Search {
      */
     @Override
     public SearchResult search(String question, String[] options) throws Exception {
-        URL fileUrl = PropertiesUtil.class.getResource("/log4j2.xml");//得到文件路径
-        System.setProperty("aip.log4j.conf",fileUrl.getPath());
+        setBdLogPath();
         Map<String, Integer> reslutmap = new LinkedHashMap<>();
         //初始化选项统计情况
         for (String option : options) {
@@ -56,7 +55,60 @@ public class BaiDuSearch implements Search {
         long time1 =System.currentTimeMillis();
         Map<String, String> optionAnalyzeItem = getOptionAnalyzeItem(options);
         long time2 =System.currentTimeMillis();
-        System.out.println("选项分词使用的时间是:"+(float)(time2-time1)/1000);
+//        System.out.println("选项分词使用的时间是:"+(float)(time2-time1)/1000);
+        bdZhidao(question, options, reslutmap, optionAnalyzeItem);
+        long time3 =System.currentTimeMillis();
+//        System.out.println("百度知道 耗时："+(float)(time3-time2)/1000);
+        mSearch(reslutmap,optionAnalyzeItem,question, options);
+        long time4 =System.currentTimeMillis();
+//        System.out.println("msearch 耗时："+(float)(time4-time3)/1000);
+        sougouSearch(reslutmap,optionAnalyzeItem,question,options);
+        sougouSearch2(reslutmap,optionAnalyzeItem,question,options);
+        long time5 =System.currentTimeMillis();
+//        System.out.println("sogouSearch 耗时："+(float)(time5-time4)/1000);
+
+
+        //合并投票简单
+        boolean unkoown=true;
+        for(Integer integer:reslutmap.values()){
+            if(integer>0){
+                unkoown=false;
+                break;
+            }
+        }
+        if(unkoown){
+            System.out.println("==========================AI分析完毕。我不会做呀================================");
+            return null;
+        }
+        List<SearchCounter> seachCount=new ArrayList<>();
+        //通过list进行排序
+        for(String key:options){
+            Integer integer = reslutmap.get(key);
+            SearchCounter searchCounter=new SearchCounter(key,integer);
+            seachCount.add(searchCounter);
+            System.out.println(key+":"+searchCounter.getCount());
+        }
+        Collections.sort(seachCount, new SortByCount());
+        SearchCounter searchCounter = null;
+        if (isAskWronng(question)) {
+            searchCounter = seachCount.get(seachCount.size() - 1);
+        } else {
+            searchCounter = seachCount.get(0);
+        }
+        SearchResult searchResult = new SearchResult(true, searchCounter.getOption());
+        System.out.println("==========================AI分析完毕================================");
+        return searchResult;
+    }
+
+    private void setBdLogPath() {
+        if(logPath.equals("")){
+            URL fileUrl = PropertiesUtil.class.getResource("/log4j2.xml");//得到文件路径
+            logPath =  fileUrl.getPath();
+            System.setProperty("aip.log4j.conf",logPath);
+        }
+    }
+
+    private void bdZhidao(String question, String[] options, Map<String, Integer> reslutmap, Map<String, String> optionAnalyzeItem) {
         String url = zhidaoUrl.concat(URLEncoder.encode(question));
         String result = HttpUtils.getBaiduSearch(url);
         try {
@@ -83,47 +135,6 @@ public class BaiDuSearch implements Search {
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        long time3 =System.currentTimeMillis();
-        System.out.println("百度知道 耗时："+(float)(time3-time2)/1000);
-        mSearch(reslutmap,optionAnalyzeItem,question, options);
-        long time4 =System.currentTimeMillis();
-        System.out.println("msearch 耗时："+(float)(time4-time3)/1000);
-
-        sougouSearch(reslutmap,optionAnalyzeItem,question,options);
-        sougouSearch2(reslutmap,optionAnalyzeItem,question,options);
-        long time5 =System.currentTimeMillis();
-        System.out.println("sogouSearch 耗时："+(float)(time5-time4)/1000);
-
-
-        //合并投票简单
-        boolean unkoown=true;
-        for(Integer integer:reslutmap.values()){
-            if(integer>0){
-                unkoown=false;
-                break;
-            }
-        }
-        if(unkoown){
-            return null;
-        }
-        List<SearchCounter> seachCount=new ArrayList<>();
-        //通过list进行排序
-        for(String key:options){
-            Integer integer = reslutmap.get(key);
-            SearchCounter searchCounter=new SearchCounter(key,integer);
-            seachCount.add(searchCounter);
-            System.out.println(key+":"+searchCounter.getCount());
-        }
-        Collections.sort(seachCount, new SortByCount());
-        SearchCounter searchCounter = null;
-        if (isAskWronng(question)) {
-            searchCounter = seachCount.get(seachCount.size() - 1);
-        } else {
-            searchCounter = seachCount.get(0);
-        }
-        SearchResult searchResult = new SearchResult(true, searchCounter.getOption());
-        System.out.println("==========================AI分析完毕================================");
-        return searchResult;
     }
 
     private void optionItemsAnalyze(Map<String, Integer> reslutmap, Map<String, String> optionAnalyzeItem, String sb, String option) {
@@ -245,26 +256,6 @@ public class BaiDuSearch implements Search {
 
     public SearchResult wenku(String question, String[] options) {
         return null;
-    }
-
-    public static void main(String[] args) {
-      new BaiDuSearch().test();
-    }
-
-    public void test(){
-        try {
-            ClassLoader classLoader = getClass().getClassLoader();
-            /**
-             getResource()方法会去classpath下找这个文件，获取到url resource, 得到这个资源后，调用url.getFile获取到 文件 的绝对路径
-             */
-            URL url = classLoader.getResource("log4j2.xml");
-            /**
-             * url.getFile() 得到这个文件的绝对路径
-             */
-            System.out.println(url.getFile());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public static Map<String,String> getOptionAnalyzeItem(String[] options){
