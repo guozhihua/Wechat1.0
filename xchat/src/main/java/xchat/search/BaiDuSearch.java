@@ -1,5 +1,7 @@
 package xchat.search;
 
+import com.alibaba.fastjson.JSON;
+import org.apache.commons.collections.map.FixedSizeMap;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -7,9 +9,12 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
 import xchat.ai.AnalyzeUtils;
 import xchat.sys.HttpUtils;
 import xchat.sys.PropertiesUtil;
+import xchat.sys.SessionBucket;
 
 import java.net.URL;
 import java.net.URLEncoder;
@@ -36,7 +41,7 @@ public class BaiDuSearch implements Search {
     private static final String msearch = "https://m.baidu.com/s?sa=ikb&word=";
 
     private static final String sogouSearch = "http://www.sogou.com/sogou?ie=utf8&&_asf=null&dp=1&cid=&cid=&interation=196636&s_from=result_up&query=";
-    private static final String sogouSearch2 = "https://www.sogou.com/web?s_from=result_up&cid=&page=2&ie=utf8&w=01029901&dr=1&query=";
+    private static final String sogouSearch2 = "https://www.sogou.com/web?s_from=result_up&cid=&page=1&ie=utf8&w=01029901&dr=1&query=";
 
     /**
      * https://zhidao.baidu.com/index?word=%E5%A4%9C%E7%9B%B2%E7%97%87
@@ -48,16 +53,16 @@ public class BaiDuSearch implements Search {
      * @throws Exception
      */
     @Override
-    public SearchResult search( String question,  String[] options) throws Exception {
+    public SearchResult search(String question, String[] options) throws Exception {
         setBdLogPath();
-         final Map<String, Integer> reslutmap = new LinkedHashMap<>();
+        final Map<String, Integer> reslutmap = new LinkedHashMap<>();
         //初始化选项统计情况
         for (String option : options) {
             if (!reslutmap.containsKey(option)) {
                 reslutmap.put(option, 0);
             }
         }
-         LinkedHashMap<String, Integer> reversermap = new LinkedHashMap<>();
+        LinkedHashMap<String, Integer> reversermap = new LinkedHashMap<>();
         reslutmap.putAll(reslutmap);
 
         LinkedHashMap<String, Integer> baiduMap = new LinkedHashMap<>();
@@ -67,51 +72,51 @@ public class BaiDuSearch implements Search {
 
         //问错误相关的题，那么可以转换为那个是正确的，一种思路是查询题干中重要信息排除选项，一种是通过选项反推主干
         boolean isWrong = isAskWrong(question);
-        Map<String,Integer> allTaskStatus=new HashMap<>();
-         String questionMainInfo = getQuestionMainInfo(question);
+        Map<String, Integer> allTaskStatus = new HashMap<>();
+        String questionMainInfo = getQuestionMainInfo(question);
         //选项分词
-         Map<String, String> optionAnalyzeItem = getOptionAnalyzeItem(options);
+        Map<String, String> optionAnalyzeItem = getOptionAnalyzeItem(options);
         //开启线程池
         ExecutorService executorService = Executors.newCachedThreadPool();
-        List<  Future<LinkedHashMap<String, Integer>>> futureList=new ArrayList<>();
-       //题目选项反推
-        ReverseSearchCallableTask reverseTask=new ReverseSearchCallableTask(question,options,questionMainInfo,reversermap);
+        List<Future<LinkedHashMap<String, Integer>>> futureList = new ArrayList<>();
+        //题目选项反推
+        ReverseSearchCallableTask reverseTask = new ReverseSearchCallableTask(question, options, questionMainInfo, reversermap);
         futureList.add(executorService.submit(reverseTask));
-        allTaskStatus.put( futureList.get(0).toString(),0);
+        allTaskStatus.put(futureList.get(0).toString(), 0);
 
-        BaiduCallableTask baiduCallableTask =new BaiduCallableTask(question,options,optionAnalyzeItem,baiduMap);
+        BaiduCallableTask baiduCallableTask = new BaiduCallableTask(question, options, optionAnalyzeItem, baiduMap);
         futureList.add(executorService.submit(baiduCallableTask));
-        allTaskStatus.put( futureList.get(1).toString(),0);
+        allTaskStatus.put(futureList.get(1).toString(), 0);
 
-        SogouCallableTask sogouCallableTask=new SogouCallableTask(question,options,optionAnalyzeItem,sougouMap);
+        SogouCallableTask sogouCallableTask = new SogouCallableTask(question, options, optionAnalyzeItem, sougouMap);
         futureList.add(executorService.submit(sogouCallableTask));
-        allTaskStatus.put( futureList.get(2).toString(),0);
+        allTaskStatus.put(futureList.get(2).toString(), 0);
         //开始任务集合
-        while (true){
-            int counter =0;
+        while (true) {
+            int counter = 0;
             for (Integer integer : allTaskStatus.values()) {
-                counter+=integer;
+                counter += integer;
             }
-            if(counter==allTaskStatus.size()){
-                if(!executorService.isShutdown()){
+            if (counter == allTaskStatus.size()) {
+                if (!executorService.isShutdown()) {
                     executorService.shutdown();
                 }
                 break;
             }
             for (Future<LinkedHashMap<String, Integer>> future : futureList) {
-                 if(!future.isDone()){
-                     Thread.sleep(500);
-                 }else{
-                     allTaskStatus.put(future.toString(),1);
-                 }
+                if (!future.isDone()) {
+                    Thread.sleep(500);
+                } else {
+                    allTaskStatus.put(future.toString(), 1);
+                }
             }
         }
         for (Future<LinkedHashMap<String, Integer>> future : futureList) {
-            int i =0;
-            if(future.isDone()&&!future.isCancelled()){
+            int i = 0;
+            if (future.isDone() && !future.isCancelled()) {
                 LinkedHashMap<String, Integer> linkedHashMap = future.get();
                 for (String key : linkedHashMap.keySet()) {
-                    if(reslutmap.containsKey(key)) reslutmap.put(key,linkedHashMap.get(key)+reslutmap.get(key));
+                    if (reslutmap.containsKey(key)) reslutmap.put(key, linkedHashMap.get(key) + reslutmap.get(key));
                 }
             }
         }
@@ -148,34 +153,72 @@ public class BaiDuSearch implements Search {
     }
 
     /**
-     * 返回一个新map
+     * 返回一个新map,
+     * 应该屏蔽推导出来名次的通用属性 如游戏，歌曲
+     *
      * @param options
      * @param reslutmap
      * @param questionMainInfo
      */
-    public  static   LinkedHashMap<String, Integer> reveseAnsweroptions(String[] options, LinkedHashMap<String, Integer> reslutmap, String questionMainInfo) {
-        ExecutorService executorService = Executors.newCachedThreadPool();
+    public static LinkedHashMap<String, Integer> reveseAnsweroptions(String[] options, LinkedHashMap<String, Integer> reslutmap, String questionMainInfo) {
+        LinkedHashMap<String, Map<String, Integer>> allInfo = new LinkedHashMap<>();
+        String[] optioins1 = questionMainInfo.split("@");
+        //options 是原来的题目选项
         for (String opt : options) {
-            if(StringUtils.isBlank(opt)){
+            if (StringUtils.isBlank(opt)) {
                 continue;
             }
             String url = msearch.concat(getOptionKey(opt));
-            String[] optioins1 = questionMainInfo.split("|");
             Map<String, Integer> reslutmap11 = new LinkedHashMap<>();
             //初始化选项统计情况
             for (String option : optioins1) {
-                if (!reslutmap.containsKey(option)&&StringUtils.isNotBlank(option)) {
+                if (!reslutmap.containsKey(option) && StringUtils.isNotBlank(option)) {
                     reslutmap11.put(option, 0);
                 }
             }
             sougouSearch2(reslutmap11, null, getOptionKey(opt), optioins1);
-            int allA = 0;
-            for (Integer integer : reslutmap11.values()) {
-                allA += integer;
-            }
-            reslutmap.put(opt, allA);
+            allInfo.put(opt, reslutmap11);
         }
-        return  reslutmap;
+        //排除通用属性，这里定义3个选项中分词结果都出现16次以上为通用的属性
+        Set<String> strings = allInfo.keySet();
+        Map<String, Integer> filterMap = new HashMap<>();
+
+        for (String string : strings) {
+            Map<String, Integer> stringIntegerMap = allInfo.get(string);
+            for (String opt1 : stringIntegerMap.keySet()) {
+                if (stringIntegerMap.get(opt1) > 4) {
+                    if (filterMap.get(opt1) == null) {
+                        filterMap.put(opt1, 1);
+                    } else {
+                        filterMap.put(opt1, filterMap.get(opt1) + 1);
+                    }
+                }
+            }
+        }
+        if (!filterMap.isEmpty()) {
+            StringBuilder sb=new StringBuilder();
+            for (String filterKey : filterMap.keySet()) {
+                if (filterMap.get(filterKey) == strings.size()) {
+                    Collection<Map<String, Integer>> values = allInfo.values();
+                    for (Map<String, Integer> value : values) {
+                        value.remove(filterKey);
+                    }
+                }else{
+                    sb.append(filterKey).append(" ");
+                }
+            }
+           // 名词关联度
+            SecketUtils.sendMsgToAll("commonword", sb.toString());
+        }
+        for (String allKey : allInfo.keySet()) {
+            Map<String, Integer> stringIntegerMap = allInfo.get(allKey);
+            int allA = 0;
+            for (Integer integer : stringIntegerMap.values()) {
+                allA += integer;
+                reslutmap.put(allKey, allA);
+            }
+        }
+        return reslutmap;
     }
 
     private static String getQuestionMainInfo(String question) {
@@ -189,7 +232,7 @@ public class BaiDuSearch implements Search {
                 if (obj != null) {
                     boolean contains = obj.getString("postag").contains("n");
                     if (contains) {
-                        questionMain.append(obj.getString("word")).append("|");
+                        questionMain.append(obj.getString("word")).append("@");
                     }
                 }
             }
@@ -225,7 +268,7 @@ public class BaiDuSearch implements Search {
                     for (String option : options) {
                         optionItemsAnalyze(reslutmap, optionAnalyzeItem, sb.toString(), option);
                         String trim = getOptionKey(option);
-                        if(trim==null){
+                        if (trim == null) {
                             continue;
                         }
                         int number = StringUtils.countMatches(sb.toString(), trim);
@@ -292,7 +335,7 @@ public class BaiDuSearch implements Search {
             String text = results.text();
             for (String option : options) {
                 String trim = getOptionKey(option);
-                if(trim==null){
+                if (trim == null) {
                     continue;
                 }
                 if (optionAnalyzeItem != null) {
@@ -328,7 +371,7 @@ public class BaiDuSearch implements Search {
 
     }
 
-    private  static void parseDocumentInfo(Map<String, Integer> reslutmap, Map<String, String> optionAnalyzeItem, String[] options, String url) {
+    private static void parseDocumentInfo(Map<String, Integer> reslutmap, Map<String, String> optionAnalyzeItem, String[] options, String url) {
         String s = HttpUtils.get(url);
         if (StringUtils.isNotBlank(s)) {
             Document parse = Jsoup.parse(s);
@@ -341,7 +384,7 @@ public class BaiDuSearch implements Search {
                     optionItemsAnalyze(reslutmap, optionAnalyzeItem, sogouApper.toString(), option);
                 }
                 String trim = getOptionKey(option);
-                if(trim==null){
+                if (trim == null) {
                     continue;
                 }
                 int number = StringUtils.countMatches(sogouApper.toString(), trim);
@@ -380,8 +423,8 @@ public class BaiDuSearch implements Search {
         Map<String, Integer> counters = new HashMap<>();
         for (String option : options) {
             String optionKey = getOptionKey(option);
-            if(optionKey==null){
-               continue;
+            if (optionKey == null) {
+                continue;
             }
             StringBuilder optinAnalyzeVal = new StringBuilder();
             JSONObject aisearchReealse = AnalyzeUtils.getAisearchReealse(optionKey);
@@ -426,7 +469,7 @@ public class BaiDuSearch implements Search {
     public static String getOptionKey(String option) {
         String reg = "ABCDEFGH";
         String reslut = option.trim();
-        if(StringUtils.isBlank(reslut)){
+        if (StringUtils.isBlank(reslut)) {
             return null;
         }
         String first = reslut.charAt(0) + "";

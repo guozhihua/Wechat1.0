@@ -15,7 +15,8 @@
 <button onclick="getQuestion($(this))" class="btn-primary btn-group-sm search-btn" value="1">关闭开关</button>
 <button onclick="closeWebSocket()" class="btn-group-sm btn-danger search-btn">关闭socket</button>
 <hr class="hjdr_hr"/>
-<span id="message" class="col-sm-3"></span><span id="dd-answer"></span>
+<span id="message" class="col-sm-3"></span><span id="dd-answer"></span><br/>
+ <span id="commonword" class="col-sm-3" style="font-size: 16px"> </span><span id="relation"  class="col-sm-6" style="font-size: 18px;color:orangered;font-weight: 500"></span>
 <iframe id="answer" src=""></iframe>
 </body>
 <script type="text/javascript">
@@ -52,9 +53,15 @@
     websocket.onmessage = function (event) {
         console.log("收到消息了" + event.data)
 //        var result =JSON.parse(event.data);
-        if (event.data.indexOf("pong") == -1) {
+        if (event.data.indexOf("pong") == -1&&event.data.indexOf("relation") == -1) {
             setMessageInnerHTML(event.data);
             searchAnswere(event.data);
+        }
+        if(event.data.indexOf("relation")>=0){
+            $("#relation").text(event.data.substr(9));
+        }
+        if(event.data.indexOf("commonword")>=0){
+            $("#commonword").text(event.data.substr(11));
         }
     }
 

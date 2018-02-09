@@ -2,12 +2,14 @@ package xchat.workers;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.util.SocketUtils;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import xchat.listeners.MsgEvent;
 import xchat.pojo.Question;
 import xchat.search.BaiDuSearch;
 import xchat.search.SearchResult;
+import xchat.search.SecketUtils;
 import xchat.sys.SessionBucket;
 
 /**
@@ -25,14 +27,11 @@ public class HJDRAnswerWorker extends BaseWorker {
         Question question = (Question)msgEvent.getDatas().get("question");
         long t1=System.currentTimeMillis();
         SearchResult search = new BaiDuSearch().search(question.getQuestion(), question.getOptionArray());
-        for(WebSocketSession session:sessionBucket.getAllsessionMap().values()){
-            String right="这题我不会!";
-            if(search!=null){
-                right=search.getRightAnswer();
-            }
-            TextMessage textMessage =new TextMessage("answer@"+right);
-            session.sendMessage(textMessage);
+        String right="这题我不会!";
+        if(search!=null){
+            right=search.getRightAnswer();
         }
+        SecketUtils.sendMsgToAll("answer",right);
         long t2=System.currentTimeMillis();
         System.out.println("=====获取答案耗时："+(float)(t2-t1)/1000);
 

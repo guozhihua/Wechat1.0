@@ -11,6 +11,7 @@ import xchat.aop.QueueUtils;
 import xchat.controller.task.HuangjinDarenAnswer;
 import xchat.listeners.MsgEvent;
 import xchat.pojo.Question;
+import xchat.search.SecketUtils;
 import xchat.service.QuestionService;
 import xchat.sys.MessageType;
 import xchat.sys.SessionBucket;
@@ -101,21 +102,7 @@ public class HJDRWorker extends BaseWorker {
                 }
                 if (!mes.isEmpty()) {
                     //以下是发送消息
-                    String msg = mes.get("type").toString().concat("@").concat(mes.get("val").toString());
-                    TextMessage text = new TextMessage(msg);
-                    List<String> closedSession = new ArrayList<>();
-                    for (WebSocketSession session : sessionBucket.getAllsessionMap().values()) {
-                        if (session.isOpen()) {
-                                session.sendMessage(text);
-                        } else {
-                            closedSession.add(session.getId());
-                        }
-                    }
-                    if (closedSession.size() > 0) {
-                        for (String sessionId : closedSession) {
-                            sessionBucket.removeSessionId(sessionId);
-                        }
-                    }
+                    SecketUtils.sendMsgToAll( mes.get("type").toString(),mes.get("val").toString());
                 }
                 Thread.sleep(sleepTime);
             } catch (Exception ex) {
