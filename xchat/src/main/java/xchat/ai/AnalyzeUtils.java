@@ -1,6 +1,7 @@
 package xchat.ai;
 
 
+import com.baidu.aip.nlp.AipNlp;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,46 +16,53 @@ import java.util.Random;
  */
 public class AnalyzeUtils {
 
-   static List<JSONObject> result = Collections.synchronizedList(new ArrayList<JSONObject>());
-    public static JSONObject getAisearchReealse(String text) {
+    private static AipNlp getClient(){
         int random= new Random().nextInt(2);
         if(random==0){
-            return new AiTuZi().getTuZiCient().lexer(text, null);
+            return new AiTuZi().getTuZiCient();
         }
-        return  new AiTuZi().getXMCient().lexer(text,null);
+        return  new AiTuZi().getXMCient();
     }
-
-
-
 
 
     /**
-     * 清楚上次分析的结果集
+     * 简单此法分析
+     * @param text
+     * @return
      */
-    public static void clearResult(){
-        result.clear();
+    public static JSONObject getAisearchReealse(String text) {
+       return getClient().lexer(text,null);
     }
+
+    /**
+     * 依存句法分析
+     * @param text
+     * @return
+     */
+    public static JSONObject depParseText(String text) {
+        return getClient().depParser(text,null);
+    }
+
+
+
+
+
+
+
+
 
 
 
     public static void main(String[] args) {
-        String[] strings = {"41℃ ～47℃", "28℃ ～30℃", "36℃ ～37℃"};
-        List<JSONObject> allAnalyzeResult = new ArrayList<>();
-        for(String key:strings){
-            JSONObject aisearchReealse = getAisearchReealse(key);
-            JSONArray items = aisearchReealse.getJSONArray("items");
-            if(items!=null){
-                for (Object item : items) {
-                    System.out.println(((JSONObject) item).getString("item"));
-                }
-            }
-            allAnalyzeResult.add(aisearchReealse);
-        }
 
-
-
+        JSONObject jsonObject = depParseText("下列哪个场所没有对外开放的卫生间？");
+        System.out.println(jsonObject);
 
     }
+
+
+
+
 
 
 }
