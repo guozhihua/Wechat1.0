@@ -40,8 +40,8 @@ public class BaiDuSearch implements Search {
     private static final String zhidaoUrl = "https://zhidao.baidu.com/search?lm=0&rn=10&pn=0&fr=search&ie=gbk&word=";
     private static final String msearch = "https://m.baidu.com/s?sa=ikb&word=";
 
-    private static final String sogouSearch = "http://www.sogou.com/sogou?ie=utf8&&_asf=null&dp=1&cid=&cid=&interation=196636&s_from=result_up&query=";
-    private static final String sogouSearch2 = "https://www.sogou.com/web?s_from=result_up&cid=&page=1&ie=utf8&w=01029901&dr=1&query=";
+    private static final String sogouSearch = "http://www.sogou.com/sogou?ie=utf8&&_asf=null&dp=1&s_from=result_up&query=";
+    private static final String sogouSearch2 = "https://www.sogou.com/web?query=";
 
     /**
      * https://zhidao.baidu.com/index?word=%E5%A4%9C%E7%9B%B2%E7%97%87
@@ -168,7 +168,6 @@ public class BaiDuSearch implements Search {
             if (StringUtils.isBlank(opt)) {
                 continue;
             }
-            String url = msearch.concat(getOptionKey(opt));
             Map<String, Integer> reslutmap11 = new LinkedHashMap<>();
             //初始化选项统计情况
             for (String option : optioins1) {
@@ -176,7 +175,7 @@ public class BaiDuSearch implements Search {
                     reslutmap11.put(option, 0);
                 }
             }
-            sougouSearch2(reslutmap11, null, getOptionKey(opt), optioins1);
+            mSearch(reslutmap11, null, getOptionKey(opt), optioins1);
             allInfo.put(opt, reslutmap11);
         }
         //排除通用属性，这里定义3个选项中分词结果都出现16次以上为通用的属性
@@ -202,12 +201,14 @@ public class BaiDuSearch implements Search {
                     Collection<Map<String, Integer>> values = allInfo.values();
                     for (Map<String, Integer> value : values) {
                         value.remove(filterKey);
+                        System.out.println("一级通用属性："+filterKey);
                     }
                 }else{
                     sb.append(filterKey).append(" ");
                 }
             }
            // 名词关联度
+            System.out.println(sb.toString());
             SecketUtils.sendMsgToAll("commonword", sb.toString());
         }
         for (String allKey : allInfo.keySet()) {
@@ -363,6 +364,7 @@ public class BaiDuSearch implements Search {
             question = question.replace("\n", "");
             question = question.replace("\u2028", "");
             String url = sogouSearch.concat(question);
+            System.out.println(url);
             parseDocumentInfo(reslutmap, optionAnalyzeItem, options, url);
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -391,6 +393,7 @@ public class BaiDuSearch implements Search {
                 reslutmap.put(option, reslutmap.get(option) + number);
             }
         }
+        System.out.println(s.length());
 
     }
 
@@ -406,6 +409,7 @@ public class BaiDuSearch implements Search {
             question = question.replace("\n", "");
             question = question.replace("\u2028", "");
             String url = sogouSearch2.concat(question);
+            System.out.println(url);
             parseDocumentInfo(reslutmap, optionAnalyzeItem, options, url);
         } catch (Exception ex) {
             ex.printStackTrace();

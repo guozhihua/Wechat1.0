@@ -60,7 +60,7 @@
         if(event.data.indexOf("relation")>=0){
             $("#relation").text(event.data.substr(9));
         }
-        if(event.data.indexOf("commonword")>=0){
+        if(event.data.indexOf("commonword")>-1){
             $("#commonword").text(event.data.substr(11));
         }
     }
