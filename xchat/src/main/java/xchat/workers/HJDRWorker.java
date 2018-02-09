@@ -70,7 +70,7 @@ public class HJDRWorker extends BaseWorker {
                     int id =new Random().nextInt(2)+35;
                     question = questionService.queryById("36");
                     HuangjinDarenAnswer.allQuestions.clear();
-                    sleepTime = 8000;
+                    sleepTime = 10000;
                 } else if ("000000".equals(question.getStatus())) {
                     mes.clear();
                     sleepTime = 1400;

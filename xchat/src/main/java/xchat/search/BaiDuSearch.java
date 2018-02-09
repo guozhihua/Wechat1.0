@@ -1,7 +1,5 @@
 package xchat.search;
 
-import com.alibaba.fastjson.JSON;
-import org.apache.commons.collections.map.FixedSizeMap;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -9,17 +7,13 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
 import xchat.ai.AnalyzeUtils;
 import xchat.sys.HttpUtils;
 import xchat.sys.PropertiesUtil;
-import xchat.sys.SessionBucket;
 
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.*;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
