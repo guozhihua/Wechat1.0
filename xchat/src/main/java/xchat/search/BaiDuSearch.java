@@ -203,7 +203,6 @@ public class BaiDuSearch implements Search {
                 }
             }
            // 名词关联度
-            System.out.println(sb.toString());
             SecketUtils.sendMsgToAll("commonword", sb.toString());
         }
         for (String allKey : allInfo.keySet()) {
