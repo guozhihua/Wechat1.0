@@ -57,10 +57,11 @@ public class BaiDuSearch implements Search {
             }
         }
         LinkedHashMap<String, Integer> reversermap = new LinkedHashMap<>();
-        reslutmap.putAll(reslutmap);
+        reversermap.putAll(reslutmap);
 
         LinkedHashMap<String, Integer> baiduMap = new LinkedHashMap<>();
         baiduMap.putAll(reslutmap);
+
         LinkedHashMap<String, Integer> sougouMap = new LinkedHashMap<>();
         sougouMap.putAll(reslutmap);
 
@@ -99,7 +100,7 @@ public class BaiDuSearch implements Search {
             }
             for (Future<LinkedHashMap<String, Integer>> future : futureList) {
                 if (!future.isDone()) {
-                    Thread.sleep(500);
+                    Thread.sleep(200);
                 } else {
                     allTaskStatus.put(future.toString(), 1);
                 }
