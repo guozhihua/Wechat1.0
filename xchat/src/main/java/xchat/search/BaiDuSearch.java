@@ -1,5 +1,6 @@
 package xchat.search;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -69,6 +70,7 @@ public class BaiDuSearch implements Search {
         boolean isWrong = isAskWrong(question);
         Map<String, Integer> allTaskStatus = new HashMap<>();
         String questionMainInfo = getQuestionMainInfo(question);
+        System.out.println("题干分词结果： "+questionMainInfo);
         //选项分词
         Map<String, String> optionAnalyzeItem = getOptionAnalyzeItem(options);
         //开启线程池
@@ -129,12 +131,16 @@ public class BaiDuSearch implements Search {
         }
         List<SearchCounter> seachCount = new ArrayList<>();
         //通过list进行排序
+        StringBuilder optionResult=new StringBuilder();
         for (String key : options) {
             Integer integer = reslutmap.get(key);
             SearchCounter searchCounter = new SearchCounter(key, integer);
             seachCount.add(searchCounter);
+            optionResult.append(key + ":" + searchCounter.getCount()).append("    ");
             System.out.println(key + ":" + searchCounter.getCount());
         }
+        SecketUtils.sendMsgToAll("relation", optionResult.toString());
+
         Collections.sort(seachCount, new SortByCount());
         SearchCounter searchCounter = null;
         if (isWrong) {
@@ -190,19 +196,19 @@ public class BaiDuSearch implements Search {
             }
         }
         if (!filterMap.isEmpty()) {
-            StringBuilder sb=new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             for (String filterKey : filterMap.keySet()) {
                 if (filterMap.get(filterKey) == strings.size()) {
                     Collection<Map<String, Integer>> values = allInfo.values();
                     for (Map<String, Integer> value : values) {
                         value.remove(filterKey);
-                        System.out.println("一级通用属性："+filterKey);
+                        System.out.println("一级通用属性：" + filterKey);
                     }
-                }else{
+                } else {
                     sb.append(filterKey).append(" ");
                 }
             }
-           // 名词关联度
+            // 名词关联度
             SecketUtils.sendMsgToAll("commonword", sb.toString());
         }
         for (String allKey : allInfo.keySet()) {
@@ -225,10 +231,10 @@ public class BaiDuSearch implements Search {
             for (Object item : items) {
                 JSONObject obj = (JSONObject) item;
                 if (obj != null) {
-                    boolean contains = obj.getString("postag").contains("n");
-                    if (contains) {
-                        questionMain.append(obj.getString("word")).append("@");
+                    if (obj.getString("word").length() < 2) {
+                        continue;
                     }
+                    questionMain.append(obj.getString("word")).append("@");
                 }
             }
 
@@ -401,8 +407,7 @@ public class BaiDuSearch implements Search {
             question = question.replace("\n", "");
             question = question.replace("\u2028", "");
             String url = sogouSearch2.concat(question);
-            System.out.println(url);
-            parseDocumentInfo(reslutmap, optionAnalyzeItem, options, url);
+            parseDocumentInfo(reslutmap, optionAnalyzeItem, options, url.trim());
         } catch (Exception ex) {
             ex.printStackTrace();
         }

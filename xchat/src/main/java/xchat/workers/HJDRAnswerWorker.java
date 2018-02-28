@@ -33,7 +33,7 @@ public class HJDRAnswerWorker extends BaseWorker {
         }
         SecketUtils.sendMsgToAll("answer",right);
         long t2=System.currentTimeMillis();
-        System.out.println("=====获取答案耗时："+(float)(t2-t1)/1000);
+        System.out.println("答案："+right+"  ，分析用时："+(float)(t2-t1)/1000);
 
 
     }

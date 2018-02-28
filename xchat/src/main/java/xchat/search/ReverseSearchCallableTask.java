@@ -39,7 +39,7 @@ public class ReverseSearchCallableTask implements Callable<LinkedHashMap<String,
     public LinkedHashMap<String, Integer> call() throws Exception {
         long time1 = System.currentTimeMillis();
         BaiDuSearch.reveseAnsweroptions(options, resultMap, questionMainInfo);
-        SecketUtils.sendMsgToAll("relation", JSON.toJSONString(resultMap));
+
         System.out.println("reverse used time is :" + (float) (System.currentTimeMillis() - time1) / 1000);
         return resultMap;
     }
