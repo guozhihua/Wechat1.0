@@ -53,7 +53,7 @@
     websocket.onmessage = function (event) {
         console.log("收到消息了" + event.data)
 //        var result =JSON.parse(event.data);
-        if (event.data.indexOf("pong") == -1&&event.data.indexOf("relation") == -1) {
+        if (event.data.indexOf("pong") == -1&&event.data.indexOf("relation") == -1&&event.data.indexOf("commonword")==-1) {
             setMessageInnerHTML(event.data);
             searchAnswere(event.data);
         }

@@ -358,8 +358,7 @@ public class BaiDuSearch implements Search {
             question = question.replace("\n", "");
             question = question.replace("\u2028", "");
             String url = sogouSearch.concat(question);
-            System.out.println(url);
-            parseDocumentInfo(reslutmap, optionAnalyzeItem, options, url);
+            parseDocumentInfo(reslutmap, optionAnalyzeItem, options, url.trim());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -387,7 +386,6 @@ public class BaiDuSearch implements Search {
                 reslutmap.put(option, reslutmap.get(option) + number);
             }
         }
-        System.out.println(s.length());
 
     }
 

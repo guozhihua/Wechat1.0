@@ -31,7 +31,7 @@ public class HuangjinDarenAnswer {
     static String url = "https://dt.same.com/api/v1/answer/get-question";
     public static Set<String> allQuestions = new HashSet<>();
 
-    public static String authHeder = "de5a814762fe77fa8d9b3825d14a1de3478a5669_3558905";
+    public static String authHeder = "6a0c83edd0b50ca4b5dab05f32a00c697bf8f20d_3558905";
 
     public static boolean getQuestion = true;
 
@@ -166,8 +166,8 @@ public class HuangjinDarenAnswer {
         String t2 = shortDateStr.concat(time2);
         long date1 = DateUtils.parseDate(t1).getTime();
         long date2 = DateUtils.parseDate(t2).getTime();
-        long date11 = date1 + 35 * 60 * 1000;
-        long date12 = date2 + 35 * 60 * 1000;
+        long date11 = date1 + 30 * 60 * 1000;
+        long date12 = date2 + 30 * 60 * 1000;
        if((currentTime > date1 && currentTime < date11) || (currentTime > date2 && currentTime < date12)){
            return true ;
        }

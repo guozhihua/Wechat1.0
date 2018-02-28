@@ -47,7 +47,6 @@ public class HJDRWorker extends BaseWorker {
     public boolean startWorker() {
         if (!start) {
             logger.info("开始触发获取黄金答人 题目的任务");
-            System.out.println(this);
             queueUtils.sendMsg(null, MessageType.HUANG_JIN_DAREN);
             start = !start;
         }
@@ -67,8 +66,8 @@ public class HJDRWorker extends BaseWorker {
                 Question question = HuangjinDarenAnswer.getQuestins();
                 Map<String, String> mes = new HashMap<>();
                 if (question == null) {
-                    int id =new Random().nextInt(2)+35;
-                    question = questionService.queryById("36");
+                    int id =new Random().nextInt(8)+35;
+                    question = questionService.queryById(id+"");
                     HuangjinDarenAnswer.allQuestions.clear();
                     sleepTime = 10000;
                 } else if ("000000".equals(question.getStatus())) {
