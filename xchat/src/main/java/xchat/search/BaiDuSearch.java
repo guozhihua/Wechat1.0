@@ -136,11 +136,10 @@ public class BaiDuSearch implements Search {
             Integer integer = reslutmap.get(key);
             SearchCounter searchCounter = new SearchCounter(key, integer);
             seachCount.add(searchCounter);
-            optionResult.append(key + ":" + searchCounter.getCount()).append("    ");
+            optionResult.append(key + ":" + searchCounter.getCount()).append("     ,");
             System.out.println(key + ":" + searchCounter.getCount());
         }
         SecketUtils.sendMsgToAll("relation", optionResult.toString());
-
         Collections.sort(seachCount, new SortByCount());
         SearchCounter searchCounter = null;
         if (isWrong) {
