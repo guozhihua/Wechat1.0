@@ -26,6 +26,7 @@ import java.io.Serializable;
  */
 public class House implements Serializable {
     private int pid;
+
     private String id;
     private String houseName;
     private String areaName;
