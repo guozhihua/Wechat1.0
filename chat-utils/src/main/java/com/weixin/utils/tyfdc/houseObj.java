@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class HouseObj implements Serializable {
     private  int nid;
     private String houseId;
+
     private String houseName;
 
     private String remark;

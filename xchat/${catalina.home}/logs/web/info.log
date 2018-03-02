@@ -1,0 +1,29 @@
+[13:04:46:197] [INFO] - org.apdplat.qa.system.CommonQuestionAnsweringSystem.<init>(CommonQuestionAnsweringSystem.java:64) - 开始构造问答系统
+[13:04:46:336] [INFO] - org.apdplat.qa.questiontypeanalysis.patternbased.MainPartExtracter.<clinit>(MainPartExtracter.java:56) - 模型：models/chineseFactored.ser.gz
+[13:05:18:125] [INFO] - org.apdplat.qa.util.Tools.getAppPath(Tools.java:471) - maven jar：/F:/.m2/repository/org/apdplat/deep-qa/1.2/deep-qa-1.2.jar
+[13:05:18:237] [INFO] - org.apdplat.qa.questiontypeanalysis.patternbased.PatternBasedMultiLevelQuestionClassifier.<init>(PatternBasedMultiLevelQuestionClassifier.java:77) - 模式文件目录：deep-qa/questionTypePatterns/
+[13:05:18:242] [INFO] - org.apdplat.qa.questiontypeanalysis.patternbased.PatternBasedMultiLevelQuestionClassifier$1.accept(PatternBasedMultiLevelQuestionClassifier.java:87) - 模式匹配策略启用文件：QuestionTypePatternsLevel1_true.txt
+[13:05:18:243] [INFO] - org.apdplat.qa.questiontypeanalysis.patternbased.PatternBasedMultiLevelQuestionClassifier$1.accept(PatternBasedMultiLevelQuestionClassifier.java:87) - 模式匹配策略启用文件：QuestionTypePatternsLevel2_true.txt
+[13:05:18:244] [INFO] - org.apdplat.qa.questiontypeanalysis.patternbased.PatternBasedMultiLevelQuestionClassifier$1.accept(PatternBasedMultiLevelQuestionClassifier.java:87) - 模式匹配策略启用文件：QuestionTypePatternsLevel3_true.txt
+[13:05:18:245] [INFO] - org.apdplat.qa.questiontypeanalysis.patternbased.PatternBasedMultiLevelQuestionClassifier.<init>(PatternBasedMultiLevelQuestionClassifier.java:100) - 	模式文件：QuestionTypePatternsLevel1_true.txt
+[13:05:18:248] [INFO] - org.apdplat.qa.questiontypeanalysis.patternbased.PatternBasedMultiLevelQuestionClassifier.<init>(PatternBasedMultiLevelQuestionClassifier.java:107) - 	是否允许多匹配：true
+[13:05:18:249] [INFO] - org.apdplat.qa.questiontypeanalysis.patternbased.PatternBasedMultiLevelQuestionClassifier.<init>(PatternBasedMultiLevelQuestionClassifier.java:100) - 	模式文件：QuestionTypePatternsLevel2_true.txt
+[13:05:18:250] [INFO] - org.apdplat.qa.questiontypeanalysis.patternbased.PatternBasedMultiLevelQuestionClassifier.<init>(PatternBasedMultiLevelQuestionClassifier.java:107) - 	是否允许多匹配：true
+[13:05:18:251] [INFO] - org.apdplat.qa.questiontypeanalysis.patternbased.PatternBasedMultiLevelQuestionClassifier.<init>(PatternBasedMultiLevelQuestionClassifier.java:100) - 	模式文件：QuestionTypePatternsLevel3_true.txt
+[13:05:18:251] [INFO] - org.apdplat.qa.questiontypeanalysis.patternbased.PatternBasedMultiLevelQuestionClassifier.<init>(PatternBasedMultiLevelQuestionClassifier.java:107) - 	是否允许多匹配：true
+[13:05:18:252] [INFO] - org.apdplat.qa.system.CommonQuestionAnsweringSystem.<init>(CommonQuestionAnsweringSystem.java:151) - 问答系统构造完成
+[15:06:34:394] [INFO] - xchat.service.SearchAnswers.GETRequest(SearchAnswers.java:68) - HTTP请求共耗时: 2479ms
+[15:06:34:526] [INFO] - xchat.service.SearchAnswers.getAnswerCount(SearchAnswers.java:85) - 匹配 A 宋江 个数 :0
+[15:06:34:544] [INFO] - xchat.service.SearchAnswers.getAnswerCount(SearchAnswers.java:85) - 匹配 B 武松  个数 :0
+[15:06:34:570] [INFO] - xchat.service.SearchAnswers.getAnswerCount(SearchAnswers.java:85) - 匹配 C 鲁智深 个数 :0
+[15:06:34:575] [INFO] - xchat.service.SearchAnswers.getFinalAnswer(SearchAnswers.java:105) - ------------------>>>>>>>>>>>>>>>>>>>>>>> 本题建议答案为: C 鲁智深
+[15:08:17:618] [INFO] - xchat.service.SearchAnswers.GETRequest(SearchAnswers.java:68) - HTTP请求共耗时: 1577ms
+[15:08:17:725] [INFO] - xchat.service.SearchAnswers.getAnswerCount(SearchAnswers.java:85) - 匹配 A 宋江 个数 :0
+[15:08:17:737] [INFO] - xchat.service.SearchAnswers.getAnswerCount(SearchAnswers.java:85) - 匹配 B 武松  个数 :0
+[15:08:17:748] [INFO] - xchat.service.SearchAnswers.getAnswerCount(SearchAnswers.java:85) - 匹配 C 鲁智深 个数 :0
+[15:08:17:751] [INFO] - xchat.service.SearchAnswers.getFinalAnswer(SearchAnswers.java:105) - ------------------>>>>>>>>>>>>>>>>>>>>>>> 本题建议答案为: C 鲁智深
+[15:09:42:639] [INFO] - xchat.service.SearchAnswers.GETRequest(SearchAnswers.java:68) - HTTP请求共耗时: 1571ms
+[15:10:05:411] [INFO] - xchat.service.SearchAnswers.getAnswerCount(SearchAnswers.java:85) - 匹配 A 宋江 个数 :0
+[15:10:05:422] [INFO] - xchat.service.SearchAnswers.getAnswerCount(SearchAnswers.java:85) - 匹配 B 武松  个数 :0
+[15:10:05:431] [INFO] - xchat.service.SearchAnswers.getAnswerCount(SearchAnswers.java:85) - 匹配 C 鲁智深 个数 :0
+[15:10:05:436] [INFO] - xchat.service.SearchAnswers.getFinalAnswer(SearchAnswers.java:105) - ------------------>>>>>>>>>>>>>>>>>>>>>>> 本题建议答案为: C 鲁智深
