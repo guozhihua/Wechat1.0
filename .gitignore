@@ -6,3 +6,4 @@ target/
 *.war
 *.iml
 *.project
+.kk
