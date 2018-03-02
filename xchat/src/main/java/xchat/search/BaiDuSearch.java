@@ -49,6 +49,8 @@ public class BaiDuSearch implements Search {
      */
     @Override
     public SearchResult search(String question, String[] options) throws Exception {
+        if(question.indexOf("？")>0) question=question.substring(0,question.indexOf("？"));
+        question=question.trim();
         setBdLogPath();
         final Map<String, Integer> reslutmap = new LinkedHashMap<>();
         //初始化选项统计情况
