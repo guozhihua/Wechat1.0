@@ -1,0 +1,8 @@
+.project/
+.idea/
+*.class
+target/
+*.jar
+*.war
+*.iml
+*.project
