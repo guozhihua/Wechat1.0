@@ -489,13 +489,13 @@ public class BaiDuSearch implements Search {
      * @return
      */
     public static boolean isAskWrong(String question) {
-
         question = question.replace(getMatchPatterDanYin(question), "");
         question = question.replace(getMatchPatterYinHao(question), "");
         question = question.replace(getMatchPatterShu(question), "");
 
         if (question.contains("不是") || question.contains("不正确") || question.contains("不属于") ||
-                question.contains("没有") || question.contains("不存在")) {
+                question.contains("没有") || question.contains("不存在")|| question.contains("不包含")||
+                question.contains("相反")|| question.contains("不含")) {
             return true;
         }
         return false;
