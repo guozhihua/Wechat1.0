@@ -92,11 +92,16 @@
                     $("#flag").addClass("error");
                 }
             } else if (msgs[0] == 'answer') {
+                //答案
                 document.getElementById('dd-answer').innerHTML = msgs[1] + '';
 
             } else {
-                document.getElementById('message').innerHTML = msgs[1] + '';
+                //这里就是输出问题
                 $("#dd-answer").empty();
+                $("#commonword").text("");
+                $("#relation").text("");
+                document.getElementById('message').innerHTML = msgs[1] + '';
+
             }
         } else {
             document.getElementById('message').innerHTML = innerHTML + '';
