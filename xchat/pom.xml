@@ -20,7 +20,7 @@
 
     <dependency>
       <groupId>com.yj</groupId>
-      <artifactId>chat-utils</artifactId>
+      <artifactId>chat-entity</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
     <dependency>
@@ -362,6 +362,11 @@
       <artifactId>lucene-analyzers-common</artifactId>
       <version>4.10.4</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.16</version>
     </dependency>
   </dependencies>
   <build>

@@ -1,6 +1,7 @@
 package xchat.sys;
 
 import org.jsoup.Jsoup;
+import org.jsoup.helper.StringUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -59,7 +60,6 @@ public class Video4480Config {
                        }
                       Video video = Video.builder().videoUuid(Integer.valueOf(id)).videoName(name.trim()).videoType(type.trim()).build();
                        videos.add(video);
-//                       System.out.println( type+"  " +name +"   "+id);
                    }
                }
 
@@ -81,13 +81,14 @@ public class Video4480Config {
                 if (video.getVideoHtml() != null) continue;
                 String url = Video4480Config.single_video_html.replace("{vid}", video.getVideoUuid() + "");
                 String bodyHtml = HttpUtils.get(url);
+                if(StringUtil.isBlank(bodyHtml)) continue;
                 Document document = Jsoup.parse(bodyHtml);
                 Elements elements = document.getElementsByTag("iframe");
                 if (!elements.isEmpty()) {
                     String src = elements.get(0).attr("src");
                     video.setVideoName(video.getVideoName().trim());
                     video.setVideoHtml(src);
-                    System.out.println(video.getVideoName()+"      "+video.getVideoHtml());
+                    System.out.println(video.getVideoName()+"   类型  ：  "+video.getVideoType()+"     "+video.getVideoHtml());
                 }
             }
         }
@@ -112,14 +113,38 @@ public class Video4480Config {
         return  result ;
     }
 
+    /**
+     * 连载 是电视剧   高清是电影
+     * @param videoItem
+     * @return
+     */
+    public static String getVideoSrc(VideoItem videoItem,int videoType){
+
+        String bodyHtml = HttpUtils.get(videoItem.getItemUrl());
+        Document document = Jsoup.parse(bodyHtml);
+        if(videoType==1){
+            Element jp_video_0 = document.getElementById("jp_video_0");
+            String val = jp_video_0.val();
+            System.out.println("名称："+videoItem.getName()+" 视频源地址："+val);
+        }else{
+
+        }
+
+
+        return  null;
+    }
+
 
 
     public static void main(String[] args) {
         try{
 
-            List<Video> videos = initVideoList();
-            setVideoHtml(videos);
-            videoItemList(videos.get(0));
+//            List<Video> videos = initVideoList();
+//            setVideoHtml(videos);
+//
+//            videoItemList(videos.get(0));
+            VideoItem videoItem=new VideoItem("tapanguan","http://aaxxy.com/vod-play-id-11344-src-1-num-43.html");
+            getVideoSrc(videoItem,1);
 
         }catch (Exception ex){
             ex.printStackTrace();
@@ -128,23 +153,25 @@ public class Video4480Config {
     }
 
 
-    class VideoItem{
-        private  String  name ;
 
-        private  String itemUrl;
 
-        public VideoItem(String name, String itemUrl) {
-            this.name = name;
-            this.itemUrl = itemUrl;
-        }
+}
 
-        public String getName() {
-            return name;
-        }
+class VideoItem{
+    private  String  name ;
 
-        public String getItemUrl() {
-            return itemUrl;
-        }
+    private  String itemUrl;
+
+    public VideoItem(String name, String itemUrl) {
+        this.name = name;
+        this.itemUrl = itemUrl;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getItemUrl() {
+        return itemUrl;
+    }
 }

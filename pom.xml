@@ -717,6 +717,11 @@
                 <version>${oauth2.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.upyun</groupId>
+                <artifactId>java-sdk</artifactId>
+                <version>${upyun.sdk.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.oltu.oauth2</groupId>
                 <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
                 <version>${oauth2.version}</version>
@@ -765,6 +770,7 @@
         <thrift_version>0.8.0</thrift_version>
         <thrift2_version>0.9.3</thrift2_version>
         <validation_version>1.1.0.Final</validation_version>
+        <upyun.sdk.version>3.13</upyun.sdk.version>
         <!--<validation_version>1.0.0.GA</validation_version>-->
         <hibernate_validator_version>5.1.0.Final</hibernate_validator_version>
         <jcache_version>0.4</jcache_version>
