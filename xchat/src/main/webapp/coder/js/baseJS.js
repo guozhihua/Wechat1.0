@@ -2,6 +2,7 @@
  * Created by 志华 on 2017/8/2.
  */
 var domain ="http://dev.edu.cn/";
+var domain1 ="dev.edu.cn";
 document.write("<script type='text/javascript' src='"+domain+"coder/coder/jquery-m/jquery.min-1.4.5.js'></script>");
 document.write("<link  rel='stylesheet' href='"+domain+"coder/bootstrap/css/bootstrap.min.css'/>");
 

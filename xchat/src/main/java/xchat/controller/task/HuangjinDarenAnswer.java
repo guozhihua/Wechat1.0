@@ -31,7 +31,7 @@ public class HuangjinDarenAnswer {
     static String url = "https://dt.same.com/api/v1/answer/get-question";
     public static Set<String> allQuestions = new HashSet<>();
 
-    public static String authHeder = "6a0c83edd0b50ca4b5dab05f32a00c697bf8f20d_3558905";
+    public static String authHeder = "3a123971fe0d95e7960f7297109f445f3b400e45_3558905";
 
     public static boolean getQuestion = true;
 
