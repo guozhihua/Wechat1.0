@@ -15,8 +15,10 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import xchat.pojo.Question;
+import xchat.service.DataDicService;
 
 import java.text.ParseException;
 import java.util.*;
@@ -31,20 +33,15 @@ public class HuangjinDarenAnswer {
     static String url = "https://dt.same.com/api/v1/answer/get-question";
     public static Set<String> allQuestions = new HashSet<>();
 
-    public static String authHeder = "3a123971fe0d95e7960f7297109f445f3b400e45_3558905";
-
     public static boolean getQuestion = true;
 
-    public static void setAuthHeader(String auth) {
-        authHeder = auth;
-    }
 
+    private static String auth="hjdr_auth";
+    private static String time1="hjdr_time1";
+    private static String time2="hjdr_time2";
 
-    public static String time1 = " 12:28:20";
-
-
-    public static String time2 = " 19:58:20";
-
+    @Autowired
+    private DataDicService dataDicService;
 
     private static final RequestConfig defaultRequestConfig = RequestConfig.custom()
             .setSocketTimeout(5000)
@@ -54,7 +51,7 @@ public class HuangjinDarenAnswer {
             .build();
 
 
-    public static Question getQuestins() throws Exception {
+    public  Question getQuestins() throws Exception {
         Question question1 =null;
         if (!getQuestion) {
             return question1;
@@ -63,7 +60,6 @@ public class HuangjinDarenAnswer {
         if (isTime()){
              question1 = new Question();
             try {
-                System.out.println("开始获取题目..");
                 HttpPost httpPost = new HttpPost(url);
                 httpPost.setConfig(defaultRequestConfig);
                 CloseableHttpClient client = HttpClients.createDefault();
@@ -71,7 +67,7 @@ public class HuangjinDarenAnswer {
                 Map<String, Object> params = new HashMap<>();
                 params.put("notice", 0);
                 httpPost.addHeader(new BasicHeader("Content-Type", "application/json; charset=utf-8"));
-                httpPost.addHeader("Authorization", authHeder);
+                httpPost.addHeader("Authorization", dataDicService.queryValueByCode(auth).getValue());
                 setPostEntity(httpPost, params);
                 HttpResponse resp = client.execute(httpPost);
                 resp.setHeader(new BasicHeader("Content-Type", "application/json; charset=utf-8"));
@@ -159,11 +155,15 @@ public class HuangjinDarenAnswer {
     }
 
 
-    public static boolean isTime() throws ParseException {
-        String shortDateStr = com.weixin.utils.util.DateUtils.getShortDateStr();
+
+
+
+
+    public  boolean isTime() throws ParseException {
+        String shortDateStr = com.weixin.utils.util.DateUtils.getShortDateStr().concat(" ");
         long currentTime = com.weixin.utils.util.DateUtils.getCurrentTime();
-        String t1 = shortDateStr.concat(time1);
-        String t2 = shortDateStr.concat(time2);
+        String t1 = shortDateStr.concat(dataDicService.queryValueByCode(time1).getValue());
+        String t2 = shortDateStr.concat(dataDicService.queryValueByCode(time2).getValue());
         long date1 = DateUtils.parseDate(t1).getTime();
         long date2 = DateUtils.parseDate(t2).getTime();
         long date11 = date1 + 30 * 60 * 1000;
@@ -173,5 +173,11 @@ public class HuangjinDarenAnswer {
        }
         return false ;
     }
+
+
+
+
+
+
 
 }

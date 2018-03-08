@@ -42,6 +42,10 @@ public class HJDRWorker extends BaseWorker {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private HuangjinDarenAnswer huangjinDarenAnswer;
+
+
     private SessionBucket sessionBucket = SessionBucket.getInstance();
 
     public boolean startWorker() {
@@ -63,7 +67,7 @@ public class HJDRWorker extends BaseWorker {
                 break;
             }
             try {
-                Question question = HuangjinDarenAnswer.getQuestins();
+                Question question = huangjinDarenAnswer.getQuestins();
                 Map<String, String> mes = new HashMap<>();
                 if (question == null) {
                     int id =new Random().nextInt(4)+35;

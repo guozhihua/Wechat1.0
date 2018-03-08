@@ -2,6 +2,7 @@ package xchat.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import xchat.controller.task.HuangjinDarenAnswer;
+import xchat.pojo.DataDic;
+import xchat.service.DataDicService;
 import xchat.sys.SessionBucket;
 import xchat.sys.WebModel;
 
@@ -27,17 +30,23 @@ import java.util.*;
 public class WebSpringSocketController extends ABaseController {
     private static Logger logger = LoggerFactory.getLogger(WebSpringSocketController.class);
 
-    @Bean//这个注解会从Spring容器拿出Bean
-    public SpringWebSocketHandler infoHandler() {
-        return new SpringWebSocketHandler();
-    }
+    @Autowired
+    private DataDicService dataDicService;
+
+
 
     @RequestMapping("/hjdr/setAuth")
     @ResponseBody
     public WebModel send(HttpServletRequest request) {
         WebModel webModel = WebModel.getInstance();
-        HuangjinDarenAnswer.setAuthHeader(request.getParameter("auth").trim());
-        logger.info("set 黄金答人的auth 为：{}",HuangjinDarenAnswer.authHeder);
+        DataDic dataDic = new DataDic();
+        dataDic.setValue(request.getParameter("auth").trim());
+        dataDic.setCode("hjdr_auth");
+        try {
+            dataDicService.updateByIdSelective(dataDic);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return webModel;
     }
     @RequestMapping("/hjdr/setQuestionFlag")
